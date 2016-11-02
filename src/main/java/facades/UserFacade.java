@@ -1,5 +1,6 @@
 package facades;
 
+import entity.Samarit;
 import security.IUserFacade;
 import entity.User;
 import entity.User_Role;
@@ -63,25 +64,29 @@ public class UserFacade implements IUserFacade {
 
     private void insertTestUsers() {
         EntityManager em = EntityConnector.getEntityManager();
-        User user = new User("user", "test");
+        
+        User samarit = new Samarit("sam", "test");
         User_Role userRole = new User_Role("User");
-        user.addRoleToUser(userRole);
+        samarit.addRoleToUser(userRole);
+        
         User admin = new User("admin", "test");
         User_Role adminRole = new User_Role("Admin");
         admin.addRoleToUser(adminRole);
 
-        User both = new User("user_admin", "test");
-        both.addRoleToUser(userRole);
-        both.addRoleToUser(adminRole);
+        User coordinator = new Samarit("coordinator", "test");
+        User_Role coorinatorRole = new User_Role("Coordinator");
+        coordinator.addRoleToUser(userRole);
+        coordinator.addRoleToUser(coorinatorRole);
+        
 
     
         try {
             em.getTransaction().begin();
-            em.persist(user);
+            em.persist(samarit);
             em.persist(admin);
-            em.persist(both);
+            em.persist(coordinator);
             em.getTransaction().commit();
-            Logger.getLogger(Log.logName).log(Level.INFO, "Inserted Test Users in database");
+            Log.writeToLog("Inserted Test Users in database");
         } catch (Exception e) {
             Log.writeToLog("Exception" + e.getMessage());
         }
