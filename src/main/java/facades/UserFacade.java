@@ -1,5 +1,8 @@
 package facades;
 
+import entity.Admin;
+import entity.Department;
+import entity.Samarit;
 import security.IUserFacade;
 import entity.User;
 import entity.User_Role;
@@ -23,7 +26,7 @@ public class UserFacade implements IUserFacade {
     /*When implementing your own database for this seed, you should NOT touch any of the classes in the security folder
     Make sure your new facade implements IUserFacade and keeps the name UserFacade, and that your Entity User class implements 
     IUser interface, then security should work "out of the box" with users and roles stored in your database */
-    EntityManagerFactory emf;
+    
 
     public UserFacade() {
         //Test Users
@@ -45,7 +48,7 @@ public class UserFacade implements IUserFacade {
     public List<String> authenticateUser(String userName, String password) {
         try {
             EntityManager em = EntityConnector.getEntityManager();
-            TypedQuery<User> q = em.createQuery("select u from User u where u.userName=:name",User.class);
+            TypedQuery<User> q = em.createQuery("select u from User u where u.email=:name",User.class);
             q.setParameter("name", userName);
             User user = q.getSingleResult();
             if(PasswordStorage.verifyPassword(password, user.getPassword())){
@@ -63,25 +66,33 @@ public class UserFacade implements IUserFacade {
 
     private void insertTestUsers() {
         EntityManager em = EntityConnector.getEntityManager();
-        User user = new User("user", "test");
+        Department d = new Department();
+        d.setNameOfDepartment("København");
+        User samarit = new Samarit("sam", "test");
         User_Role userRole = new User_Role("User");
-        user.addRoleToUser(userRole);
-        User admin = new User("admin", "test");
+        d.addUser((Samarit)samarit);
+        samarit.addRoleToUser(userRole);
+        
+        User admin = new Admin("admin","test");
         User_Role adminRole = new User_Role("Admin");
         admin.addRoleToUser(adminRole);
 
-        User both = new User("user_admin", "test");
-        both.addRoleToUser(userRole);
-        both.addRoleToUser(adminRole);
-
+        User coordinator = new Samarit("coordinator", "test");
+        User_Role coorinatorRole = new User_Role("Coordinator");
+        d.addUser((Samarit)coordinator);
+        coordinator.addRoleToUser(userRole);
+        coordinator.addRoleToUser(coorinatorRole);
     
         try {
+           
+            em = EntityConnector.getEntityManager();
             em.getTransaction().begin();
-            em.persist(user);
+            em.persist(d);
+            em.persist(samarit);
             em.persist(admin);
-            em.persist(both);
+            em.persist(coordinator);
             em.getTransaction().commit();
-            Logger.getLogger(Log.logName).log(Level.INFO, "Inserted Test Users in database");
+            Log.writeToLog("Inserted Test Users in database");
         } catch (Exception e) {
             Log.writeToLog("Exception" + e.getMessage());
         }

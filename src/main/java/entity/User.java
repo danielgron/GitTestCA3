@@ -7,30 +7,35 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import security.IUser;
 import security.PasswordStorage;
+import log.Log;
 
 @Entity
-public class User implements IUser, Serializable{
+public abstract class User implements IUser, Serializable{
   
   private String password;  //Pleeeeease dont store me in plain text
   @Id
-  private String userName;
+  private String email;
   
   @ManyToMany(cascade = CascadeType.PERSIST)
   List<User_Role> roles = new ArrayList();
+
+
+
 
 //   List<Role> roles = new ArrayList();
     public User() {
     }
 
-  public User(String userName, String password) {
-    this.userName = userName;
+  public User(String email, String password) {
+    this.email = email;
       try {
           String hashPassword = PasswordStorage.createHash(password);
           this.password = hashPassword;
       } catch (PasswordStorage.CannotPerformOperationException ex) {
-          System.out.println("EROROR!!!!");
+          Log.writeToLog("Could not create Password for User");
           this.password = "failed!";
       }
   }
@@ -66,11 +71,11 @@ public class User implements IUser, Serializable{
 
   @Override
   public String getUserName() {
-    return userName;
+    return email;
   }
 
   public void setUserName(String userName) {
-    this.userName = userName;
+    this.email = userName;
   }
   
   
@@ -78,4 +83,6 @@ public class User implements IUser, Serializable{
       roles.remove(role);
       role.removeUserFromRole(this);
   }        
+  
+      
 }
