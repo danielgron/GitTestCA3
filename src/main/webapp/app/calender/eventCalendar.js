@@ -46,8 +46,8 @@ angular.module('myApp.calendar', ['ngRoute', 'ui.calendar'])
                         dayClick: $scope.dayClick
                     }
                 };
-                $scope.dayClick = function (date) {
-
+                $scope.dayClick = function (date,view) {
+                    alert('Current view: ' + view.name);
                 };
 
 
