@@ -67,6 +67,7 @@ public class InitialSeedRestIntegrationTest {
   }
 
   @Test
+  @Ignore
   public void tesRestForAdmin() {
     login("admin","test");
     given()

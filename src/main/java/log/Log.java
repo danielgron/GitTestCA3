@@ -22,7 +22,7 @@ public class Log {
     
     public static void startLogFile() throws IOException{
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-        String fileName = "LogFile" + timeStamp + ".txt";
+        String fileName = "c:\\res\\LogFile" + timeStamp + ".txt";
          Logger logger = Logger.getLogger(logName);
          FileHandler file = new FileHandler(fileName);
          // This places the log file in the bin folder where you have your 
