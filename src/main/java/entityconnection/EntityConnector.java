@@ -16,20 +16,20 @@ import javax.persistence.Persistence;
 public class EntityConnector {
     
     private static EntityManagerFactory emf;
-    private static final String persistanceUnit = "pu_local";
+    private static final String PERSISTENCEUNIT = "pu_local";
     
     private EntityConnector(){
     }
     
     public static EntityManager getEntityManager(){
         if(emf == null){
-            emf = Persistence.createEntityManagerFactory(persistanceUnit);
+            emf = Persistence.createEntityManagerFactory(PERSISTENCEUNIT);
         }
         return emf.createEntityManager();
     }
     
     public static void createEntityManagerFactory(){
-        emf = Persistence.createEntityManagerFactory(persistanceUnit);
+        emf = Persistence.createEntityManagerFactory(PERSISTENCEUNIT);
     }
     
 }

@@ -1,6 +1,7 @@
 package facades;
 
 import entity.Admin;
+import entity.Department;
 import entity.Samarit;
 import security.IUserFacade;
 import entity.User;
@@ -25,7 +26,7 @@ public class UserFacade implements IUserFacade {
     /*When implementing your own database for this seed, you should NOT touch any of the classes in the security folder
     Make sure your new facade implements IUserFacade and keeps the name UserFacade, and that your Entity User class implements 
     IUser interface, then security should work "out of the box" with users and roles stored in your database */
-    EntityManagerFactory emf;
+    
 
     public UserFacade() {
         //Test Users
@@ -65,9 +66,11 @@ public class UserFacade implements IUserFacade {
 
     private void insertTestUsers() {
         EntityManager em = EntityConnector.getEntityManager();
-        
+        Department d = new Department();
+        d.setNameOfDepartment("København");
         User samarit = new Samarit("sam", "test");
         User_Role userRole = new User_Role("User");
+        d.addUser((Samarit)samarit);
         samarit.addRoleToUser(userRole);
         
         User admin = new Admin("admin","test");
@@ -76,13 +79,15 @@ public class UserFacade implements IUserFacade {
 
         User coordinator = new Samarit("coordinator", "test");
         User_Role coorinatorRole = new User_Role("Coordinator");
+        d.addUser((Samarit)coordinator);
         coordinator.addRoleToUser(userRole);
         coordinator.addRoleToUser(coorinatorRole);
-        
-
     
         try {
+           
+            em = EntityConnector.getEntityManager();
             em.getTransaction().begin();
+            em.persist(d);
             em.persist(samarit);
             em.persist(admin);
             em.persist(coordinator);

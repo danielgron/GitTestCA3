@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import security.IUser;
 import security.PasswordStorage;
 import log.Log;
@@ -20,6 +21,9 @@ public abstract class User implements IUser, Serializable{
   
   @ManyToMany(cascade = CascadeType.PERSIST)
   List<User_Role> roles = new ArrayList();
+
+
+
 
 //   List<Role> roles = new ArrayList();
     public User() {
@@ -79,4 +83,6 @@ public abstract class User implements IUser, Serializable{
       roles.remove(role);
       role.removeUserFromRole(this);
   }        
+  
+      
 }

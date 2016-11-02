@@ -19,8 +19,8 @@ import javax.persistence.*;
 @DiscriminatorColumn(name = "DT", discriminatorType = DiscriminatorType.CHAR)
 public class Samarit extends User{
     
-    
-//  private Department department; // Not implemented!
+        @ManyToOne(cascade = CascadeType.PERSIST)
+    private Department department;
 //  private Dato dato; // Not Implemented!
     private String firstName;
     private String lastName;
@@ -128,6 +128,14 @@ public class Samarit extends User{
 
     public void setShiftsTotal(int shiftsTotal) {
         this.shiftsTotal = shiftsTotal;
+    }
+    
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
     
 }
