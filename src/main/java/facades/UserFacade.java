@@ -1,5 +1,6 @@
 package facades;
 
+import entity.Admin;
 import entity.Samarit;
 import security.IUserFacade;
 import entity.User;
@@ -46,7 +47,7 @@ public class UserFacade implements IUserFacade {
     public List<String> authenticateUser(String userName, String password) {
         try {
             EntityManager em = EntityConnector.getEntityManager();
-            TypedQuery<User> q = em.createQuery("select u from User u where u.userName=:name",User.class);
+            TypedQuery<User> q = em.createQuery("select u from User u where u.email=:name",User.class);
             q.setParameter("name", userName);
             User user = q.getSingleResult();
             if(PasswordStorage.verifyPassword(password, user.getPassword())){
@@ -69,7 +70,7 @@ public class UserFacade implements IUserFacade {
         User_Role userRole = new User_Role("User");
         samarit.addRoleToUser(userRole);
         
-        User admin = new User("admin", "test");
+        User admin = new Admin("admin","test");
         User_Role adminRole = new User_Role("Admin");
         admin.addRoleToUser(adminRole);
 

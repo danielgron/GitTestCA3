@@ -12,7 +12,7 @@ import security.PasswordStorage;
 import log.Log;
 
 @Entity
-public class User implements IUser, Serializable{
+public abstract class User implements IUser, Serializable{
   
   private String password;  //Pleeeeease dont store me in plain text
   @Id

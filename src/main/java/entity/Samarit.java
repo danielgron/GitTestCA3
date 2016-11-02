@@ -130,45 +130,4 @@ public class Samarit extends User{
         this.shiftsTotal = shiftsTotal;
     }
     
-    
-    
-    
-    
-    // Inherrited: 
-    @Override
-    public void removeRoleFromUser(User_Role role) {
-        super.removeRoleFromUser(role); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setUserName(String userName) {
-        super.setUserName(userName); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String getUserName() {
-        return super.getUserName(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setPassword(String password) {
-        super.setPassword(password); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String getPassword() {
-        return super.getPassword(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<String> getRolesAsStrings() {
-        return super.getRolesAsStrings(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void addRoleToUser(User_Role role) {
-        super.addRoleToUser(role); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    
 }
