@@ -18,7 +18,9 @@ app.config(['$routeProvider', function ($routeProvider) {
 app.controller('CoordinatorCtrl', ["$scope", "$http", function ($scope, $http) {
         $scope.newUser;
         $scope.createUser = function () {
+            $scope.newUser.department = {nameOfDepartment : 'København'};
             var userTobesend = $scope.newUser;
+            
             var jsonString = JSON.stringify(userTobesend);
             $http({
             method: 'POST',

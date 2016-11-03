@@ -59,6 +59,7 @@ public class UserFacade implements IUserFacade {
                 return null;
             }
         } catch (Exception ex) {
+            Log.writeToLog("Authenticating user failed: "+ex.getMessage());
             Logger.getLogger(UserFacade.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
