@@ -1,44 +1,44 @@
-
+    
 <h2>Create New User</h2>
 
 
 
-<form ng-submit="createUser()">
+<form ng-submit="ctrl.createUser()">
     <div class="col-md-6">
     
     <div class="form-group">
         <label for="department">Afdeling</label>
-        <input readonly type="text" class="form-control" id="department" value="HSK">
+        <input ng-model="ctrl.newUser.department.nameOfDepartment" readonly type="text" class="form-control" id="department">
     </div>
     
     <div class="form-group">
         <label for="email">Email address:</label>
-        <input ng-model="newUser.email" type="email" class="form-control" id="email" required>
+        <input ng-model="ctrl.newUser.email" type="email" class="form-control" id="email" required>
     </div>
     
     <div class="form-group">
         <label for="firstname">First Name:</label>
-        <input ng-model="newUser.firstName" type="text" class="form-control" id="firstname" required>
+        <input ng-model="ctrl.newUser.firstName" type="text" class="form-control" id="firstname" required>
     </div>
     
     <div class="form-group">
         <label for="lastName">Last Name:</label>
-        <input ng-model="newUser.lastName" type="text" class="form-control" id="lastName" required>
+        <input ng-model="ctrl.newUser.lastName" type="text" class="form-control" id="lastName" required>
     </div>
     
     <div class="form-group">
         <label for="Adresse">Vej</label>
-        <input ng-model="newUser.adresse" type="text" class="form-control" id="Adresse" required>
+        <input ng-model="ctrl.newUser.adresse" type="text" class="form-control" id="Adresse" required>
     </div>
     
     <div class="form-group">
         <label for="zip">Post Number</label>
-        <input ng-model="newUser.zip" type="text" class="form-control" id="zip" required>
+        <input ng-model="ctrl.newUser.zip" type="text" class="form-control" id="zip" required>
     </div>
     
     <div class="form-group">
         <label for="city">By</label>
-        <input ng-model="newUser.city" type="text" class="form-control" id="city" required>
+        <input ng-model="ctrl.newUser.city" type="text" class="form-control" id="city" required>
     </div>
 </div>
     
@@ -46,22 +46,22 @@
     
     <div class="form-group">
         <label for="phone">Telefon</label>
-        <input ng-model="newUser.phone" type="text" class="form-control" id="phone" required>
+        <input ng-model="ctrl.newUser.phone" type="text" class="form-control" id="phone" required>
     </div>
     
     <div class="form-group">
         <label for="redCroosLevel">Uddannelses Niveau</label>
-        <input ng-model="newUser.redCroosLevel" type="text" class="form-control" id="redCroosLevel" required>
+        <input ng-model="ctrl.newUser.redCroosLevel" type="text" class="form-control" id="redCroosLevel" required>
     </div>
     
     <div class="form-group">
         <label for="medicalLevel">Medicinsk Rolle</label>
-        <input ng-model="newUser.medicalLevel" type="text" class="form-control" id="medicalLevel" required>
+        <input ng-model="ctrl.newUser.medicalLevel" type="text" class="form-control" id="medicalLevel" required>
     </div>
     
     <div class="form-group">
         <label for="driverLevel">Type Chauffør</label>
-        <input ng-model="newUser.driverLevel" type="text" class="form-control" id="driverLevel" required>
+        <input ng-model="ctrl.newUser.driverLevel" type="text" class="form-control" id="driverLevel" required>
     </div>
     
     </div>

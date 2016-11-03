@@ -15,10 +15,12 @@ app.config(['$routeProvider', function ($routeProvider) {
         });
     }]);
 
-app.controller('CoordinatorCtrl', ["$scope", "$http", function ($scope, $http) {
-        $scope.newUser;
-        $scope.createUser = function () {
-            var userTobesend = $scope.newUser;
+app.controller('CoordinatorCtrl', ["$scope", "$http", 'UserFactory', function ($scope, $http, UserFactory) {
+        var self = this;
+        self.newUser = {};
+        self.newUser.department ={nameOfDepartment: UserFactory.getDepartment()}; // Gets the department of the Admin!
+        self.createUser = function () {
+            var userTobesend = self.newUser;
             var jsonString = JSON.stringify(userTobesend);
             $http({
             method: 'POST',

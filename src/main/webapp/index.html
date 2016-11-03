@@ -46,7 +46,7 @@
     <body ng-app="myApp">
 
         <div class="container"  >
-            <nav class="navbar navbar-static-top  navbar-default " role="navigation" ng-controller="AppLoginCtrl">
+            <nav class="navbar navbar-static-top  navbar-default " role="navigation" ng-controller="AppLoginCtrl as authCtrl">
                 <div class="container">
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -80,6 +80,7 @@
                             <div class="navbar-right" ng-show="isAuthenticated">
 
                                 <p class="navbar-text">Logged on as: {{username}}</p>
+                                <p class="navbar-text">Afdeling {{department}}</p>
 
                                 <button type="submit" class="btn btn-primary navbar-btn"  ng-click="logout()">Logout
                                 </button>

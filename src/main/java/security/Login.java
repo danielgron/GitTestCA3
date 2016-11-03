@@ -7,10 +7,16 @@ import com.google.gson.JsonSyntaxException;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jwt.*;
+import entity.Department;
+import entity.Samarit;
+import entity.User;
+import entityconnection.EntityConnector;
 import facades.UserFacade;
 import java.security.SecureRandom;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotAuthorizedException;
@@ -19,6 +25,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import log.Log;
 
 @Path("login")
 public class Login {
@@ -44,6 +51,7 @@ public class Login {
         String token = createToken(username, roles);
         responseJson.addProperty("username", username);
         responseJson.addProperty("token", token);
+        responseJson.addProperty("department", findUsersDepartment(username));
         return Response.ok(new Gson().toJson(responseJson)).build();
       }
     }
@@ -82,6 +90,7 @@ public class Login {
             .claim("username", subject)
             .claim("roles", roles)
             .claim("issuer", issuer)
+            .claim("department", findUsersDepartment(subject))
             .issueTime(date)
             .expirationTime(new Date(date.getTime() + 1000 * 60 * 60))
             .build();
@@ -89,4 +98,26 @@ public class Login {
     signedJWT.sign(signer);
     return signedJWT.serialize();
   }
+
+    private String findUsersDepartment(String username) {
+        EntityManager em = EntityConnector.getEntityManager();
+        
+        try{
+            User user = em.find(User.class, username);
+            
+            if(user instanceof Samarit){
+            Samarit sam =  (Samarit) user;
+             return sam.getDepartment().getNameOfDepartment();
+            }
+                
+        }
+        catch(Exception e){
+            Log.writeToLog("Error:  " + e.getMessage());
+            return null;
+        }
+        finally{
+        em.close();
+        }
+        return "Admin";
+    }
 }
