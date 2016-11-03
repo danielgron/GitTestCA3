@@ -1,5 +1,5 @@
 angular.module('myApp.security', [])
-        .controller('AppLoginCtrl', function ($scope, $rootScope, $http, $window, $location, $uibModal, jwtHelper) {
+        .controller('AppLoginCtrl',['$scope', '$rootScope', '$http', '$window', '$location', '$uibModal', 'jwtHelper', 'UserFactory', function ($scope, $rootScope, $http, $window, $location, $uibModal, jwtHelper, UserFactory) {
 
           $rootScope.$on('logOutEvent', function () {
             $scope.logout();
@@ -48,7 +48,7 @@ angular.module('myApp.security', [])
             $http.post('api/login', $scope.user)
                     .success(function (data) {
                       $window.sessionStorage.id_token = data.token;
-                      initializeFromToken($scope, $window.sessionStorage.id_token, jwtHelper);
+                      initializeFromToken($scope, $window.sessionStorage.id_token, jwtHelper, UserFactory);
                       $location.path("#/view1");
                     })
                     .error(function (data) {
@@ -84,11 +84,11 @@ angular.module('myApp.security', [])
           var init = function () {
             var token = $window.sessionStorage.id_token;
             if (token) {
-              initializeFromToken($scope, $window.sessionStorage.id_token, jwtHelper);
+              initializeFromToken($scope, $window.sessionStorage.id_token, jwtHelper, UserFactory);
             }
           };
           init();// and fire it after definition
-        })
+        }])
         .factory('AuthInterceptor', function ($rootScope, $q) {
           return {
             responseError: function (response) {
@@ -117,10 +117,12 @@ angular.module('myApp.security', [])
 
 
 
-function initializeFromToken($scope, token, jwtHelper) {
+function initializeFromToken($scope, token, jwtHelper, UserFactory) {
   $scope.isAuthenticated = true;
   var tokenPayload = jwtHelper.decodeToken(token);
   $scope.username = tokenPayload.username;
+  $scope.department = tokenPayload.department;
+  UserFactory.setDepartment(tokenPayload.department);
   $scope.isAdmin = false;
   $scope.isUser = false;
   $scope.isCoordinator = false;
