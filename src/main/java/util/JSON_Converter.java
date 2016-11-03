@@ -1,3 +1,9 @@
+
+    
+    
+  
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -22,13 +28,17 @@ import net.minidev.json.JSONArray;
  */
 public class JSON_Converter {
 
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private static Gson  gson = new GsonBuilder().setPrettyPrinting().create();
     private DateUtils du = new DateUtils();
 
-    public Samarit parseSamarit(String jsonString) {
+    public static Samarit parseSamarit(String jsonString){
         Samarit s = null;
-
+        s=gson.fromJson(jsonString, Samarit.class);
+        
         return s;
+    }
+    public static String jsonFromSamarit(Samarit s){
+        return gson.toJson(s);
     }
 
     public JsonObject parseEvent(Event event) {
