@@ -27,9 +27,12 @@ app.controller('CoordinatorCtrl', ["$scope", "$http", 'UserFactory', function ($
             data: jsonString,
             url: 'api/coordinator'
           }).then(function successCallback(res) {
-            $scope.data = res.data.message;
+            $scope.data = res.data;
+            console.log($scope.data);
           }, function errorCallback(res) {
             $scope.error = res.status + ": "+ res.data.statusText;
+            console.log("ERROR");
+            console.log($scope.error);
 
             });
         };

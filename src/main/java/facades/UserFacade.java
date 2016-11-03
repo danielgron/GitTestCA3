@@ -47,6 +47,7 @@ public class UserFacade implements IUserFacade {
     @Override
     public List<String> authenticateUser(String userName, String password) {
         try {
+            Log.writeToLog("Authenticating user: "+userName);
             EntityManager em = EntityConnector.getEntityManager();
             TypedQuery<User> q = em.createQuery("select u from User u where u.email=:name",User.class);
             q.setParameter("name", userName);
@@ -65,6 +66,7 @@ public class UserFacade implements IUserFacade {
 
 
     private void insertTestUsers() {
+        Log.writeToLog("Inserting Test Users in database");
         EntityManager em = EntityConnector.getEntityManager();
         Department d = new Department();
         d.setNameOfDepartment("København");
@@ -84,6 +86,7 @@ public class UserFacade implements IUserFacade {
         coordinator.addRoleToUser(coorinatorRole);
     
         try {
+            Log.writeToLog("Connecting to database");
            
             em = EntityConnector.getEntityManager();
             em.getTransaction().begin();

@@ -34,6 +34,8 @@ public class Samarit extends User{
     private int shiftsThisSeason;
     private int shiftsTotal;
 //  private List<VagtKort> vagtKorts; // Not implemented yet!
+    @ManyToMany(mappedBy = "samarits")
+    private List<Event> events;
 
     public Samarit() {
     }

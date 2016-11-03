@@ -46,8 +46,9 @@ angular.module('myApp.calendar', ['ngRoute', 'ui.calendar'])
                         dayClick: $scope.dayClick
                     }
                 };
-                $scope.dayClick = function (date,view,cell) {
+                $scope.dayClick = function (date,jsEvent,view,cell) {
                     window.console.log(view);
+                    this.css('background-color', 'red');
                 };
 
 
