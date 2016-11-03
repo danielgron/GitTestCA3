@@ -40,6 +40,9 @@ public class Event implements Serializable {
     private Integer id;
 
     @Temporal(TemporalType.TIMESTAMP)
+    private Date doorsOpening;
+    
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_start")
     private Date dateStart;
 

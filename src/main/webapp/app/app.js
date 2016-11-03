@@ -16,7 +16,8 @@ angular.module('myApp', [
     'myApp.factories',
     'myApp.services',
     'myApp.calendar',
-    'myApp.coordinator'
+    'myApp.coordinator',
+    'myApp.event'
 ])
         .config(['$routeProvider', function ($routeProvider) {
                 $routeProvider.otherwise({redirectTo: '/view1'});
