@@ -25,7 +25,7 @@ angular.module('myApp.calendar', ['ngRoute', 'ui.calendar'])
                 $scope.eventSources = [$scope.events];
 
                 $scope.eventSource = {
-                    
+                    url: 'api/event'
                 };
 
 
@@ -52,14 +52,12 @@ angular.module('myApp.calendar', ['ngRoute', 'ui.calendar'])
                 };
 
 
-                $scope.events = [
-                    {title: 'All Day Event', start: new Date(y, m, 1)},
-                    {title: 'Long Event', start: new Date(y, m, d - 5), end: new Date(y, m, d - 2)},
-                    {id: 999, title: 'Repeating Event', start: new Date(y, m, d - 3, 16, 0), allDay: false},
-                    {id: 999, title: 'Repeating Event', start: new Date(y, m, d + 4, 16, 0), allDay: false},
-                    {title: 'Birthday Party', start: new Date(y, m, d + 1, 19, 0), end: new Date(y, m, d + 1, 22, 30), allDay: false},
-                    {title: 'Click for Google', start: new Date(y, m, 28), end: new Date(y, m, 29), url: 'http://google.com/'}
-                ];
+                $scope.events = [];
+                calendarFactory.getEvents().then(function (response) {
+                    $scope.events = response.data;
+                }, function (error) {
+                    $scope.status = 'Unable to load customer data: ' + error.message;
+                });
                 /* event source that calls a function on every view switch */
                 $scope.eventsF = function (start, end, timezone, callback) {
                     var s = new Date(start).getTime() / 1000;
@@ -108,13 +106,3 @@ angular.module('myApp.calendar', ['ngRoute', 'ui.calendar'])
                 });
             }]);
 
-angular.module('myApp.calendar').factory('calendarFactory', function ($http) {
-    var calendarFactory = {};
-    var urlBase = "api/events";
-
-    calendarFactory.getEvents = function () {
-        return $http.get(urlBase);
-    };
-
-    return calendarFactory;
-});

@@ -7,18 +7,24 @@ package facades;
 
 import entity.Event;
 import entityconnection.EntityConnector;
+import java.util.Date;
+import java.time.Instant;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.time.*;
 
 /**
  *
  * @author dennisschmock
  */
 public class EventFacade {
-
+    public static void main(String[] args) {
+        EventFacade ef = new EventFacade();
+        ef.testEvents();
+    }
     /**
      * The purpose of this method is to return a list of Events
      * @return
@@ -65,5 +71,20 @@ public class EventFacade {
             em.close();
         }
         return event;
+    }
+    
+    public void testEvents(){
+        EntityManager em = EntityConnector.getEntityManager();
+        Instant instant = Instant.now();
+        LocalDateTime local = LocalDateTime.of(2016, Month.NOVEMBER, 3, 15, 0);
+        Date start = new Date();
+        Date end =  Date.from(local.atZone(ZoneId.systemDefault()).toInstant());
+
+        
+        if(getEvents().size()<=0){
+            Event event = new Event(start, end, true, "test", "test");
+            //Event event2 = new Event(date_start, date_end, true, eventName, description);
+            createEvent(event);
+        }
     }
 }

@@ -11,27 +11,55 @@ import com.google.gson.JsonObject;
 import entity.Event;
 import entity.Samarit;
 import entity.User;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
+import net.minidev.json.JSONArray;
 
 /**
  *
  * @author danie
  */
 public class JSON_Converter {
+
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    public Samarit parseSamarit(String jsonString){
+    private DateUtils du = new DateUtils();
+
+    public Samarit parseSamarit(String jsonString) {
         Samarit s = null;
-        
-        
+
         return s;
     }
-    
-    public JsonObject parseEvent(Event event){
+
+    public JsonObject parseEvent(Event event) {
         JsonObject jEvent = new JsonObject();
         jEvent.addProperty("id", event.getId());
-        jEvent.addProperty("title", event.getEventName());
-        jEvent.addProperty("start", event.getDateStart().toString());
-        jEvent.addProperty("end", event.getDateEnd().toString());
-        jEvent.addProperty("allDay", Boolean.FALSE);
-        return jEvent; 
+        if (event.getEventName() != null) {
+            jEvent.addProperty("title", event.getEventName());
+        }
+        if (event.getDateStart() != null) {
+            Date start = event.getDateStart();
+            LocalDateTime localStart = DateUtils.asLocalDateTime(start);
+            jEvent.addProperty("start", localStart.toString());
+        }
+        if (event.getDateEnd() != null) {
+            Date end = event.getDateEnd();
+            LocalDateTime localEnd = DateUtils.asLocalDateTime(end);
+            jEvent.addProperty("end", localEnd.toString());
+        }
+        jEvent.addProperty("allDay", event.isAllDay());
+
+        return jEvent;
+    }
+
+    public String parseEvents(List<Event> events) {
+        JSONArray jevents = new JSONArray();
+        if (events != null) {
+            for (Event event : events) {
+                jevents.add(parseEvent(event));
+            }
+
+        }
+        return gson.toJson(jevents);
     }
 }
