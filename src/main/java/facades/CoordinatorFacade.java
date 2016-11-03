@@ -5,9 +5,11 @@
  */
 package facades;
 
+import entity.Samarit;
 import entity.User;
 import entityconnection.EntityConnector;
 import javax.persistence.EntityManager;
+import log.Log;
 
 /**
  *
@@ -17,18 +19,19 @@ public class CoordinatorFacade {
     
     
     
-    public User addNewUser(User u){
+    public Samarit addNewSamarit(Samarit s){
         
-        
+        Log.writeToLog("Adding new Samarit");
         EntityManager em = EntityConnector.getEntityManager();
         try{
             em.getTransaction().begin();
-            em.persist(u);
+            em.persist(s);
             em.getTransaction().commit();
+            Log.writeToLog("New samarit added");
         }
         finally{
             em.close();
         }
-        return u;
+        return s;
     }
 }

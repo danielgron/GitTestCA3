@@ -7,7 +7,10 @@ package util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import entity.Event;
 import entity.Samarit;
+import entity.User;
 
 /**
  *
@@ -21,8 +24,18 @@ public class JSON_Converter {
         
         return s;
     }
-
-    public static String jsonFromSamarit(Samarit s) {
+    public static String jsonFromSamarit(Samarit s){
         return gson.toJson(s);
     }
+    
+    public JsonObject parseEvent(Event event){
+        JsonObject jEvent = new JsonObject();
+        jEvent.addProperty("id", event.getId());
+        jEvent.addProperty("title", event.getEventName());
+        jEvent.addProperty("start", event.getDateStart().toString());
+        jEvent.addProperty("end", event.getDateEnd().toString());
+        jEvent.addProperty("allDay", Boolean.FALSE);
+        return jEvent; 
+    }
 }
+

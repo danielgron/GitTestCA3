@@ -8,6 +8,7 @@ package entityconnection;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import log.Log;
 
 /**
  *
@@ -19,11 +20,13 @@ public class EntityConnector {
     private static final String PERSISTENCEUNIT = "pu_local";
     
     private EntityConnector(){
+        Log.writeToLog("Creating EntityConnectorObject");
     }
     
     public static EntityManager getEntityManager(){
         if(emf == null){
             emf = Persistence.createEntityManagerFactory(PERSISTENCEUNIT);
+            Log.writeToLog("Entity Manager Factory created");
         }
         return emf.createEntityManager();
     }

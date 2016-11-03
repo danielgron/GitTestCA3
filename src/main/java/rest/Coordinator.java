@@ -1,6 +1,7 @@
 package rest;
 
 import entity.Samarit;
+import facades.CoordinatorFacade;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.annotation.security.RolesAllowed;
@@ -14,6 +15,7 @@ import util.JSON_Converter;
 @Path("coordinator")
 @RolesAllowed("Coordinator")
 public class Coordinator {
+    private static CoordinatorFacade cf  = new CoordinatorFacade();
   
   @GET
   @Produces(MediaType.APPLICATION_JSON)
@@ -25,6 +27,7 @@ public class Coordinator {
   @Produces(MediaType.APPLICATION_JSON)
   public String postNewUser(String json){
       Samarit s= JSON_Converter.parseSamarit(json);
+      s= cf.addNewSamarit(s);
       return JSON_Converter.jsonFromSamarit(s);
   }
  
