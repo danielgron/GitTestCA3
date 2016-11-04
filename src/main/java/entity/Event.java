@@ -38,52 +38,43 @@ public class Event implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date doorsOpening;
     
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "date_start")
-    private Date dateStart;
+    
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "date_end")
-    private Date dateEnd;
+    @Column(name="event_date")
+    private Date date;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "event_start")
+    private Date start;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "event_end")
+    private Date end;
 
     private boolean allDay;
 
-    private String eventName;
-    private String description;
-
+    private String name;
     
+    @Column(name="description")
+    private String desc;
+
     private @ManyToMany
     List<Samarit> samarits = new ArrayList();
 
-    public Event(Date date_start, Date date_end, boolean allDay, String eventName, String description) {
-        this.dateStart = date_start;
-        this.dateEnd = date_end;
+    public Event(Date date, Date start, Date end, boolean allDay, String name, String desc) {
+        this.date = date;
+        this.start = start;
+        this.end = end;
         this.allDay = allDay;
-        this.eventName = eventName;
-        this.description = description;
+        this.name = name;
+        this.desc = desc;
     }
 
+    
+    
     public Event() {
-    }
-
-    public String getEventName() {
-        return eventName;
-    }
-
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     /**
@@ -101,31 +92,45 @@ public class Event implements Serializable {
     }
 
     /**
-     * @return the dateStart
+     * @return the date
      */
-    public Date getDateStart() {
-        return dateStart;
+    public Date getDate() {
+        return date;
     }
 
     /**
-     * @param dateStart the dateStart to set
+     * @param date the date to set
      */
-    public void setDateStart(Date dateStart) {
-        this.dateStart = dateStart;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     /**
-     * @return the dateEnd
+     * @return the start
      */
-    public Date getDateEnd() {
-        return dateEnd;
+    public Date getStart() {
+        return start;
     }
 
     /**
-     * @param dateEnd the dateEnd to set
+     * @param start the start to set
      */
-    public void setDateEnd(Date dateEnd) {
-        this.dateEnd = dateEnd;
+    public void setStart(Date start) {
+        this.start = start;
+    }
+
+    /**
+     * @return the end
+     */
+    public Date getEnd() {
+        return end;
+    }
+
+    /**
+     * @param end the end to set
+     */
+    public void setEnd(Date end) {
+        this.end = end;
     }
 
     /**
@@ -140,6 +145,34 @@ public class Event implements Serializable {
      */
     public void setAllDay(boolean allDay) {
         this.allDay = allDay;
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @return the desc
+     */
+    public String getDesc() {
+        return desc;
+    }
+
+    /**
+     * @param desc the desc to set
+     */
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
 }

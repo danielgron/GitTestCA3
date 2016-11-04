@@ -15,17 +15,21 @@ import log.Log;
  * @author Daniel
  */
 public class ServerStart implements ServletContextListener  {
-
+private static boolean logStarted;
     //Notification that the web application initialization process is starting
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         EntityConnector.createEntityManagerFactory();
+        if (!logStarted){
+            logStarted=true;
         try {
             Log.startLogFile();
         } catch (IOException ex) {
             System.out.println("Could Not Start the Log File!" + ex.getMessage());
         }
         Log.writeToLog("Server has Started!");
+        
+        }
     }
 
     //Notification that the servlet context is about to be shut down.

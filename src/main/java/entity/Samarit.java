@@ -19,7 +19,7 @@ import javax.persistence.*;
 @DiscriminatorColumn(name = "DT", discriminatorType = DiscriminatorType.CHAR)
 public class Samarit extends User{
     
-        @ManyToOne(cascade = CascadeType.PERSIST)
+        @ManyToOne(cascade = CascadeType.MERGE)
     private Department department;
 //  private Dato dato; // Not Implemented!
     private String firstName;

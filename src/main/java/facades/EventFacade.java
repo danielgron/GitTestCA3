@@ -23,7 +23,7 @@ import java.time.*;
 public class EventFacade {
 
     public EventFacade() {
-        this.testEvents();
+      // this.testEvents();
     }
 
     /**
@@ -82,7 +82,7 @@ public class EventFacade {
         Date end = Date.from(local.atZone(ZoneId.systemDefault()).toInstant());
 
         if (getEvents().size() <= 0) {
-            Event event = new Event(start, end, false, "test", "test");
+            Event event = new Event(start, start, end, false, "test", "test");
             //Event event2 = new Event(date_start, date_end, true, eventName, description);
             createEvent(event);
         }
