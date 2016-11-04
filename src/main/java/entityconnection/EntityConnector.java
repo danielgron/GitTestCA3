@@ -17,7 +17,7 @@ import log.Log;
 public class EntityConnector {
     
     private static EntityManagerFactory emf;
-    private static final String PERSISTENCEUNIT = "pu_local";
+    private static String persistenceUnit = "pu_local";
     
     private EntityConnector(){
         Log.writeToLog("Creating EntityConnectorObject");
@@ -25,14 +25,17 @@ public class EntityConnector {
     
     public static EntityManager getEntityManager(){
         if(emf == null){
-            emf = Persistence.createEntityManagerFactory(PERSISTENCEUNIT);
+            emf = Persistence.createEntityManagerFactory(persistenceUnit);
             Log.writeToLog("Entity Manager Factory created");
         }
         return emf.createEntityManager();
     }
     
     public static void createEntityManagerFactory(){
-        emf = Persistence.createEntityManagerFactory(PERSISTENCEUNIT);
+        emf = Persistence.createEntityManagerFactory(persistenceUnit);
     }
-    
+
+    public static void setPersistenceUnit(String persistenceUnit) {
+        EntityConnector.persistenceUnit = persistenceUnit;
+    }
 }
