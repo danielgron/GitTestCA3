@@ -66,7 +66,7 @@ public class JSON_Converter {
             jEvent.addProperty("title", event.getName());
         }
         if (event.getStart()!= null) {
-            Date start = event.getDate();
+            Date start = event.getStart();
             LocalDateTime localStart = DateUtils.asLocalDateTime(start);
             jEvent.addProperty("start", localStart.toString());
         }

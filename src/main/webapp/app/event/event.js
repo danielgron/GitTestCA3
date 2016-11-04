@@ -1,38 +1,37 @@
 angular.module('myApp.event', ['ngRoute'])
         .config(['$routeProvider', function ($routeProvider) {
                 $routeProvider.when('/addevent', {
-                    templateUrl: "app/calender/template/addevent.html",
+                    templateUrl: "app/event/template/addevent.html",
                     controller: "EventCtrl"
                 });
             }])
         .controller('EventCtrl', ['$scope', '$locale', 'eventFactory', function ($scope, $locale, eventFactory) {
 
                 $scope.event = {};
-                $scope.event.date = new Date();
                 $scope.event.start = new Date();
                 $scope.event.end = new Date();
-                 $scope.event.date.setHours(16);
-                $scope.event.date.setMinutes(0);
+                $scope.event.start.setHours(16);
+                $scope.event.start.setMinutes(0);
+                $scope.event.end.setHours(22);
+                $scope.event.end.setMinutes(0);
 
                 $scope.today = function () {
-                    $scope.event.date = new Date();
-                    $scope.event.start = $scope.event.date;
-                    $scope.event.end = $scope.event.date;
+                    $scope.event.start = new Date();
+                    $scope.event.end = $scope.event.start;
                 };
 
-                $scope.saveEvent = function(){
+                $scope.saveEvent = function () {
                     eventFactory.saveEvent($scope.event)
-                    .then(function(){
-                        alert('succes');
-                    }, function(){
-                        alert('crash and burn!');
-                    });
+                            .then(function () {
+                                alert('succes');
+                            }, function () {
+                                alert('crash and burn!');
+                            });
                 };
-                        
+
                 $scope.reset = function () {
                     $scope.event = {};
                     $scope.event = {};
-                    $scope.event.date = new Date();
                     $scope.event.start = new Date();
                     $scope.event.end = new Date();
                     $scope.event.start.setHours(16);
@@ -67,10 +66,11 @@ angular.module('myApp.event', ['ngRoute'])
                 };
 
                 $scope.setDate = function (year, month, day) {
-                    $scope.event.date = new Date(year, month, day);
-                    $scope.event.date.setHours($scope.event.start.getHours());
-                    $scope.event.date.setMinutes()($scope.event.start.getMinutes());
-                    $scope.event.start = $scope.event.date;
+                    var tempDate = new Date();
+                    tempDate = $scope.event.start;
+                    $scope.event.start = new Date(year, month, day);
+                    $scope.event.start.setHours(tempDate.getHours());
+                    $scope.event.start.setMinutes(tempDate.getMinutes());
                     tempDate = $scope.event.end;
                     $scope.event.end = $scope.date;
                     $scope.event.end.setHours(tempDate.getHours());
@@ -97,29 +97,25 @@ angular.module('myApp.event', ['ngRoute'])
                 }
 
                 //For timepicker
-
                 $scope.hstep = 1;
                 $scope.mstep = 5;
-                $scope.event.start.setHours(16);
-                $scope.event.start.setMinutes(0);
-                $scope.event.end.setHours(22);
-                $scope.event.end.setMinutes(0);
+
+
 
                 $scope.customers = [];
                 $scope.customers.push({name: 'København', id: '1'});
                 $scope.customers.push({name: '2København', id: '2'});
                 $scope.customers.push({name: '3København', id: '3'});
 
-                $scope.save = eventFactory;
             }])
         .factory('eventFactory', function ($http) {
             eventFactory = {};
 
             eventFactory.saveEvent = function (event) {
-            var jsonString = JSON.stringify(event);
+                var jsonString = JSON.stringify(event);
                 return $http.post('api/event', jsonString);
 
-                
+
             };
             return eventFactory;
         });

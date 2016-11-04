@@ -41,9 +41,7 @@ public class Event implements Serializable {
     
     
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="event_date")
-    private Date date;
+ 
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "event_start")
@@ -63,8 +61,7 @@ public class Event implements Serializable {
     private @ManyToMany
     List<Samarit> samarits = new ArrayList();
 
-    public Event(Date date, Date start, Date end, boolean allDay, String name, String desc) {
-        this.date = date;
+    public Event(Date start, Date end, boolean allDay, String name, String desc) {
         this.start = start;
         this.end = end;
         this.allDay = allDay;
@@ -91,20 +88,7 @@ public class Event implements Serializable {
         this.id = id;
     }
 
-    /**
-     * @return the date
-     */
-    public Date getDate() {
-        return date;
-    }
-
-    /**
-     * @param date the date to set
-     */
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
+   
     /**
      * @return the start
      */
