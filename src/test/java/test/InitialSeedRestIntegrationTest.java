@@ -19,7 +19,7 @@ public class InitialSeedRestIntegrationTest {
   private static final int SERVER_PORT = 9999;
   private static final String APP_CONTEXT = "/seed";
   private static EmbeddedTomcat tomcat;
-  private String realJson = "\"{\"department\":{\"nameOfDepartment\":\"København\"},\"firstName\":\"wglkl\",\"lastName\":\"gwwjkgjk\",\"adresse\":\"gwjlgkwjk\",\"zip\":\"wgwlk\",\"city\":\"gjkwljgw\",\"phone\":\"gege\",\"redCroosLevel\":\"egweg\",\"medicalLevel\":\"gwwg\",\"driverLevel\":\"gq\",\"email\":\"jrwglwl@xn--gelgwklw-l0ae\"}\"";
+  private String insertUserData = "{\"department\":{\"nameOfDepartment\":\"København\"},\"email\":\"Testmand@gmail.com\",\"firstName\":\"gklwlægkw\",\"lastName\":\"klægwklæq\",\"adresse\":\"gwælkl\",\"zip\":\"ægwqlkæ\",\"city\":\"lkægwe\",\"phone\":\"klæwglkæw\",\"redCroosLevel\":\"wgæklwglkæ\",\"medicalLevel\":\"wglækwg\",\"driverLevel\":\"wgælwklwkæg\"}";
   
   public InitialSeedRestIntegrationTest() {
   }
@@ -111,11 +111,10 @@ public class InitialSeedRestIntegrationTest {
       given()
               .contentType("application/json")
               .header("Authorization", "Bearer " + securityToken)
-              .body("{\"jsonExample\":\"dummieJSON\"}")
+              .body(insertUserData)
               .when()
               .post("/api/coordinator").then()
-              .statusCode(500); // This means that we are allowed, but the Server can't 
-                                //use the JSON Correctly, since its a dummie!
+              .statusCode(200); // Succes call
   }
   
   @Test
