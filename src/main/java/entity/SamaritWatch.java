@@ -49,6 +49,16 @@ public class SamaritWatch implements Serializable {
     
     @Temporal(TemporalType.TIMESTAMP)
     private Date watchEnd;
+
+    public SamaritWatch() {
+    }
+
+    public SamaritWatch(Samarit samarit, Event event, Date watchStart, Date watchEnd) {
+        this.samarit = samarit;
+        this.event = event;
+        this.watchStart = watchStart;
+        this.watchEnd = watchEnd;
+    }
     
     
 

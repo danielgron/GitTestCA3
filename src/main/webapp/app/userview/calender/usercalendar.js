@@ -248,7 +248,7 @@ angular.module('ui.usercalendar', [])
                     var options = null;
 
                     function getOptions () {
-                        var calendarSettings = attrs.uiCalendar ? scope.$parent.$eval(attrs.uiCalendar) : {};
+                        var calendarSettings = attrs.uiUserCalendar ? scope.$parent.$eval(attrs.uiUserCalendar) : {};
                         var fullCalendarConfig = controller.getFullCalendarConfig(calendarSettings, uiUserCalendarConfig);
                         var localeFullCalendarConfig = controller.getLocaleConfig(fullCalendarConfig);
                         angular.extend(localeFullCalendarConfig, fullCalendarConfig);

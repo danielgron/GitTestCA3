@@ -29,6 +29,7 @@ public class RedCrossLevel implements Serializable {
     
     public RedCrossLevel(){
     }
+    
     public RedCrossLevel(String level){
         this.levelName=level;
     }

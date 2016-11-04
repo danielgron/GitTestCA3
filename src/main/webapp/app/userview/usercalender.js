@@ -8,30 +8,30 @@
  *
  */
 
-angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar'])
+angular.module('myApp.usercalendar', ['ngRoute', 'ui.usercalendar'])
 
-        .constant('uiCalendarConfig', {
+        .constant('uiUserCalendarConfig', {
             calendars: {}
         })
 
-        .controller('UserCalendarCtrl', ['$scope', '$locale', 'uiCalendarConfig', '$location','userCalendarFactory',
-            function ($scope, $locale, uiCalendarConfig, $location,userCalendarFactory) {
+        .controller('UserCalendarCtrl', ['$scope', '$locale', 'uiUserCalendarConfig', '$location', 'userCalendarFactory',
+            function ($scope, $locale, uiUserCalendarConfig, $location, userCalendarFactory) {
                 //This is where we configure how the calender behaves
                 var date = new Date();
                 var d = date.getDate();
                 var m = date.getMonth();
                 var y = date.getFullYear();
-                $scope.uiCalendarConfig = uiCalendarConfig;
-                $scope.eventSources = [$scope.userwatch];
+                
+
 
                 $scope.eventSource = {
                 };
-                
-                $scope.test = function(){
+
+                $scope.test = function () {
                     alert('test');
-                }
-                
-               
+                };
+
+
 
                 $scope.uiConfig = {
                     calendar: {
@@ -39,7 +39,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar'])
                         editable: false,
                         locale: 'da',
                         header: {
-                            left: 'title',
+                            left: 'title today',
                             center: '',
                             right: 'today prev,next'
                         },
@@ -50,9 +50,8 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar'])
                         dayClick: $scope.dayClick
                     }
                 };
-                $scope.dayClick = function (date, jsEvent, view, cell) {
+                $scope.dayClick = function (date, jsEvent, view) {
                     
-                    window.console.log(date.date());
 
 
                 };
@@ -64,12 +63,13 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar'])
 
 
                 $scope.watches = [];
+
                 userCalendarFactory.getEvents().then(function (response) {
                     $scope.watches = response.data;
                 }, function (error) {
                     $scope.status = 'Unable to load customer data: ' + error.message;
                 });
-                
+
                 /* event source that calls a function on every view switch */
                 $scope.eventsF = function (start, end, timezone, callback) {
                     var s = new Date(start).getTime() / 1000;
@@ -87,16 +87,11 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar'])
 
                 //Change the view between month, week and day
                 $scope.changeView = function (view, calendar) {
-                    uiCalendarConfig.calendars[calendar].fullCalendar('changeView', view);
+                    window.console.log(calendar);
+                    uiUserCalendarConfig.calendars[calendar].fullCalendar('changeView', view);
                 };
 
-                $scope.next = function (calendar) {
-                    uiCalendarConfig.calendars[calendar].fullCalendar('next');
-                };
 
-                $scope.prev = function () {
-                    uiCalendarConfig.calendars[calender].fullCalender('prev')
-                };
 
 
                 /* event sources array*/
