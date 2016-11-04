@@ -1,0 +1,29 @@
+<div class="container">
+    <section id="directives-calendar" ng-controller="CalendarCtrl">
+
+        <div class="well col-md-12">
+
+            <div class="btn-group-vertical  col-md-2">
+                <button type="button" ng-click="go('/addevent')" class="btn btn-success"><i class="glyphicon glyphicon-plus"/> Tilføj event</button>
+
+            </div>
+            <div class="col-md-10">
+
+                <div class="alert-success calAlert" ng-show="alertMessage != undefined && alertMessage != ''">
+                    <h4>{{alertMessage}}</h4>
+                </div>
+                <div class="btn-toolbar">
+                    <p class="pull-right lead">Calendar One View Options</p>
+                    <div class="btn-group">
+                        <button type="button" ng-click="listEvents()" class="btn btn-primary"><i class="glyphicon glyphicon-list"/> List events</button>
+                        <button class="btn btn-success" ng-click="changeView('agendaDay', 'myCalendar')">Dag</button>
+                        <button class="btn btn-success" ng-click="changeView('agendaWeek', 'myCalendar')">Uge</button>
+                        <button class="btn btn-success" ng-click="changeView('month', 'myCalendar')">Måned</button>
+                    </div>
+
+                </div>
+
+                <div data-tap-disabled="true" class="calendar" ng-model="eventSources" calendar="myCalendar" ui-calendar="uiConfig.calendar"></div>
+            </div>
+        </div>
+</div>

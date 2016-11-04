@@ -4,6 +4,8 @@ import entity.Samarit;
 import facades.CoordinatorFacade;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -27,7 +29,10 @@ public class Coordinator {
   @Produces(MediaType.APPLICATION_JSON)
   public String postNewUser(String json){
       Samarit s= JSON_Converter.parseSamarit(json);
-      s= cf.addNewSamarit(s);
+       
+            s= cf.addNewSamarit(s);
+
+        
       return JSON_Converter.jsonFromSamarit(s);
   }
  

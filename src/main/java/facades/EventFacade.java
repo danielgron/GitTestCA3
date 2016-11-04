@@ -21,12 +21,14 @@ import java.time.*;
  * @author dennisschmock
  */
 public class EventFacade {
-    public static void main(String[] args) {
-        EventFacade ef = new EventFacade();
-        ef.testEvents();
+
+    public EventFacade() {
+      // this.testEvents();
     }
+
     /**
      * The purpose of this method is to return a list of Events
+     *
      * @return
      */
     public List<Event> getEvents() {
@@ -43,8 +45,8 @@ public class EventFacade {
         }
         return events;
     }
-    
-    public Event createEvent(Event event){
+
+    public Event createEvent(Event event) {
         EntityManager em = EntityConnector.getEntityManager();
         try {
             em.getTransaction().begin();
@@ -57,10 +59,10 @@ public class EventFacade {
             em.close();
         }
         return event;
-        
+
     }
-    
-    public Event getEvent(int id){
+
+    public Event getEvent(int id) {
         EntityManager em = EntityConnector.getEntityManager();
         Event event = null;
         try {
@@ -72,17 +74,15 @@ public class EventFacade {
         }
         return event;
     }
-    
-    public void testEvents(){
+
+    public void testEvents() {
         EntityManager em = EntityConnector.getEntityManager();
-        Instant instant = Instant.now();
         LocalDateTime local = LocalDateTime.of(2016, Month.NOVEMBER, 3, 15, 0);
         Date start = new Date();
-        Date end =  Date.from(local.atZone(ZoneId.systemDefault()).toInstant());
+        Date end = Date.from(local.atZone(ZoneId.systemDefault()).toInstant());
 
-        
-        if(getEvents().size()<=0){
-            Event event = new Event(start, end, true, "test", "test");
+        if (getEvents().size() <= 0) {
+            Event event = new Event(start, start, end, false, "test", "test");
             //Event event2 = new Event(date_start, date_end, true, eventName, description);
             createEvent(event);
         }

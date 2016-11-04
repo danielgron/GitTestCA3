@@ -14,8 +14,8 @@ angular.module('myApp.calendar', ['ngRoute', 'ui.calendar'])
             calendars: {}
         })
 
-        .controller('CalendarCtrl', ['$scope', '$locale', 'uiCalendarConfig', 'calendarFactory',
-            function ($scope, $locale, uiCalendarConfig, calendarFactory) {
+        .controller('CalendarCtrl', ['$scope', '$locale', 'uiCalendarConfig', 'calendarFactory', '$location',
+            function ($scope, $locale, uiCalendarConfig, calendarFactory, $location) {
                 //This is where we configure how the calender behaves
                 var date = new Date();
                 var d = date.getDate();
@@ -27,7 +27,6 @@ angular.module('myApp.calendar', ['ngRoute', 'ui.calendar'])
                 $scope.eventSource = {
                     url: 'api/event'
                 };
-
 
                 $scope.uiConfig = {
                     calendar: {
@@ -46,9 +45,17 @@ angular.module('myApp.calendar', ['ngRoute', 'ui.calendar'])
                         dayClick: $scope.dayClick
                     }
                 };
-                $scope.dayClick = function (date,jsEvent,view,cell) {
-                    window.console.log(view);
-                    this.css('background-color', 'red');
+                $scope.dayClick = function (date, jsEvent, view, cell) {
+                    angular.forEach(function (date) {
+                        window.console.log(date);
+                    });
+
+
+                };
+
+                //For using buttons to redirect
+                $scope.go = function (path) {
+                    $location.path(path);
                 };
 
 
@@ -101,7 +108,7 @@ angular.module('myApp.calendar', ['ngRoute', 'ui.calendar'])
 
         .config(['$routeProvider', function ($routeProvider) {
                 $routeProvider.when('/calender', {
-                    templateUrl: "app/calender/calendertemplate.html",
+                    templateUrl: "app/calender/template/calendertemplate.html",
                     controller: "CalendarCtrl"
                 });
             }]);

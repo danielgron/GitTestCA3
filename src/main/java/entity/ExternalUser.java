@@ -21,7 +21,8 @@ public class ExternalUser extends User{
     private String firstName;
     private String lastName;
     private String phone;
-    private String redCroosLevel; // f.eks Samarit, eller Teamleder
+    @ManyToOne
+    private RedCrossLevel redCrossLevel; // f.eks Samarit, eller Teamleder
     private String medicalLevel; // f.eks. Medic, Medic 2 eller læge. (Vil være intet for mange)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date expiration; // Might not be needed!
@@ -51,12 +52,12 @@ public class ExternalUser extends User{
         this.phone = phone;
     }
 
-    public String getRedCroosLevel() {
-        return redCroosLevel;
+    public RedCrossLevel getRedCroosLevel() {
+        return redCrossLevel;
     }
 
-    public void setRedCroosLevel(String redCroosLevel) {
-        this.redCroosLevel = redCroosLevel;
+    public void setRedCroosLevel(RedCrossLevel redCrossLevel) {
+        this.redCrossLevel = redCrossLevel;
     }
 
     public String getMedicalLevel() {

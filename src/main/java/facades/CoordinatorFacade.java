@@ -5,6 +5,7 @@
  */
 package facades;
 
+import entity.Department;
 import entity.Samarit;
 import entity.User;
 import entityconnection.EntityConnector;
@@ -17,17 +18,25 @@ import log.Log;
  */
 public class CoordinatorFacade {
     
-    
+    DepartmentFacade df = new DepartmentFacade();
     
     public Samarit addNewSamarit(Samarit s){
-        
-        Log.writeToLog("Adding new Samarit");
+        //s.setDepartment(df.getDepartment(s.getDepartment().getNameOfDepartment()));
+        Department d = df.getDepartment(s.getDepartment().getNameOfDepartment());
+        d.addUser(s);
+        Log.writeToLog("Adding new samarite");
         EntityManager em = EntityConnector.getEntityManager();
+        //if (s.getRedCroosLevel()==null) throw new NoRedCrossLevelException();
         try{
             em.getTransaction().begin();
+            em.merge(d);
             em.persist(s);
             em.getTransaction().commit();
-            Log.writeToLog("New samarit added");
+            Log.writeToLog("New samarite added");
+        }
+        catch(Exception e){
+            Log.writeToLog("Exception encountered while adding samarite.");
+            Log.writeToLog(e.getMessage());
         }
         finally{
             em.close();

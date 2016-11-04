@@ -8,6 +8,7 @@ package entity;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * This Class is a representation of a 
@@ -19,7 +20,7 @@ import javax.persistence.*;
 @DiscriminatorColumn(name = "DT", discriminatorType = DiscriminatorType.CHAR)
 public class Samarit extends User{
     
-        @ManyToOne(cascade = CascadeType.PERSIST)
+        @ManyToOne(cascade = CascadeType.MERGE)
     private Department department;
 //  private Dato dato; // Not Implemented!
     private String firstName;
@@ -28,7 +29,9 @@ public class Samarit extends User{
     private String zip;
     private String city;
     private String phone;
-    private String redCroosLevel; // f.eks Samarit, eller Teamleder
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @NotNull
+    private RedCrossLevel redCrossLevel; // f.eks Samarit, eller Teamleder
     private String medicalLevel; // f.eks. Medic, Medic 2 eller læge. (Vil være intet for mange)
     private String driverLevel; // Hvilke Biler og bilbtyper må samaritten benytte. (Vil være intet for mange)
     private int shiftsThisSeason;
@@ -92,12 +95,12 @@ public class Samarit extends User{
         this.phone = phone;
     }
 
-    public String getRedCroosLevel() {
-        return redCroosLevel;
+    public RedCrossLevel getRedCroosLevel() {
+        return redCrossLevel;
     }
 
-    public void setRedCroosLevel(String redCroosLevel) {
-        this.redCroosLevel = redCroosLevel;
+    public void setRedCroosLevel(RedCrossLevel redCroosLevel) {
+        this.redCrossLevel = redCroosLevel;
     }
 
     public String getMedicalLevel() {

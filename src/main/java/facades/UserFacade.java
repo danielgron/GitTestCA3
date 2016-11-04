@@ -20,6 +20,7 @@ import javax.persistence.TypedQuery;
 import log.Log;
 import security.IUser;
 import security.PasswordStorage;
+import startup.StartData;
 
 public class UserFacade implements IUserFacade {
 
@@ -31,7 +32,7 @@ public class UserFacade implements IUserFacade {
     public UserFacade() {
         //Test Users
         if(isDatabaseUsersEmpty()){
-        insertTestUsers();
+        StartData.insertTestData();
         }
     }
 
@@ -59,50 +60,14 @@ public class UserFacade implements IUserFacade {
                 return null;
             }
         } catch (Exception ex) {
+            Log.writeToLog("Authenticating user failed: "+ex.getMessage());
             Logger.getLogger(UserFacade.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
 
-    private void insertTestUsers() {
-        Log.writeToLog("Inserting Test Users in database");
-        EntityManager em = EntityConnector.getEntityManager();
-        Department d = new Department();
-        d.setNameOfDepartment("København");
-        User samarit = new Samarit("sam", "test");
-        User_Role userRole = new User_Role("User");
-        d.addUser((Samarit)samarit);
-        samarit.addRoleToUser(userRole);
-        
-        User admin = new Admin("admin","test");
-        User_Role adminRole = new User_Role("Admin");
-        admin.addRoleToUser(adminRole);
-
-        User coordinator = new Samarit("coordinator", "test");
-        User_Role coorinatorRole = new User_Role("Coordinator");
-        d.addUser((Samarit)coordinator);
-        coordinator.addRoleToUser(userRole);
-        coordinator.addRoleToUser(coorinatorRole);
     
-        try {
-            Log.writeToLog("Connecting to database");
-           
-            em = EntityConnector.getEntityManager();
-            em.getTransaction().begin();
-            em.persist(d);
-            em.persist(samarit);
-            em.persist(admin);
-            em.persist(coordinator);
-            em.getTransaction().commit();
-            Log.writeToLog("Inserted Test Users in database");
-        } catch (Exception e) {
-            Log.writeToLog("Exception" + e.getMessage());
-        }
-        finally{
-            em.close();
-        }
-    }
 
     private boolean isDatabaseUsersEmpty() {
         EntityManager em = EntityConnector.getEntityManager();
