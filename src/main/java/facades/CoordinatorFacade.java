@@ -26,6 +26,7 @@ public class CoordinatorFacade {
         d.addUser(s);
         Log.writeToLog("Adding new samarite");
         EntityManager em = EntityConnector.getEntityManager();
+        //if (s.getRedCroosLevel()==null) throw new NoRedCrossLevelException();
         try{
             em.getTransaction().begin();
             em.merge(d);
