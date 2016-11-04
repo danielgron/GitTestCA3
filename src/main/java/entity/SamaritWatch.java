@@ -7,6 +7,7 @@ package entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,10 +30,10 @@ public class SamaritWatch implements Serializable {
         return serialVersionUID;
     }
 
-    @ManyToOne
+    @ManyToOne (cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private Samarit samarit;
 
-    @ManyToOne
+    @ManyToOne (cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private Event event;
 
     private static final long serialVersionUID = 1L;

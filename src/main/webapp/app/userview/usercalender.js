@@ -39,7 +39,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar'])
                         editable: false,
                         locale: 'da',
                         header: {
-                            left: 'title today',
+                            left: 'title',
                             center: '',
                             right: 'today prev,next'
                         },

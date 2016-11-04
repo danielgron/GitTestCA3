@@ -76,6 +76,11 @@ public class Event implements Serializable {
         return id;
     }
 
+    public void addWatch(SamaritWatch watch){
+        this.watches.add(watch);
+        watch.setEvent(this);
+        
+    }
     /**
      * @param id the id to set
      */
