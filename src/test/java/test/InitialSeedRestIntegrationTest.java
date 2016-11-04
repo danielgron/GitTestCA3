@@ -17,7 +17,7 @@ import test.utils.EmbeddedTomcat;
 public class InitialSeedRestIntegrationTest {
 
   private static final int SERVER_PORT = 9999;
-  private static final String APP_CONTEXT = "/seed";
+  private static final String APP_CONTEXT = "/vagtmanager";
   private static EmbeddedTomcat tomcat;
   private String insertUserData = "{\"department\":{\"nameOfDepartment\":\"København\"},\"email\":\"Testmand@gmail.com\",\"firstName\":\"gklwlægkw\",\"lastName\":\"klægwklæq\",\"adresse\":\"gwælkl\",\"zip\":\"ægwqlkæ\",\"city\":\"lkægwe\",\"phone\":\"klæwglkæw\",\"redCroosLevel\":\"wgæklwglkæ\",\"medicalLevel\":\"wglækwg\",\"driverLevel\":\"wgælwklwkæg\"}";
   
