@@ -1,0 +1,14 @@
+nov. 04, 2016 2:33:45 PM log.Log writeToLog
+INFO: Server has Started!
+nov. 04, 2016 2:33:45 PM log.Log writeToLog
+INFO: Inserting Test Users in database
+nov. 04, 2016 2:33:45 PM log.Log writeToLog
+INFO: Connecting to database
+nov. 04, 2016 2:33:45 PM log.Log writeToLog
+INFO: Inserted Test Users in database
+nov. 04, 2016 2:33:45 PM log.Log writeToLog
+INFO: Getting department corresponding to København from database
+nov. 04, 2016 2:33:45 PM log.Log writeToLog
+INFO: Adding new samarite
+nov. 04, 2016 2:33:45 PM log.Log writeToLog
+INFO: New samarite added

@@ -21,7 +21,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.usercalendar'])
                 var d = date.getDate();
                 var m = date.getMonth();
                 var y = date.getFullYear();
-                
+
 
 
                 $scope.eventSource = {
@@ -39,7 +39,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.usercalendar'])
                         editable: false,
                         locale: 'da',
                         header: {
-                            left: 'title today',
+                            left: 'title',
                             center: '',
                             right: 'today prev,next'
                         },
@@ -51,7 +51,8 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.usercalendar'])
                     }
                 };
                 $scope.dayClick = function (date, jsEvent, view) {
-                    
+                    window.console.log('you clicked ' + date.day());
+                    uiUserCalendarConfig.calendars['userCalender'].fullCalendar('changeView', 'agendaDay');
 
 
                 };
