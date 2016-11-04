@@ -107,8 +107,8 @@ angular.module('myApp.calendar', ['ngRoute', 'ui.calendar'])
         ])
 
         .config(['$routeProvider', function ($routeProvider) {
-                $routeProvider.when('/calender', {
-                    templateUrl: "app/calender/template/calendertemplate.html",
+                $routeProvider.when('/eventcalender', {
+                    templateUrl: "app/event/template/calendertemplate.html",
                     controller: "CalendarCtrl"
                 });
             }]);

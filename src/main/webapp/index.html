@@ -9,8 +9,8 @@
         <title>Daniels Startup Seed AngularJS App</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="app/calender/vendor/fullcalendar.css" rel="stylesheet" type="text/css"/>
-        <link href="app/calender/vendor/fullcalendar.print.css" media="print" rel="stylesheet" type="text/css"/>
+        <link href="app/vendor/fullcalendar.css" rel="stylesheet" type="text/css"/>
+        <link href="app/vendor/fullcalendar.print.css" media="print" rel="stylesheet" type="text/css"/>
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="app/app.css">   
 
@@ -24,9 +24,9 @@
         <script src="bower_components/angular-jwt/dist/angular-jwt.js"></script>
         <script src='bower_components/angular-animate/angular-animate.min.js'></script>
         <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-        <script src="app/calender/vendor/moment.js" type="text/javascript"></script>
+        <script src="app/vendor/moment.js" type="text/javascript"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.0.1/fullcalendar.min.js"></script>
-        <script src="app/calender/vendor/da.js" type="text/javascript"></script>
+        <script src="app/vendor/da.js" type="text/javascript"></script>
         <script src="app/app.js"></script>
         <script src="app/view1/view1.js"></script>
         <script src="app/view2/view2.js"></script>
@@ -37,11 +37,12 @@
         <script src="app/components/directives.js"></script>
         <script src="app/components/factories.js"></script>
         <script src="app/components/services.js"></script>
-        <script src="app/calender/vendor/calendar.js" type="text/javascript"></script>
-        <script src="app/calender/eventCalendar.js"></script>
+        <script src="app/vendor/calendar.js" type="text/javascript"></script>
+        <script src="app/event/eventCalendar.js"></script>
         <script src="app/coordinator/coordinator.js" type="text/javascript"></script>
-        <script src="app/calender/eventCalenderFactory.js" type="text/javascript"></script>
-        <script src="app/calender/event.js" type="text/javascript"></script>
+        <script src="app/event/eventCalenderFactory.js" type="text/javascript"></script>
+        <script src="app/event/event.js" type="text/javascript"></script>
+        <script src="app/userview/userview.js" type="text/javascript"></script>
     </head>
     <body ng-app="myApp">
 
@@ -63,7 +64,8 @@
                             <li><a href="#/view2">Page for Users</a></li>
                             <li><a href="#/view3">Page for Admins</a></li>
                             <li ng-show="isCoordinator"><a href="#/coordinator">Page For Coordinators</a></li>
-                            <li ng-show="isCoordinator"><a href="#/calender">Events</a></li>
+                            <li ng-show="isCoordinator"><a href="#/eventcalender">Events</a></li>
+                            <li ng-show="isUser"><a href="#/userview">Min side</a></li>
                         </ul>
                         <div>
                             <form class="navbar-form navbar-right" role="form" ng-show="!isAuthenticated" ng-submit="login()"  >
