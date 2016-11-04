@@ -14,8 +14,8 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar'])
             calendars: {}
         })
 
-        .controller('UserCalendarCtrl', ['$scope', '$locale', 'uiCalendarConfig', 'calendarFactory', '$location',
-            function ($scope, $locale, uiCalendarConfig, calendarFactory, $location) {
+        .controller('UserCalendarCtrl', ['$scope', '$locale', 'uiCalendarConfig', '$location','userCalendarFactory',
+            function ($scope, $locale, uiCalendarConfig, $location,userCalendarFactory) {
                 //This is where we configure how the calender behaves
                 var date = new Date();
                 var d = date.getDate();
@@ -25,8 +25,13 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar'])
                 $scope.eventSources = [$scope.userwatch];
 
                 $scope.eventSource = {
-                    url: 'api/event'
                 };
+                
+                $scope.test = function(){
+                    alert('test');
+                }
+                
+               
 
                 $scope.uiConfig = {
                     calendar: {
@@ -34,7 +39,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar'])
                         editable: false,
                         locale: 'da',
                         header: {
-                            left: 'title',
+                            left: 'title today',
                             center: '',
                             right: 'today prev,next'
                         },
@@ -46,9 +51,8 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar'])
                     }
                 };
                 $scope.dayClick = function (date, jsEvent, view, cell) {
-                    angular.forEach(function (date) {
-                        window.console.log(date);
-                    });
+                    
+                    window.console.log(date.date());
 
 
                 };
@@ -103,8 +107,8 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar'])
         ])
 
         .config(['$routeProvider', function ($routeProvider) {
-                $routeProvider.when('/usercalender', {
-                    templateUrl: "app/userview/template/usercalendertemp.html",
+                $routeProvider.when('/userview', {
+                    templateUrl: "app/userview/template/userview.html",
                     controller: "UserCalendarCtrl"
                 });
             }]);
