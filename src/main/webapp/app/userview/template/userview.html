@@ -15,7 +15,7 @@
                     <h4>{{alertMessage}}</h4>
                 </div>
                 <div class="btn-toolbar">
-                    <p class="pull-right lead">Min kalender</p>
+                    <p class="pull-right lead">Min kalender {{avail}}</p>
                     <div class="btn-group">
                         <button type="button" ng-click="listEvents()" class="btn btn-primary"><i class="glyphicon glyphicon-list"/> List vagter</button>
                         <button class="btn btn-success" ng-click="changeView('agendaDay', 'userCalender')">Dag</button>
@@ -25,7 +25,7 @@
 
                 </div>
 
-                <div data-tap-disabled="true" class="calendar" ng-model="eventSources" calendar="userCalender" ui-user-calendar="uiConfig.calendar"></div>
+                <div data-tap-disabled="true" class="calendar" ng-model="eventSources" typeId="{{avail}}" calendar="userCalender" ui-user-calendar="uiConfig.calendar"></div>
             </div>
         </div>
 </div>

@@ -6,8 +6,9 @@ angular.module('myApp.usercalendar')
             userCalendarFactory.getEvents = function () {
                 return $http.get(urlBase);
             };
+            
             userCalendarFactory.setAvailable = function(date){
-                
+              return $http.post(urlBase,date);  
             };
 
             return userCalendarFactory;

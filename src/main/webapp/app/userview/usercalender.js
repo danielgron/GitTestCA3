@@ -17,21 +17,32 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.usercalendar'])
         .controller('UserCalendarCtrl', ['$scope', '$locale', 'uiUserCalendarConfig', '$location', 'userCalendarFactory',
             function ($scope, $locale, uiUserCalendarConfig, $location, userCalendarFactory) {
                 //This is where we configure how the calender behaves
+
                 var date = new Date();
                 var d = date.getDate();
                 var m = date.getMonth();
                 var y = date.getFullYear();
+                $scope.avail = true;
+
+
+                $scope.header = 'test';
 
 
 
                 $scope.eventSource = {
                 };
-
+                
+                
                 $scope.test = function () {
-                    alert('test');
+                    
+                    //Using the calenderobject to store variable across scopes
+                    uiUserCalendarConfig.calendars['userCalender'].avail = !uiUserCalendarConfig.calendars['userCalender'].avail;
+                    //And setting localscope 
+                    $scope.avail = uiUserCalendarConfig.calendars['userCalender'].avail;
+                    window.console.log(uiUserCalendarConfig.calendars['userCalender'].avail);
+
+
                 };
-
-
 
                 $scope.uiConfig = {
                     calendar: {
@@ -50,11 +61,20 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.usercalendar'])
                         dayClick: $scope.dayClick
                     }
                 };
-                $scope.dayClick = function (date, jsEvent, view) {
-                    window.console.log('you clicked ' + date.day());
+
+                $scope.dayClick = function (date, jsEvent, view)
+                {
+                    if(uiUserCalendarConfig.calendars['userCalender'].avail){
+                    uiUserCalendarConfig.calendars['userCalender'].fullCalendar('gotoDate', date);
                     uiUserCalendarConfig.calendars['userCalender'].fullCalendar('changeView', 'agendaDay');
-
-
+                    } else {
+                        var watch = [];
+                        watch.date = date;
+                        
+                        userCalendarFactory.setAvailable(watch);
+                        
+                        window.console.log(date.toJSON());
+                    }
                 };
 
                 //For using buttons to redirect
@@ -89,6 +109,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.usercalendar'])
                 //Change the view between month, week and day
                 $scope.changeView = function (view, calendar) {
                     window.console.log(calendar);
+
                     uiUserCalendarConfig.calendars[calendar].fullCalendar('changeView', view);
                 };
 
