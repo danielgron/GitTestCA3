@@ -1,5 +1,6 @@
 package test;
 
+import entityconnection.EntityConnector;
 import org.junit.BeforeClass;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.*;
@@ -16,9 +17,10 @@ import test.utils.EmbeddedTomcat;
 public class InitialSeedRestIntegrationTest {
 
   private static final int SERVER_PORT = 9999;
-  private static final String APP_CONTEXT = "/seed";
+  private static final String APP_CONTEXT = "/vagtmanager";
   private static EmbeddedTomcat tomcat;
-
+  private String insertUserData = "{\"department\":{\"nameOfDepartment\":\"København\"},\"email\":\"Testmand@gmail.com\",\"firstName\":\"gklwlægkw\",\"lastName\":\"klægwklæq\",\"adresse\":\"gwælkl\",\"zip\":\"ægwqlkæ\",\"city\":\"lkægwe\",\"phone\":\"klæwglkæw\",\"redCroosLevel\":\"wgæklwglkæ\",\"medicalLevel\":\"wglækwg\",\"driverLevel\":\"wgælwklwkæg\"}";
+  
   public InitialSeedRestIntegrationTest() {
   }
   private static String securityToken;
@@ -43,6 +45,7 @@ public class InitialSeedRestIntegrationTest {
 
   @BeforeClass
   public static void setUpBeforeAll() throws ServletException, MalformedURLException, LifecycleException {
+    EntityConnector.setPersistenceUnit("pu_test");
     tomcat = new EmbeddedTomcat();
     tomcat.start(SERVER_PORT, APP_CONTEXT);
     RestAssured.baseURI = "http://localhost";
@@ -67,7 +70,6 @@ public class InitialSeedRestIntegrationTest {
   }
 
   @Test
-  @Ignore
   public void tesRestForAdmin() {
     login("admin","test");
     given()
@@ -102,5 +104,29 @@ public class InitialSeedRestIntegrationTest {
             .body("error.message", equalTo("No authorization header provided"));
 
   }
-
+  
+  @Test
+  public void coordinatorCreateUserTest(){
+      login("coordinator","test");
+      given()
+              .contentType("application/json")
+              .header("Authorization", "Bearer " + securityToken)
+              .body(insertUserData)
+              .when()
+              .post("/api/coordinator").then()
+              .statusCode(200); // Succes call
+  }
+  
+  @Test
+  public void createUserAsNonCoordinator(){
+      login("sam","test");
+      given()
+              .contentType("application/json")
+              .header("Authorization", "Bearer " + securityToken)
+              .body("{\"jsonExample\":\"dummieJSON\"}")
+              .when()
+              .post("/api/coordinator").then()
+              .statusCode(403); // Means that we are not authorized to preform this request
+  }
+ 
 }
