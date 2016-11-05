@@ -39,7 +39,7 @@ public class Samarit extends User {
     private int shiftsTotal;
 //  private List<VagtKort> vagtKorts; // Not implemented yet!
     
-    @OneToMany(mappedBy = "samarit")
+    @OneToMany(mappedBy = "samarit",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private List<SamaritWatch> watches = new ArrayList();
     
     public Samarit() {
@@ -50,7 +50,7 @@ public class Samarit extends User {
     }
     
     public void addWatch(SamaritWatch watch) {
-        this.watches.add(watch);
+        this.getWatches().add(watch);
         watch.setSamarit(this);
     }
     
@@ -103,11 +103,11 @@ public class Samarit extends User {
     }
     
     public RedCrossLevel getRedCroosLevel() {
-        return redCrossLevel;
+        return getRedCrossLevel();
     }
     
     public void setRedCroosLevel(RedCrossLevel redCroosLevel) {
-        this.redCrossLevel = redCroosLevel;
+        this.setRedCrossLevel(redCroosLevel);
     }
     
     public String getMedicalLevel() {
@@ -148,6 +148,34 @@ public class Samarit extends User {
     
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    /**
+     * @return the redCrossLevel
+     */
+    public RedCrossLevel getRedCrossLevel() {
+        return redCrossLevel;
+    }
+
+    /**
+     * @param redCrossLevel the redCrossLevel to set
+     */
+    public void setRedCrossLevel(RedCrossLevel redCrossLevel) {
+        this.redCrossLevel = redCrossLevel;
+    }
+
+    /**
+     * @return the watches
+     */
+    public List<SamaritWatch> getWatches() {
+        return watches;
+    }
+
+    /**
+     * @param watches the watches to set
+     */
+    public void setWatches(List<SamaritWatch> watches) {
+        this.watches = watches;
     }
     
 }

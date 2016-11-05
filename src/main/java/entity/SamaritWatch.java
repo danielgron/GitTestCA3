@@ -23,44 +23,33 @@ import javax.persistence.TemporalType;
 @Entity
 public class SamaritWatch implements Serializable {
 
-    /**
-     * @return the serialVersionUID
-     */
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
-    @ManyToOne (cascade = {CascadeType.PERSIST,CascadeType.MERGE})
-    private Samarit samarit;
-
-    @ManyToOne (cascade = {CascadeType.PERSIST,CascadeType.MERGE})
-    private Event event;
-
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
-    private boolean isAvailable = true;
-    
-    
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Samarit samarit;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Event event;
+    private boolean watchSet;
+    private boolean isAvailable;
+
     @Temporal(TemporalType.TIMESTAMP)
-    private Date watchStart;
-    
+    private Date start;
+
     @Temporal(TemporalType.TIMESTAMP)
-    private Date watchEnd;
+    private Date end;
 
     public SamaritWatch() {
     }
 
-    public SamaritWatch(Samarit samarit, Event event, Date watchStart, Date watchEnd) {
+    public SamaritWatch(Samarit samarit, Event event, Date start, Date end, boolean isAvailable) {
         this.samarit = samarit;
         this.event = event;
-        this.watchStart = watchStart;
-        this.watchEnd = watchEnd;
+        this.start = start;
+        this.end = end;
+        this.isAvailable = isAvailable;
     }
-    
-    
 
     public Integer getId() {
         return id;
@@ -75,6 +64,18 @@ public class SamaritWatch implements Serializable {
      */
     public Samarit getSamarit() {
         return samarit;
+    }
+
+    public SamaritWatch(Samarit samarit, Date start, boolean isAvailable) {
+        this.samarit = samarit;
+        samarit.addWatch(this);
+        this.start = start;
+        this.isAvailable = isAvailable;
+    }
+
+    public void setSamaritWithWatch(Samarit samarit) {
+        this.setSamarit(samarit);
+        samarit.getWatches().add(this);
     }
 
     /**
@@ -113,32 +114,45 @@ public class SamaritWatch implements Serializable {
     }
 
     /**
-     * @return the watchStart
+     * @return the watchSet
      */
-    public Date getWatchStart() {
-        return watchStart;
+    public boolean isWatchSet() {
+        return watchSet;
     }
 
     /**
-     * @param watchStart the watchStart to set
+     * @param watchSet the watchSet to set
      */
-    public void setWatchStart(Date watchStart) {
-        this.watchStart = watchStart;
+    public void setWatchSet(boolean watchSet) {
+        this.watchSet = watchSet;
     }
 
     /**
-     * @return the watchEnd
+     * @return the start
      */
-    public Date getWatchEnd() {
-        return watchEnd;
+    public Date getStart() {
+        return start;
     }
 
     /**
-     * @param watchEnd the watchEnd to set
+     * @param start the start to set
      */
-    public void setWatchEnd(Date watchEnd) {
-        this.watchEnd = watchEnd;
+    public void setStart(Date start) {
+        this.start = start;
     }
 
-    
+    /**
+     * @return the end
+     */
+    public Date getEnd() {
+        return end;
+    }
+
+    /**
+     * @param end the end to set
+     */
+    public void setEnd(Date end) {
+        this.end = end;
+    }
+
 }

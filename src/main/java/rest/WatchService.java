@@ -6,6 +6,9 @@
 package rest;
 
 import com.google.gson.Gson;
+import entity.SamaritWatch;
+import facades.WatchFacade;
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -14,6 +17,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import util.WatchConverter;
 
@@ -23,12 +27,15 @@ import util.WatchConverter;
  * @author dennisschmock
  */
 @Path("watch")
+@RolesAllowed("Coordinator")
+
 public class WatchService {
 
     @Context
     private UriInfo context;
     private static WatchConverter wc = new WatchConverter();
     private static Gson gson = new Gson();
+    private static WatchFacade wf = new WatchFacade();
 
     /**
      * Creates a new instance of WatchService
@@ -46,13 +53,24 @@ public class WatchService {
     public String getWatches() {
         return gson.toJson("test");
     }
-    
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void setWatch(String date){
-        System.out.println("test"+date);
-    };
-            
+    public void setWatch(String sWatch) {
+        SamaritWatch sw = null;
+        sw = gson.fromJson(sWatch, SamaritWatch.class);
+        wf.addUnavailForWatch(sw);
 
+    }
+
+    ;
     
+      @Path("{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getWatchesForSamarit(@PathParam("id" String id)) {
+
+        return "";
+    }
+
 }

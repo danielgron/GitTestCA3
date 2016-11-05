@@ -28,8 +28,9 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.usercalendar'])
                 $scope.header = 'test';
 
 
-
+                var email = 'coorinator';
                 $scope.eventSource = {
+                     url: 'api/watch/' + email
                 };
                 
                 
@@ -59,29 +60,34 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.usercalendar'])
                         eventResize: $scope.alertOnResize,
                         eventRender: $scope.eventRender,
                         dayRender: $scope.dayRender,
-                        dayClick: $scope.dayClick
+                        dayClick: $scope.dayClick,
+                        renderEvent: $scope.renderEvent
                     }
                 };
 
                 $scope.dayRender = function (date,cell){
+                    
                 };
                 
-                $scope.eventRender = function(event, element, view){
-                    if(event.isAvail != true){
-                        return "<td style='background: red'></td>";
-                    }
+                $scope.renderEvent = function(){
+                    
                 };
+                
                 $scope.dayClick = function (date, jsEvent, view)
                 {
                     if(uiUserCalendarConfig.calendars['userCalender'].avail){
                     uiUserCalendarConfig.calendars['userCalender'].fullCalendar('gotoDate', date);
                     uiUserCalendarConfig.calendars['userCalender'].fullCalendar('changeView', 'agendaDay');
                     } else {
-                        var watch = {}
+                        var watch = {};
+                        watch.title = "";
+                        watch.samarit = {};
                         watch.start = date;
-                        watch.mail = "dennis@schmock.eu";
+                        watch.samarit.email = "coordinator";
+                        watch.isAvailable = false;
                         
                         userCalendarFactory.setAvailable(watch);
+                        $scope.renderEvent(watch);
                       
                        
                     }
