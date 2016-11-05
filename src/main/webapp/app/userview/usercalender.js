@@ -58,22 +58,32 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.usercalendar'])
                         eventDrop: $scope.alertOnDrop,
                         eventResize: $scope.alertOnResize,
                         eventRender: $scope.eventRender,
+                        dayRender: $scope.dayRender,
                         dayClick: $scope.dayClick
                     }
                 };
 
+                $scope.dayRender = function (date,cell){
+                };
+                
+                $scope.eventRender = function(event, element, view){
+                    if(event.isAvail != true){
+                        return "<td style='background: red'></td>";
+                    }
+                };
                 $scope.dayClick = function (date, jsEvent, view)
                 {
                     if(uiUserCalendarConfig.calendars['userCalender'].avail){
                     uiUserCalendarConfig.calendars['userCalender'].fullCalendar('gotoDate', date);
                     uiUserCalendarConfig.calendars['userCalender'].fullCalendar('changeView', 'agendaDay');
                     } else {
-                        var watch = [];
-                        watch.date = date;
+                        var watch = {}
+                        watch.start = date;
+                        watch.mail = "dennis@schmock.eu";
                         
                         userCalendarFactory.setAvailable(watch);
-                        
-                        window.console.log(date.toJSON());
+                      
+                       
                     }
                 };
 
