@@ -25,7 +25,7 @@ angular.module('myApp.calendar', ['ngRoute', 'ui.calendar'])
                 $scope.eventSources = [$scope.events];
 
                 $scope.eventSource = {
-                    url: 'api/event'
+                    url: 'api/event/range'
                 };
 
                 $scope.uiConfig = {
@@ -46,6 +46,7 @@ angular.module('myApp.calendar', ['ngRoute', 'ui.calendar'])
                     }
                 };
                 $scope.dayClick = function (date, jsEvent, view, cell) {
+                    alert('wrong calender')
                     angular.forEach(function (date) {
                         window.console.log(date);
                     });
@@ -99,7 +100,8 @@ angular.module('myApp.calendar', ['ngRoute', 'ui.calendar'])
 
 
                 /* event sources array*/
-                $scope.eventSources = [$scope.events, $scope.eventSource, $scope.eventsF];
+                $scope.eventSources = [$scope.events, $scope.eventSource, $scope.calEventsExt];
+                
                 $scope.eventSources2 = [$scope.calEventsExt, $scope.eventsF, $scope.events];
 
 

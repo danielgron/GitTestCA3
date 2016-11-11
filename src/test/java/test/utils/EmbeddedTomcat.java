@@ -19,7 +19,7 @@ import org.glassfish.jersey.servlet.ServletContainer;
 public class EmbeddedTomcat {
 
   private final static String TMP_DIR = System.getProperty("java.io.tmpdir")+"/EmbeddedTomcat";
-  //private static final int PORT = 9999;
+  private static final int PORT = 9999;
   
   Tomcat tomcat;
 

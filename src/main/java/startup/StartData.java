@@ -20,8 +20,11 @@ import log.Log;
  * @author danie
  */
 public class StartData {
+    
+    public static void main(String[] args) {
+        insertTestData();
+    }
     public static void insertTestData() {
-        
         Log.writeToLog("Inserting Test Users in database");
         EntityManager em = EntityConnector.getEntityManager();
         RedCrossLevel r1 = new RedCrossLevel("Samarit");

@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -38,10 +39,6 @@ public class Event implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
-    
-
- 
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "event_start")
@@ -54,12 +51,12 @@ public class Event implements Serializable {
     private boolean allDay;
 
     private String name;
-    
-    @Column(name="description")
+
+    @Column(name = "description")
     private String desc;
 
-    private @ManyToMany
-    List<Samarit> samarits = new ArrayList();
+    @OneToMany(mappedBy = "event")
+    List<SamaritWatch> watches = new ArrayList();
 
     public Event(Date start, Date end, boolean allDay, String name, String desc) {
         this.start = start;
@@ -69,8 +66,6 @@ public class Event implements Serializable {
         this.desc = desc;
     }
 
-    
-    
     public Event() {
     }
 
@@ -81,6 +76,11 @@ public class Event implements Serializable {
         return id;
     }
 
+    public void addWatch(SamaritWatch watch){
+        this.watches.add(watch);
+        watch.setEvent(this);
+        
+    }
     /**
      * @param id the id to set
      */
@@ -88,7 +88,6 @@ public class Event implements Serializable {
         this.id = id;
     }
 
-   
     /**
      * @return the start
      */
