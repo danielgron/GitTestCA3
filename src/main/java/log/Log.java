@@ -35,6 +35,7 @@ public class Log {
     }
     
     public static void closeLogger() {
+        Log.writeToLog("Logger is Closing");
         for (Handler h : Logger.getLogger(logName).getHandlers()) {
             System.out.println("Closing logger");
             h.close();

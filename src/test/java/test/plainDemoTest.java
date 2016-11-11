@@ -63,7 +63,7 @@ public class plainDemoTest {
             testSam.setDepartment(d);
             cf.addNewSamarit(testSam);
             TypedQuery qnew = em.createQuery("select u from User u", User.class);
-            List<User> linew = q.getResultList();
+            List<User> linew = qnew.getResultList();
             int numbersAfterInsert = linew.size();
              assertTrue(numbersBeforeInsert + 1 == numbersAfterInsert);
             
