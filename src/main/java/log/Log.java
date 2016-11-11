@@ -23,7 +23,7 @@ public class Log {
     public static void startLogFile() throws IOException{
         
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-        String fileName = "c:\\res\\LogFile"+timeStamp+".txt";
+        String fileName = "LogFile"+timeStamp+".txt";
          Logger logger = Logger.getLogger(logName);
          FileHandler file = new FileHandler(fileName);
          
