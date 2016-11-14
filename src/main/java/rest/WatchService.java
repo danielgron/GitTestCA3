@@ -71,7 +71,6 @@ public class WatchService {
 
     }
 
-    ;
     
     @Path("{id}")
     @GET

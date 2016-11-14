@@ -23,7 +23,7 @@ public class Log {
     public static void startLogFile() throws IOException{
         
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-        String fileName = "c:\\res\\LogFile"+timeStamp+".txt";
+        String fileName = "LogFile"+timeStamp+".txt";
          Logger logger = Logger.getLogger(logName);
          FileHandler file = new FileHandler(fileName);
          
@@ -35,6 +35,7 @@ public class Log {
     }
     
     public static void closeLogger() {
+        Log.writeToLog("Logger is Closing");
         for (Handler h : Logger.getLogger(logName).getHandlers()) {
             System.out.println("Closing logger");
             h.close();
