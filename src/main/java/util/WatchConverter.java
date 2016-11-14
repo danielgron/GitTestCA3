@@ -6,6 +6,7 @@
 package util;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import entity.SamaritWatch;
 
 /**
@@ -15,7 +16,26 @@ import entity.SamaritWatch;
 public class WatchConverter {
     private static Gson gson = new Gson();
     
-//    public static SamaritWatch jsonToWatch(String watch){
-//        SamaritWatch sw = null;
-//    }
+    /**
+     * This method is a Json Wrapper. It takes SamaritObject and converts
+     * it to a JsonObject. 
+     * It deals with a watch of type: Unavailable
+     * @param watch
+     * @return
+     */
+    public JsonObject jsonWatchUnavailable(SamaritWatch watch){
+        JsonObject jsonWatch = new JsonObject();
+        
+        if(watch !=null){
+            
+            
+            
+            
+            
+        }
+        
+        
+        return jsonWatch;
+    }
+    
 }

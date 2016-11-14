@@ -74,9 +74,8 @@ public class WatchFacade {
         List<SamaritWatch> watches = null;
         try {
             User samarit = em.find(Samarit.class, email);
-
-            Query q = em.createQuery("SELECT w FROM SameritWatch w WHERE w.samarit = ?u");
-            q.setParameter("u", samarit);
+            Query q = em.createNamedQuery("SamaritWatch.findByUserName");
+            q.setParameter("mail", email);
             watches = q.getResultList();
         } catch (Exception ex) {
             Logger.getLogger(EventFacade.class.getName()).log(Level.SEVERE, null, ex);

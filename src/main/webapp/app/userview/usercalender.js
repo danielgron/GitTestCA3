@@ -23,19 +23,23 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.usercalendar'])
                 var m = date.getMonth();
                 var y = date.getFullYear();
                 $scope.avail = true;
-
+                $scope.watches = [];
+                
+                $scope.addWatch = function(watch){
+                    $scope.watches.push(watch);
+                }
 
                 $scope.header = 'test';
 
 
                 var email = 'coorinator';
                 $scope.eventSource = {
-                     url: 'api/watch/' + email
+                    url: 'api/watch/' + email
                 };
-                
-                
+
+
                 $scope.test = function () {
-                    
+
                     //Using the calenderobject to store variable across scopes
                     uiUserCalendarConfig.calendars['userCalender'].avail = !uiUserCalendarConfig.calendars['userCalender'].avail;
                     //And setting localscope 
@@ -65,19 +69,19 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.usercalendar'])
                     }
                 };
 
-                $scope.dayRender = function (date,cell){
-                    
+                $scope.dayRender = function (date, cell) {
+
                 };
-                
-                $scope.renderEvent = function(){
-                    
+
+                $scope.renderEvent = function () {
+
                 };
-                
+
                 $scope.dayClick = function (date, jsEvent, view)
                 {
-                    if(uiUserCalendarConfig.calendars['userCalender'].avail){
-                    uiUserCalendarConfig.calendars['userCalender'].fullCalendar('gotoDate', date);
-                    uiUserCalendarConfig.calendars['userCalender'].fullCalendar('changeView', 'agendaDay');
+                    if (uiUserCalendarConfig.calendars['userCalender'].avail) {
+                        uiUserCalendarConfig.calendars['userCalender'].fullCalendar('gotoDate', date);
+                        uiUserCalendarConfig.calendars['userCalender'].fullCalendar('changeView', 'agendaDay');
                     } else {
                         var watch = {};
                         watch.title = "";
@@ -85,11 +89,12 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.usercalendar'])
                         watch.start = date;
                         watch.samarit.email = "coordinator";
                         watch.isAvailable = false;
-                        
+
                         userCalendarFactory.setAvailable(watch);
-                        $scope.renderEvent(watch);
-                      
-                       
+                        $scope.watches = $scope.watches;
+                        $scope.addWatch(watch);
+
+
                     }
                 };
 
@@ -99,7 +104,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.usercalendar'])
                 };
 
 
-                $scope.watches = [];
+
 
                 userCalendarFactory.getEvents().then(function (response) {
                     $scope.watches = response.data;

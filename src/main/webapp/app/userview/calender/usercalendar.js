@@ -236,8 +236,7 @@ angular.module('ui.usercalendar', [])
                     restrict: 'A',
                     scope: {
                         eventSources: '=ngModel',
-                        calendarWatchEvent: '&',
-                         typeId: '='
+                        calendarWatchEvent: '&'
                     },
                     controller: 'uiUserCalendarCtrl',
                     link: function (scope, elm, attrs, controller) {
@@ -247,12 +246,7 @@ angular.module('ui.usercalendar', [])
                         var eventSourcesWatcher = controller.changeWatcher(sources, controller.sourceFingerprint);
                         var eventsWatcher = controller.changeWatcher(controller.allEvents, controller.eventFingerprint);
                         var options = null;
-                        scope.$watch('typeId', function (newValue, oldValue) {
-                            if (newValue !== oldValue) {
-                                oldValue = newValue;
-                                console.log("I got the new value! ", newValue);
-                            }
-                        }, true);
+                        
 
 
                         function getOptions() {

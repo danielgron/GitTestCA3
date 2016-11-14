@@ -5,9 +5,15 @@
  */
 package rest;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import entity.SamaritWatch;
 import facades.WatchFacade;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -27,7 +33,7 @@ import util.WatchConverter;
  * @author dennisschmock
  */
 @Path("watch")
-@RolesAllowed("Coordinator")
+//@RolesAllowed("Coordinator")
 
 public class WatchService {
 
@@ -36,6 +42,8 @@ public class WatchService {
     private static WatchConverter wc = new WatchConverter();
     private static Gson gson = new Gson();
     private static WatchFacade wf = new WatchFacade();
+    private static JsonFactory factory = new JsonFactory();
+    private static ObjectMapper mapper = new ObjectMapper();
 
     /**
      * Creates a new instance of WatchService
@@ -65,12 +73,17 @@ public class WatchService {
 
     ;
     
-      @Path("{id}")
+    @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getWatchesForSamarit(@PathParam("id" String id)) {
-
-        return "";
+    public String getWatchesForSamarit(@PathParam("id") String id) {
+        List<SamaritWatch> watches = wf.getWatchesForUser(id);
+        try {
+            return mapper.writeValueAsString(watches);
+        } catch (JsonProcessingException ex) {
+            Logger.getLogger(WatchService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
 }
