@@ -28,7 +28,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.usercalendar'])
                 $scope.header = 'test';
 
 
-                var email = 'coorinator';
+                var email = 'coordinator';
                 $scope.eventSource = {
                      url: 'api/watch/' + email
                 };

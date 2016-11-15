@@ -166,12 +166,17 @@ public class WatchFacade {
             if (watch.getSamarit() != null) {
                 sm = em.find(Samarit.class, watch.getSamarit().getUserName());
                 watch.setSamaritWithWatch(sm);
+                System.out.println(watch);
             }
             em.persist(watch);
 
             em.getTransaction().commit();
 
+        } catch (Exception ex) {
+            System.out.println(ex);
         } finally {
+            System.out.println("Closed!");
+            em.close();
         }
         return watch;
 

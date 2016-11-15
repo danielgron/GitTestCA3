@@ -27,7 +27,6 @@ import util.WatchConverter;
  * @author dennisschmock
  */
 @Path("watch")
-@RolesAllowed("Coordinator")
 
 public class WatchService {
 
@@ -54,21 +53,31 @@ public class WatchService {
         return gson.toJson("test");
     }
 
+    /**
+     * This method takes a POST restcall with a
+     *
+     * @param id
+     * @param sWatch
+     */
+    @Path("{id}")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void setWatch(String sWatch) {
-        SamaritWatch sw = null;
+    public void setUnAvailWatch(@PathParam("id") String id, String sWatch) {
+
+        SamaritWatch sw;
         sw = gson.fromJson(sWatch, SamaritWatch.class);
+        System.out.println("qweWTF!");
+
         wf.addUnavailForWatch(sw);
 
     }
 
     ;
     
-      @Path("{id}")
+    @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getWatchesForSamarit(@PathParam("id" String id)) {
+    public String getWatchesForSamarit(@PathParam("id") String id) {
 
         return "";
     }
