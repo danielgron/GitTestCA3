@@ -1,13 +1,13 @@
 ----------------------------------------------------------------
-Wed Nov 16 12:08:43 CET 2016:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.13.1.1 - (1765088): instance a816c00e-0158-6cd3-1980-00000b9d26b0 
-on database directory C:\Users\danie\OneDrive\Dokumenter\NetBeansProjects\RK-TrialRun\target\testDB with class loader sun.misc.Launcher$AppClassLoader@6bc7c054 
-Loaded from file:/C:/Users/danie/.m2/repository/org/apache/derby/derby/10.13.1.1/derby-10.13.1.1.jar
+Wed Nov 16 13:47:27 CET 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.13.1.1 - (1765088): instance a816c00e-0158-6d2d-7ade-00000db4f690 
+on database directory /Users/dennisschmock/netbeans/RK-TrialRun/target/testDB with class loader sun.misc.Launcher$AppClassLoader@232204a1 
+Loaded from file:/Users/dennisschmock/.m2/repository/org/apache/derby/derby/10.13.1.1/derby-10.13.1.1.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_72-b15
-user.dir=C:\Users\danie\OneDrive\Dokumenter\NetBeansProjects\RK-TrialRun
-os.name=Windows 10
-os.arch=amd64
-os.version=10.0
+java.runtime.version=1.8.0_60-b27
+user.dir=/Users/dennisschmock/netbeans/RK-TrialRun
+os.name=Mac OS X
+os.arch=x86_64
+os.version=10.11.1
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''

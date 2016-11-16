@@ -26,7 +26,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "SamaritWatch.findByUserName", query = "SELECT w FROM SamaritWatch AS w WHERE w.samarit.email = :mail")})
+    @NamedQuery(name = "SamaritWatch.findByUserName", query = "SELECT w FROM SamaritWatch AS w WHERE w.samarit.userName = :mail")})
 public class SamaritWatch implements Serializable {
 
     @Id
