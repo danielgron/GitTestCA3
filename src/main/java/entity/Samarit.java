@@ -19,6 +19,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+
 @DiscriminatorColumn(name = "DT", discriminatorType = DiscriminatorType.CHAR)
 public class Samarit extends User {
     

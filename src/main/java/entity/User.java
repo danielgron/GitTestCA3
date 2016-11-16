@@ -19,8 +19,9 @@ import log.Log;
 public abstract class User implements IUser, Serializable{
   
   private String password;  //Pleeeeease dont store me in plain text
+  
   @Id
-  private String email;
+  private String userName;
   
   @ManyToMany(cascade = CascadeType.PERSIST)
   List<User_Role> roles = new ArrayList();
@@ -33,7 +34,7 @@ public abstract class User implements IUser, Serializable{
     }
 
   public User(String email, String password) {
-    this.email = email;
+    this.userName = email;
       try {
           String hashPassword = PasswordStorage.createHash(password);
           this.password = hashPassword;
@@ -74,11 +75,11 @@ public abstract class User implements IUser, Serializable{
 
   @Override
   public String getUserName() {
-    return email;
+    return userName;
   }
 
   public void setUserName(String userName) {
-    this.email = userName;
+    this.userName = userName;
   }
   
   
