@@ -11,7 +11,6 @@
     <class>entity.Admin</class>
     <class>entity.Event</class>
     <class>entity.RedCrossLevel</class>
-    <class>startup.DataFill</class>
     <class>entity.SamaritWatch</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
@@ -46,8 +45,8 @@
       <property name="eclipselink.canonicalmodel.subpackage" value="pu_test"/>
     </properties>
   </persistence-unit>
-  -->
   
+  -->
   <persistence-unit name="pu_test" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>entity.Admin</class>
@@ -55,7 +54,7 @@
     <class>entity.Event</class>
     <class>entity.RedCrossLevel</class>
     <class>entity.Samarit</class>
-    <class>entity.SameritWatch</class>
+    <class>entity.SamaritWatch</class>
     <class>entity.User_Role</class>
     <class>entity.User</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
@@ -64,8 +63,8 @@
       <property name="javax.persistence.jdbc.url" value="jdbc:derby:target/testDB;create=true"/>
       <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
       <property name="eclipselink.ddl-generation.output-mode" value="database"/>
-      <property name="eclipselink.canonicalmodel.subpackage" value="testinmem"/>
+      <property name="eclipselink.canonicalmodel.subpackage" value="pu_test"/>
     </properties>
   </persistence-unit>
-  
+  -->
 </persistence>
