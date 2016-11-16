@@ -10,8 +10,10 @@ angular.module('myApp.usercalendar')
             };
             
             userCalendarFactory.setAvailable = function(watch){
-                var jsonObject = JSON.stringify(watch);
-              return $http.post(urlBase,watch);  
+                var  jsonObject = JSON.stringify(watch);
+                                window.console.log(urlBase);
+
+              return $http.post(urlBase,jsonObject);
             };
 
             return userCalendarFactory;

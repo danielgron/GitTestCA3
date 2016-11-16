@@ -74,9 +74,8 @@ public class WatchFacade {
         List<SamaritWatch> watches = null;
         try {
             User samarit = em.find(Samarit.class, email);
-
-            Query q = em.createQuery("SELECT w FROM SameritWatch w WHERE w.samarit = ?u");
-            q.setParameter("u", samarit);
+            Query q = em.createNamedQuery("SamaritWatch.findByUserName");
+            q.setParameter("mail", email);
             watches = q.getResultList();
         } catch (Exception ex) {
             Logger.getLogger(EventFacade.class.getName()).log(Level.SEVERE, null, ex);
@@ -163,19 +162,20 @@ public class WatchFacade {
         Samarit sm = null;
         try {
             em.getTransaction().begin();
-            if (watch.getSamarit() != null) {
-                sm = em.find(Samarit.class, watch.getSamarit().getUserName());
-                watch.setSamaritWithWatch(sm);
-                System.out.println(watch);
+            System.out.println("AFter entityManager");
+            if (watch.getSamarit().getUserName() != null) {
+                System.out.println("Before find " + watch.getSamarit().getUserName());
+                sm = em.createQuery("")
+                
+                //watch.setSamaritWithWatch(sm);
             }
             em.persist(watch);
 
             em.getTransaction().commit();
 
         } catch (Exception ex) {
-            System.out.println(ex);
+            System.out.println("Error: " + ex);
         } finally {
-            System.out.println("Closed!");
             em.close();
         }
         return watch;

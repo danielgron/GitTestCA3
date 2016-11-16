@@ -5,6 +5,7 @@
  */
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,7 @@ public class Samarit extends User {
     private String zip;
     private String city;
     private String phone;
+    
     @ManyToOne(cascade = CascadeType.MERGE)
     @NotNull
     private RedCrossLevel redCrossLevel; // f.eks Samarit, eller Teamleder
@@ -39,6 +41,7 @@ public class Samarit extends User {
     private int shiftsTotal;
 //  private List<VagtKort> vagtKorts; // Not implemented yet!
     
+    @JsonManagedReference
     @OneToMany(mappedBy = "samarit",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private List<SamaritWatch> watches = new ArrayList();
     

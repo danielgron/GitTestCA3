@@ -4,15 +4,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import security.IUser;
 import security.PasswordStorage;
 import log.Log;
 
 @Entity
+//@Table(name = "grete") If you choose to use the derby in memery database we have to use the other name
 public abstract class User implements IUser, Serializable{
   
   private String password;  //Pleeeeease dont store me in plain text

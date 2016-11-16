@@ -59,11 +59,12 @@ public class plainDemoTest {
             
             Samarit testSam = new Samarit("test@gmail.com", "testingpassword");
             // if any database Constrais are made make sure to add
-            Department d = em.find(Department.class, "København"); // must match the inserted value
+            TypedQuery<Department> query = em.createQuery("select d from Department d", Department.class);
+            Department d = query.getSingleResult();
             testSam.setDepartment(d);
             cf.addNewSamarit(testSam);
             TypedQuery qnew = em.createQuery("select u from User u", User.class);
-            List<User> linew = q.getResultList();
+            List<User> linew = qnew.getResultList();
             int numbersAfterInsert = linew.size();
              assertTrue(numbersBeforeInsert + 1 == numbersAfterInsert);
             
