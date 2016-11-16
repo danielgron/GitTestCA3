@@ -15,7 +15,7 @@ import security.PasswordStorage;
 import log.Log;
 
 @Entity
-//@Table(name = "grete") If you choose to use the derby in memery database we have to use the other name
+@Table(name = "RKUSER") //If you choose to use the derby in memery database we have to use the other name
 public abstract class User implements IUser, Serializable{
   
   private String password;  //Pleeeeease dont store me in plain text

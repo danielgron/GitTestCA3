@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,27 +25,30 @@ import javax.persistence.TemporalType;
  * @author dennisschmock
  */
 @Entity
-@NamedQueries({@NamedQuery(name = "SamaritWatch.findByUserName",query = "SELECT w FROM SamaritWatch AS w WHERE w.samarit.email = :mail")})
+@NamedQueries({
+    @NamedQuery(name = "SamaritWatch.findByUserName", query = "SELECT w FROM SamaritWatch AS w WHERE w.samarit.email = :mail")})
 public class SamaritWatch implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
+
     @JsonBackReference
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Samarit samarit;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Event event;
-    
+
     private boolean watchSet;
     private boolean isAvailable;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "WATCHSTART")
     private Date start;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "WATCHEND")
     private Date end;
 
     public SamaritWatch() {
