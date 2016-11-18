@@ -12,3 +12,8 @@ Vagtmanager 2.0
       <p>The goal is that this project should be used to organize activities for the diffrent departments  </p>
 </uib-accordion-group >
 
+
+<uib-accordion-heading>
+        Issue progress
+      </uib-accordion-heading>
+[![Throughput Graph](https://graphs.waffle.io/danielgron/RK-TrialRun/throughput.svg)](https://waffle.io/danielgron/RK-TrialRun/metrics/throughput)
