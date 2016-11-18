@@ -33,7 +33,6 @@ import util.WatchConverter;
  * @author dennisschmock
  */
 @Path("watch")
-//@RolesAllowed("Coordinator")
 
 public class WatchService {
 
@@ -63,15 +62,16 @@ public class WatchService {
     }
 
     @POST
+    @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void setWatch(String sWatch) {
+    public void setWatch(@PathParam("id") String id,String sWatch) {
+        System.out.println("TESTER!");
         SamaritWatch sw = null;
         sw = gson.fromJson(sWatch, SamaritWatch.class);
         wf.addUnavailForWatch(sw);
 
     }
 
-    
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)

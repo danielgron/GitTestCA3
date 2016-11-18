@@ -18,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import util.DateUtils;
 
 /**
@@ -162,15 +163,19 @@ public class WatchFacade {
         Samarit sm = null;
         try {
             em.getTransaction().begin();
-            if (watch.getSamarit() != null) {
-                sm = em.find(Samarit.class, watch.getSamarit().getUserName());
-                watch.setSamaritWithWatch(sm);
+            System.out.println("AFter entityManager");
+            if (watch.getSamarit().getUserName() != null) {
+                System.out.println("Befor2e find " + watch.getSamarit().getUserName());
+                System.out.println(sm.getUserName());
             }
             em.persist(watch);
 
             em.getTransaction().commit();
 
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
         } finally {
+            em.close();
         }
         return watch;
 

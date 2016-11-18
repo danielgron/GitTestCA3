@@ -19,6 +19,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+
 @DiscriminatorColumn(name = "DT", discriminatorType = DiscriminatorType.CHAR)
 public class Samarit extends User {
     
@@ -31,6 +32,7 @@ public class Samarit extends User {
     private String zip;
     private String city;
     private String phone;
+    
     @ManyToOne(cascade = CascadeType.MERGE)
     @NotNull
     private RedCrossLevel redCrossLevel; // f.eks Samarit, eller Teamleder

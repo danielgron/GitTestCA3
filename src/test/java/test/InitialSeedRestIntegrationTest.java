@@ -128,5 +128,5 @@ public class InitialSeedRestIntegrationTest {
               .post("/api/coordinator").then()
               .statusCode(403); // Means that we are not authorized to preform this request
   }
- 
-}
+  
+  }

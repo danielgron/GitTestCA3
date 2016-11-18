@@ -66,5 +66,4 @@
       <property name="eclipselink.canonicalmodel.subpackage" value="pu_test"/>
     </properties>
   </persistence-unit>
-  --&gt;
 </persistence>

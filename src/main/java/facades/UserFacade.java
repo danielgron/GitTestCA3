@@ -50,7 +50,7 @@ public class UserFacade implements IUserFacade {
         try {
             Log.writeToLog("Authenticating user: "+userName);
             EntityManager em = EntityConnector.getEntityManager();
-            TypedQuery<User> q = em.createQuery("select u from User u where u.email=:name",User.class);
+            TypedQuery<User> q = em.createQuery("select u from User u where u.userName=:name",User.class);
             q.setParameter("name", userName);
             User user = q.getSingleResult();
             if(PasswordStorage.verifyPassword(password, user.getPassword())){
