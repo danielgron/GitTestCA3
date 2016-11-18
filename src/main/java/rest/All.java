@@ -53,7 +53,7 @@ public class All {
       try{
           JsonValidator.validateRequest(json);
       }
-      catch(Exception e ){
+      catch(Exception e){
           return "[false]";
       }
       finally{

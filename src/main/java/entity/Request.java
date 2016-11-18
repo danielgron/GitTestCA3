@@ -5,8 +5,10 @@
  */
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,7 +27,7 @@ public class Request implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     private String eventName;
     private int numberGuests;
     private String agegroup;
@@ -49,10 +51,12 @@ public class Request implements Serializable {
     private boolean treatmentfacility;
     private String comments;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+  // @JsonManagedReference
+
     private Contact contact;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Invoice invoice;
 
     private boolean medics;
@@ -62,11 +66,37 @@ public class Request implements Serializable {
     private boolean responseTeam;
     private String visibility;
 
-    public Long getId() {
+    public Request() {
+    }
+
+    public Request(String eventName, int numberGuests, String agegroup, Date eventDate, String venue, String street, int zip, Date doorsopen, Date eventstart, Date eventend, Date watchStart, String catering, boolean treatmentfacility, String comments, boolean medics, boolean ambulance, boolean emergencyOffice, boolean stretcherTeam, boolean responseTeam, String visibility) {
+        this.eventName = eventName;
+        this.numberGuests = numberGuests;
+        this.agegroup = agegroup;
+        this.eventDate = eventDate;
+        this.venue = venue;
+        this.street = street;
+        this.zip = zip;
+        this.doorsopen = doorsopen;
+        this.eventstart = eventstart;
+        this.eventend = eventend;
+        this.watchStart = watchStart;
+        this.catering = catering;
+        this.treatmentfacility = treatmentfacility;
+        this.comments = comments;
+        this.medics = medics;
+        this.ambulance = ambulance;
+        this.emergencyOffice = emergencyOffice;
+        this.stretcherTeam = stretcherTeam;
+        this.responseTeam = responseTeam;
+        this.visibility = visibility;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -264,6 +294,7 @@ public class Request implements Serializable {
      */
     public void setContact(Contact contact) {
         this.contact = contact;
+        contact.getRequest().add(this);
     }
 
     /**
@@ -278,6 +309,7 @@ public class Request implements Serializable {
      */
     public void setInvoice(Invoice invoice) {
         this.invoice = invoice;
+
     }
 
     /**
