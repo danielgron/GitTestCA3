@@ -18,7 +18,7 @@
       <property name="javax.persistence.jdbc.user" value="mytestuser"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value="testpassword"/>
-      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+      <property name="javax.persistence.schema-generation.database.action" value="create"/>
       <property name="eclipselink.canonicalmodel.subpackage" value="pu_local"/>
     </properties>
   </persistence-unit>
@@ -66,5 +66,5 @@
       <property name="eclipselink.canonicalmodel.subpackage" value="pu_test"/>
     </properties>
   </persistence-unit>
-  -->
+  --&gt;
 </persistence>
