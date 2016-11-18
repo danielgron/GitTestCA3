@@ -22,7 +22,6 @@ public class JsonValidator {
     public static void validateRequest(String json) {
         Request request;
         
-        factory..
 
     }
 }
