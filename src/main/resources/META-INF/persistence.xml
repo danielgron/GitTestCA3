@@ -14,7 +14,7 @@
     <class>entity.SamaritWatch</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://46.101.166.154:3306/RK?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/rk?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value="Ospekos_22"/>
@@ -66,5 +66,5 @@
       <property name="eclipselink.canonicalmodel.subpackage" value="pu_test"/>
     </properties>
   </persistence-unit>
-  -->
+  --&gt;
 </persistence>
