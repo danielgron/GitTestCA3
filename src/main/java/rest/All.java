@@ -5,12 +5,14 @@
  */
 package rest;
 
+import javax.json.Json;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -40,5 +42,28 @@ public class All {
   public String getText() {
     return " {\"message\" : \"result for all\"}";
   }
+  
+  
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public String postSamaritterRequest(String json){
+      try{
+          validateJSON(json);
+      }
+      catch(Exception e ){
+          return "[false]";
+      }
+      finally{
+          
+      }
+      return "[true]";
+      
+  }
+
+  //
+    private void validateJSON(String json) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }
