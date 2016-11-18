@@ -8,6 +8,7 @@ package util;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import entity.Request;
 
 /**
  *
@@ -19,6 +20,9 @@ public class JsonValidator {
     private static ObjectMapper mapper = new ObjectMapper();
 
     public static void validateRequest(String json) {
+        Request request;
+        
+        factory..
 
     }
 }
