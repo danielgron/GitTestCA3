@@ -18,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import util.DateUtils;
 
 /**
@@ -28,30 +29,7 @@ public class WatchFacade {
 
     public WatchFacade() {
         EntityManager em = EntityConnector.getEntityManager();
-//        if (getWatches().size() <= 0) {
-//            Samarit samarit = em.find(Samarit.class, "coordinator");
-//            LocalDate d1 = LocalDate.of(2016, Month.NOVEMBER, 7);
-//            LocalDate d2 = LocalDate.of(2016, Month.NOVEMBER, 8);
-//            LocalDate d3 = LocalDate.of(2016, Month.NOVEMBER, 9);
-//            LocalDate d4 = LocalDate.of(2016, Month.NOVEMBER, 10);
-//            Date d01 = DateUtils.asDate(d1);
-//            Date d02 = DateUtils.asDate(d2);
-//            Date d03 = DateUtils.asDate(d3);
-//            Date d04 = DateUtils.asDate(d4);
-//
-//            SamaritWatch sw1 = new SamaritWatch(samarit, d01, false);
-//            SamaritWatch sw2 = new SamaritWatch(samarit, d02, false);
-//            SamaritWatch sw3 = new SamaritWatch(samarit, d03, false);
-//            SamaritWatch sw4 = new SamaritWatch(samarit, d04, false);
-//
-//            em.getTransaction().begin();
-//            em.persist(sw1);
-//            em.persist(sw2);
-//            em.persist(sw3);
-//            em.persist(sw4);
-//            em.getTransaction().commit();
-//
-//        }
+
 
     }
 
@@ -74,9 +52,8 @@ public class WatchFacade {
         List<SamaritWatch> watches = null;
         try {
             User samarit = em.find(Samarit.class, email);
-
-            Query q = em.createQuery("SELECT w FROM SameritWatch w WHERE w.samarit = ?u");
-            q.setParameter("u", samarit);
+            Query q = em.createNamedQuery("SamaritWatch.findByUserName");
+            q.setParameter("mail", email);
             watches = q.getResultList();
         } catch (Exception ex) {
             Logger.getLogger(EventFacade.class.getName()).log(Level.SEVERE, null, ex);
@@ -163,15 +140,19 @@ public class WatchFacade {
         Samarit sm = null;
         try {
             em.getTransaction().begin();
-            if (watch.getSamarit() != null) {
-                sm = em.find(Samarit.class, watch.getSamarit().getUserName());
-                watch.setSamaritWithWatch(sm);
+            System.out.println("AFter entityManager");
+            if (watch.getSamarit().getUserName() != null) {
+                System.out.println("Befor2e find " + watch.getSamarit().getUserName());
+                System.out.println(sm.getUserName());
             }
             em.persist(watch);
 
             em.getTransaction().commit();
 
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
         } finally {
+            em.close();
         }
         return watch;
 

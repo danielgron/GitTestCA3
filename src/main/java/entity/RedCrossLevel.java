@@ -24,8 +24,6 @@ public class RedCrossLevel implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     private String levelName;
-    @OneToMany(mappedBy = "redCrossLevel")
-    private List<ExternalUser> externalUsers;
     
     public RedCrossLevel(){
     }

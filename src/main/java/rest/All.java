@@ -5,14 +5,17 @@
  */
 package rest;
 
+import javax.json.Json;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import util.JsonValidator;
 
 /**
  * REST Web Service
@@ -40,5 +43,27 @@ public class All {
   public String getText() {
     return " {\"message\" : \"result for all\"}";
   }
+  
+  
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public String postSamaritterRequest(String json){
+      
+      try{
+          JsonValidator.validateRequest(json);
+      }
+      catch(Exception e){
+          return "[false]";
+      }
+      finally{
+          
+      }
+      return "[true]";
+      
+  }
+
+  //
+    
 
 }

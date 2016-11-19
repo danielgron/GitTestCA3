@@ -50,7 +50,7 @@ public class UserFacade implements IUserFacade {
         try {
             Log.writeToLog("Authenticating user: "+userName);
             EntityManager em = EntityConnector.getEntityManager();
-            TypedQuery<User> q = em.createQuery("select u from User u where u.email=:name",User.class);
+            TypedQuery<User> q = em.createQuery("select u from User u where u.userName=:name",User.class);
             q.setParameter("name", userName);
             User user = q.getSingleResult();
             if(PasswordStorage.verifyPassword(password, user.getPassword())){
@@ -70,9 +70,18 @@ public class UserFacade implements IUserFacade {
     
 
     private boolean isDatabaseUsersEmpty() {
-        EntityManager em = EntityConnector.getEntityManager();
+        EntityManager em = null;
+        List<User> us = null;
+        try
+        {
+        em =EntityConnector.getEntityManager();
         Query q = em.createQuery("select u from User u ", User.class);
-        List<User> us = q.getResultList();
+        us = q.getResultList();
+        }
+        finally{
+            em.close();
+        }
+        
         return us.isEmpty();
     }
     

@@ -43,7 +43,9 @@ public class StartData {
 
         User coordinator = new Samarit("coordinator", "test");
         User_Role coordinatorRole = new User_Role("Coordinator");
+        User_Role departmentAdminRole = new User_Role("DepartmentAdmin");
         d.addUser((Samarit)coordinator);
+        coordinator.addRoleToUser(departmentAdminRole);
         coordinator.addRoleToUser(userRole);
         coordinator.addRoleToUser(coordinatorRole);
     
