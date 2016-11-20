@@ -17,6 +17,7 @@ var app = angular.module('myApp.factories', []);
   app.factory('UserFactory', function(){
      
       var department = "None";
+      var createdUser = {};
       
       return{
           getDepartment : function(){
@@ -24,6 +25,12 @@ var app = angular.module('myApp.factories', []);
           },
           setDepartment : function(input){
               department = input;
+          },
+          getCreatedUser : function(){
+              return createdUser;
+          },
+          setCreatedUser : function(input){
+              createdUser = input;
           }
       };
   });
