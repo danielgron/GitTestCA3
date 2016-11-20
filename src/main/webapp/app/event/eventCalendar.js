@@ -61,11 +61,14 @@ angular.module('myApp.calendar', ['ngRoute', 'ui.calendar'])
 
 
                 $scope.events = [];
+                
                 calendarFactory.getEvents().then(function (response) {
                     $scope.events = response.data;
+                    window.console.log("try to get events: " + response.data);
                 }, function (error) {
                     $scope.status = 'Unable to load customer data: ' + error.message;
                 });
+                
                 /* event source that calls a function on every view switch */
                 $scope.eventsF = function (start, end, timezone, callback) {
                     var s = new Date(start).getTime() / 1000;

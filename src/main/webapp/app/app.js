@@ -7,8 +7,7 @@ angular.module('myApp', [
     'angular-jwt',
     'ui.bootstrap',
     'myApp.security',
-    'myApp.view1',
-    'myApp.view2',
+   
     'myApp.view3',
     'myApp.view4',
     'myApp.filters',
@@ -18,7 +17,8 @@ angular.module('myApp', [
     'myApp.calendar',
     'myApp.coordinator',
     'myApp.event',
-    'myApp.usercalendar'
+    'myApp.usercalendar',
+    'angularMoment'
 ])
         .config(['$routeProvider', function ($routeProvider) {
                 $routeProvider.otherwise({redirectTo: '/view1'});
