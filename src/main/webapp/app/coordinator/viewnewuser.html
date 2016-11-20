@@ -1,11 +1,5 @@
-    
-<h2>Create New User</h2>
-
-
-
-<form ng-submit="ctrl.createUser()">
-    <div class="col-md-6">
-    
+<div class="col-md-6">
+    <h1>{{ctrl.newUser.firstName}} tilføjet som samarit</h1>
     <div class="form-group">
         <label for="department">Afdeling</label>
         <input ng-model="ctrl.newUser.department.nameOfDepartment" readonly type="text" class="form-control" id="department">
@@ -65,7 +59,3 @@
     </div>
     
     </div>
-<input type="submit" id="submit" value="Submit" formaction="/coordinator/viewnewuser"/>
-
-
-</form>

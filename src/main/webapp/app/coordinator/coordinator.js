@@ -13,6 +13,11 @@ app.config(['$routeProvider', function ($routeProvider) {
             controller: 'CoordinatorCtrl',
             controllerAs: 'ctrl'
         });
+        $routeProvider.when('/coordinator/viewnewuser', {
+            templateUrl: 'app/coordinator/viewnewuser.html',
+            controller: 'CoordinatorCtrl',
+            controllerAs: 'ctrl'
+        });
     }]);
 
 app.controller('CoordinatorCtrl', ["$scope", "$http", 'UserFactory', function ($scope, $http, UserFactory) {
