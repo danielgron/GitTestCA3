@@ -19,7 +19,6 @@
       <property name="javax.persistence.jdbc.password" value="testpassword"/>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
       <property name="eclipselink.canonicalmodel.subpackage" value="pu_local"/>
-      <property name="javax.persistence.schema-generation.database.action" value="create"/>
     </properties>
   </persistence-unit>
   <!--
@@ -66,9 +65,4 @@
       <property name="eclipselink.canonicalmodel.subpackage" value="pu_test"/>
     </properties>
   </persistence-unit>
-<<<<<<< HEAD
-  --&gt;
-=======
-
->>>>>>> 382e8b874a7ed911047c0102de5be32753a8b79e
 </persistence>
