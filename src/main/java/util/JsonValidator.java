@@ -14,6 +14,7 @@ import entity.Request;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import com.google.gson.JsonObject;
 
 /**
  *
@@ -21,7 +22,7 @@ import java.util.logging.Logger;
  */
 public class JsonValidator {
 
-    private Gson gson = new Gson();
+    private static  Gson gson = new Gson();
     private static String json = "{\n"
             + "  \"id\" : 1,\n"
             + "  \"eventName\" : \"Julefrokost\",\n"
@@ -68,17 +69,29 @@ public class JsonValidator {
     private static JsonFactory factory = new JsonFactory();
     private static ObjectMapper mapper = new ObjectMapper();
 
-    public static boolean validateRequest(String json) {
+    public static String validateRequest(String json) {
         Request request;
-
+        ValidatorObject jsonObj = new ValidatorObject();
         mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         try {
             request = mapper.readValue(json, Request.class);
+            jsonObj.setValidJson(true);
+            jsonObj.setRequest(request);
         } catch (IOException ex) {
             Logger.getLogger(JsonValidator.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            jsonObj.setValidJson(false);
         }
-        return true;
+        
+
+  
+        try {
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonObj);
+        } catch (JsonProcessingException ex) {
+            Logger.getLogger(JsonValidator.class.getName()).log(Level.SEVERE, null, ex);
+                    return ex.getMessage();
+
+        }
+       
     }
 
     //public static createRequest
