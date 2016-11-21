@@ -8,11 +8,13 @@ package facades;
 import entity.Department;
 import entity.Event;
 import entity.Samarit;
+import entity.SamaritCalenderEvent;
 import entity.User;
 import entityconnection.EntityConnector;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import log.Log;
 
 /**
@@ -55,6 +57,12 @@ public class CoordinatorFacade {
         try{
             em.getTransaction().begin();
             e=em.find(Event.class, eventId);
+            List<Samarit> allFromDepartMent = e.getDepartment().getSamarites();
+            for (Samarit samarit : allFromDepartMent) {
+                if(checkAvalibilty(samarit,e, em)){
+                    availableSams.add(samarit);
+                }
+            }
         }
         catch(Exception ex){
             Log.writeToLog(ex.getMessage());
@@ -63,4 +71,24 @@ public class CoordinatorFacade {
             em.close();
         }
     }
+
+    /**
+     * Checks if the samarit is availble in the perriod
+     * that the Event Spans over
+     * @param samarit Samarit
+     * @param e Event
+     * @return True if Availiby else false
+     */
+    private boolean checkAvalibilty(Samarit samarit, Event e, EntityManager em) {
+        boolean available = true;
+        Query q = em.createQuery("SELECT s FROM Samarit AS s LEFT JOIN s.watches AS sw WHERE sw IS NULL OR sw.start >= '2016-11-03' AND sw.end <='2016-11-03'");
+        List<SamaritCalenderEvent> events = samarit.getWatches();
+        for (SamaritCalenderEvent event : events) {
+        
+                
+            }
+        
+        return true;
+        }
+    
 }

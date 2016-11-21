@@ -5,6 +5,7 @@
  */
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,10 @@ import javax.persistence.OneToMany;
  */
 @Entity
 public class Department implements Serializable {
+
+    @OneToMany(mappedBy = "department")
+    @JsonBackReference
+    private List<Event> events;
 
     @Id
     private String nameOfDepartment;
@@ -49,6 +54,16 @@ public class Department implements Serializable {
     public void setNameOfDepartment(String nameOfDepartment) {
         this.nameOfDepartment = nameOfDepartment;
     }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
+    
+    
     
     
 }
