@@ -56,7 +56,7 @@ public class Event implements Serializable {
     private String desc;
 
     @OneToMany(mappedBy = "event")
-    List<SamaritWatch> watches = new ArrayList();
+    List<SamaritCalenderEvent> watches = new ArrayList();
 
     public Event(Date start, Date end, boolean allDay, String name, String desc) {
         this.start = start;
@@ -76,7 +76,7 @@ public class Event implements Serializable {
         return id;
     }
 
-    public void addWatch(SamaritWatch watch){
+    public void addWatch(SamaritCalenderEvent watch){
         this.watches.add(watch);
         watch.setEvent(this);
         

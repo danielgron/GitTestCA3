@@ -44,7 +44,7 @@ public class Samarit extends User {
     
     @JsonManagedReference
     @OneToMany(mappedBy = "samarit",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
-    private List<SamaritWatch> watches = new ArrayList();
+    private List<SamaritCalenderEvent> watches = new ArrayList();
     
     public Samarit() {
     }
@@ -53,7 +53,7 @@ public class Samarit extends User {
         super(email, password);
     }
     
-    public void addWatch(SamaritWatch watch) {
+    public void addWatch(SamaritCalenderEvent watch) {
         this.getWatches().add(watch);
         watch.setSamarit(this);
     }
@@ -171,14 +171,14 @@ public class Samarit extends User {
     /**
      * @return the watches
      */
-    public List<SamaritWatch> getWatches() {
+    public List<SamaritCalenderEvent> getWatches() {
         return watches;
     }
 
     /**
      * @param watches the watches to set
      */
-    public void setWatches(List<SamaritWatch> watches) {
+    public void setWatches(List<SamaritCalenderEvent> watches) {
         this.watches = watches;
     }
     

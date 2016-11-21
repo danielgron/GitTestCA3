@@ -26,8 +26,8 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "SamaritWatch.findByUserName", query = "SELECT w FROM SamaritWatch AS w WHERE w.samarit.userName = :mail")})
-public class SamaritWatch implements Serializable {
+    @NamedQuery(name = "SamaritWatch.findByUserName", query = "SELECT w FROM SamaritCalenderEvent AS w WHERE w.samarit.userName = :mail")})
+public class SamaritCalenderEvent implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,6 +42,7 @@ public class SamaritWatch implements Serializable {
 
     private boolean watchSet;
     private boolean isAvailable;
+    private boolean allDay;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "WATCHSTART")
@@ -51,10 +52,10 @@ public class SamaritWatch implements Serializable {
     @Column(name = "WATCHEND")
     private Date end;
 
-    public SamaritWatch() {
+    public SamaritCalenderEvent() {
     }
 
-    public SamaritWatch(Samarit samarit, Event event, Date start, Date end, boolean isAvailable) {
+    public SamaritCalenderEvent(Samarit samarit, Event event, Date start, Date end, boolean isAvailable) {
         this.samarit = samarit;
         this.event = event;
         this.start = start;
@@ -77,7 +78,7 @@ public class SamaritWatch implements Serializable {
         return samarit;
     }
 
-    public SamaritWatch(Samarit samarit, Date start, boolean isAvailable) {
+    public SamaritCalenderEvent(Samarit samarit, Date start, boolean isAvailable) {
         this.samarit = samarit;
         samarit.addWatch(this);
         this.start = start;
@@ -164,6 +165,20 @@ public class SamaritWatch implements Serializable {
      */
     public void setEnd(Date end) {
         this.end = end;
+    }
+
+    /**
+     * @return the allDay
+     */
+    public boolean isAllDay() {
+        return allDay;
+    }
+
+    /**
+     * @param allDay the allDay to set
+     */
+    public void setAllDay(boolean allDay) {
+        this.allDay = allDay;
     }
 
 }
