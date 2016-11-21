@@ -55,6 +55,11 @@ angular.module('myApp.calendar', ['ngRoute', 'ui.calendar'])
 
 
                 };
+                
+                $scope.alertOnEventClick = function( event, jsEvent, view){
+                    calendarFactory.setClickedEventId(event.id);
+                    $scope.go('/singleevent');
+                };
 
                 //For using buttons to redirect
                 $scope.go = function (path) {

@@ -18,6 +18,7 @@ angular.module('myApp', [
     'myApp.coordinator',
     'myApp.event',
     'myApp.usercalendar',
+    'myApp.singleevent',
     'angularMoment'
 ])
         .config(['$routeProvider', function ($routeProvider) {
