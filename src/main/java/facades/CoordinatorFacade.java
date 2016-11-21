@@ -12,10 +12,12 @@ import entity.SamaritCalenderEvent;
 import entity.User;
 import entityconnection.EntityConnector;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import log.Log;
+import util.DateUtils;
 
 /**
  *
@@ -49,7 +51,7 @@ public class CoordinatorFacade {
         return s;
     }
 
-    public void getAvailableSamaritesFromEventId(int eventId) {
+    public List<Samarit> getAvailableSamaritesFromEventId(int eventId) {
         Event e;
         List<Samarit> availableSams = new ArrayList();
         EntityManager em = EntityConnector.getEntityManager();
@@ -70,6 +72,7 @@ public class CoordinatorFacade {
         finally{
             em.close();
         }
+        return availableSams;
     }
 
     /**
@@ -84,11 +87,21 @@ public class CoordinatorFacade {
         Query q = em.createQuery("SELECT s FROM Samarit AS s LEFT JOIN s.watches AS sw WHERE sw IS NULL OR sw.start >= '2016-11-03' AND sw.end <='2016-11-03'");
         List<SamaritCalenderEvent> events = samarit.getWatches();
         for (SamaritCalenderEvent event : events) {
+            if(
+                    DateUtils.dateBetween(event.getStart(),e.getStart(),e.getEnd()) ||
+                    DateUtils.dateBetween(event.getEnd(),e.getStart(),e.getEnd()) ||
+                    DateUtils.dateBetween(e.getStart(),event.getStart(),event.getEnd()) ||
+                    DateUtils.dateBetween(e.getStart(),event.getStart(),event.getEnd())
+                    ){
+                available = false;
+            }
         
                 
             }
         
-        return true;
+        return available;
         }
+
+    
     
 }

@@ -27,4 +27,9 @@ public class DateUtils {
   public static LocalDateTime asLocalDateTime(Date date) {
     return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
   }
+  
+  
+  public static boolean dateBetween(Date toCheck, Date start, Date end) {
+        return (toCheck.after(start) && toCheck.before(end));
+    }
 }

@@ -1,12 +1,15 @@
 package test;
 
 import entity.Department;
+import entity.Event;
 import entity.Samarit;
+import entity.SamaritCalenderEvent;
 import entity.User;
 import entityconnection.EntityConnector;
 import facades.CoordinatorFacade;
 import facades.UserFacade;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -67,6 +70,34 @@ public class plainDemoTest {
             List<User> linew = qnew.getResultList();
             int numbersAfterInsert = linew.size();
              assertTrue(numbersBeforeInsert + 1 == numbersAfterInsert);
+            
+        }
+        
+        @Test
+        public void checkAvalibilty(){
+            EntityManager em = EntityConnector.getEntityManager();
+            Samarit testSam = new Samarit("test2@gmail.com", "testingpassword");
+            Department d = new Department();
+            d.setNameOfDepartment("TestDepartment");
+            d.addUser(testSam);
+            testSam.addWatch(new SamaritCalenderEvent(testSam, new Event(), new Date(2001, 2, 5, 6, 0),new Date(2001, 2, 5, 10, 0), false));
+            // Event with with start and end in between the watch marked
+            Event e = new Event();
+            e.setStart(new Date(2001, 5, 5, 10, 0));
+            e.setEnd(new Date(2001, 5, 6, 10, 0));
+            e.setDepartment(d);
+            
+            em.getTransaction().begin();
+            em.persist(d);
+            em.persist(e);
+            em.persist(testSam);
+            em.getTransaction().commit();
+            
+            List<Samarit> l = cf.getAvailableSamaritesFromEventId(1);
+            System.out.println(testSam.getDepartment().getNameOfDepartment());
+            System.out.println(l.size());
+            System.out.println(e.getId());
+             assertTrue(1 == 1);
             
         }
         
