@@ -4,8 +4,18 @@ angular.module('myApp.usercalendar')
             var username = "coordinator"; //Hardcoded for testing
             var userCalendarFactory = {};
             var urlBase = "api/watch/"+username;
+            var watches =[];
+            
+            userCalendarFactory.getWatches = function(){
+                return watches;
+            };
+            
+            userCalendarFactory.addWatch = function(watch){
+                watches.push(watch);
+            };
 
             userCalendarFactory.getEvents = function () {
+                
                 return $http.get(urlBase);
             };
             

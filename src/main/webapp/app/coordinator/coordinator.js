@@ -13,12 +13,18 @@ app.config(['$routeProvider', function ($routeProvider) {
             controller: 'CoordinatorCtrl',
             controllerAs: 'ctrl'
         });
+        $routeProvider.when('/coordinator/viewnewuser', {
+            templateUrl: 'app/coordinator/viewnewuser.html',
+            controller: 'CoordinatorCtrl',
+            controllerAs: 'ctrl'
+        });
     }]);
 
-app.controller('CoordinatorCtrl', ["$scope", "$http", 'UserFactory', function ($scope, $http, UserFactory) {
+app.controller('CoordinatorCtrl', ['$window',"$scope", "$http", 'UserFactory', function ($window,$scope, $http, UserFactory) {
         var self = this;
         self.newUser = {};
         self.newUser.department ={nameOfDepartment: UserFactory.getDepartment()}; // Gets the department of the Admin!
+        self.createdUser = UserFactory.getCreatedUser();
         self.createUser = function () {
             var userTobesend = self.newUser;
             var jsonString = JSON.stringify(userTobesend);
@@ -27,8 +33,10 @@ app.controller('CoordinatorCtrl', ["$scope", "$http", 'UserFactory', function ($
             data: jsonString,
             url: 'api/coordinator'
           }).then(function successCallback(res) {
-            $scope.data = res.data;
-            console.log($scope.data);
+            self.data = res.data;
+            UserFactory.setCreatedUser(self.data);
+            $window.location.href = '#/coordinator/viewnewuser';
+            console.log(self.data);
           }, function errorCallback(res) {
             $scope.error = res.status + ": "+ res.data.statusText;
             console.log("ERROR");
@@ -38,5 +46,6 @@ app.controller('CoordinatorCtrl', ["$scope", "$http", 'UserFactory', function ($
         };
 
     }]);
+
 
 

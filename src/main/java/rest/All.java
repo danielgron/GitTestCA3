@@ -51,7 +51,8 @@ public class All {
   public String postSamaritterRequest(String json){
       
       try{
-          JsonValidator.validateRequest(json);
+          return JsonValidator.validateRequest(json);
+          
       }
       catch(Exception e){
           return "[false]";
@@ -59,7 +60,7 @@ public class All {
       finally{
           
       }
-      return "[true]";
+     
       
   }
 
