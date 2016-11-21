@@ -23,48 +23,9 @@ import com.google.gson.JsonObject;
 public class JsonValidator {
 
     private static  Gson gson = new Gson();
-    private static String json = "{\n"
-            + "  \"id\" : 1,\n"
-            + "  \"eventName\" : \"Julefrokost\",\n"
-            + "  \"numberGuests\" : 400,\n"
-            + "  \"agegroup\" : \"Børn\",\n"
-            + "  \"eventDate\" : 1479423600000,\n"
-            + "  \"venue\" : \"Vega\",\n"
-            + "  \"street\" : \"Julevej\",\n"
-            + "  \"zip\" : 1300,\n"
-            + "  \"doorsopen\" : 1479471503000,\n"
-            + "  \"eventstart\" : 1479471503000,\n"
-            + "  \"eventend\" : 1479471503000,\n"
-            + "  \"watchStart\" : 1479471503000,\n"
-            + "  \"catering\" : \"Klares\",\n"
-            + "  \"treatmentfacility\" : true,\n"
-            + "  \"comments\" : \"Test\",\n"
-            + "  \"contact\" : {\n"
-            + "    \"id\" : 2,\n"
-            + "    \"name\" : \"Hans Jensen\",\n"
-            + "    \"phone\" : \"44556677\",\n"
-            + "    \"mail\" : \"dennis@schmock.eu\"\n"
-            + "  },\n"
-            + "  \"invoice\" : {\n"
-            + "    \"id\" : 2,\n"
-            + "    \"company\" : \"Google\",\n"
-            + "    \"cvr\" : \"55667788\",\n"
-            + "    \"name\" : \"test\",\n"
-            + "    \"street\" : \"Somestreet\",\n"
-            + "    \"zip\" : \"2222\"\n"
-            + "  },\n"
-            + "  \"medics\" : true,\n"
-            + "  \"ambulance\" : true,\n"
-            + "  \"emergencyOffice\" : true,\n"
-            + "  \"stretcherTeam\" : true,\n"
-            + "  \"responseTeam\" : true,\n"
-            + "  \"visibility\" : \"visi\"\n"
-            + "}";
+    
 
-    public static void main(String[] args) {
-
-        validateRequest(json);
-    }
+    
 
     private static JsonFactory factory = new JsonFactory();
     private static ObjectMapper mapper = new ObjectMapper();
