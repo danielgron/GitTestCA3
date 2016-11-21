@@ -27,7 +27,7 @@ import javax.persistence.TemporalType;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "SamaritWatch.findByUserName", query = "SELECT w FROM SamaritWatch AS w WHERE w.samarit.userName = :mail")})
-public class SamaritWatch implements Serializable {
+public class SamaritCalenderEvent implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,10 +51,10 @@ public class SamaritWatch implements Serializable {
     @Column(name = "WATCHEND")
     private Date end;
 
-    public SamaritWatch() {
+    public SamaritCalenderEvent() {
     }
 
-    public SamaritWatch(Samarit samarit, Event event, Date start, Date end, boolean isAvailable) {
+    public SamaritCalenderEvent(Samarit samarit, Event event, Date start, Date end, boolean isAvailable) {
         this.samarit = samarit;
         this.event = event;
         this.start = start;
@@ -77,7 +77,7 @@ public class SamaritWatch implements Serializable {
         return samarit;
     }
 
-    public SamaritWatch(Samarit samarit, Date start, boolean isAvailable) {
+    public SamaritCalenderEvent(Samarit samarit, Date start, boolean isAvailable) {
         this.samarit = samarit;
         samarit.addWatch(this);
         this.start = start;

@@ -7,7 +7,7 @@ package facades;
 
 import entity.Event;
 import entity.Samarit;
-import entity.SamaritWatch;
+import entity.SamaritCalenderEvent;
 import entity.User;
 import entityconnection.EntityConnector;
 import java.time.LocalDate;
@@ -33,9 +33,9 @@ public class WatchFacade {
 
     }
 
-    public List<SamaritWatch> getWatches() {
+    public List<SamaritCalenderEvent> getWatches() {
         EntityManager em = EntityConnector.getEntityManager();
-        List<SamaritWatch> watches = null;
+        List<SamaritCalenderEvent> watches = null;
         try {
             Query q = em.createQuery("SELECT w FROM SamaritWacth w");
             watches = q.getResultList();
@@ -47,9 +47,9 @@ public class WatchFacade {
         return watches;
     }
 
-    public List<SamaritWatch> getWatchesForUser(String email) {
+    public List<SamaritCalenderEvent> getWatchesForUser(String email) {
         EntityManager em = EntityConnector.getEntityManager();
-        List<SamaritWatch> watches = null;
+        List<SamaritCalenderEvent> watches = null;
         try {
             User samarit = em.find(Samarit.class, email);
             Query q = em.createNamedQuery("SamaritWatch.findByUserName");
@@ -63,11 +63,11 @@ public class WatchFacade {
         return watches;
     }
 
-    public SamaritWatch getWatch(int id) {
+    public SamaritCalenderEvent getWatch(int id) {
         EntityManager em = EntityConnector.getEntityManager();
-        SamaritWatch watch = null;
+        SamaritCalenderEvent watch = null;
         try {
-            watch = em.find(SamaritWatch.class, id);
+            watch = em.find(SamaritCalenderEvent.class, id);
 
         } catch (Exception ex) {
             Logger.getLogger(EventFacade.class.getName()).log(Level.SEVERE, null, ex);
@@ -77,7 +77,7 @@ public class WatchFacade {
         return watch;
     }
 
-    public SamaritWatch updateWatch(SamaritWatch watch) {
+    public SamaritCalenderEvent updateWatch(SamaritCalenderEvent watch) {
         EntityManager em = EntityConnector.getEntityManager();
         try {
             em.getTransaction().begin();
@@ -93,11 +93,11 @@ public class WatchFacade {
         return watch;
     }
 
-    public SamaritWatch deleteWatch(Integer id) {
+    public SamaritCalenderEvent deleteWatch(Integer id) {
         EntityManager em = EntityConnector.getEntityManager();
-        SamaritWatch watch = null;
+        SamaritCalenderEvent watch = null;
         try {
-            watch = em.find(SamaritWatch.class, id);
+            watch = em.find(SamaritCalenderEvent.class, id);
             em.getTransaction().begin();
             em.remove(watch);
             em.getTransaction().commit();
@@ -110,7 +110,7 @@ public class WatchFacade {
         return watch;
     }
 
-    public SamaritWatch addWatch(SamaritWatch watch, String email, Integer eventId) {
+    public SamaritCalenderEvent addWatch(SamaritCalenderEvent watch, String email, Integer eventId) {
         EntityManager em = EntityConnector.getEntityManager();
         try {
             em.getTransaction().begin();
@@ -135,7 +135,7 @@ public class WatchFacade {
         return watch;
     }
 
-    public SamaritWatch addUnavailForWatch(SamaritWatch watch) {
+    public SamaritCalenderEvent addUnavailForWatch(SamaritCalenderEvent watch) {
         EntityManager em = EntityConnector.getEntityManager();
         Samarit sm = null;
         try {

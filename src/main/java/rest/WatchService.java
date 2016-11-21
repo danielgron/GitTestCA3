@@ -9,7 +9,7 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import entity.SamaritWatch;
+import entity.SamaritCalenderEvent;
 import facades.WatchFacade;
 import java.util.List;
 import java.util.logging.Level;
@@ -66,8 +66,8 @@ public class WatchService {
     @Consumes(MediaType.APPLICATION_JSON)
     public void setWatch(@PathParam("id") String id,String sWatch) {
         System.out.println("TESTER!");
-        SamaritWatch sw = null;
-        sw = gson.fromJson(sWatch, SamaritWatch.class);
+        SamaritCalenderEvent sw = null;
+        sw = gson.fromJson(sWatch, SamaritCalenderEvent.class);
         wf.addUnavailForWatch(sw);
 
     }
@@ -76,7 +76,7 @@ public class WatchService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getWatchesForSamarit(@PathParam("id") String id) {
-        List<SamaritWatch> watches = wf.getWatchesForUser(id);
+        List<SamaritCalenderEvent> watches = wf.getWatchesForUser(id);
         try {
             return mapper.writeValueAsString(watches);
         } catch (JsonProcessingException ex) {
