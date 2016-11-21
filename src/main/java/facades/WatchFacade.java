@@ -37,7 +37,7 @@ public class WatchFacade {
         EntityManager em = EntityConnector.getEntityManager();
         List<SamaritCalenderEvent> watches = null;
         try {
-            Query q = em.createQuery("SELECT w FROM SamaritWacth w");
+            Query q = em.createQuery("SELECT w FROM SamaritCalenderEvent w");
             watches = q.getResultList();
         } catch (Exception ex) {
             Logger.getLogger(EventFacade.class.getName()).log(Level.SEVERE, null, ex);
@@ -47,13 +47,13 @@ public class WatchFacade {
         return watches;
     }
 
-    public List<SamaritCalenderEvent> getWatchesForUser(String email) {
+    public List<SamaritCalenderEvent> getWatchesForUser(String userName) {
         EntityManager em = EntityConnector.getEntityManager();
         List<SamaritCalenderEvent> watches = null;
         try {
-            User samarit = em.find(Samarit.class, email);
+            User samarit = em.find(Samarit.class, userName);
             Query q = em.createNamedQuery("SamaritWatch.findByUserName");
-            q.setParameter("mail", email);
+            q.setParameter("userName", userName);
             watches = q.getResultList();
         } catch (Exception ex) {
             Logger.getLogger(EventFacade.class.getName()).log(Level.SEVERE, null, ex);
@@ -137,14 +137,16 @@ public class WatchFacade {
 
     public SamaritCalenderEvent addUnavailForWatch(SamaritCalenderEvent watch) {
         EntityManager em = EntityConnector.getEntityManager();
+                if (watch==null){
+                    return null;
+                }
         Samarit sm = null;
         try {
             em.getTransaction().begin();
-            System.out.println("AFter entityManager");
             if (watch.getSamarit().getUserName() != null) {
-                System.out.println("Befor2e find " + watch.getSamarit().getUserName());
-                System.out.println(sm.getUserName());
+                sm = em.find(Samarit.class, "coordinator");
             }
+            watch.setSamarit(sm);
             em.persist(watch);
 
             em.getTransaction().commit();

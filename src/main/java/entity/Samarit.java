@@ -5,6 +5,7 @@
  */
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class Samarit extends User {
     private int shiftsTotal;
 //  private List<VagtKort> vagtKorts; // Not implemented yet!
     
-    @JsonManagedReference
+    @JsonBackReference
     @OneToMany(mappedBy = "samarit",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private List<SamaritCalenderEvent> watches = new ArrayList();
     
@@ -55,7 +56,6 @@ public class Samarit extends User {
     
     public void addWatch(SamaritCalenderEvent watch) {
         this.getWatches().add(watch);
-        watch.setSamarit(this);
     }
     
     public String getFirstName() {
