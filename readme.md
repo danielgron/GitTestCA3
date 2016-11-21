@@ -1,5 +1,5 @@
 <div >
-
+[![Build Status](https://travis-ci.org/danielgron/RK-TrialRun.svg?branch=master)](https://travis-ci.org/danielgron/RK-TrialRun)
 <h2>
 Vagtmanager 2.0
 </h2>
