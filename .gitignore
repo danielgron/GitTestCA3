@@ -92,3 +92,4 @@ src/main/java/rest/ApplicationConfig.java
 
 # Derby log
 derby.log
+LogFile*.*
