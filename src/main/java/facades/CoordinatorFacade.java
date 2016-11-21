@@ -6,9 +6,12 @@
 package facades;
 
 import entity.Department;
+import entity.Event;
 import entity.Samarit;
 import entity.User;
 import entityconnection.EntityConnector;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import log.Log;
 
@@ -42,5 +45,22 @@ public class CoordinatorFacade {
             em.close();
         }
         return s;
+    }
+
+    public void getAvailableSamaritesFromEventId(int eventId) {
+        Event e;
+        List<Samarit> availableSams = new ArrayList();
+        EntityManager em = EntityConnector.getEntityManager();
+        //if (s.getRedCroosLevel()==null) throw new NoRedCrossLevelException();
+        try{
+            em.getTransaction().begin();
+            e=em.find(Event.class, eventId);
+        }
+        catch(Exception ex){
+            Log.writeToLog(ex.getMessage());
+        }
+        finally{
+            em.close();
+        }
     }
 }

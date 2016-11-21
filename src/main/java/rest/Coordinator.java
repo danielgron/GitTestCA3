@@ -10,6 +10,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import util.JSON_Converter;
@@ -24,6 +25,14 @@ public class Coordinator {
   public String getSomething(){
     String now = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss").format(new Date());
     return "{\"message\" : \"REST call accesible by only authenticated ADMINS\",\n"+"\"serverTime\": \""+now +"\"}"; 
+  }
+  
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("{eventId}")
+  public String getFreeSamarites(@PathParam("id") String id){
+      cf.getAvailableSamaritesFromEventId(Integer.parseInt(id));
+    return "{\"message\" : \"REST call accesible by only authenticated ADMINS\",\n"+"\"serverTime\": \"" +"\"}"; 
   }
   @POST
   @Produces(MediaType.APPLICATION_JSON)
