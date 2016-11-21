@@ -47,16 +47,13 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.usercalendar', 'angularMome
                         ]
                     }
                 ];
-
-                $scope.setCalDate = function (date, jsEvent, view) {
-                    var selectedDate = moment(date).format('YYYY-MM-DD');				    // set dateFrom based on user click on calendar
-                   // $scope.calendarDate[0].events[0].start = selectedDate;				    // update Calendar event dateFrom
-                   // $scope.selectedDate = $filter('date')(selectedDate, 'yyyy-MM-dd');
-                   // $scope.watches.push($scope.calendarDate);
-                    window.console.log($scope.watches);
+                
+                //This method is for setting a whole day to unavail, by clicking it
+                $scope.setUnavailForWatch = function (date, jsEvent, view) {
+                   
 
                     var watch = {};
-                    watch.title;
+                    watch.title = "unavail";
                     watch.samarit = {};
                     watch.start = date;
                     watch.end = date;
@@ -98,7 +95,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.usercalendar', 'angularMome
                         eventResize: $scope.alertOnResize,
                         eventRender: $scope.eventRender,
                         dayRender: $scope.dayRender,
-                        dayClick: $scope.setCalDate,
+                        dayClick: $scope.setUnavailForWatch,
                         renderEvent: $scope.renderEvent
                     }
                 };
@@ -111,32 +108,19 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.usercalendar', 'angularMome
 
 
 
-//                $scope.dayClick = function (date, jsEvent, view)
-//                {
-//                    if (uiUserCalendarConfig.calendars['userCalender'].avail) {
-//                        uiUserCalendarConfig.calendars['userCalender'].fullCalendar('gotoDate', date);
-//                        uiUserCalendarConfig.calendars['userCalender'].fullCalendar('changeView', 'agendaDay');
-//                    } else {
-//                        var watch = {};
-//                watch.title = "";
-//                watch.samarit = {};
-//                watch.start = date;
-//                watch.samarit.email = "coordinator";
-//                watch.isAvailable = false;
-//                userCalendarFactory.setAvailable(watch);
-//
-//                $scope.addWatch(watch);
-//                    }
-//                };
+
                 //For using buttons to redirect
                 $scope.go = function (path) {
                     $location.path(path);
                 };
+                
                 userCalendarFactory.getEvents().then(function (response) {
                     $scope.watches = response.data;
+                    window.console.log(response.data);
                 }, function (error) {
                     $scope.status = 'Unable to load customer data: ' + error.message;
                 });
+                
                 /* event source that calls a function on every view switch */
                 $scope.eventsF = function (start, end, timezone, callback) {
                     var s = new Date(start).getTime() / 1000;

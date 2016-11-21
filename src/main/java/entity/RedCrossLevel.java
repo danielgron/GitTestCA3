@@ -5,6 +5,7 @@
  */
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
@@ -19,6 +20,7 @@ import javax.persistence.OneToMany;
 public class RedCrossLevel implements Serializable {
 
     @OneToMany(mappedBy = "redCrossLevel")
+        @JsonBackReference
     private List<Samarit> samarits;
 
     private static final long serialVersionUID = 1L;

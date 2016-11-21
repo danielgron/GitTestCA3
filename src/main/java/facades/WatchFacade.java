@@ -52,7 +52,7 @@ public class WatchFacade {
         List<SamaritCalenderEvent> watches = null;
         try {
             User samarit = em.find(Samarit.class, userName);
-            Query q = em.createNamedQuery("SamaritWatch.findByUserName");
+            Query q = em.createNamedQuery("SamaritCalenderEvent.findByUserName");
             q.setParameter("userName", userName);
             watches = q.getResultList();
         } catch (Exception ex) {

@@ -23,7 +23,7 @@ import javax.validation.constraints.NotNull;
 
 @DiscriminatorColumn(name = "DT", discriminatorType = DiscriminatorType.CHAR)
 public class Samarit extends User {
-    
+
     @ManyToOne(cascade = CascadeType.MERGE)
     private Department department;
 //  private Dato dato; // Not Implemented!
@@ -33,7 +33,7 @@ public class Samarit extends User {
     private String zip;
     private String city;
     private String phone;
-    
+
     @ManyToOne(cascade = CascadeType.MERGE)
     @NotNull
     private RedCrossLevel redCrossLevel; // f.eks Samarit, eller Teamleder
@@ -42,114 +42,114 @@ public class Samarit extends User {
     private int shiftsThisSeason;
     private int shiftsTotal;
 //  private List<VagtKort> vagtKorts; // Not implemented yet!
-    
+
+    @OneToMany(mappedBy = "samarit", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JsonBackReference
-    @OneToMany(mappedBy = "samarit",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private List<SamaritCalenderEvent> watches = new ArrayList();
-    
+
     public Samarit() {
     }
-    
+
     public Samarit(String email, String password) {
         super(email, password);
     }
-    
+
     public void addWatch(SamaritCalenderEvent watch) {
         this.getWatches().add(watch);
     }
-    
+
     public String getFirstName() {
         return firstName;
     }
-    
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-    
+
     public String getLastName() {
         return lastName;
     }
-    
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    
+
     public String getAdresse() {
         return adresse;
     }
-    
+
     public void setAdresse(String adresse) {
         this.adresse = adresse;
     }
-    
+
     public String getZip() {
         return zip;
     }
-    
+
     public void setZip(String zip) {
         this.zip = zip;
     }
-    
+
     public String getCity() {
         return city;
     }
-    
+
     public void setCity(String city) {
         this.city = city;
     }
-    
+
     public String getPhone() {
         return phone;
     }
-    
+
     public void setPhone(String phone) {
         this.phone = phone;
     }
-    
+
     public RedCrossLevel getRedCroosLevel() {
         return getRedCrossLevel();
     }
-    
+
     public void setRedCroosLevel(RedCrossLevel redCroosLevel) {
         this.setRedCrossLevel(redCroosLevel);
     }
-    
+
     public String getMedicalLevel() {
         return medicalLevel;
     }
-    
+
     public void setMedicalLevel(String medicalLevel) {
         this.medicalLevel = medicalLevel;
     }
-    
+
     public String getDriverLevel() {
         return driverLevel;
     }
-    
+
     public void setDriverLevel(String driverLevel) {
         this.driverLevel = driverLevel;
     }
-    
+
     public int getShiftsThisSeason() {
         return shiftsThisSeason;
     }
-    
+
     public void setShiftsThisSeason(int shiftsThisYear) {
         this.shiftsThisSeason = shiftsThisYear;
     }
-    
+
     public int getShiftsTotal() {
         return shiftsTotal;
     }
-    
+
     public void setShiftsTotal(int shiftsTotal) {
         this.shiftsTotal = shiftsTotal;
     }
-    
+
     public Department getDepartment() {
         return department;
     }
-    
+
     public void setDepartment(Department department) {
         this.department = department;
     }
@@ -181,5 +181,5 @@ public class Samarit extends User {
     public void setWatches(List<SamaritCalenderEvent> watches) {
         this.watches = watches;
     }
-    
+
 }

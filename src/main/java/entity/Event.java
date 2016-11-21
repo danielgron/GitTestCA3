@@ -5,6 +5,7 @@
  */
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,7 +51,7 @@ public class Event implements Serializable {
     private Date end;
 
     private boolean allDay;
-    
+
     @ManyToOne
     private Department department;
 
@@ -60,6 +61,7 @@ public class Event implements Serializable {
     private String desc;
 
     @OneToMany(mappedBy = "event")
+    @JsonBackReference
     List<SamaritCalenderEvent> watches = new ArrayList();
 
     public Event(Date start, Date end, boolean allDay, String name, String desc) {
@@ -80,11 +82,12 @@ public class Event implements Serializable {
         return id;
     }
 
-    public void addWatch(SamaritCalenderEvent watch){
+    public void addWatch(SamaritCalenderEvent watch) {
         this.watches.add(watch);
         watch.setEvent(this);
-        
+
     }
+
     /**
      * @param id the id to set
      */

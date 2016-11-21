@@ -83,13 +83,15 @@ public class WatchService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getWatchesForSamarit(@PathParam("id") String id) {
-        List<SamaritCalenderEvent> watches = wf.getWatchesForUser(id);
+        List<SamaritCalenderEvent> watches = null;
+        watches = wf.getWatchesForUser(id);
+        String json = "fail";
         try {
-            return mapper.writeValueAsString(watches);
+            json =  mapper.writeValueAsString(watches);
         } catch (JsonProcessingException ex) {
             Logger.getLogger(WatchService.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        return json;
     }
 
 }
