@@ -1,0 +1,2 @@
+Nov 20, 2016 9:01:01 PM log.Log writeToLog
+INFO: Server has Started!

@@ -4,7 +4,7 @@
         <div class="well col-md-12">
 
             <div class="btn-group-vertical  col-md-2">
-                <button type="button" ng-click="test()" class="btn btn-success text-left"><i class="glyphicon glyphicon-edit"/> Rediger</button>
+                <button type="button" ng-click="" class="btn btn-success text-left"><i class="glyphicon glyphicon-edit"/> Rediger</button>
                 <button type="button" ng-click="go('/availcal')" class="btn btn-success text-left"><i class="glyphicon glyphicon-edit"/> Stamdata</button>
                 <button type="button" ng-click="go('/availcal')" class="btn btn-success text-left"><i class="glyphicon glyphicon-edit"/> Rediger</button>
 
@@ -15,7 +15,7 @@
                     <h4>{{alertMessage}}</h4>
                 </div>
                 <div class="btn-toolbar">
-                    <p class="pull-right lead">Min kalender {{avail}}</p>
+                    <p class="pull-right lead">Min kalender</p>
                     <div class="btn-group">
                         <button type="button" ng-click="listEvents()" class="btn btn-primary"><i class="glyphicon glyphicon-list"/> List vagter</button>
                         <button class="btn btn-success" ng-click="changeView('agendaDay', 'userCalender')">Dag</button>
@@ -26,6 +26,8 @@
                 </div>
 
                 <div data-tap-disabled="true" class="calendar" ng-model="eventSources" typeId="{{avail}}" calendar="userCalender" ui-user-calendar="uiConfig.calendar"></div>
+            {{calendarDate}}
+            
             </div>
         </div>
 </div>

@@ -24,7 +24,7 @@ public class CoordinatorFacade {
         //s.setDepartment(df.getDepartment(s.getDepartment().getNameOfDepartment()));
         Department d = df.getDepartment(s.getDepartment().getNameOfDepartment());
         d.addUser(s);
-        Log.writeToLog("Adding new samarite");
+        //Log.writeToLog("Adding new samarite");
         EntityManager em = EntityConnector.getEntityManager();
         //if (s.getRedCroosLevel()==null) throw new NoRedCrossLevelException();
         try{

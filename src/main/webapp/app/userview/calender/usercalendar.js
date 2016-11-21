@@ -15,7 +15,7 @@ angular.module('ui.usercalendar', [])
         })
         .controller('uiUserCalendarCtrl', ['$scope', '$locale',
             function ($scope, $locale) {
-
+                
                 var sources = $scope.eventSources;
                 var extraEventSignature = $scope.calendarWatchEvent ? $scope.calendarWatchEvent : angular.noop;
 
