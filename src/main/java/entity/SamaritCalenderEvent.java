@@ -26,7 +26,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "SamaritWatch.findByUserName", query = "SELECT w FROM SamaritWatch AS w WHERE w.samarit.userName = :mail")})
+    @NamedQuery(name = "SamaritWatch.findByUserName", query = "SELECT w FROM SamaritCalenderEvent AS w WHERE w.samarit.userName = :mail")})
 public class SamaritCalenderEvent implements Serializable {
 
     @Id
@@ -42,6 +42,7 @@ public class SamaritCalenderEvent implements Serializable {
 
     private boolean watchSet;
     private boolean isAvailable;
+    private boolean allDay;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "WATCHSTART")
@@ -164,6 +165,20 @@ public class SamaritCalenderEvent implements Serializable {
      */
     public void setEnd(Date end) {
         this.end = end;
+    }
+
+    /**
+     * @return the allDay
+     */
+    public boolean isAllDay() {
+        return allDay;
+    }
+
+    /**
+     * @param allDay the allDay to set
+     */
+    public void setAllDay(boolean allDay) {
+        this.allDay = allDay;
     }
 
 }

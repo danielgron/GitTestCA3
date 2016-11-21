@@ -42,11 +42,13 @@ angular.module('myApp.calendar', ['ngRoute', 'ui.calendar'])
                         eventDrop: $scope.alertOnDrop,
                         eventResize: $scope.alertOnResize,
                         eventRender: $scope.eventRender,
-                        dayClick: $scope.dayClick
+                        dayClick: $scope.dayClick,
+                        eventLimitClick: $scope.eventLimitClick
                     }
                 };
+                
                 $scope.dayClick = function (date, jsEvent, view, cell) {
-                    alert('wrong calender')
+                    alert('wrong calender');
                     angular.forEach(function (date) {
                         window.console.log(date);
                     });
