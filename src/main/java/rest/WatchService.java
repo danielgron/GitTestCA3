@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import entity.SamaritCalenderEvent;
 import facades.WatchFacade;
+import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -64,10 +65,16 @@ public class WatchService {
     @POST
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void setWatch(@PathParam("id") String id,String sWatch) {
-        System.out.println("TESTER!");
+    public void setWatch(@PathParam("id") String id, String sWatch) {
         SamaritCalenderEvent sw = null;
-        sw = gson.fromJson(sWatch, SamaritCalenderEvent.class);
+
+        try {
+            sw = mapper.readValue(sWatch, SamaritCalenderEvent.class);
+            sw.getSamarit().setUserName(sWatch);
+
+        } catch (IOException ex) {
+            Logger.getLogger(WatchService.class.getName()).log(Level.SEVERE, null, ex);
+        }
         wf.addUnavailForWatch(sw);
 
     }

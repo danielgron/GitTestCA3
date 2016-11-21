@@ -50,17 +50,19 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.usercalendar', 'angularMome
 
                 $scope.setCalDate = function (date, jsEvent, view) {
                     var selectedDate = moment(date).format('YYYY-MM-DD');				    // set dateFrom based on user click on calendar
-                    $scope.calendarDate[0].events[0].start = selectedDate;				    // update Calendar event dateFrom
-                    $scope.selectedDate = $filter('date')(selectedDate, 'yyyy-MM-dd');
-                    $scope.watches.push($scope.calendarDate);
+                   // $scope.calendarDate[0].events[0].start = selectedDate;				    // update Calendar event dateFrom
+                   // $scope.selectedDate = $filter('date')(selectedDate, 'yyyy-MM-dd');
+                   // $scope.watches.push($scope.calendarDate);
                     window.console.log($scope.watches);
 
                     var watch = {};
                     watch.title;
                     watch.samarit = {};
                     watch.start = date;
-                    watch.samarit.email = "coordinator";
+                    watch.end = date;
+                    watch.samarit.userName = "coordinator";
                     watch.isAvailable = false;
+                    watch.allDay = true;
                     userCalendarFactory.setAvailable(watch).then(function (response) {
                         window.console.log("great succes" + response.data);
                     }, function (response) {

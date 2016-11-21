@@ -26,14 +26,13 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "SamaritWatch.findByUserName", query = "SELECT w FROM SamaritCalenderEvent AS w WHERE w.samarit.userName = :mail")})
+    @NamedQuery(name = "SamaritCalenderEvent.findByUserName", query = "SELECT w FROM SamaritCalenderEvent AS w WHERE w.samarit.userName = :userName")})
 public class SamaritCalenderEvent implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @JsonBackReference
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Samarit samarit;
 
@@ -95,6 +94,7 @@ public class SamaritCalenderEvent implements Serializable {
      */
     public void setSamarit(Samarit samarit) {
         this.samarit = samarit;
+        samarit.addWatch(this);
     }
 
     /**
