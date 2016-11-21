@@ -5,7 +5,9 @@
  */
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,13 +26,23 @@ public class Contact implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @OneToMany(mappedBy = "contact")
-    private List<Request> request;
+    @JsonBackReference
+    private List<Request> request = new ArrayList();
 
     private String name;
     private String phone;
     private String mail;
+
+    public Contact() {
+    }
+
+    public Contact(String name, String phone, String mail) {
+        this.name = name;
+        this.phone = phone;
+        this.mail = mail;
+    }
 
     public Long getId() {
         return id;
@@ -95,8 +107,5 @@ public class Contact implements Serializable {
     public void setMail(String mail) {
         this.mail = mail;
     }
-    
-    
-    
-    
+
 }

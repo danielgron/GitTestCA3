@@ -29,6 +29,19 @@ public class Invoice implements Serializable {
     private String street;
     private String zip;
 
+    public Invoice() {
+    }
+
+    public Invoice(String company, String cvr, String name, String street, String zip) {
+        this.company = company;
+        this.cvr = cvr;
+        this.name = name;
+        this.street = street;
+        this.zip = zip;
+    }
+    
+    
+
     public Long getId() {
         return id;
     }
