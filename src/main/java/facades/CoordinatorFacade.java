@@ -67,7 +67,7 @@ public class CoordinatorFacade {
             }
         }
         catch(Exception ex){
-            Log.writeToLog(ex.getMessage());
+            Log.writeToLog( "Exception in Coordinator Facade getAvailable Samarits: " + ex.getMessage());
         }
         finally{
             em.close();
