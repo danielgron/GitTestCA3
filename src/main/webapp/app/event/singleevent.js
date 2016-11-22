@@ -11,6 +11,8 @@ angular.module('myApp.singleevent', ['ngRoute'])
                  self.eventid = calendarFactory.getClickedEventid();
                  self.event;
                  getClickedEvent();
+                 self.avaliableSam = [];
+                 getAvalibleSam();
                  
                  function getClickedEvent(){
                      calendarFactory.getSingleEvent(self.eventid)
@@ -20,7 +22,14 @@ angular.module('myApp.singleevent', ['ngRoute'])
                          console.log("Error" + error);
                      };
                  }
-                 console.log("stop");
+                 
+                 function getAvalibleSam(){
+                     var sam1 = {name:"Hans", redcrosslevel : "Teamleder"};
+                     var sam2 = {name:"Grete", redcrosslevel : "Samarit"};
+                   self.avaliableSam.push(sam1);
+                   self.avaliableSam.push(sam2);
+                 };
+                 
                  
             }]);
                 
