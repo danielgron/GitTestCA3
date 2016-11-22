@@ -16,7 +16,7 @@
     <h2>Event Name: {{ctrl.event.name}}</h2>
     <h2>Event Start: {{ctrl.event.start}}</h2>
     <h2>Event End: {{ctrl.event.end}}</h2>
-    <h2>Event Department: {{ctrl.event.department}}</h2>
+    <h2>Event Department: {{ctrl.event.department.nameOfDepartment}}</h2>
 
 </div>
         
@@ -28,14 +28,14 @@
                 <thead>
                     <tr>
                         <th>Navn</th> 
-                        <th> Uddannelse</th> 
+                        <th> Afdeling</th> 
                         
                     </tr>
                 </thead>
                 <tbody ng-repeat="sam in ctrl.avaliableSam">
                     <tr>
-                        <td>{{sam.name}}</td>
-                        <td>{{sam.redcrosslevel}}</td>
+                        <td>{{sam.userName}}</td>
+                        <td>{{sam.department.nameOfDepartment}}</td>
                     </tr>
                 </tbody>
             </table>

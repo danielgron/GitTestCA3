@@ -24,10 +24,17 @@ angular.module('myApp.singleevent', ['ngRoute'])
                  }
                  
                  function getAvalibleSam(){
-                     var sam1 = {name:"Hans", redcrosslevel : "Teamleder"};
-                     var sam2 = {name:"Grete", redcrosslevel : "Samarit"};
-                   self.avaliableSam.push(sam1);
-                   self.avaliableSam.push(sam2);
+                     calendarFactory.getAvaliableSamaritsForEvent(self.eventid)
+                             .then(function(response){
+                                 self.avaliableSam = response.data;
+                                 if(self.avaliableSam.length === 0){
+                                     self.avaliableSam.push({userName:"Non Avaliable"});
+                                 }
+                     }), function(error){
+                     console.log("Error" + error);
+                     };
+                         
+                     
                  };
                  
                  

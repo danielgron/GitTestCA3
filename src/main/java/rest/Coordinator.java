@@ -44,21 +44,22 @@ public class Coordinator {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   @Path("{eventId}")
-  public String getFreeSamarites(@PathParam("eventId") String id){
-      List<Samarit> sams = cf.getAvailableSamaritesFromEventId(Integer.parseInt(id));
-      String json = "fail";
-        if (sams.size()>0){
+  public String getFreeSamarites(@PathParam("eventId") String id) throws Exception{
         try {
-             ObjectMapper mapper = new ObjectMapper();
+      List<Samarit> sams = cf.getAvailableSamaritesFromEventId(Integer.parseInt(id));
+        if (sams.size()>0){
+            ObjectMapper mapper = new ObjectMapper();
             SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("password");
             FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter", theFilter);
-            json =  mapper.writer(filters).writeValueAsString(sams);
-        } catch (JsonProcessingException ex) {
-            Logger.getLogger(Coordinator.class.getName()).log(Level.SEVERE, null, ex);
+           return mapper.writer(filters).writeValueAsString(sams);
         }
+        else{
+            return "[]"; // returns an empty array if the size of the list is 0
         }
-       
-        return json;
+        } catch (Exception ex) {
+            log.Log.writeToLog("Failed at Getting Availble Samarits: " + ex);
+            throw ex;
+        } 
   }
   
   @POST
