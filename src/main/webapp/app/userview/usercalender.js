@@ -64,7 +64,11 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment']
                 $scope.addWatch = function (watch) {
 
                 };
-
+                $scope.eventRender = function(event,element){
+                    if(event.title === 'unavail'){
+                        event.rendering = 'background';
+                    }
+                }
 
 
                 //This method is for setting a whole day to unavail, by clicking it
@@ -75,19 +79,23 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment']
                     watch.title = "unavail";
                     watch.samarit = {};
                     watch.start = date;
-                    watch.end = date;
+                    
                     watch.samarit.userName = "coordinator";
                     watch.isAvailable = false;
                     watch.allDay = true;
+                    watch.rendering = 'background';
+                    watch.color = 'red';
                    // watch.stick = true
 
                     userCalendarFactory.setAvailable(watch).then(function (response) {
+                        watch = response.data;
                         window.console.log("great succes" + response.data);
                     }, function (response) {
                         window.console.log("great failure" + response);
                     });
 
-
+                    watch.stick = true;
+                    watch.rendering = 'background';
                     $scope.watchList.push(watch);
 
                 };

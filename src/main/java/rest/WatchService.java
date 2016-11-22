@@ -84,7 +84,7 @@ public class WatchService {
         watches = wf.getWatchesForUser(id);
         String json = "{fail}";
         try {
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm a z");
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             mapper.setDateFormat(df);
             SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("samarit");
             FilterProvider filters = new SimpleFilterProvider().addFilter("myFilter", theFilter);

@@ -46,6 +46,8 @@ public class SamaritCalenderEvent implements Serializable {
     private boolean allDay;
     
     private String title;
+    private String rendering;
+    private String color;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "WATCHSTART")
@@ -199,6 +201,34 @@ public class SamaritCalenderEvent implements Serializable {
      */
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    /**
+     * @return the rendering
+     */
+    public String getRendering() {
+        return rendering;
+    }
+
+    /**
+     * @param rendering the rendering to set
+     */
+    public void setRendering(String rendering) {
+        this.rendering = rendering;
+    }
+
+    /**
+     * @return the color
+     */
+    public String getColor() {
+        return color;
+    }
+
+    /**
+     * @param color the color to set
+     */
+    public void setColor(String color) {
+        this.color = color;
     }
 
 }
