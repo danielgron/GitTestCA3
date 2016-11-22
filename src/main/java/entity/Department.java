@@ -68,6 +68,9 @@ public class Department implements Serializable {
     }
     
     public void addEvent(Event e){
+        if(events == null){
+            events = new ArrayList<>();
+        }
         events.add(e);
     }
 
