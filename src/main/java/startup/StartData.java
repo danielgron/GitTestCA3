@@ -16,6 +16,8 @@ import entityconnection.EntityConnector;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.Persistence;
 import javax.persistence.Query;
 import log.Log;
 
@@ -26,7 +28,9 @@ import log.Log;
 public class StartData {
     
     public static void main(String[] args) {
+        Persistence.generateSchema("pu_local", null);
         insertTestData();
+        insertRandomData();
     }
     public static void insertTestData() {
         Log.writeToLog("Inserting Test Users in database");
@@ -83,27 +87,44 @@ public class StartData {
     }
     
     public static void insertRandomData(){
-        String[] fName = {"Adam", "Allan", "Anders", "Brian", "Børge", "Claus", "Daniel", "Danni", "Dennis", "Egon", "Emil", "Fie", "Freja", "Grethe","Gorm"};
+        String[] fName = {"Adam", "Allan", "Anders", "Brian", "Børge", "Claus", "Daniel", "Danni", "Dennis", "Egon", "Emil", "Fie", "Freja", "Grethe","Gorm","Henning","Ib","Ida","Jens","Klaus","Kasper","Kenneth"};
         String[] lName = {"Andersen","Jespersen","Jørgensen","Hansen","Thomsen","Gram","Hat","Stol","Green","Pind","Løkke","Nielsen","Flotnavn","Avn","Ravn","Havn","Barm"};
-        String[] emailDomain = {"hotmail","gmail"};
+        String[] emailDomain = {"hotmail","gmail","jubii","yahoo"};
         String[] emailEnd = {".com",".net",".dk"};
         EntityManager em = EntityConnector.getEntityManager();
         Query q = em.createQuery("Select d from Department d where (d.nameOfDepartment='København')");
-        
-        Department d = (Department) q.getSingleResult();
+        Query q2 = em.createQuery("Select ur from User_Role ur where (ur.roleName='User')");
+        Department d ;
+        try{
+            d = (Department) q.getSingleResult();
+        }
+        catch (NoResultException ex) {
+            d= new Department();
+            d.setNameOfDepartment("København");
+        }
+        User_Role userRole = (User_Role) q2.getSingleResult();
         ArrayList<User> randomTestUsers = new ArrayList();
         for (int i = 0; i < 50; i++) {
             String userFName = fName[((int)(Math.random()*fName.length))];
             String userLName = lName[((int)(Math.random()*lName.length))];
-            String email = userFName+userLName+emailDomain[((int)(Math.random()*emailDomain.length))];
+            String email = userFName+userLName+"@"+emailDomain[((int)(Math.random()*emailDomain.length))]+emailEnd[((int)(Math.random()*emailEnd.length))];
             Samarit s= new Samarit(email, userFName+"123");
             s.setFirstName(userFName);
-            s.setFirstName(userLName);
-            
+            s.setLastName(userLName);
+            s.setDepartment(d);
+            s.setPhone("88888888");
+            s.addRoleToUser(userRole);
             randomTestUsers.add(s);
         }
+        try{
+        em.getTransaction().begin();
         for (User randomTestUser : randomTestUsers) {
-            
+            em.persist(randomTestUser);
+        }
+        em.getTransaction().commit();
+        }
+        finally{
+            em.close();
         }
     }
 }
