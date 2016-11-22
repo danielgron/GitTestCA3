@@ -3,8 +3,15 @@ package rest;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import entity.Samarit;
 import facades.CoordinatorFacade;
+import facades.UserFacade;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +24,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import security.IUser;
 import util.JSON_Converter;
 
 @Path("coordinator")
@@ -25,6 +33,7 @@ public class Coordinator {
     private static CoordinatorFacade cf  = new CoordinatorFacade();
     private static JsonFactory factory = new JsonFactory();
     private static ObjectMapper mapper = new ObjectMapper();
+    private static UserFacade uf = new UserFacade();
   
   @GET
   @Produces(MediaType.APPLICATION_JSON)
@@ -49,6 +58,7 @@ public class Coordinator {
        
         return json;
   }
+  
   @POST
   @Produces(MediaType.APPLICATION_JSON)
   public String postNewUser(String json){
@@ -58,6 +68,25 @@ public class Coordinator {
 
         
       return JSON_Converter.jsonFromSamarit(s);
+  }
+  
+  
+  @GET
+  @Path("user/{userid}")
+  @Produces(MediaType.APPLICATION_JSON)
+  public String getSingleUser(@PathParam("userid") String id) throws Exception{
+        try {
+            IUser user = uf.getUserByUserId(id);
+            ObjectMapper mapper = new ObjectMapper();
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm a z");
+            mapper.setDateFormat(df);
+            SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("password");
+            FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter", theFilter);
+            return mapper.writer(filters).writeValueAsString(user);
+        } catch (Exception ex) {
+            log.Log.writeToLog("Exception When Creating JSON Object single event: " + ex);
+            throw ex;
+        }
   }
  
 }
