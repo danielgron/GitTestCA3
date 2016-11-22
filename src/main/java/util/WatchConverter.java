@@ -7,7 +7,7 @@ package util;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import entity.SamaritCalenderEvent;
+import entity.watches.SamaritOccupied;
 
 /**
  *
@@ -23,7 +23,7 @@ public class WatchConverter {
      * @param watch
      * @return
      */
-    public JsonObject jsonWatchUnavailable(SamaritCalenderEvent watch){
+    public JsonObject jsonWatchUnavailable(SamaritOccupied watch){
         JsonObject jsonWatch = new JsonObject();
         
         if(watch !=null){

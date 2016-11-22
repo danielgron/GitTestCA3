@@ -8,14 +8,12 @@ package facades;
 import entity.Department;
 import entity.Event;
 import entity.Samarit;
-import entity.SamaritCalenderEvent;
-import entity.User;
+import entity.watches.SamaritOccupied;
+import entity.watches.SamaritCalendar;
 import entityconnection.EntityConnector;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import log.Log;
 import util.DateUtils;
 
@@ -85,8 +83,8 @@ public class CoordinatorFacade {
     private boolean checkAvalibilty(Samarit samarit, Event e, EntityManager em) {
         boolean available = true;
         //Query q = em.createQuery("SELECT s FROM Samarit AS s LEFT JOIN s.watches AS sw WHERE sw IS NULL OR sw.start >= '2016-11-03' AND sw.end <='2016-11-03'");
-        List<SamaritCalenderEvent> events = samarit.getWatches();
-        for (SamaritCalenderEvent event : events) {
+        List<SamaritOccupied> events = samarit.getNotAvail();
+        for (SamaritCalendar event : events) {
             if(
                     DateUtils.dateBetween(event.getStart(),e.getStart(),e.getEnd()) ||
                     DateUtils.dateBetween(event.getEnd(),e.getStart(),e.getEnd()) ||

@@ -5,9 +5,10 @@
  */
 package entity;
 
+import entity.watches.SamaritOccupied;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import java.io.Serializable;
+import entity.watches.SamaritCalendar;
+import entity.watches.SamaritWatch;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
@@ -43,9 +44,14 @@ public class Samarit extends User {
     private int shiftsTotal;
 //  private List<VagtKort> vagtKorts; // Not implemented yet!
 
+    
     @OneToMany(mappedBy = "samarit", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JsonBackReference(value="watches-sam")
-    private List<SamaritCalenderEvent> watches = new ArrayList();
+    private List<SamaritWatch> watches = new ArrayList();
+    
+    @OneToMany(mappedBy = "samarit", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JsonBackReference(value="occupied-sam")
+    private List<SamaritOccupied> notAvail = new ArrayList<>();
 
     public Samarit() {
     }
@@ -54,8 +60,15 @@ public class Samarit extends User {
         super(email, password);
     }
 
-    public void addWatch(SamaritCalenderEvent watch) {
+    public void addWatch(SamaritWatch watch) {
         this.getWatches().add(watch);
+        watch.setSamarit(this);
+    }
+    
+    
+    public void addNotAvail(SamaritOccupied notAvail){
+        this.notAvail.add(notAvail);
+        notAvail.setSamarit(this);
     }
 
     public String getFirstName() {
@@ -171,15 +184,31 @@ public class Samarit extends User {
     /**
      * @return the watches
      */
-    public List<SamaritCalenderEvent> getWatches() {
+    public List<SamaritWatch> getWatches() {
         return watches;
     }
 
     /**
      * @param watches the watches to set
      */
-    public void setWatches(List<SamaritCalenderEvent> watches) {
+    public void setWatches(List<SamaritWatch> watches) {
         this.watches = watches;
     }
+
+    /**
+     * @return the notAvail
+     */
+    public List<SamaritOccupied> getNotAvail() {
+        return notAvail;
+    }
+
+    /**
+     * @param notAvail the notAvail to set
+     */
+    public void setNotAvail(List<SamaritOccupied> notAvail) {
+        this.notAvail = notAvail;
+    }
+
+    
 
 }

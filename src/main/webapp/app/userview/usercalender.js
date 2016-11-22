@@ -56,7 +56,8 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment']
                         eventRender: $scope.eventRender,
                         dayRender: $scope.dayRender,
                         dayClick: $scope.setUnavailForWatch,
-                        renderEvent: $scope.renderEvent
+                        renderEvent: $scope.renderEvent,
+                        selectOverlap: $scope.selectOverlap
                     }
                 };
 
@@ -64,28 +65,38 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment']
                 $scope.addWatch = function (watch) {
 
                 };
-                $scope.eventRender = function(event,element){
-                    if(event.title === 'unavail'){
+                $scope.eventRender = function (event, element) {
+                    if (event.title === 'unavail') {
                         event.rendering = 'background';
                     }
                 }
 
+                $scope.selectOverlap = function(event) {
+                    // Here you will get all background events which are on same time.
+                    console.log(event);
+                };
 
                 //This method is for setting a whole day to unavail, by clicking it
                 $scope.setUnavailForWatch = function (date, jsEvent, view) {
-
-
                     var watch = {};
+//                    userCalendarFactory.getWatch(date).then(function(successResponse){
+//                        
+//                    },function(errorResponse){
+//                        
+//                    });
+                    
+
+                    
                     watch.title = "unavail";
                     watch.samarit = {};
                     watch.start = date;
-                    
+
                     watch.samarit.userName = "coordinator";
                     watch.isAvailable = false;
                     watch.allDay = true;
                     watch.rendering = 'background';
                     watch.color = 'red';
-                   // watch.stick = true
+                    // watch.stick = true
 
                     userCalendarFactory.setAvailable(watch).then(function (response) {
                         watch = response.data;
