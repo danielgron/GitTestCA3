@@ -21,16 +21,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment']
                 $scope.eventSources1 = [$scope.watchList];
                 var email = 'coordinator';
 
-//                userCalendarFactory.getEvents().then(function (response) {
-//                    
-//                    angular.forEach(response.data, function(value,key){
-//                        $scope.watchList.push(value);
-//                    })
-//                   // $scope.watchList = tempWatchList;
-//
-//                }, function (error) {
-//                    $scope.status = 'Unable to load customer data: ' + error.message;
-//                });
+//             
 
 
 
