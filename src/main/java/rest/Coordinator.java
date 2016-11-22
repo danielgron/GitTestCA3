@@ -1,9 +1,13 @@
 package rest;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import entity.Samarit;
 import facades.CoordinatorFacade;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
@@ -19,6 +23,8 @@ import util.JSON_Converter;
 @RolesAllowed("Coordinator")
 public class Coordinator {
     private static CoordinatorFacade cf  = new CoordinatorFacade();
+    private static JsonFactory factory = new JsonFactory();
+    private static ObjectMapper mapper = new ObjectMapper();
   
   @GET
   @Produces(MediaType.APPLICATION_JSON)
@@ -30,9 +36,18 @@ public class Coordinator {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   @Path("{eventId}")
-  public String getFreeSamarites(@PathParam("id") String id){
-      cf.getAvailableSamaritesFromEventId(Integer.parseInt(id));
-    return "{\"message\" : \"REST call accesible by only authenticated ADMINS\",\n"+"\"serverTime\": \"" +"\"}"; 
+  public String getFreeSamarites(@PathParam("eventId") String id){
+      List<Samarit> sams = cf.getAvailableSamaritesFromEventId(Integer.parseInt(id));
+      String json = "fail";
+        if (sams.size()>0){
+        try {
+            json =  mapper.writeValueAsString(sams);
+        } catch (JsonProcessingException ex) {
+            Logger.getLogger(Coordinator.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+       
+        return json;
   }
   @POST
   @Produces(MediaType.APPLICATION_JSON)
