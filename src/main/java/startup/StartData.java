@@ -13,8 +13,10 @@ import entity.Samarit;
 import entity.User;
 import entity.User_Role;
 import entityconnection.EntityConnector;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import log.Log;
 
 /**
@@ -36,8 +38,8 @@ public class StartData {
         d.setNameOfDepartment("København");
         Event e = new Event();
             e.setName("Test Event");
-            e.setStart(new Date(101, 5, 5, 10, 0));
-            e.setEnd(new Date(101, 5, 6, 10, 0));
+            e.setStart(new Date(116, 5, 5, 10, 0));
+            e.setEnd(new Date(116, 5, 6, 10, 0));
             e.setDepartment(d);
             d.getEvents().add(e);
         User samarit = new Samarit("sam", "test");
@@ -77,6 +79,31 @@ public class StartData {
         }
         finally{
             em.close();
+        }
+    }
+    
+    public static void insertRandomData(){
+        String[] fName = {"Adam", "Allan", "Anders", "Brian", "Børge", "Claus", "Daniel", "Danni", "Dennis", "Egon", "Emil", "Fie", "Freja", "Grethe","Gorm"};
+        String[] lName = {"Andersen","Jespersen","Jørgensen","Hansen","Thomsen","Gram","Hat","Stol","Green","Pind","Løkke","Nielsen","Flotnavn","Avn","Ravn","Havn","Barm"};
+        String[] emailDomain = {"hotmail","gmail"};
+        String[] emailEnd = {".com",".net",".dk"};
+        EntityManager em = EntityConnector.getEntityManager();
+        Query q = em.createQuery("Select d from Department d where (d.nameOfDepartment='København')");
+        
+        Department d = (Department) q.getSingleResult();
+        ArrayList<User> randomTestUsers = new ArrayList();
+        for (int i = 0; i < 50; i++) {
+            String userFName = fName[((int)(Math.random()*fName.length))];
+            String userLName = lName[((int)(Math.random()*lName.length))];
+            String email = userFName+userLName+emailDomain[((int)(Math.random()*emailDomain.length))];
+            Samarit s= new Samarit(email, userFName+"123");
+            s.setFirstName(userFName);
+            s.setFirstName(userLName);
+            
+            randomTestUsers.add(s);
+        }
+        for (User randomTestUser : randomTestUsers) {
+            
         }
     }
 }
