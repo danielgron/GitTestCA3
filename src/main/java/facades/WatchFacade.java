@@ -51,10 +51,11 @@ public class WatchFacade {
         EntityManager em = EntityConnector.getEntityManager();
         List<SamaritCalenderEvent> watches = null;
         try {
-            User samarit = em.find(Samarit.class, userName);
+          
             Query q = em.createNamedQuery("SamaritCalenderEvent.findByUserName");
             q.setParameter("userName", userName);
             watches = q.getResultList();
+            
         } catch (Exception ex) {
             Logger.getLogger(EventFacade.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -144,7 +145,7 @@ public class WatchFacade {
         try {
             em.getTransaction().begin();
             if (watch.getSamarit().getUserName() != null) {
-                sm = em.find(Samarit.class, "coordinator");
+                sm = em.find(Samarit.class, watch.getSamarit().getUserName());
             }
             watch.setSamarit(sm);
             em.persist(watch);

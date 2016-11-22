@@ -23,13 +23,13 @@ import javax.persistence.OneToMany;
 public class Department implements Serializable {
 
     @OneToMany(mappedBy = "department")
-    @JsonBackReference
+    @JsonBackReference(value="event-dep")
     private List<Event> events;
 
     @Id
     private String nameOfDepartment;
     @OneToMany(mappedBy = "department", cascade = CascadeType.PERSIST)
-    @JsonBackReference
+    @JsonBackReference(value="samarit-con")
     private List<Samarit> samarites;
 //    private List<VagtKort> vagtkorts; // not Implemented!
 

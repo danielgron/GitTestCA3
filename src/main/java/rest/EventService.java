@@ -5,12 +5,16 @@
  */
 package rest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import entity.Event;
 import facades.EventFacade;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
@@ -19,6 +23,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import util.DateUtils;
@@ -35,6 +40,7 @@ public class EventService {
     private static EventFacade ef = new EventFacade();
     private static JSON_Converter eJson = new JSON_Converter();
     private Gson gson = new Gson();
+    private static ObjectMapper mapper = new ObjectMapper();
 
     @Context
     private UriInfo context;
@@ -52,8 +58,7 @@ public class EventService {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getEvent() {
-
+    public String getEvents() {
         List<Event> events = ef.getEvents();
         System.out.println("Works in event");
         return eJson.parseEvents(events);
@@ -77,6 +82,20 @@ public class EventService {
         System.out.println("Works in event");
         return eJson.parseEvents(events);
 
+    }
+    
+    @GET
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getSingleEvent(@PathParam("id") String id){
+      Event event = ef.getEvent(Integer.parseInt(id));
+        try {
+            return  mapper.writerWithDefaultPrettyPrinter().writeValueAsString(event);
+        } catch (JsonProcessingException ex) {
+           log.Log.writeToLog("Exception When Creating JSON Object single event: " + ex);
+           return null;
+        }
+        
     }
 
     /**

@@ -6,6 +6,7 @@
 package entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFilter;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.CascadeType;
@@ -26,7 +27,8 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "SamaritCalenderEvent.findByUserName", query = "SELECT w FROM SamaritCalenderEvent AS w WHERE w.samarit.userName = :userName")})
+@NamedQuery(name = "SamaritCalenderEvent.findByUserName", query = "SELECT w FROM SamaritCalenderEvent AS w WHERE w.samarit.userName = :userName")})
+@JsonFilter("myFilter")
 public class SamaritCalenderEvent implements Serializable {
 
     @Id
@@ -42,6 +44,8 @@ public class SamaritCalenderEvent implements Serializable {
     private boolean watchSet;
     private boolean isAvailable;
     private boolean allDay;
+    
+    private String title;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "WATCHSTART")
@@ -50,6 +54,8 @@ public class SamaritCalenderEvent implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "WATCHEND")
     private Date end;
+    
+    
 
     public SamaritCalenderEvent() {
     }
@@ -179,6 +185,20 @@ public class SamaritCalenderEvent implements Serializable {
      */
     public void setAllDay(boolean allDay) {
         this.allDay = allDay;
+    }
+
+    /**
+     * @return the title
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * @param title the title to set
+     */
+    public void setTitle(String title) {
+        this.title = title;
     }
 
 }

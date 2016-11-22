@@ -61,7 +61,7 @@ public class Event implements Serializable {
     private String desc;
 
     @OneToMany(mappedBy = "event")
-    @JsonBackReference
+    @JsonBackReference (value="watches-event")
     List<SamaritCalenderEvent> watches = new ArrayList();
 
     public Event(Date start, Date end, boolean allDay, String name, String desc) {

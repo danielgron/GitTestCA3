@@ -22,7 +22,7 @@ import java.time.*;
 public class EventFacade {
 
     public EventFacade() {
-         this.populateEvents();
+        this.populateEvents();
     }
 
     /**
@@ -38,7 +38,7 @@ public class EventFacade {
             Query q = em.createQuery("SELECT e FROM Event e");
             events = q.getResultList();
         } catch (Exception ex) {
-            Logger.getLogger(EventFacade.class.getName()).log(Level.SEVERE, null, ex);
+            log.Log.writeToLog("Exception get events" + ex);
         } finally {
             em.close();
         }
@@ -53,7 +53,7 @@ public class EventFacade {
             em.getTransaction().commit();
         } catch (Exception ex) {
             em.getTransaction().rollback();
-            Logger.getLogger(EventFacade.class.getName()).log(Level.SEVERE, null, ex);
+            log.Log.writeToLog("Exception create events" + ex);
         } finally {
             em.close();
         }
@@ -67,7 +67,7 @@ public class EventFacade {
         try {
             event = em.find(Event.class, id);
         } catch (Exception ex) {
-            Logger.getLogger(EventFacade.class.getName()).log(Level.SEVERE, null, ex);
+            log.Log.writeToLog("Exception get event" + ex);
         } finally {
             em.close();
         }
@@ -77,13 +77,15 @@ public class EventFacade {
     public List<Event> getEventsDateRange(Date startDate, Date endDate) {
         List<Event> events = null;
         EntityManager em = EntityConnector.getEntityManager();
-        try{
+        try {
             Query q = em.createQuery("SELECT e FROM Event AS e WHERE e.start BETWEEN :start AND :end");
             q.setParameter("start", startDate);
             q.setParameter("end", endDate);
             events = q.getResultList();
-        }finally{
-            
+        } catch (Exception ex) {
+            log.Log.writeToLog("Exception get events Date Range" + ex);
+        } finally {
+
         }
 
         return events;
@@ -97,7 +99,7 @@ public class EventFacade {
         LocalDateTime local3 = LocalDateTime.of(2016, Month.NOVEMBER, 9, 15, 0);
         LocalDateTime local4 = LocalDateTime.of(2016, Month.DECEMBER, 3, 15, 0);
         LocalDateTime local5 = LocalDateTime.of(2016, Month.DECEMBER, 3, 15, 0);
-        
+
         Date start = new Date();
         Date start6 = Date.from(local.atZone(ZoneId.systemDefault()).toInstant());
         Date start1 = Date.from(local1.atZone(ZoneId.systemDefault()).toInstant());
@@ -117,7 +119,6 @@ public class EventFacade {
         Date end04 = Date.from(end3.atZone(ZoneId.systemDefault()).toInstant());
         Date end05 = Date.from(end4.atZone(ZoneId.systemDefault()).toInstant());
         Date end06 = Date.from(end5.atZone(ZoneId.systemDefault()).toInstant());
-       
 
         if (getEvents().size() <= 0) {
             Event event = new Event(start, end01, false, "test", "test");
@@ -126,12 +127,12 @@ public class EventFacade {
             Event event3 = new Event(start3, end04, false, "test", "test");
             Event event4 = new Event(start4, end05, false, "test", "test");
             Event event5 = new Event(start5, end06, false, "test", "test");
-           createEvent(event);
-           createEvent(event1);
-           createEvent(event2);
-           createEvent(event3);
-           createEvent(event4);
-           createEvent(event5);
+            createEvent(event);
+            createEvent(event1);
+            createEvent(event2);
+            createEvent(event3);
+            createEvent(event4);
+            createEvent(event5);
         }
     }
 }
