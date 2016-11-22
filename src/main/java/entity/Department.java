@@ -66,5 +66,9 @@ public class Department implements Serializable {
     public void setEvents(List<Event> events) {
         this.events = events;
     }
+    
+    public void addEvent(Event e){
+        events.add(e);
+    }
 
 }

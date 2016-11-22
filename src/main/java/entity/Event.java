@@ -64,12 +64,14 @@ public class Event implements Serializable {
     @JsonBackReference (value="watches-event")
     List<SamaritCalenderEvent> watches = new ArrayList();
 
-    public Event(Date start, Date end, boolean allDay, String name, String desc) {
+    public Event(Date start, Date end, boolean allDay, String name, String desc, Department department) {
         this.start = start;
         this.end = end;
         this.allDay = allDay;
         this.name = name;
         this.desc = desc;
+        this.department = department;
+        department.addEvent(this);
     }
 
     public Event() {
@@ -171,6 +173,7 @@ public class Event implements Serializable {
 
     public void setDepartment(Department department) {
         this.department = department;
+        department.addEvent(this); // Event is responsable for adding the refrence
     }
 
 }

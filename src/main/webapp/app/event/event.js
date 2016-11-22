@@ -5,7 +5,7 @@ angular.module('myApp.event', ['ngRoute'])
                     controller: "EventCtrl"
                 });
             }])
-        .controller('EventCtrl', ['$scope', '$locale', 'eventFactory', function ($scope, $locale, eventFactory) {
+        .controller('EventCtrl', ['$scope', '$locale', 'eventFactory', 'UserFactory', function ($scope, $locale, eventFactory, UserFactory) {
 
                 $scope.event = {};
                 $scope.event.start = new Date();
@@ -14,6 +14,8 @@ angular.module('myApp.event', ['ngRoute'])
                 $scope.event.start.setMinutes(0);
                 $scope.event.end.setHours(22);
                 $scope.event.end.setMinutes(0);
+                $scope.event.department ={};
+                $scope.event.department.nameOfDepartment = UserFactory.getDepartment();
 
                 $scope.today = function () {
                     $scope.event.start = new Date();
