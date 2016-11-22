@@ -32,7 +32,6 @@ import util.JSON_Converter;
 public class Coordinator {
     private static CoordinatorFacade cf  = new CoordinatorFacade();
     private static JsonFactory factory = new JsonFactory();
-    private static ObjectMapper mapper = new ObjectMapper();
     private static UserFacade uf = new UserFacade();
   
   @GET
@@ -50,7 +49,10 @@ public class Coordinator {
       String json = "fail";
         if (sams.size()>0){
         try {
-            json =  mapper.writeValueAsString(sams);
+             ObjectMapper mapper = new ObjectMapper();
+            SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("password");
+            FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter", theFilter);
+            json =  mapper.writer(filters).writeValueAsString(sams);
         } catch (JsonProcessingException ex) {
             Logger.getLogger(Coordinator.class.getName()).log(Level.SEVERE, null, ex);
         }
