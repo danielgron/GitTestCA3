@@ -59,6 +59,7 @@ public class Department implements Serializable {
     }
 
     public List<Event> getEvents() {
+        if (events ==null) events = new ArrayList();
         return events;
     }
 
