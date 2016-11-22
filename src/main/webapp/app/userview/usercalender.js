@@ -8,30 +8,35 @@
  *
  */
 
-angular.module('myApp.usercalendar', ['ngRoute', 'ui.usercalendar', 'angularMoment'])
+angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment'])
 
-        .constant('uiUserCalendarConfig', {
-            calendars: {}
-        })
 
-        .controller('UserCalendarCtrl', ['$scope', 'moment', '$locale', 'uiUserCalendarConfig', '$location', 'userCalendarFactory', '$filter',
-            function ($scope, moment, $locale, uiUserCalendarConfig, $location, userCalendarFactory, $filter) {
+
+        .controller('UserCalendarCtrl', ['$scope', 'moment', '$locale', 'uiCalendarConfig', '$location', 'userCalendarFactory', '$filter',
+            function ($scope, moment, $locale, uiCalendarConfig, $location, userCalendarFactory, $filter) {
                 //This is where we configure how the calender behaves
-
-                var date = new Date();
-                var d = date.getDate();
-                var m = date.getMonth();
-                var y = date.getFullYear();
-                $scope.watches = userCalendarFactory.getWatches;
-                $scope.eventSources = [$scope.watches];
-                $scope.header = 'test';
+                $scope.eventSources1 = [];
+                $scope.watchList = [];
+                $scope.watchList = userCalendarFactory.getWatchlist();
+                $scope.eventSources1 = [$scope.watchList];
                 var email = 'coordinator';
 
+//                userCalendarFactory.getEvents().then(function (response) {
+//                    
+//                    angular.forEach(response.data, function(value,key){
+//                        $scope.watchList.push(value);
+//                    })
+//                   // $scope.watchList = tempWatchList;
+//
+//                }, function (error) {
+//                    $scope.status = 'Unable to load customer data: ' + error.message;
+//                });
 
-                $scope.eventList = {};
+
+
 
                 $scope.eventSource = {
-                    url: 'api/event/range'
+                    url: 'api/watch/coordinator'
                 };
 
                 $scope.uiConfig = {
@@ -58,7 +63,6 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.usercalendar', 'angularMome
 
                 $scope.addWatch = function (watch) {
 
-                    userCalendarFactory.addWatch(watch);
                 };
 
 
@@ -75,6 +79,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.usercalendar', 'angularMome
                     watch.samarit.userName = "coordinator";
                     watch.isAvailable = false;
                     watch.allDay = true;
+                   // watch.stick = true
 
                     userCalendarFactory.setAvailable(watch).then(function (response) {
                         window.console.log("great succes" + response.data);
@@ -82,11 +87,12 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.usercalendar', 'angularMome
                         window.console.log("great failure" + response);
                     });
 
-                    $scope.addWatch(watch);
+
+                    $scope.watchList.push(watch);
 
                 };
 
-                
+
 
 
                 $scope.dayRender = function (date, cell) {
@@ -101,39 +107,23 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.usercalendar', 'angularMome
                     $location.path(path);
                 };
 
-                userCalendarFactory.getEvents().then(function (response) {
-                    $scope.watches = response.data;
-                    window.console.log("fra scope" + $scope.watches);
-                }, function (error) {
-                    $scope.status = 'Unable to load customer data: ' + error.message;
-                });
 
-                /* event source that calls a function on every view switch */
-                $scope.eventsF = function (start, end, timezone, callback) {
-                    var s = new Date(start).getTime() / 1000;
-                    var e = new Date(end).getTime() / 1000;
-                    var m = new Date(start).getMonth();
-                    var events = [{title: 'Feed Me ' + m, start: s + (50000), end: s + (100000), allDay: false, className: ['customFeed']}];
-                    callback(events);
-                };
-                
-                $scope.calEventsExt = {
-                    color: '#f00',
-                    textColor: 'yellow',
-                    events: [
-                        {type: 'party', title: 'Lunch', start: new Date(y, m, d, 12, 0), end: new Date(y, m, d, 14, 0), allDay: false},
-                        {type: 'party', title: 'Lunch 2', start: new Date(y, m, d, 12, 0), end: new Date(y, m, d, 14, 0), allDay: false},
-                        {type: 'party', title: 'Click for Google', start: new Date(y, m, 28), end: new Date(y, m, 29), url: 'http://google.com/'}
-                    ]
-                };
-                
+
+
+
+
+
                 //Change the view between month, week and day
                 $scope.changeView = function (view, calendar) {
-                    uiUserCalendarConfig.calendars[calendar].fullCalendar('changeView', view);
+                    uiCalendarConfig.calendars[calendar].fullCalendar('changeView', view);
                 };
 
                 /* event sources array*/
-                $scope.eventSources = [$scope.watches, $scope.eventSource, $scope.calEventsExt];
+                /* event sources array*/
+                $scope.eventSources1 = [$scope.watchList, $scope.eventSource];
+
+                window.console.log("EventScopes");
+                window.console.log($scope.watchList);
             }
         ])
 
