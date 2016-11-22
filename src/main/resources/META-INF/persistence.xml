@@ -45,7 +45,6 @@
     </properties>
   </persistence-unit>
   -->
-  
   <persistence-unit name="pu_test" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>entity.Admin</class>

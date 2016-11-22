@@ -15,6 +15,7 @@ import entity.User_Role;
 import entityconnection.EntityConnector;
 import java.util.Date;
 import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
 import log.Log;
 
 /**
@@ -24,6 +25,7 @@ import log.Log;
 public class StartData {
     
     public static void main(String[] args) {
+        Persistence.generateSchema("pu_local", null);
         insertTestData();
     }
     public static void insertTestData() {
