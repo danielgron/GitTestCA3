@@ -1,20 +1,13 @@
 package facades;
 
-import entity.Admin;
-import entity.Department;
-import entity.Samarit;
 import security.IUserFacade;
 import entity.User;
 import entity.User_Role;
 import entityconnection.EntityConnector;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import log.Log;
