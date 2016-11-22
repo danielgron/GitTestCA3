@@ -16,7 +16,7 @@ angular.module('myApp.usercalendar')
 
             userCalendarFactory.getEvents = function () {
                 
-                return $http.get(urlBase);
+                return $http.get('api/event');
             };
             
             userCalendarFactory.setAvailable = function(watch){

@@ -24,48 +24,15 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.usercalendar', 'angularMome
                 var y = date.getFullYear();
                 $scope.watches = userCalendarFactory.getWatches;
                 $scope.eventSources = [$scope.watches];
-
-                $scope.eventList = {};
-
-
-
-                $scope.addWatch = function (watch) {
-
-                   userCalendarFactory.addWatch(watch);
-                };
-
-               
-                
-                //This method is for setting a whole day to unavail, by clicking it
-                $scope.setUnavailForWatch = function (date, jsEvent, view) {
-                   
-
-                    var watch = {};
-                    watch.title = "unavail";
-                    watch.samarit = {};
-                    watch.start = date;
-                    watch.end = date;
-                    watch.samarit.userName = "coordinator";
-                    watch.isAvailable = false;
-                    watch.allDay = true;
-                    userCalendarFactory.setAvailable(watch).then(function (response) {
-                        window.console.log("great succes" + response.data);
-                    }, function (response) {
-                        window.console.log("great failure" + response);
-                    });
-
-                    $scope.addWatch(watch);
-
-
-                };
-
                 $scope.header = 'test';
                 var email = 'coordinator';
 
-                $scope.eventSource = {
-                    url: 'api/watch/' + email
-                };
 
+                $scope.eventList = {};
+
+                $scope.eventSource = {
+                    url: 'api/event/range'
+                };
 
                 $scope.uiConfig = {
                     calendar: {
@@ -87,6 +54,41 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.usercalendar', 'angularMome
                         renderEvent: $scope.renderEvent
                     }
                 };
+
+
+                $scope.addWatch = function (watch) {
+
+                    userCalendarFactory.addWatch(watch);
+                };
+
+
+
+                //This method is for setting a whole day to unavail, by clicking it
+                $scope.setUnavailForWatch = function (date, jsEvent, view) {
+
+
+                    var watch = {};
+                    watch.title = "unavail";
+                    watch.samarit = {};
+                    watch.start = date;
+                    watch.end = date;
+                    watch.samarit.userName = "coordinator";
+                    watch.isAvailable = false;
+                    watch.allDay = true;
+
+                    userCalendarFactory.setAvailable(watch).then(function (response) {
+                        window.console.log("great succes" + response.data);
+                    }, function (response) {
+                        window.console.log("great failure" + response);
+                    });
+
+                    $scope.addWatch(watch);
+
+                };
+
+                
+
+
                 $scope.dayRender = function (date, cell) {
 
                 };
@@ -94,22 +96,18 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.usercalendar', 'angularMome
 
                 };
 
-
-
-
                 //For using buttons to redirect
                 $scope.go = function (path) {
                     $location.path(path);
                 };
-                
+
                 userCalendarFactory.getEvents().then(function (response) {
-                    
                     $scope.watches = response.data;
                     window.console.log("fra scope" + $scope.watches);
                 }, function (error) {
                     $scope.status = 'Unable to load customer data: ' + error.message;
                 });
-                
+
                 /* event source that calls a function on every view switch */
                 $scope.eventsF = function (start, end, timezone, callback) {
                     var s = new Date(start).getTime() / 1000;
@@ -118,17 +116,24 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.usercalendar', 'angularMome
                     var events = [{title: 'Feed Me ' + m, start: s + (50000), end: s + (100000), allDay: false, className: ['customFeed']}];
                     callback(events);
                 };
+                
                 $scope.calEventsExt = {
                     color: '#f00',
                     textColor: 'yellow',
-                    events: []
+                    events: [
+                        {type: 'party', title: 'Lunch', start: new Date(y, m, d, 12, 0), end: new Date(y, m, d, 14, 0), allDay: false},
+                        {type: 'party', title: 'Lunch 2', start: new Date(y, m, d, 12, 0), end: new Date(y, m, d, 14, 0), allDay: false},
+                        {type: 'party', title: 'Click for Google', start: new Date(y, m, 28), end: new Date(y, m, 29), url: 'http://google.com/'}
+                    ]
                 };
+                
                 //Change the view between month, week and day
                 $scope.changeView = function (view, calendar) {
                     uiUserCalendarConfig.calendars[calendar].fullCalendar('changeView', view);
                 };
+
                 /* event sources array*/
-                $scope.eventSources = [$scope.watches, $scope.eventSource, $scope.eventsF];
+                $scope.eventSources = [$scope.watches, $scope.eventSource, $scope.calEventsExt];
             }
         ])
 

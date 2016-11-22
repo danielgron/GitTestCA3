@@ -187,10 +187,10 @@ angular.module('ui.usercalendar', [])
                     return self;
                 };
 
-                this.getFullCalendarConfig = function (calendarSettings, uiCalendarConfig) {
+                this.getFullCalendarConfig = function (calendarSettings, uiUserCalendarConfig) {
                     var config = {};
 
-                    angular.extend(config, uiCalendarConfig);
+                    angular.extend(config, uiUserCalendarConfig);
                     angular.extend(config, calendarSettings);
 
                     angular.forEach(config, function (value, key) {
