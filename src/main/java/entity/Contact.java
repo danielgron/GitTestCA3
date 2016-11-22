@@ -28,7 +28,7 @@ public class Contact implements Serializable {
     private Long id;
 
     @OneToMany(mappedBy = "contact")
-    @JsonBackReference
+    @JsonBackReference(value="request-con")
     private List<Request> request = new ArrayList();
 
     private String name;

@@ -44,7 +44,7 @@ public class Samarit extends User {
 //  private List<VagtKort> vagtKorts; // Not implemented yet!
 
     @OneToMany(mappedBy = "samarit", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JsonBackReference
+    @JsonBackReference(value="watches-sam")
     private List<SamaritCalenderEvent> watches = new ArrayList();
 
     public Samarit() {

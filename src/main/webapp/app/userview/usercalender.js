@@ -34,19 +34,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.usercalendar', 'angularMome
                    userCalendarFactory.addWatch(watch);
                 };
 
-                $scope.calendarDate = [
-                    {
-                        events: [
-                            {
-                                title: 'From',
-                                start: '2015-01-31',
-                                allDay: true,
-                                rendering: 'background',
-                                backgroundColor: '#f26522'
-                            }
-                        ]
-                    }
-                ];
+               
                 
                 //This method is for setting a whole day to unavail, by clicking it
                 $scope.setUnavailForWatch = function (date, jsEvent, view) {
@@ -115,8 +103,9 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.usercalendar', 'angularMome
                 };
                 
                 userCalendarFactory.getEvents().then(function (response) {
+                    
                     $scope.watches = response.data;
-                    window.console.log(response.data);
+                    window.console.log("fra scope" + $scope.watches);
                 }, function (error) {
                     $scope.status = 'Unable to load customer data: ' + error.message;
                 });

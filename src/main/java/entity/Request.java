@@ -52,8 +52,6 @@ public class Request implements Serializable {
     private String comments;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-  // @JsonManagedReference
-
     private Contact contact;
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

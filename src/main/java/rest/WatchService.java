@@ -8,10 +8,15 @@ package rest;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.google.gson.Gson;
 import entity.SamaritCalenderEvent;
 import facades.WatchFacade;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,6 +31,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
+import util.JacksonFilter;
 import util.WatchConverter;
 
 /**
@@ -51,17 +57,6 @@ public class WatchService {
     public WatchService() {
     }
 
-    /**
-     * Retrieves representation of an instance of rest.WatchService
-     *
-     * @return an instance of java.lang.String
-     */
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getWatches() {
-        return gson.toJson("test");
-    }
-
     @POST
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -69,8 +64,10 @@ public class WatchService {
         SamaritCalenderEvent sw = null;
 
         try {
+
+            mapper = new ObjectMapper();
             sw = mapper.readValue(sWatch, SamaritCalenderEvent.class);
-            sw.getSamarit().setUserName(sWatch);
+            sw.getSamarit().setUserName(id);
 
         } catch (IOException ex) {
             Logger.getLogger(WatchService.class.getName()).log(Level.SEVERE, null, ex);
@@ -85,9 +82,14 @@ public class WatchService {
     public String getWatchesForSamarit(@PathParam("id") String id) {
         List<SamaritCalenderEvent> watches = null;
         watches = wf.getWatchesForUser(id);
-        String json = "fail";
+        String json = "{fail}";
         try {
-            json =  mapper.writeValueAsString(watches);
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm a z");
+            mapper.setDateFormat(df);
+            SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("samarit");
+            FilterProvider filters = new SimpleFilterProvider().addFilter("myFilter", theFilter);
+
+            json = mapper.writer(filters).writeValueAsString(watches);
         } catch (JsonProcessingException ex) {
             Logger.getLogger(WatchService.class.getName()).log(Level.SEVERE, null, ex);
         }
