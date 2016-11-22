@@ -78,7 +78,21 @@ public class WatchFacade {
         }
         return watch;
     }
-
+    
+//    public SamaritOccupied getWatch(Date date){
+//        EntityManager em = EntityConnector.getEntityManager();
+//        SamaritOccupied watch = null;
+//        try{
+//            Query q = em.createQuery("SELECT w FROM SamaritOccupied AS w WHERE w.start  ");
+//            
+//        }finally{
+//            em.close();
+//        }
+//            
+//        
+//        return watch;
+//        
+//    }
     public SamaritOccupied updateWatch(SamaritOccupied watch) {
         EntityManager em = EntityConnector.getEntityManager();
         try {

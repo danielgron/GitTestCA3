@@ -56,16 +56,14 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment']
                 $scope.addWatch = function (watch) {
 
                 };
-                $scope.eventRender = function (event, element) {
-                    if (event.title === 'unavail') {
-                        event.rendering = 'background';
-                    }
-                }
+                
+//                $scope.eventRender = function (event, element) {
+//                    if (event.title === 'unavail') {
+//                        event.rendering = 'background';
+//                    }
+//                };
 
-                $scope.selectOverlap = function(event) {
-                    // Here you will get all background events which are on same time.
-                    console.log(event);
-                };
+              
 
                 //This method is for setting a whole day to unavail, by clicking it
                 $scope.setUnavailForWatch = function (date, jsEvent, view) {
@@ -83,7 +81,6 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment']
                     watch.start = date;
 
                     watch.samarit.userName = "coordinator";
-                    watch.isAvailable = false;
                     watch.allDay = true;
                     watch.rendering = 'background';
                     watch.color = 'red';
