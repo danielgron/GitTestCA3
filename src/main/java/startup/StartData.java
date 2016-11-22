@@ -7,11 +7,13 @@ package startup;
 
 import entity.Admin;
 import entity.Department;
+import entity.Event;
 import entity.RedCrossLevel;
 import entity.Samarit;
 import entity.User;
 import entity.User_Role;
 import entityconnection.EntityConnector;
+import java.util.Date;
 import javax.persistence.EntityManager;
 import log.Log;
 
@@ -32,6 +34,12 @@ public class StartData {
         RedCrossLevel r3 = new RedCrossLevel("Gæst");
         Department d = new Department();
         d.setNameOfDepartment("København");
+        Event e = new Event();
+            e.setName("Test Event");
+            e.setStart(new Date(101, 5, 5, 10, 0));
+            e.setEnd(new Date(101, 5, 6, 10, 0));
+            e.setDepartment(d);
+            d.getEvents().add(e);
         User samarit = new Samarit("sam", "test");
         User_Role userRole = new User_Role("User");
         d.addUser((Samarit)samarit);
@@ -58,13 +66,14 @@ public class StartData {
             em.persist(r2);
             em.persist(r3);
             em.persist(d);
+            em.persist(e);
             em.persist(samarit);
             em.persist(admin);
             em.persist(coordinator);
             em.getTransaction().commit();
             Log.writeToLog("Inserted Test Users in database");
-        } catch (Exception e) {
-            Log.writeToLog("Exception" + e.getMessage());
+        } catch (Exception ex) {
+            Log.writeToLog("Exception" + ex.getMessage());
         }
         finally{
             em.close();

@@ -22,7 +22,7 @@
     </properties>
   </persistence-unit>
   <!--
-  <persistence-unit name="pu_test" transaction-type="RESOURCE_LOCAL">
+  <persistence-unit name="pu_test2" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>entity.User</class>
     <class>entity.User_Role</class>
@@ -41,11 +41,11 @@
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value="testpassword"/>
       <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
-      <property name="eclipselink.canonicalmodel.subpackage" value="pu_test"/>
+      <property name="eclipselink.canonicalmodel.subpackage" value="pu_test2"/>
     </properties>
   </persistence-unit>
-  
   -->
+  
   <persistence-unit name="pu_test" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>entity.Admin</class>

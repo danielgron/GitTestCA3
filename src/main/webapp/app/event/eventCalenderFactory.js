@@ -18,11 +18,16 @@ angular.module('myApp.calendar').factory('calendarFactory', function ($http) {
     var getSingleEvent = function (id) {
       return $http.get(urlBase + "/" + id);
     };
+    
+    var getAvaliableSamaritsForEvent = function(id){
+        return $http.get("api/coordinator/" + id);
+    };
 
     return {
         getEvents,
         getClickedEventid,
         setClickedEventId,
-        getSingleEvent
+        getSingleEvent,
+        getAvaliableSamaritsForEvent
     };
 });
