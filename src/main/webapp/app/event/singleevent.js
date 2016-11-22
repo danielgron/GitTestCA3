@@ -11,6 +11,8 @@ angular.module('myApp.singleevent', ['ngRoute'])
                  self.eventid = calendarFactory.getClickedEventid();
                  self.event;
                  getClickedEvent();
+                 self.avaliableSam = [];
+                 getAvalibleSam();
                  
                  function getClickedEvent(){
                      calendarFactory.getSingleEvent(self.eventid)
@@ -20,7 +22,21 @@ angular.module('myApp.singleevent', ['ngRoute'])
                          console.log("Error" + error);
                      };
                  }
-                 console.log("stop");
+                 
+                 function getAvalibleSam(){
+                     calendarFactory.getAvaliableSamaritsForEvent(self.eventid)
+                             .then(function(response){
+                                 self.avaliableSam = response.data;
+                                 if(self.avaliableSam.length === 0){
+                                     self.avaliableSam.push({userName:"Non Avaliable"});
+                                 }
+                     }), function(error){
+                     console.log("Error" + error);
+                     };
+                         
+                     
+                 };
+                 
                  
             }]);
                 

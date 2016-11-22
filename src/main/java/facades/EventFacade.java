@@ -5,6 +5,7 @@
  */
 package facades;
 
+import entity.Department;
 import entity.Event;
 import entityconnection.EntityConnector;
 import java.util.Date;
@@ -14,6 +15,7 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.time.*;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -121,12 +123,14 @@ public class EventFacade {
         Date end06 = Date.from(end5.atZone(ZoneId.systemDefault()).toInstant());
 
         if (getEvents().size() <= 0) {
-            Event event = new Event(start, end01, false, "test", "test");
-            Event event1 = new Event(start1, end02, false, "test", "test");
-            Event event2 = new Event(start2, end03, false, "test", "test");
-            Event event3 = new Event(start3, end04, false, "test", "test");
-            Event event4 = new Event(start4, end05, false, "test", "test");
-            Event event5 = new Event(start5, end06, false, "test", "test");
+            TypedQuery<Department> findfirstDepartment = em.createQuery("select d from Department d", Department.class);
+            Department firstDepartment = findfirstDepartment.getSingleResult();
+            Event event = new Event(start, end01, false, "FCK Brøndby", "test", firstDepartment);
+            Event event1 = new Event(start1, end02, false, "JuleFrokost", "test", firstDepartment);
+            Event event2 = new Event(start2, end03, false, "MadFestival", "test", firstDepartment);
+            Event event3 = new Event(start3, end04, false, "Roskilde", "test", firstDepartment);
+            Event event4 = new Event(start4, end05, false, "Fodbold Stævne", "test", firstDepartment);
+            Event event5 = new Event(start5, end06, false, "TDC fest", "test", firstDepartment);
             createEvent(event);
             createEvent(event1);
             createEvent(event2);

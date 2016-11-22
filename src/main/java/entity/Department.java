@@ -59,11 +59,19 @@ public class Department implements Serializable {
     }
 
     public List<Event> getEvents() {
+        if (events ==null) events = new ArrayList();
         return events;
     }
 
     public void setEvents(List<Event> events) {
         this.events = events;
+    }
+    
+    public void addEvent(Event e){
+        if(events == null){
+            events = new ArrayList<>();
+        }
+        events.add(e);
     }
 
 }

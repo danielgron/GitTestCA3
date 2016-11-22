@@ -10,6 +10,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import entity.Event;
 import facades.EventFacade;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -40,7 +42,6 @@ public class EventService {
     private static EventFacade ef = new EventFacade();
     private static JSON_Converter eJson = new JSON_Converter();
     private Gson gson = new Gson();
-    private static ObjectMapper mapper = new ObjectMapper();
 
     @Context
     private UriInfo context;
@@ -90,6 +91,9 @@ public class EventService {
     public String getSingleEvent(@PathParam("id") String id){
       Event event = ef.getEvent(Integer.parseInt(id));
         try {
+            ObjectMapper mapper = new ObjectMapper();
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm a z");
+            mapper.setDateFormat(df);
             return  mapper.writerWithDefaultPrettyPrinter().writeValueAsString(event);
         } catch (JsonProcessingException ex) {
            log.Log.writeToLog("Exception When Creating JSON Object single event: " + ex);
