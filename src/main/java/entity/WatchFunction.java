@@ -1,6 +1,7 @@
 
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,9 @@ public class WatchFunction implements Serializable {
 
     @Id
     private String functionName;
-    @ManyToMany
+    
+    @ManyToMany(mappedBy = "watchFunctions")
+    @JsonBackReference(value="samarits-wf")
     private List<Samarit> samaritsThatHasThisFunction;
 
     public WatchFunction() {
