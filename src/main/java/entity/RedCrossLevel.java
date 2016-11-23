@@ -7,9 +7,11 @@ package entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 /**
@@ -19,8 +21,8 @@ import javax.persistence.OneToMany;
 @Entity
 public class RedCrossLevel implements Serializable {
 
-    @OneToMany(mappedBy = "redCrossLevel")
-        @JsonBackReference(value="samarits-rcl")
+    @ManyToMany(mappedBy = "redCrossLevel")
+    @JsonBackReference(value="samarits-rcl")
     private List<Samarit> samarits;
 
     private static final long serialVersionUID = 1L;
@@ -48,6 +50,13 @@ public class RedCrossLevel implements Serializable {
 
     public void setSamarits(List<Samarit> samarits) {
         this.samarits = samarits;
+    }
+    
+    public void addSamaritToLevel(Samarit sam){
+        if(samarits == null){
+            samarits = new ArrayList<>();
+        }
+        samarits.add(sam);
     }
     
     

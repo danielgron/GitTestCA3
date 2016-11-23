@@ -5,6 +5,7 @@
  */
 package entity.watches;
 
+import exceptions.DateNullException;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -50,9 +51,15 @@ public class SamaritCalendar implements Serializable {
 
   
 
-    public SamaritCalendar(Date start, Date end, boolean allDay) {
+    public SamaritCalendar(Date start, Date end, boolean allDay) throws DateNullException {
+        if (start==null) throw new DateNullException("Not allowed to add null start date");
         this.start = start;
-        this.end = end;
+        if(end!=null) this.end = end;
+        else{
+            this.start.setHours(0);
+            this.start.setMinutes(0);
+            this.end= new Date(this.start.getTime()+(1000*60*60*24));
+        }
         this.allDay = allDay;
     }
 

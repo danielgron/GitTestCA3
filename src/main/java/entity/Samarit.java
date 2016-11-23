@@ -27,7 +27,6 @@ public class Samarit extends User {
 
     @ManyToOne(cascade = CascadeType.MERGE)
     private Department department;
-//  private Dato dato; // Not Implemented!
     private String firstName;
     private String lastName;
     private String adresse; //(Vej)
@@ -35,9 +34,9 @@ public class Samarit extends User {
     private String city;
     private String phone;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @NotNull
-    private RedCrossLevel redCrossLevel; // f.eks Samarit, eller Teamleder
+    private List<RedCrossLevel> redCrossLevel; // f.eks Samarit, eller Teamleder
     private String medicalLevel; // f.eks. Medic, Medic 2 eller læge. (Vil være intet for mange)
     private String driverLevel; // Hvilke Biler og bilbtyper må samaritten benytte. (Vil være intet for mange)
     private int shiftsThisSeason;
@@ -119,14 +118,6 @@ public class Samarit extends User {
         this.phone = phone;
     }
 
-    public RedCrossLevel getRedCroosLevel() {
-        return getRedCrossLevel();
-    }
-
-    public void setRedCroosLevel(RedCrossLevel redCroosLevel) {
-        this.setRedCrossLevel(redCroosLevel);
-    }
-
     public String getMedicalLevel() {
         return medicalLevel;
     }
@@ -170,14 +161,14 @@ public class Samarit extends User {
     /**
      * @return the redCrossLevel
      */
-    public RedCrossLevel getRedCrossLevel() {
+    public List<RedCrossLevel> getRedCrossLevel() {
         return redCrossLevel;
     }
 
     /**
      * @param redCrossLevel the redCrossLevel to set
      */
-    public void setRedCrossLevel(RedCrossLevel redCrossLevel) {
+    public void setRedCrossLevel(List<RedCrossLevel> redCrossLevel) {
         this.redCrossLevel = redCrossLevel;
     }
 
@@ -207,6 +198,14 @@ public class Samarit extends User {
      */
     public void setNotAvail(List<SamaritOccupied> notAvail) {
         this.notAvail = notAvail;
+    }
+    
+    public void addRedCrossLevelToSamarit(RedCrossLevel level){
+        if(redCrossLevel == null){
+            redCrossLevel = new ArrayList<>();
+        }
+        redCrossLevel.add(level);
+        level.addSamaritToLevel(this);
     }
 
     
