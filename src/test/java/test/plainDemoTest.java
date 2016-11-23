@@ -6,11 +6,14 @@ import entity.Samarit;
 import entity.watches.SamaritOccupied;
 import entity.User;
 import entityconnection.EntityConnector;
+import exceptions.DateNullException;
 import facades.CoordinatorFacade;
 import facades.UserFacade;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
@@ -91,7 +94,11 @@ public class plainDemoTest {
             Department d = new Department();
             d.setNameOfDepartment("TestDepartment");
             d.addUser(testSam);
+        try {
             testSam.addNotAvail(new SamaritOccupied(testSam, new Date(101, 2, 5, 6, 0),new Date(101, 2, 5, 10, 0), false));
+        } catch (DateNullException ex) {
+            Logger.getLogger(plainDemoTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
             // Event with with start and end in between the watch marked
             Event e = new Event();
             e.setName("Test Event");
@@ -132,7 +139,11 @@ public class plainDemoTest {
             Department d = new Department();
             d.setNameOfDepartment("TestDepartment2");
             d.addUser(testSam);
+        try {
             testSam.addNotAvail(new SamaritOccupied(testSam, new Date(101, 2, 5, 6, 0),new Date(101, 7, 5, 10, 0), false));
+        } catch (DateNullException ex) {
+            Logger.getLogger(plainDemoTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
             // Event with with start and end in between the watch marked
             Event e = new Event();
             e.setName("Test Event");

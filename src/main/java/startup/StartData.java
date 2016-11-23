@@ -17,12 +17,13 @@ import entityconnection.EntityConnector;
 import exceptions.DateNullException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import log.Log;
-import org.glassfish.hk2.utilities.reflection.Logger;
 
 /**
  *
@@ -102,6 +103,8 @@ public class StartData {
         EntityManager em = EntityConnector.getEntityManager();
         Query q = em.createQuery("Select d from Department d where (d.nameOfDepartment='København')");
         Query q2 = em.createQuery("Select ur from User_Role ur where (ur.roleName='User')");
+        Query q3 = em.createQuery("Select r from RedCrossLevel r", RedCrossLevel.class);
+        List<RedCrossLevel> listofAllRedCrossLevels = q3.getResultList();
         Department d ;
         try{
             d = (Department) q.getSingleResult();
@@ -123,9 +126,11 @@ public class StartData {
             s.setDepartment(d);
             s.setPhone("88888888");
             s.addRoleToUser(userRole);
+            s.addRedCrossLevelToSamarit(listofAllRedCrossLevels.get(ThreadLocalRandom.current().nextInt(0, listofAllRedCrossLevels.size() + 1)));
             for (int j = 0; j < 50; j++) {
             s.addNotAvail(ocupySam(s));
             }
+
             randomTestUsers.add(s);
         }
         Log.writeToLog("Test Data adding random events");
