@@ -75,11 +75,11 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment']
 
                 //This method is for setting a whole day to unavail, by clicking it
                 $scope.setUnavailForWatch = function (date, jsEvent, view) {
-                    userCalendarFactory.getWatch(date).then(function(successResponse){
-                        
-                    },function(errorResponse){
-                        
-                    });
+//                    userCalendarFactory.getWatch(date).then(function(successResponse){
+//                        
+//                    },function(errorResponse){
+//                        
+//                    });
                     var watch = {};
 
                     watch.title = "unavail";
