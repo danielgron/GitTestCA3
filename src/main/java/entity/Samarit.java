@@ -37,8 +37,6 @@ public class Samarit extends User {
     @ManyToMany(cascade = CascadeType.MERGE)
     @NotNull
     private List<RedCrossLevel> redCrossLevel; // f.eks Samarit, eller Teamleder
-    private String medicalLevel; // f.eks. Medic, Medic 2 eller læge. (Vil være intet for mange)
-    private String driverLevel; // Hvilke Biler og bilbtyper må samaritten benytte. (Vil være intet for mange)
     private int shiftsThisSeason;
     private int shiftsTotal;
 //  private List<VagtKort> vagtKorts; // Not implemented yet!
@@ -51,6 +49,10 @@ public class Samarit extends User {
     @OneToMany(mappedBy = "samarit", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JsonBackReference(value="occupied-sam")
     private List<SamaritOccupied> notAvail = new ArrayList<>();
+    
+    @ManyToMany(mappedBy = "samaritsThatHasThisFunction", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JsonBackReference(value = "watchFunctions-sam")
+    private List<WatchFunction> watchFunctions;
 
     public Samarit() {
     }
@@ -118,22 +120,6 @@ public class Samarit extends User {
         this.phone = phone;
     }
 
-    public String getMedicalLevel() {
-        return medicalLevel;
-    }
-
-    public void setMedicalLevel(String medicalLevel) {
-        this.medicalLevel = medicalLevel;
-    }
-
-    public String getDriverLevel() {
-        return driverLevel;
-    }
-
-    public void setDriverLevel(String driverLevel) {
-        this.driverLevel = driverLevel;
-    }
-
     public int getShiftsThisSeason() {
         return shiftsThisSeason;
     }
@@ -193,6 +179,14 @@ public class Samarit extends User {
         return notAvail;
     }
 
+    public List<WatchFunction> getWatchFunctions() {
+        return watchFunctions;
+    }
+
+    public void setWatchFunctions(List<WatchFunction> watchFunctions) {
+        this.watchFunctions = watchFunctions;
+    }
+
     /**
      * @param notAvail the notAvail to set
      */
@@ -206,6 +200,14 @@ public class Samarit extends User {
         }
         redCrossLevel.add(level);
         level.addSamaritToLevel(this);
+    }
+    
+    public void addFunctionToSamarit(WatchFunction function){
+        if(watchFunctions == null){
+            watchFunctions = new ArrayList<>();
+        }
+        watchFunctions.add(function);
+        function.addSamaritToFunction(this);
     }
 
     

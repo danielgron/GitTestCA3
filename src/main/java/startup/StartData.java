@@ -12,7 +12,9 @@ import entity.RedCrossLevel;
 import entity.Samarit;
 import entity.User;
 import entity.User_Role;
+import entity.WatchFunction;
 import entity.watches.SamaritOccupied;
+import entity.watches.SamaritWatch;
 import entityconnection.EntityConnector;
 import exceptions.DateNullException;
 import java.util.ArrayList;
@@ -43,6 +45,9 @@ public class StartData {
         RedCrossLevel r1 = new RedCrossLevel("Samarit");
         RedCrossLevel r2 = new RedCrossLevel("Teamleder");
         RedCrossLevel r3 = new RedCrossLevel("Gæst");
+        WatchFunction f1 = new WatchFunction("Chaffør");
+        WatchFunction f2 = new WatchFunction("Chaffør med Trailer");
+        WatchFunction f3 = new WatchFunction("VagtLeder");
         Department d = new Department();
         d.setNameOfDepartment("København");
         Event e = new Event();
@@ -78,6 +83,9 @@ public class StartData {
             em.persist(r3);
             em.persist(d);
             em.persist(e);
+            em.persist(f1);
+            em.persist(f2);
+            em.persist(f3);
             em.persist(samarit);
             em.persist(admin);
             em.persist(coordinator);
@@ -104,7 +112,9 @@ public class StartData {
         Query q = em.createQuery("Select d from Department d where (d.nameOfDepartment='København')");
         Query q2 = em.createQuery("Select ur from User_Role ur where (ur.roleName='User')");
         Query q3 = em.createQuery("Select r from RedCrossLevel r", RedCrossLevel.class);
+        Query q4 = em.createQuery("Select f from WatchFunction f", WatchFunction.class);
         List<RedCrossLevel> listofAllRedCrossLevels = q3.getResultList();
+        List<WatchFunction> listofAllWatchFunctions = q4.getResultList();
         Department d ;
         try{
             d = (Department) q.getSingleResult();
@@ -126,7 +136,8 @@ public class StartData {
             s.setDepartment(d);
             s.setPhone("88888888");
             s.addRoleToUser(userRole);
-            s.addRedCrossLevelToSamarit(listofAllRedCrossLevels.get(ThreadLocalRandom.current().nextInt(0, listofAllRedCrossLevels.size() - 1)));
+            s.addRedCrossLevelToSamarit(listofAllRedCrossLevels.get(ThreadLocalRandom.current().nextInt(0, listofAllRedCrossLevels.size())));
+            s.addFunctionToSamarit(listofAllWatchFunctions.get(ThreadLocalRandom.current().nextInt(0, listofAllRedCrossLevels.size())));
             for (int j = 0; j < 50; j++) {
             s.addNotAvail(ocupySam(s));
             }
