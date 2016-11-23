@@ -12,7 +12,7 @@ angular.module('myApp.usercalendar')
             };
             
             userCalendarFactory.getWatch = function(date){
-               return $http.get('api/watch/'+date);
+               return $http.get('api/watch/date/'+date);
             };
             
             userCalendarFactory.addEvent = function(watch){

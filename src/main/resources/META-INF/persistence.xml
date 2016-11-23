@@ -2,17 +2,20 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="pu_local" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>entity.Admin</class>
-    <class>entity.Contact</class>
-    <class>entity.Department</class>
-    <class>entity.Event</class>
-    <class>entity.Invoice</class>
-    <class>entity.RedCrossLevel</class>
-    <class>entity.Request</class>
-    <class>entity.Samarit</class>
-    <class>entity.StaffedEvent</class>
+    <non-jta-data-source/>
     <class>entity.User</class>
     <class>entity.User_Role</class>
+    <class>entity.Department</class>
+    <class>entity.ExternalUser</class>
+    <class>entity.Samarit</class>
+    <class>entity.Admin</class>
+    <class>entity.Event</class>
+    <class>entity.RedCrossLevel</class>
+    <class>entity.SamaritCalenderEvent</class>
+    <class>entity.Contact</class>
+    <class>entity.Invoice</class>
+    <class>entity.Request</class>
+    <class>entity.StaffedEvent</class>
     <class>entity.watches.SamaritCalendar</class>
     <class>entity.watches.SamaritOccupied</class>
     <class>entity.watches.SamaritWatch</class>
@@ -54,19 +57,13 @@
   <persistence-unit name="pu_test" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>entity.Admin</class>
-    <class>entity.Contact</class>
     <class>entity.Department</class>
     <class>entity.Event</class>
-    <class>entity.Invoice</class>
     <class>entity.RedCrossLevel</class>
-    <class>entity.Request</class>
     <class>entity.Samarit</class>
-    <class>entity.StaffedEvent</class>
-    <class>entity.User</class>
     <class>entity.User_Role</class>
-    <class>entity.watches.SamaritCalendar</class>
-    <class>entity.watches.SamaritOccupied</class>
-    <class>entity.watches.SamaritWatch</class>
+    <class>entity.User</class>
+    <class>entity.SamaritCalenderEvent</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
