@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 /**
@@ -19,8 +20,8 @@ import javax.persistence.OneToMany;
 @Entity
 public class RedCrossLevel implements Serializable {
 
-    @OneToMany(mappedBy = "redCrossLevel")
-        @JsonBackReference(value="samarits-rcl")
+    @ManyToMany(mappedBy = "redCrossLevel")
+    @JsonBackReference(value="samarits-rcl")
     private List<Samarit> samarits;
 
     private static final long serialVersionUID = 1L;
