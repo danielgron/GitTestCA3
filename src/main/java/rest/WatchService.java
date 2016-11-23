@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.google.gson.Gson;
-import entity.SamaritCalenderEvent;
+import entity.watches.SamaritOccupied;
 import facades.WatchFacade;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -61,12 +61,12 @@ public class WatchService {
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public void setWatch(@PathParam("id") String id, String sWatch) {
-        SamaritCalenderEvent sw = null;
+        SamaritOccupied sw = null;
 
         try {
 
             mapper = new ObjectMapper();
-            sw = mapper.readValue(sWatch, SamaritCalenderEvent.class);
+            sw = mapper.readValue(sWatch, SamaritOccupied.class);
             sw.getSamarit().setUserName(id);
 
         } catch (IOException ex) {
@@ -80,14 +80,14 @@ public class WatchService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getWatchesForSamarit(@PathParam("id") String id) {
-        List<SamaritCalenderEvent> watches = null;
+        List<SamaritOccupied> watches = null;
         watches = wf.getWatchesForUser(id);
         String json = "{fail}";
         try {
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm a z");
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             mapper.setDateFormat(df);
             SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("samarit");
-            FilterProvider filters = new SimpleFilterProvider().addFilter("myFilter", theFilter);
+            FilterProvider filters = new SimpleFilterProvider().addFilter("samaritFilter", theFilter);
 
             json = mapper.writer(filters).writeValueAsString(watches);
         } catch (JsonProcessingException ex) {

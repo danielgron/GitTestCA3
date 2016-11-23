@@ -7,8 +7,9 @@ package facades;
 
 import entity.Event;
 import entity.Samarit;
-import entity.SamaritCalenderEvent;
+import entity.watches.SamaritOccupied;
 import entity.User;
+import entity.watches.SamaritWatch;
 import entityconnection.EntityConnector;
 import java.time.LocalDate;
 import java.time.Month;
@@ -33,11 +34,11 @@ public class WatchFacade {
 
     }
 
-    public List<SamaritCalenderEvent> getWatches() {
+    public List<SamaritOccupied> getWatches() {
         EntityManager em = EntityConnector.getEntityManager();
-        List<SamaritCalenderEvent> watches = null;
+        List<SamaritOccupied> watches = null;
         try {
-            Query q = em.createQuery("SELECT w FROM SamaritCalenderEvent w");
+            Query q = em.createQuery("SELECT w FROM SamaritOccupied w");
             watches = q.getResultList();
         } catch (Exception ex) {
             Logger.getLogger(EventFacade.class.getName()).log(Level.SEVERE, null, ex);
@@ -47,12 +48,12 @@ public class WatchFacade {
         return watches;
     }
 
-    public List<SamaritCalenderEvent> getWatchesForUser(String userName) {
+    public List<SamaritOccupied> getWatchesForUser(String userName) {
         EntityManager em = EntityConnector.getEntityManager();
-        List<SamaritCalenderEvent> watches = null;
+        List<SamaritOccupied> watches = null;
         try {
           
-            Query q = em.createNamedQuery("SamaritCalenderEvent.findByUserName");
+            Query q = em.createNamedQuery("SamaritOccupied.findByUserName");
             q.setParameter("userName", userName);
             watches = q.getResultList();
             
@@ -64,11 +65,11 @@ public class WatchFacade {
         return watches;
     }
 
-    public SamaritCalenderEvent getWatch(int id) {
+    public SamaritOccupied getWatch(int id) {
         EntityManager em = EntityConnector.getEntityManager();
-        SamaritCalenderEvent watch = null;
+        SamaritOccupied watch = null;
         try {
-            watch = em.find(SamaritCalenderEvent.class, id);
+            watch = em.find(SamaritOccupied.class, id);
 
         } catch (Exception ex) {
             Logger.getLogger(EventFacade.class.getName()).log(Level.SEVERE, null, ex);
@@ -77,8 +78,22 @@ public class WatchFacade {
         }
         return watch;
     }
-
-    public SamaritCalenderEvent updateWatch(SamaritCalenderEvent watch) {
+    
+//    public SamaritOccupied getWatch(Date date){
+//        EntityManager em = EntityConnector.getEntityManager();
+//        SamaritOccupied watch = null;
+//        try{
+//            Query q = em.createQuery("SELECT w FROM SamaritOccupied AS w WHERE w.start  ");
+//            
+//        }finally{
+//            em.close();
+//        }
+//            
+//        
+//        return watch;
+//        
+//    }
+    public SamaritOccupied updateWatch(SamaritOccupied watch) {
         EntityManager em = EntityConnector.getEntityManager();
         try {
             em.getTransaction().begin();
@@ -94,11 +109,11 @@ public class WatchFacade {
         return watch;
     }
 
-    public SamaritCalenderEvent deleteWatch(Integer id) {
+    public SamaritOccupied deleteWatch(Integer id) {
         EntityManager em = EntityConnector.getEntityManager();
-        SamaritCalenderEvent watch = null;
+        SamaritOccupied watch = null;
         try {
-            watch = em.find(SamaritCalenderEvent.class, id);
+            watch = em.find(SamaritOccupied.class, id);
             em.getTransaction().begin();
             em.remove(watch);
             em.getTransaction().commit();
@@ -111,7 +126,7 @@ public class WatchFacade {
         return watch;
     }
 
-    public SamaritCalenderEvent addWatch(SamaritCalenderEvent watch, String email, Integer eventId) {
+    public SamaritWatch addWatch(SamaritWatch watch, String email, Integer eventId) {
         EntityManager em = EntityConnector.getEntityManager();
         try {
             em.getTransaction().begin();
@@ -136,7 +151,7 @@ public class WatchFacade {
         return watch;
     }
 
-    public SamaritCalenderEvent addUnavailForWatch(SamaritCalenderEvent watch) {
+    public SamaritOccupied addUnavailForWatch(SamaritOccupied watch) {
         EntityManager em = EntityConnector.getEntityManager();
                 if (watch==null){
                     return null;

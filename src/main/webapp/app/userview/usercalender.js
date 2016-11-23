@@ -21,22 +21,14 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment']
                 $scope.eventSources1 = [$scope.watchList];
                 var email = 'coordinator';
 
-//                userCalendarFactory.getEvents().then(function (response) {
-//                    
-//                    angular.forEach(response.data, function(value,key){
-//                        $scope.watchList.push(value);
-//                    })
-//                   // $scope.watchList = tempWatchList;
-//
-//                }, function (error) {
-//                    $scope.status = 'Unable to load customer data: ' + error.message;
-//                });
+//             
 
 
 
 
                 $scope.eventSource = {
-                    url: 'api/watch/coordinator'
+                    url: 'api/watch/coordinator',
+                    color: 'red'
                 };
 
                 $scope.uiConfig = {
@@ -56,7 +48,10 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment']
                         eventRender: $scope.eventRender,
                         dayRender: $scope.dayRender,
                         dayClick: $scope.setUnavailForWatch,
-                        renderEvent: $scope.renderEvent
+                        renderEvent: $scope.renderEvent,
+                        selectOverlap: $scope.selectOverlap,
+                        rerenderEvents: $scope.rerenderEvents,
+                        eventAfterAllRender: $scope.eventAfterRender
                     }
                 };
 
@@ -65,30 +60,53 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment']
 
                 };
 
+                $scope.eventRender = function (event, element) {
+//                    // event.start is already a moment.js object
+                    // we can apply .format()
+                    var dateString = event.start.format("YYYY-MM-DD");
+                    window.console.log(dateString);
+                    
+                    result = angular.element(document).find('.fc-day[data-date="' + dateString + '"]').css('background-color', 'red');//element.find('.fc-day[data-date="' + dateString + '"]');
+                    //result.css('background-color', 'black');
+                            //document.getElementsByClassName('.fc-day[data-date=' + dateString + ']');
+                    window.console.log(result);
 
+                    //$(view.el[0]).find('.fc-day[data-date=' + dateString + ']').css('background-color', '#FAA732');
+                };
+                eventAfterRender: $scope.eventAfterRender = function () {
+                    $scope.rerenderEvents();
+                };
+                $scope.rerenderEvents = function () {
+
+                };
 
                 //This method is for setting a whole day to unavail, by clicking it
                 $scope.setUnavailForWatch = function (date, jsEvent, view) {
-
-
+                    window.console.log();
+                    this.css('background-color', 'red');
                     var watch = {};
+
                     watch.title = "unavail";
                     watch.samarit = {};
                     watch.start = date;
-                    watch.end = date;
+
                     watch.samarit.userName = "coordinator";
-                    watch.isAvailable = false;
                     watch.allDay = true;
-                   // watch.stick = true
+                    // watch.rendering = 'background';
+                    watch.color = 'red';
+                    // watch.stick = true
 
                     userCalendarFactory.setAvailable(watch).then(function (response) {
+                        watch = response.data;
                         window.console.log("great succes" + response.data);
                     }, function (response) {
                         window.console.log("great failure" + response);
                     });
 
-
+                    watch.stick = true;
+                    //  watch.rendering = 'background';
                     $scope.watchList.push(watch);
+                    $scope.rerenderEvents();
 
                 };
 
@@ -98,9 +116,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment']
                 $scope.dayRender = function (date, cell) {
 
                 };
-                $scope.renderEvent = function () {
 
-                };
 
                 //For using buttons to redirect
                 $scope.go = function (path) {
