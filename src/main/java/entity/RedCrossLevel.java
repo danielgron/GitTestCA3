@@ -7,6 +7,7 @@ package entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -49,6 +50,13 @@ public class RedCrossLevel implements Serializable {
 
     public void setSamarits(List<Samarit> samarits) {
         this.samarits = samarits;
+    }
+    
+    public void addSamaritToLevel(Samarit sam){
+        if(samarits == null){
+            samarits = new ArrayList<>();
+        }
+        samarits.add(sam);
     }
     
     

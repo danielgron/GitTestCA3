@@ -205,6 +205,7 @@ public class Samarit extends User {
             redCrossLevel = new ArrayList<>();
         }
         redCrossLevel.add(level);
+        level.addSamaritToLevel(this);
     }
 
     
