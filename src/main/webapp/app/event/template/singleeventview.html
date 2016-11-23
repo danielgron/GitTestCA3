@@ -29,6 +29,7 @@
                     <tr>
                         <th>Navn</th> 
                         <th> Afdeling</th> 
+                        <th> UddannelsesNivauer</th> 
                         
                     </tr>
                 </thead>
@@ -36,6 +37,9 @@
                     <tr>
                         <td>{{sam.userName}}</td>
                         <td>{{sam.department.nameOfDepartment}}</td>
+                        <td ng-repeat="level in sam.redCrossLevel">
+                            {{level.level}},
+                        </td>
                     </tr>
                 </tbody>
             </table>

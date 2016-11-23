@@ -61,17 +61,10 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment']
                 };
 
                 $scope.eventRender = function (event, element) {
-//                    // event.start is already a moment.js object
-                    // we can apply .format()
                     var dateString = event.start.format("YYYY-MM-DD");
                     window.console.log(dateString);
                     
-                    result = angular.element(document).find('.fc-day[data-date="' + dateString + '"]').css('background-color', 'red');//element.find('.fc-day[data-date="' + dateString + '"]');
-                    //result.css('background-color', 'black');
-                            //document.getElementsByClassName('.fc-day[data-date=' + dateString + ']');
-                    window.console.log(result);
-
-                    //$(view.el[0]).find('.fc-day[data-date=' + dateString + ']').css('background-color', '#FAA732');
+                    angular.element(document).find('.fc-day[data-date="' + dateString + '"]').css('background-color', 'red');//element.find('.fc-day[data-date="' + dateString + '"]');
                 };
                 eventAfterRender: $scope.eventAfterRender = function () {
                     $scope.rerenderEvents();
@@ -83,8 +76,11 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment']
                 //This method is for setting a whole day to unavail, by clicking it
                 //TO-DO - remove when clicking day with event.
                 $scope.setUnavailForWatch = function (date, jsEvent, view) {
-                    window.console.log();
-                    this.css('background-color', 'red');
+//                    userCalendarFactory.getWatch(date).then(function(successResponse){
+//                        
+//                    },function(errorResponse){
+//                        
+//                    });
                     var watch = {};
 
                     watch.title = "unavail";
@@ -93,9 +89,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment']
 
                     watch.samarit.userName = "coordinator";
                     watch.allDay = true;
-                    // watch.rendering = 'background';
                     watch.color = 'red';
-                    // watch.stick = true
 
                     userCalendarFactory.setAvailable(watch).then(function (response) {
                         watch = response.data;
@@ -104,10 +98,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment']
                         window.console.log("great failure" + response);
                     });
 
-                    watch.stick = true;
-                    //  watch.rendering = 'background';
                     $scope.watchList.push(watch);
-                    $scope.rerenderEvents();
 
                 };
 
