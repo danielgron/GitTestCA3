@@ -22,7 +22,7 @@ import javax.persistence.OneToMany;
 @Entity
 public class Department implements Serializable {
 
-    @OneToMany(mappedBy = "department")
+    @OneToMany(mappedBy = "department", cascade = CascadeType.PERSIST)
     @JsonBackReference(value="event-dep")
     private List<Event> events;
 

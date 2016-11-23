@@ -91,7 +91,7 @@ public class plainDemoTest {
             Department d = new Department();
             d.setNameOfDepartment("TestDepartment");
             d.addUser(testSam);
-            testSam.addNotAvail(new SamaritOccupied(testSam, new Event(), new Date(101, 2, 5, 6, 0),new Date(101, 2, 5, 10, 0), false));
+            testSam.addNotAvail(new SamaritOccupied(testSam, new Date(101, 2, 5, 6, 0),new Date(101, 2, 5, 10, 0), false));
             // Event with with start and end in between the watch marked
             Event e = new Event();
             e.setName("Test Event");
@@ -132,7 +132,7 @@ public class plainDemoTest {
             Department d = new Department();
             d.setNameOfDepartment("TestDepartment2");
             d.addUser(testSam);
-            testSam.addNotAvail(new SamaritOccupied(testSam, new Event(), new Date(101, 2, 5, 6, 0),new Date(101, 7, 5, 10, 0), false));
+            testSam.addNotAvail(new SamaritOccupied(testSam, new Date(101, 2, 5, 6, 0),new Date(101, 7, 5, 10, 0), false));
             // Event with with start and end in between the watch marked
             Event e = new Event();
             e.setName("Test Event");
