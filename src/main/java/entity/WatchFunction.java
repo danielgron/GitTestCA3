@@ -1,6 +1,7 @@
 
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 /**
  * This Class Reprcent the different functions (f.eks Chaffør, Vagtleder m.m)
@@ -20,14 +22,21 @@ public class WatchFunction implements Serializable {
 
     @Id
     private String functionName;
-    @ManyToMany
+    
+    @ManyToMany(mappedBy = "watchFunctions")
+    @JsonBackReference(value="samarits-wf")
     private List<Samarit> samaritsThatHasThisFunction;
+    
+    @ManyToOne
+    @JsonBackReference (value="department-wf")
+    private Department department;
 
     public WatchFunction() {
     }
 
-    public WatchFunction(String functionName) {
+    public WatchFunction(String functionName, Department department) {
         this.functionName = functionName;
+        department.addWatchFunction(this); // Department 
     }
     
     
@@ -47,14 +56,21 @@ public class WatchFunction implements Serializable {
     public void setSamaritsThatHasThisFunction(List<Samarit> samaritsThatHasThisFunction) {
         this.samaritsThatHasThisFunction = samaritsThatHasThisFunction;
     }
-    
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
    public void addSamaritToFunction(Samarit sam) {
        if(samaritsThatHasThisFunction == null){
            samaritsThatHasThisFunction = new ArrayList<>();
        }
        samaritsThatHasThisFunction.add(sam);
    }
+   
+   
     
-   
-   
 }

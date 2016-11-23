@@ -50,8 +50,8 @@ public class Samarit extends User {
     @JsonBackReference(value="occupied-sam")
     private List<SamaritOccupied> notAvail = new ArrayList<>();
     
-    @ManyToMany(mappedBy = "samaritsThatHasThisFunction", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JsonBackReference(value = "watchFunctions-sam")
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @NotNull
     private List<WatchFunction> watchFunctions;
 
     public Samarit() {
