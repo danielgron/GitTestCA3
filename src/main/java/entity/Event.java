@@ -5,7 +5,9 @@
  */
 package entity;
 
+import entity.watches.SamaritOccupied;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import entity.watches.SamaritWatch;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -62,14 +64,16 @@ public class Event implements Serializable {
 
     @OneToMany(mappedBy = "event")
     @JsonBackReference (value="watches-event")
-    List<SamaritCalenderEvent> watches = new ArrayList();
+    List<SamaritWatch> watches = new ArrayList();
 
-    public Event(Date start, Date end, boolean allDay, String name, String desc) {
+    public Event(Date start, Date end, boolean allDay, String name, String desc, Department department) {
         this.start = start;
         this.end = end;
         this.allDay = allDay;
         this.name = name;
         this.desc = desc;
+        this.department = department;
+        department.addEvent(this);
     }
 
     public Event() {
@@ -82,7 +86,7 @@ public class Event implements Serializable {
         return id;
     }
 
-    public void addWatch(SamaritCalenderEvent watch) {
+    public void addWatch(SamaritWatch watch) {
         this.watches.add(watch);
         watch.setEvent(this);
 
@@ -171,6 +175,7 @@ public class Event implements Serializable {
 
     public void setDepartment(Department department) {
         this.department = department;
+        department.addEvent(this); // Event is responsable for adding the refrence
     }
 
 }

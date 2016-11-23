@@ -8,9 +8,9 @@
 *
 */
 
-angular.module('ui.calendar', [])
+angular.module('ui.calendar', ['myApp.usercalendar'])
 
-    .constant('uiCalendarConfig', {
+    .constant('uiCalendarConfig1', {
         calendars : {}
     })
     .controller('uiCalendarCtrl', ['$scope', '$locale',
