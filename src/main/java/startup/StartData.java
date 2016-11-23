@@ -100,13 +100,13 @@ public class StartData {
     }
     
     public void insertRandomData(){
-        String[] fName = {"Adam", "Allan", "Anders", "Brian", "Børge", "Claus", "Daniel", "Danni", "Dennis", "Egon", "Emil", "Fie", "Freja", "Grethe","Gorm","Henning","Ib","Ida","Jens","Klaus","Kasper","Kenneth","Abel","Jarmo","Sonny","Cher","Dreng","Lotus","Dan","Lars","Mathilde","Mads"};
-        String[] lName = {"Andersen","Jespersen","Jørgensen","Hansen","Thomsen","Gram","Hat","Stol","Green","Pind","Løkke","Nielsen","Flotnavn","Avn","Ravn","Havn","Barm","Heintze","Gønge","Von Jarmo","Tømrer","Forsørensen","Pilatus","Ort","Rohde","Lund","Greve","Vad","Dam","Bondo","Kjærsgård","Gade","Hassan"};
+        String[] fName = {"Adam", "Allan", "Anders", "Brian", "Børge", "Claus", "Daniel", "Danni", "Dennis", "Egon", "Emil", "Fie", "Freja", "Grethe","Gorm","Henning","Ib","Ida","Jens","Klaus","Kasper","Kenneth","Abel","Jarmo","Sonny","Cher","Dreng","Lotus","Dan","Lars","Mathilde","Mads","Morten","Michael"};
+        String[] lName = {"Andersen","Jespersen","Jørgensen","Hansen","Thomsen","Gram","Hat","Stol","Green","Pind","Løkke","Nielsen","Flotnavn","Avn","Ravn","Havn","Barry","Heintze","Gønge","Von Jarmo","Tømrer","Forsørensen","Pilatus","Ort","Rohde","Lund","Greve","Vad","Dam","Bondo","Kjærsgård","Gade","Hassan","Michael","Juel"};
         String[] emailDomain = {"hotmail","gmail","jubii","yahoo"};
         String[] emailEnd = {".com",".net",".dk"};
         String[] adr1 = {"Store ","Lille ","","","","","","","",""};
-        String[] adr2 = {" Randers",""};
-        String[] adr3 = {"vej","gade"," Hovedgade"," Landevej"};
+        String[] adr2 = {"Randers","Morgen","Blomster","Paradis","Fiol","Banan","Vin","Herre","Roskilde","Jylland","Bøge","Ege"};
+        String[] adr3 = {"vej","gade"," Hovedgade"," Landevej","stræde","stien","pladsen"};
         
         EntityManager em = EntityConnector.getEntityManager();
         Query q = em.createQuery("Select d from Department d where (d.nameOfDepartment='København')");
@@ -130,7 +130,7 @@ public class StartData {
             String userFName = fName[((int)(Math.random()*fName.length))];
             String userLName = lName[((int)(Math.random()*lName.length))];
             String email = userFName+userLName+(int)(Math.random()*10000)+"@"+emailDomain[((int)(Math.random()*emailDomain.length))]+emailEnd[((int)(Math.random()*emailEnd.length))];
-            String address = adr1[(int)(Math.random()*adr1.length)]+adr2[(int)(Math.random()*adr2.length)]+adr3[(int)(Math.random()*adr2.length)]+ " " + (int)(Math.random()*200);
+            String address = adr1[(int)(Math.random()*adr1.length)]+adr2[(int)(Math.random()*adr2.length)]+adr3[(int)(Math.random()*adr3.length)]+ " " + (int)(Math.random()*200);
             Samarit s= new Samarit(email, userFName+"123");
             s.setFirstName(userFName);
             s.setLastName(userLName);
