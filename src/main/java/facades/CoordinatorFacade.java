@@ -8,12 +8,14 @@ package facades;
 import entity.Department;
 import entity.Event;
 import entity.Samarit;
+import entity.WatchFunction;
 import entity.watches.SamaritOccupied;
 import entity.watches.SamaritCalendar;
 import entityconnection.EntityConnector;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import log.Log;
 import util.DateUtils;
 
@@ -99,6 +101,14 @@ public class CoordinatorFacade {
         
         return available;
         }
+
+    public List<WatchFunction> getWatchFunctionsFromDepartment(String department) {
+        EntityManager em = EntityConnector.getEntityManager();
+        Query q = em.createQuery("select w from WatchFunction w where w.department.nameOfDepartment LIKE :dept", WatchFunction.class);
+        q.setParameter("dept", department);
+        List<WatchFunction> list = q.getResultList();
+        return list;
+    }
 
     
     

@@ -45,11 +45,11 @@ public class StartData {
         RedCrossLevel r1 = new RedCrossLevel("Samarit");
         RedCrossLevel r2 = new RedCrossLevel("Teamleder");
         RedCrossLevel r3 = new RedCrossLevel("Gæst");
-        WatchFunction f1 = new WatchFunction("Chaffør");
-        WatchFunction f2 = new WatchFunction("Chaffør med Trailer");
-        WatchFunction f3 = new WatchFunction("VagtLeder");
         Department d = new Department();
         d.setNameOfDepartment("København");
+        WatchFunction f1 = new WatchFunction("Chaffør", d);
+        WatchFunction f2 = new WatchFunction("Chaffør med Trailer",d);
+        WatchFunction f3 = new WatchFunction("VagtLeder", d);
         Event e = new Event();
             e.setName("Test Event");
             e.setStart(new Date(116, 5, 5, 10, 0));
