@@ -40,8 +40,8 @@ public class SamaritOccupied extends SamaritCalendar{
     public SamaritOccupied() {
     }
 
-    public SamaritOccupied(Samarit testSam, Event event, Date date, Date date0, boolean b) {
-        super(date,date0,b);
+    public SamaritOccupied(Samarit testSam, Event event, Date start, Date end, boolean b) {
+        super(start,end,b);
         this.samarit = testSam;
         
     }

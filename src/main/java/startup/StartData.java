@@ -12,6 +12,7 @@ import entity.RedCrossLevel;
 import entity.Samarit;
 import entity.User;
 import entity.User_Role;
+import entity.watches.SamaritOccupied;
 import entityconnection.EntityConnector;
 import java.util.ArrayList;
 import java.util.Date;
@@ -131,5 +132,21 @@ public class StartData {
         finally{
             em.close();
         }
+    }
+    
+    public SamaritOccupied ocupySam(){
+        SamaritOccupied so = new SamaritOccupied();
+        return so;
+    }
+    
+    public Event testEvent(){
+        Event e = new Event();
+        int month = (int)(Math.random()*12);
+        int day = (int)(Math.random()*30);
+        int hour = (int)(Math.random()*12)+12;
+        int duration  = (int)(Math.random()*10);
+        Date dStart = new Date(116, month, day, hour, 0);
+        Date dEnd = new Date(116, month, day, hour+duration, 0);
+        return e;
     }
 }
