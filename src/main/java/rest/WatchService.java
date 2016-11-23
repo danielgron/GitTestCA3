@@ -33,6 +33,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import util.JacksonFilter;
 import util.WatchConverter;
+import javax.ws.rs.container.ContainerRequestContext;
+
 
 /**
  * REST Web Service
@@ -80,6 +82,8 @@ public class WatchService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getWatchesForSamarit(@PathParam("id") String id) {
+            //  String token = request.getHeaderString("Authorization").substring("Bearer ".length());
+
         List<SamaritOccupied> watches = null;
         watches = wf.getWatchesForUser(id);
         String json = "{fail}";
