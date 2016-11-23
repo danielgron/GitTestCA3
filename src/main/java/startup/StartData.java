@@ -126,7 +126,7 @@ public class StartData {
             s.setDepartment(d);
             s.setPhone("88888888");
             s.addRoleToUser(userRole);
-            s.addRedCrossLevelToSamarit(listofAllRedCrossLevels.get(ThreadLocalRandom.current().nextInt(0, listofAllRedCrossLevels.size() + 1)));
+            s.addRedCrossLevelToSamarit(listofAllRedCrossLevels.get(ThreadLocalRandom.current().nextInt(0, listofAllRedCrossLevels.size() - 1)));
             for (int j = 0; j < 50; j++) {
             s.addNotAvail(ocupySam(s));
             }
