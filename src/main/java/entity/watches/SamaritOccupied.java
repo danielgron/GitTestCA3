@@ -8,6 +8,7 @@ package entity.watches;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import entity.Event;
 import entity.Samarit;
+import exceptions.DateNullException;
 import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
@@ -40,7 +41,7 @@ public class SamaritOccupied extends SamaritCalendar{
     public SamaritOccupied() {
     }
 
-    public SamaritOccupied(Samarit testSam, Event event, Date start, Date end, boolean b) {
+    public SamaritOccupied(Samarit testSam, Date start, Date end, boolean b) throws DateNullException {
         super(start,end,b);
         this.samarit = testSam;
         
