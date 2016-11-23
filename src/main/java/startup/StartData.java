@@ -130,10 +130,12 @@ public class StartData {
             String userFName = fName[((int)(Math.random()*fName.length))];
             String userLName = lName[((int)(Math.random()*lName.length))];
             String email = userFName+userLName+(int)(Math.random()*10000)+"@"+emailDomain[((int)(Math.random()*emailDomain.length))]+emailEnd[((int)(Math.random()*emailEnd.length))];
+            String address = adr1[(int)(Math.random()*adr1.length)]+adr2[(int)(Math.random()*adr2.length)]+adr3[(int)(Math.random()*adr2.length)]+ " " + (int)(Math.random()*200);
             Samarit s= new Samarit(email, userFName+"123");
             s.setFirstName(userFName);
             s.setLastName(userLName);
             s.setDepartment(d);
+            s.setAdresse(address);
             s.setPhone("88888888");
             s.addRoleToUser(userRole);
             s.addRedCrossLevelToSamarit(listofAllRedCrossLevels.get(ThreadLocalRandom.current().nextInt(0, listofAllRedCrossLevels.size())));
