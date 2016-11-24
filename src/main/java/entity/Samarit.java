@@ -213,12 +213,6 @@ public class Samarit extends User {
     }
 
     @Override
-    public int hashCode() {
-        int hash = 3;
-        return hash;
-    }
-
-    @Override
     public boolean equals(Object obj) {
            if (!(obj instanceof Samarit)) {
             return false;
@@ -227,4 +221,4 @@ public class Samarit extends User {
         return this.getUserName().equals(castedObject.getUserName());
        
     }
-}
+    }

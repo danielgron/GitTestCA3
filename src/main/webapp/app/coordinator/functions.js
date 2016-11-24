@@ -6,17 +6,35 @@ angular.module('myApp.functions', ['ngRoute'])
                 });
             }])
 
-        .controller("functionctrl", [ 'UserFactory', 'Functionsfactory', function ( UserFactory, Functionsfactory) {
+        .controller("functionctrl", ['$http','UserFactory', 'Functionsfactory', function ($http ,UserFactory, Functionsfactory) {
                 var self = this;
                 self.allDepartmentFunctions;
+                self.newFunction = {};
+                self.newFunction.department = {};
+                self.newFunction.department.nameOfDepartment = UserFactory.getDepartment();
                 getAllDepartmentFunctions();
-                
-                function getAllDepartmentFunctions(){
+                self.createNewFunction = function () {
+                    $http({
+                        method: 'POST',
+                        url: 'api/coordinator/functions',
+                        data: self.newFunction
+                    }).then(function successCallback(response) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        alert("succes");
+                    }, function errorCallback(response) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        console.log("Error: " + response.statusCode );
+                    });
+                };
+
+                function getAllDepartmentFunctions() {
                     Functionsfactory.getFunctionsFromDepartment(UserFactory.getDepartment())
-                            .then(function (response){
+                            .then(function (response) {
                                 self.allDepartmentFunctions = response.data;
-                    }), function(error){
-                      console.log("Error" + error);  
+                            }), function (error) {
+                        console.log("Error" + error);
                     };
                 }
             }])
@@ -24,7 +42,7 @@ angular.module('myApp.functions', ['ngRoute'])
 
         .factory('Functionsfactory', function ($http) {
             var getFunctionsFromDepartment = function (department) {
-                 return $http.get("api/coordinator/functions/" + department);
+                return $http.get("api/coordinator/functions/" + department);
             };
             return {
                 getFunctionsFromDepartment

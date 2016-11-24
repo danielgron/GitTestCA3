@@ -124,4 +124,20 @@ public class CoordinatorFacade {
         return list;
     }
 
+    public WatchFunction createNewFunctionForDepartment(WatchFunction watchFunction) {
+       EntityManager em = EntityConnector.getEntityManager();
+       try{
+           em.getTransaction().begin();
+           em.persist(watchFunction);
+           em.getTransaction().commit();
+       }
+       catch(Exception e){
+           throw e;
+       }
+       finally{
+           em.close();
+       }
+       return watchFunction;
+    }
+
 }
