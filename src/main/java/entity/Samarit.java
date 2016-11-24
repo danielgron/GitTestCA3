@@ -48,7 +48,7 @@ public class Samarit extends User {
     
     @OneToMany(mappedBy = "samarit", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JsonBackReference(value="occupied-sam")
-    private List<SamaritOccupied> notAvail = new ArrayList<>();
+    private List<OcupiedSlot> notAvail = new ArrayList();
     
     @ManyToMany(cascade = CascadeType.MERGE)
     @NotNull
@@ -67,9 +67,10 @@ public class Samarit extends User {
     }
     
     
-    public void addNotAvail(SamaritOccupied notAvail){
+    public void addNotAvail(OcupiedSlot notAvail){
         this.notAvail.add(notAvail);
-        notAvail.setSamarit(this);
+        SamaritOccupied s= (SamaritOccupied)notAvail;
+                s.setSamarit(this);
     }
 
     public String getFirstName() {
@@ -175,7 +176,7 @@ public class Samarit extends User {
     /**
      * @return the notAvail
      */
-    public List<SamaritOccupied> getNotAvail() {
+    public List<OcupiedSlot> getNotAvail() {
         return notAvail;
     }
 
@@ -190,7 +191,7 @@ public class Samarit extends User {
     /**
      * @param notAvail the notAvail to set
      */
-    public void setNotAvail(List<SamaritOccupied> notAvail) {
+    public void setNotAvail(List<OcupiedSlot> notAvail) {
         this.notAvail = notAvail;
     }
     

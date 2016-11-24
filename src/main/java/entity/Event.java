@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @XmlRootElement
-public class Event implements Serializable {
+public class Event implements Serializable, OcupiedSlot {
 
     private static final long serialVersionUID = 1L;
 
@@ -56,6 +56,8 @@ public class Event implements Serializable {
 
     @ManyToOne
     private Department department;
+    
+    private List<Resource> resources;
 
     private String name;
 
@@ -102,6 +104,8 @@ public class Event implements Serializable {
     /**
      * @return the start
      */
+  
+    @Override
     public Date getStart() {
         return start;
     }
@@ -116,6 +120,7 @@ public class Event implements Serializable {
     /**
      * @return the end
      */
+    @Override
     public Date getEnd() {
         return end;
     }
