@@ -12,4 +12,17 @@ angular.module('myApp.directives', []).
         '<li><a href="http://weblogs.asp.net/dwahlin/creating-custom-angularjs-directives-part-i-the-fundamentals">Creating Custom Directives</a></li>'+
       '</ul>'
     };
-  });
+  })
+  .directive('resourceDirective', function() {
+      console.log("Struck directive");
+  return {
+    restrict: 'E',
+    templateUrl: 'app/coordinator/template/resources.html',
+    scope:{
+    event: '@'
+    }
+    
+
+  };
+})
+  ;

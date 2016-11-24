@@ -18,6 +18,7 @@ angular.module('myApp', [
     'myApp.coordinator',
     'myApp.event',
     'myApp.functions',
+    'myApp.resources',
     'myApp.usercalendar',
     'myApp.singleevent',
     'angularMoment'

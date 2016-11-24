@@ -6,18 +6,26 @@
 
 angular.module('myApp.resources', [])
 
-        .controller("resourcectrl", ['ResourceFactory', function ( ResourceFactory) {
-                
+        .controller("Resourcectrl", ['ResourceFactory','$scope', function ( ResourceFactory,$scope) {
+                var self = this;
+                ResourceFactory.setEvent($scope.event);
+                console.log($scope.event);
                 
                 
         }])
-        .directive('resources', function() {
-  return {
-    restrict: 'E',
-    templateUrl: 'template/resources.html'
-
-  };
-})
+        .factory('ResourceFactory', function ($http) {
+    var event;
+    var getAvailableResources = function getAvailableResources(){
+      return $http.get("api/coordinator/availableResources/" + event);
+    };
+    var setEvent = function getAvailableResources(e){
+      event = e;
+    };
+    return {
+      getAvailableResources: getAvailableResources,
+      setEvent: setEvent
+    };
+  });
         
 
 
