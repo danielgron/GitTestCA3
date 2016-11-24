@@ -59,7 +59,8 @@ public class SamaritCalendar implements Serializable, OcupiedSlot{
         else{
             this.start.setHours(0);
             this.start.setMinutes(0);
-            this.end= new Date(this.start.getTime()+(1000*60*60*24));
+            long endTime = this.start.getTime()+(1000*60*60*24);
+            this.end= new Date(endTime);
         }
         this.allDay = allDay;
     }

@@ -89,10 +89,13 @@ public class CoordinatorFacade {
         List<OcupiedSlot> events = samarit.getNotAvail();
         for (OcupiedSlot event : events) {
             if(
+                    event.getEnd()!=null &&
+                    (
                     DateUtils.dateBetween(event.getStart(),e.getStart(),e.getEnd()) ||
                     DateUtils.dateBetween(event.getEnd(),e.getStart(),e.getEnd()) ||
                     DateUtils.dateBetween(e.getStart(),event.getStart(),event.getEnd()) ||
                     DateUtils.dateBetween(e.getStart(),event.getStart(),event.getEnd())
+                    )
                     ){
                 available = false;
             }
