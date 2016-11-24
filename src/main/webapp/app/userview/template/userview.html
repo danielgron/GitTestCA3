@@ -1,7 +1,10 @@
+<div id="overLay" bs-loading-overlay>
+</div>
+
 <div class="container">
     <section id="directives-calendar" ng-controller="UserCalendarCtrl">
 
-        <div class="well col-md-12">
+        <div class="well col-md-12 bs-loading-container" >
 
             <div class="btn-group-vertical  col-md-2">
                 <button type="button" ng-click="" class="btn btn-success text-left"><i class="glyphicon glyphicon-edit"/> Rediger</button>
@@ -25,10 +28,11 @@
 
                 </div>
 
-                <div data-tap-disabled="true" class="calendar" ng-model="eventSources1" typeId="{{avail}}" calendar="userCalender" ui-calendar="uiConfig.calendar"></div>
-               
-                
+                <div  data-tap-disabled="true" class="calendar" ng-model="eventSources1" typeId="{{avail}}" calendar="userCalender" ui-calendar="uiConfig.calendar"></div>
+
                 UserName: {{user.userName}}
             </div>
         </div>
 </div>
+
+

@@ -141,9 +141,7 @@ public class WatchFacade {
 
     public SamaritOccupied addUnavailForWatch(SamaritOccupied watch) {
         EntityManager em = EntityConnector.getEntityManager();
-        if (watch == null) {
-            return null;
-        }
+        
         Samarit sm = null;
         try {
             em.getTransaction().begin();
@@ -155,6 +153,8 @@ public class WatchFacade {
             q.setParameter(1, watch.getSamarit().getUserName());
             q.setParameter(2, watch.getStart());
             List<SamaritOccupied> occ = q.getResultList();
+            
+            
             for (SamaritOccupied samaritOccupied : occ) {
                 if (samaritOccupied.isAllDay()) {
                     return null;
