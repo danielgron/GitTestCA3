@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/vagtmanager"/>
+<Context path="/vagtmanager">
+  <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="20" maxIdle="10" maxWait="-1" name="t" password="testpassword" type="javax.sql.DataSource" url="jdbc:mysql://46.101.166.154:3306/RK?zeroDateTimeBehavior=convertToNull" username="mytestuser"/>
+</Context>
