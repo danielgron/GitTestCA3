@@ -7,6 +7,7 @@ package facades;
 
 import entity.Department;
 import entity.Event;
+import entity.OcupiedSlot;
 import entity.Samarit;
 import entity.WatchFunction;
 import entity.watches.SamaritOccupied;
@@ -85,13 +86,16 @@ public class CoordinatorFacade {
     private boolean checkAvalibilty(Samarit samarit, Event e, EntityManager em) {
         boolean available = true;
         //Query q = em.createQuery("SELECT s FROM Samarit AS s LEFT JOIN s.watches AS sw WHERE sw IS NULL OR sw.start >= '2016-11-03' AND sw.end <='2016-11-03'");
-        List<SamaritOccupied> events = samarit.getNotAvail();
-        for (SamaritCalendar event : events) {
+        List<OcupiedSlot> events = samarit.getNotAvail();
+        for (OcupiedSlot event : events) {
             if(
+                    event.getEnd()!=null &&
+                    (
                     DateUtils.dateBetween(event.getStart(),e.getStart(),e.getEnd()) ||
                     DateUtils.dateBetween(event.getEnd(),e.getStart(),e.getEnd()) ||
                     DateUtils.dateBetween(e.getStart(),event.getStart(),event.getEnd()) ||
                     DateUtils.dateBetween(e.getStart(),event.getStart(),event.getEnd())
+                    )
                     ){
                 available = false;
             }
