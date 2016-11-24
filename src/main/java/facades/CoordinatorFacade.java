@@ -25,28 +25,26 @@ import util.DateUtils;
  * @author danie
  */
 public class CoordinatorFacade {
-    
+
     DepartmentFacade df = new DepartmentFacade();
-    
-    public Samarit addNewSamarit(Samarit s){
+
+    public Samarit addNewSamarit(Samarit s) {
         //s.setDepartment(df.getDepartment(s.getDepartment().getNameOfDepartment()));
         Department d = df.getDepartment(s.getDepartment().getNameOfDepartment());
         d.addUser(s);
         //Log.writeToLog("Adding new samarite");
         EntityManager em = EntityConnector.getEntityManager();
         //if (s.getRedCroosLevel()==null) throw new NoRedCrossLevelException();
-        try{
+        try {
             em.getTransaction().begin();
             em.merge(d);
             em.persist(s);
             em.getTransaction().commit();
             Log.writeToLog("New samarite added");
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             Log.writeToLog("Exception encountered while adding samarite.");
             Log.writeToLog(e.getMessage());
-        }
-        finally{
+        } finally {
             em.close();
         }
         return s;
@@ -57,29 +55,28 @@ public class CoordinatorFacade {
         List<Samarit> availableSams = new ArrayList();
         EntityManager em = EntityConnector.getEntityManager();
         //if (s.getRedCroosLevel()==null) throw new NoRedCrossLevelException();
-        try{
+        try {
             em.getTransaction().begin();
-            e=em.find(Event.class, eventId);
+            e = em.find(Event.class, eventId);
             List<Samarit> allFromDepartMent = e.getDepartment().getSamarites();
             for (Samarit samarit : allFromDepartMent) {
-                if(checkAvalibilty(samarit,e, em)){
+                if (checkAvalibilty(samarit, e, em)) {
                     availableSams.add(samarit);
                 }
             }
-        }
-        catch(Exception ex){
-            Log.writeToLog( "Exception in Coordinator Facade getAvailable Samarits: " + ex.getMessage());
+        } catch (Exception ex) {
+            Log.writeToLog("Exception in Coordinator Facade getAvailable Samarits: " + ex.getMessage());
             throw ex;
-        }
-        finally{
+        } finally {
             em.close();
         }
         return availableSams;
     }
 
     /**
-     * Checks if the samarit is availble in the perriod
-     * that the Event Spans over
+     * Checks if the samarit is availble in the perriod that the Event Spans
+     * over
+     *
      * @param samarit Samarit
      * @param e Event
      * @return True if Availiby else false
@@ -87,30 +84,36 @@ public class CoordinatorFacade {
     private boolean checkAvalibilty(Samarit samarit, Event e, EntityManager em) {
         boolean available = true;
         //Query q = em.createQuery("SELECT s FROM Samarit AS s LEFT JOIN s.watches AS sw WHERE sw IS NULL OR sw.start >= '2016-11-03' AND sw.end <='2016-11-03'");
-        List<OcupiedSlot> events = samarit.getNotAvail();
-        try{
-        for (OcupiedSlot event : events) {
-            if(
-                    event.getStart().getDate() ==  e.getStart().getDate() &&
-                    (
-                    DateUtils.dateBetween(event.getStart(),e.getStart(),e.getEnd()) ||
-                    DateUtils.dateBetween(event.getEnd(),e.getStart(),e.getEnd()) ||
-                    DateUtils.dateBetween(e.getStart(),event.getStart(),event.getEnd()) ||
-                    DateUtils.dateBetween(e.getStart(),event.getStart(),event.getEnd())
-                    )
-                    ){
+        List<OcupiedSlot> blockedTimes = samarit.getNotAvail();
+        try {
+            for (OcupiedSlot blockedTime : blockedTimes) {
+
+                // In case of isAllDay evalutaing to true always set available to false
+                if (blockedTime.isAllDay()) {
+                    if (blockedTime.getStart().getDate() != e.getStart().getDate()) {
+                        continue;
+                    } else {
+                        return false;
+                    }
+                }
+                if ( // In case isAllDay is false check start and end times
+                        (DateUtils.dateBetween(blockedTime.getStart(), e.getStart(), e.getEnd())
+                        || DateUtils.dateBetween(blockedTime.getEnd(), e.getStart(), e.getEnd())
+                        || DateUtils.dateBetween(e.getStart(), blockedTime.getStart(), blockedTime.getEnd())
+                        || DateUtils.dateBetween(e.getStart(), blockedTime.getStart(), blockedTime.getEnd()))) {
                     available = false;
                 }
-                
+
             }
         } catch (Exception ex) {
             Log.writeToLog("Error when loading calenderEvent for Samarit: " + samarit.getUserName());
             Log.writeToLog(ex.getMessage());
-            return false;
+            throw ex;
+
         }
-        
+
         return available;
-        }
+    }
 
     public List<WatchFunction> getWatchFunctionsFromDepartment(String department) {
         EntityManager em = EntityConnector.getEntityManager();
@@ -120,6 +123,4 @@ public class CoordinatorFacade {
         return list;
     }
 
-    
-    
 }

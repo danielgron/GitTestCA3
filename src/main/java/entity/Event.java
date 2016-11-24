@@ -186,4 +186,30 @@ public class Event implements Serializable, OcupiedSlot {
         department.addEvent(this); // Event is responsable for adding the refrence
     }
 
+    public List<ResourceWatch> getResourceWatchs() {
+        return resourceWatchs;
+    }
+
+    public void setResourceWatchs(List<ResourceWatch> resourceWatchs) {
+        this.resourceWatchs = resourceWatchs;
+    }
+
+    public List<Resource> getResources() {
+        return resources;
+    }
+
+    public void setResources(List<Resource> resources) {
+        this.resources = resources;
+    }
+
+    public List<SamaritWatch> getWatches() {
+        return watches;
+    }
+
+    public void setWatches(List<SamaritWatch> watches) {
+        this.watches = watches;
+    }
+    
+    
+
 }
