@@ -83,6 +83,7 @@ public class CoordinatorFacade {
      */
     private boolean checkAvalibilty(Samarit samarit, Event e, EntityManager em) {
         boolean available = true;
+        String samNAme = samarit.getUserName();
         //Query q = em.createQuery("SELECT s FROM Samarit AS s LEFT JOIN s.watches AS sw WHERE sw IS NULL OR sw.start >= '2016-11-03' AND sw.end <='2016-11-03'");
         List<OcupiedSlot> blockedTimes = samarit.getNotAvail();
         try {
