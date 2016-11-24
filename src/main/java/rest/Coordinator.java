@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import entity.Samarit;
+import entity.WatchFunction;
 import facades.CoordinatorFacade;
 import facades.UserFacade;
 import java.text.DateFormat;
@@ -90,6 +91,23 @@ public class Coordinator {
             log.Log.writeToLog("Exception When Creating JSON Object single event: " + ex);
             throw ex;
         }
+  }
+  
+  @GET
+  @Path("functions/{department}")
+  @Produces(MediaType.APPLICATION_JSON)
+  public String getWatchFunctionsFromDepartment(@PathParam("department") String department) throws Exception{
+      try{
+          List<WatchFunction> allFromDepartment = cf.getWatchFunctionsFromDepartment(department);
+          ObjectMapper mapper = new ObjectMapper();
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm a z");
+            mapper.setDateFormat(df);
+            return mapper.writeValueAsString(allFromDepartment);
+      }
+      catch(Exception e){
+          log.Log.writeToLog("Exception in REST.getWatchFunctionsFromDepartment" + e);
+          throw e;
+      }
   }
  
 }

@@ -45,11 +45,11 @@ public class StartData {
         RedCrossLevel r1 = new RedCrossLevel("Samarit");
         RedCrossLevel r2 = new RedCrossLevel("Teamleder");
         RedCrossLevel r3 = new RedCrossLevel("Gæst");
-        WatchFunction f1 = new WatchFunction("Chaffør");
-        WatchFunction f2 = new WatchFunction("Chaffør med Trailer");
-        WatchFunction f3 = new WatchFunction("VagtLeder");
         Department d = new Department();
         d.setNameOfDepartment("København");
+        WatchFunction f1 = new WatchFunction("Chaffør", d);
+        WatchFunction f2 = new WatchFunction("Chaffør med Trailer",d);
+        WatchFunction f3 = new WatchFunction("VagtLeder", d);
         Event e = new Event();
             e.setName("Test Event");
             e.setStart(new Date(116, 5, 5, 10, 0));
@@ -100,13 +100,13 @@ public class StartData {
     }
     
     public void insertRandomData(){
-        String[] fName = {"Adam", "Allan", "Anders", "Brian", "Børge", "Claus", "Daniel", "Danni", "Dennis", "Egon", "Emil", "Fie", "Freja", "Grethe","Gorm","Henning","Ib","Ida","Jens","Klaus","Kasper","Kenneth","Abel","Jarmo","Sonny","Cher","Dreng","Lotus","Dan","Lars","Mathilde","Mads"};
-        String[] lName = {"Andersen","Jespersen","Jørgensen","Hansen","Thomsen","Gram","Hat","Stol","Green","Pind","Løkke","Nielsen","Flotnavn","Avn","Ravn","Havn","Barm","Heintze","Gønge","Von Jarmo","Tømrer","Forsørensen","Pilatus","Ort","Rohde","Lund","Greve","Vad","Dam","Bondo","Kjærsgård","Gade","Hassan"};
+        String[] fName = {"Adam", "Allan", "Anders", "Brian", "Børge", "Claus", "Daniel", "Danni", "Dennis", "Egon", "Emil", "Fie", "Freja", "Grethe","Gorm","Henning","Ib","Ida","Jens","Klaus","Kasper","Kenneth","Abel","Jarmo","Sonny","Cher","Dreng","Lotus","Dan","Lars","Mathilde","Mads","Morten","Michael"};
+        String[] lName = {"Andersen","Jespersen","Jørgensen","Hansen","Thomsen","Gram","Hat","Stol","Green","Pind","Løkke","Nielsen","Flotnavn","Avn","Ravn","Havn","Barry","Heintze","Gønge","Von Jarmo","Tømrer","Forsørensen","Pilatus","Ort","Rohde","Lund","Greve","Vad","Dam","Bondo","Kjærsgård","Gade","Hassan","Michael","Juel"};
         String[] emailDomain = {"hotmail","gmail","jubii","yahoo"};
         String[] emailEnd = {".com",".net",".dk"};
         String[] adr1 = {"Store ","Lille ","","","","","","","",""};
-        String[] adr2 = {" Randers",""};
-        String[] adr3 = {"vej","gade"," Hovedgade"," Landevej"};
+        String[] adr2 = {"Randers","Morgen","Blomster","Paradis","Fiol","Banan","Vin","Herre","Roskilde","Jylland","Bøge","Ege"};
+        String[] adr3 = {"vej","gade"," Hovedgade"," Landevej","stræde","stien","pladsen"};
         
         EntityManager em = EntityConnector.getEntityManager();
         Query q = em.createQuery("Select d from Department d where (d.nameOfDepartment='København')");
@@ -130,7 +130,7 @@ public class StartData {
             String userFName = fName[((int)(Math.random()*fName.length))];
             String userLName = lName[((int)(Math.random()*lName.length))];
             String email = userFName+userLName+(int)(Math.random()*10000)+"@"+emailDomain[((int)(Math.random()*emailDomain.length))]+emailEnd[((int)(Math.random()*emailEnd.length))];
-            String address = adr1[(int)(Math.random()*adr1.length)]+adr2[(int)(Math.random()*adr2.length)]+adr3[(int)(Math.random()*adr2.length)]+ " " + (int)(Math.random()*200);
+            String address = adr1[(int)(Math.random()*adr1.length)]+adr2[(int)(Math.random()*adr2.length)]+adr3[(int)(Math.random()*adr3.length)]+ " " + (int)(Math.random()*200);
             Samarit s= new Samarit(email, userFName+"123");
             s.setFirstName(userFName);
             s.setLastName(userLName);

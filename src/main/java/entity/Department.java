@@ -22,6 +22,10 @@ import javax.persistence.OneToMany;
 @Entity
 public class Department implements Serializable {
 
+    @OneToMany(mappedBy = "department")
+    @JsonBackReference(value="event-dep")
+    private List<WatchFunction> watchFunctions;
+
     @OneToMany(mappedBy = "department", cascade = CascadeType.PERSIST)
     @JsonBackReference(value="event-dep")
     private List<Event> events;
@@ -66,12 +70,30 @@ public class Department implements Serializable {
     public void setEvents(List<Event> events) {
         this.events = events;
     }
+
+    public List<WatchFunction> getWatchFunctions() {
+        return watchFunctions;
+    }
+
+    public void setWatchFunctions(List<WatchFunction> watchFunctions) {
+        this.watchFunctions = watchFunctions;
+    }
+    
+    
     
     public void addEvent(Event e){
         if(events == null){
             events = new ArrayList<>();
         }
         events.add(e);
+    }
+    
+    public void addWatchFunction(WatchFunction function){
+        if(watchFunctions == null){
+            watchFunctions = new ArrayList<>();
+        }
+        watchFunctions.add(function);
+        function.setDepartment(this);
     }
 
 }
