@@ -14,4 +14,5 @@ import java.util.Date;
 public interface OcupiedSlot {
     public Date getStart();
     public Date getEnd();
+    public boolean isAllDay();
 }

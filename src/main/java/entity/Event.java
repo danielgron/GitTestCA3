@@ -7,6 +7,7 @@ package entity;
 
 import entity.watches.SamaritOccupied;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import entity.watches.ResourceWatch;
 import entity.watches.SamaritWatch;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -33,6 +34,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Event implements Serializable, OcupiedSlot {
 
     private static final long serialVersionUID = 1L;
+    @OneToMany(mappedBy = "event")
+    private List<ResourceWatch> resourceWatchs;
 
     /**
      * @return the serialVersionUID
