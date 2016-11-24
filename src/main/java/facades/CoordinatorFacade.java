@@ -69,6 +69,7 @@ public class CoordinatorFacade {
         }
         catch(Exception ex){
             Log.writeToLog( "Exception in Coordinator Facade getAvailable Samarits: " + ex.getMessage());
+            throw ex;
         }
         finally{
             em.close();
@@ -87,6 +88,7 @@ public class CoordinatorFacade {
         boolean available = true;
         //Query q = em.createQuery("SELECT s FROM Samarit AS s LEFT JOIN s.watches AS sw WHERE sw IS NULL OR sw.start >= '2016-11-03' AND sw.end <='2016-11-03'");
         List<OcupiedSlot> events = samarit.getNotAvail();
+        try{
         for (OcupiedSlot event : events) {
             if(
                     event.getStart().getDate() ==  e.getStart().getDate() &&
@@ -97,11 +99,15 @@ public class CoordinatorFacade {
                     DateUtils.dateBetween(e.getStart(),event.getStart(),event.getEnd())
                     )
                     ){
-                available = false;
-            }
-        
+                    available = false;
+                }
                 
             }
+        } catch (Exception ex) {
+            Log.writeToLog("Error when loading calenderEvent for Samarit: " + samarit.getUserName());
+            Log.writeToLog(ex.getMessage());
+            return false;
+        }
         
         return available;
         }
