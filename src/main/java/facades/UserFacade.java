@@ -31,8 +31,17 @@ public class UserFacade implements IUserFacade {
 
     @Override
     public IUser getUserByUserId(String id) {
-        EntityManager em = EntityConnector.getEntityManager();
-        return em.find(User.class, id);
+            EntityManager em = EntityConnector.getEntityManager();
+        try {
+            return em.find(User.class, id);
+        } catch (Exception e) {
+            Log.writeToLog("Error in get User: " + e.getLocalizedMessage());
+           
+            throw e;
+        }
+        finally{
+            em.close();
+        }
     }
 
     /*
@@ -40,9 +49,9 @@ public class UserFacade implements IUserFacade {
      */
     @Override
     public List<String> authenticateUser(String userName, String password) {
+            EntityManager em = EntityConnector.getEntityManager();
         try {
             Log.writeToLog("Authenticating user: "+userName);
-            EntityManager em = EntityConnector.getEntityManager();
             TypedQuery<User> q = em.createQuery("select u from User u where u.userName=:name",User.class);
             q.setParameter("name", userName);
             User user = q.getSingleResult();
@@ -54,7 +63,9 @@ public class UserFacade implements IUserFacade {
             }
         } catch (Exception ex) {
             Log.writeToLog("Authenticating user failed: "+ex.getMessage());
-            Logger.getLogger(UserFacade.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally{
+            em.close();
         }
         return null;
     }
@@ -63,18 +74,16 @@ public class UserFacade implements IUserFacade {
     
 
     private boolean isDatabaseUsersEmpty() {
-        EntityManager em = null;
+        EntityManager em =EntityConnector.getEntityManager();
         List<User> us = null;
         try
         {
-        em =EntityConnector.getEntityManager();
         Query q = em.createQuery("select u from User u ", User.class);
         us = q.getResultList();
         }
         finally{
             em.close();
         }
-        
         return us.isEmpty();
     }
     
@@ -115,7 +124,7 @@ public class UserFacade implements IUserFacade {
                     .getSingleResult();
             return u;
         } catch (Exception e) {
-            System.out.println("ERROR!" + e);
+            Log.writeToLog("Error in findRole: " + e);
             return null;
         }
         finally{

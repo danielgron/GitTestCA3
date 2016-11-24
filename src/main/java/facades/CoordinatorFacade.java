@@ -54,6 +54,7 @@ public class CoordinatorFacade {
         Event e;
         List<Samarit> availableSams = new ArrayList();
         EntityManager em = EntityConnector.getEntityManager();
+        em.getEntityManagerFactory().getCache().evictAll(); // IMPORTANT!!! This Clears the Cache of the JPA!
         //if (s.getRedCroosLevel()==null) throw new NoRedCrossLevelException();
         try {
             em.getTransaction().begin();
