@@ -12,7 +12,9 @@ import entity.RedCrossLevel;
 import entity.Samarit;
 import entity.User;
 import entity.User_Role;
+import entity.WatchFunction;
 import entity.watches.SamaritOccupied;
+import entity.watches.SamaritWatch;
 import entityconnection.EntityConnector;
 import exceptions.DateNullException;
 import java.util.ArrayList;
@@ -45,6 +47,9 @@ public class StartData {
         RedCrossLevel r3 = new RedCrossLevel("Gæst");
         Department d = new Department();
         d.setNameOfDepartment("København");
+        WatchFunction f1 = new WatchFunction("Chaffør", d);
+        WatchFunction f2 = new WatchFunction("Chaffør med Trailer",d);
+        WatchFunction f3 = new WatchFunction("VagtLeder", d);
         Event e = new Event();
             e.setName("Test Event");
             e.setStart(new Date(116, 5, 5, 10, 0));
@@ -78,6 +83,9 @@ public class StartData {
             em.persist(r3);
             em.persist(d);
             em.persist(e);
+            em.persist(f1);
+            em.persist(f2);
+            em.persist(f3);
             em.persist(samarit);
             em.persist(admin);
             em.persist(coordinator);
@@ -92,19 +100,21 @@ public class StartData {
     }
     
     public void insertRandomData(){
-        String[] fName = {"Adam", "Allan", "Anders", "Brian", "Børge", "Claus", "Daniel", "Danni", "Dennis", "Egon", "Emil", "Fie", "Freja", "Grethe","Gorm","Henning","Ib","Ida","Jens","Klaus","Kasper","Kenneth","Abel","Jarmo","Sonny","Cher","Dreng","Lotus","Dan","Lars","Mathilde","Mads","Han"};
-        String[] lName = {"Andersen","Jespersen","Jørgensen","Hansen","Thomsen","Gram","Hat","Stol","Green","Pind","Løkke","Nielsen","Flotnavn","Avn","Ravn","Havn","Barm","Heintze","Gønge","Von Jarmo","Tømrer","Forsørensen","Pilatus","Ort","Rohde","Lund","Greve","Vad","Dam","Bondo","Kjærsgård","Gade","Hassan","Schmidt","Thorning","Klausen","Mbutu","Merkel","Solo","Simpson"};
+        String[] fName = {"Adam", "Allan", "Anders", "Brian", "Børge", "Claus", "Daniel", "Danni", "Dennis", "Egon", "Emil", "Fie", "Freja", "Grethe","Gorm","Henning","Ib","Ida","Jens","Klaus","Kasper","Kenneth","Abel","Jarmo","Sonny","Cher","Dreng","Lotus","Dan","Lars","Mathilde","Mads","Morten","Michael"};
+        String[] lName = {"Andersen","Jespersen","Jørgensen","Hansen","Thomsen","Gram","Hat","Stol","Green","Pind","Løkke","Nielsen","Flotnavn","Avn","Ravn","Havn","Barry","Heintze","Gønge","Von Jarmo","Tømrer","Forsørensen","Pilatus","Ort","Rohde","Lund","Greve","Vad","Dam","Bondo","Kjærsgård","Gade","Hassan","Michael","Juel"};
         String[] emailDomain = {"hotmail","gmail","jubii","yahoo"};
         String[] emailEnd = {".com",".net",".dk"};
         String[] adr1 = {"Store ","Lille ","","","","","","","",""};
-        String[] adr2 = {" Randers",""};
-        String[] adr3 = {"vej","gade"," Hovedgade"," Landevej"};
+        String[] adr2 = {"Randers","Morgen","Blomster","Paradis","Fiol","Banan","Vin","Herre","Roskilde","Jylland","Bøge","Ege"};
+        String[] adr3 = {"vej","gade"," Hovedgade"," Landevej","stræde","stien","pladsen"};
         
         EntityManager em = EntityConnector.getEntityManager();
         Query q = em.createQuery("Select d from Department d where (d.nameOfDepartment='København')");
         Query q2 = em.createQuery("Select ur from User_Role ur where (ur.roleName='User')");
         Query q3 = em.createQuery("Select r from RedCrossLevel r", RedCrossLevel.class);
+        Query q4 = em.createQuery("Select f from WatchFunction f", WatchFunction.class);
         List<RedCrossLevel> listofAllRedCrossLevels = q3.getResultList();
+        List<WatchFunction> listofAllWatchFunctions = q4.getResultList();
         Department d ;
         try{
             d = (Department) q.getSingleResult();
@@ -120,13 +130,16 @@ public class StartData {
             String userFName = fName[((int)(Math.random()*fName.length))];
             String userLName = lName[((int)(Math.random()*lName.length))];
             String email = userFName+userLName+(int)(Math.random()*10000)+"@"+emailDomain[((int)(Math.random()*emailDomain.length))]+emailEnd[((int)(Math.random()*emailEnd.length))];
+            String address = adr1[(int)(Math.random()*adr1.length)]+adr2[(int)(Math.random()*adr2.length)]+adr3[(int)(Math.random()*adr3.length)]+ " " + (int)(Math.random()*200);
             Samarit s= new Samarit(email, userFName+"123");
             s.setFirstName(userFName);
             s.setLastName(userLName);
             s.setDepartment(d);
+            s.setAdresse(address);
             s.setPhone("88888888");
             s.addRoleToUser(userRole);
-            s.addRedCrossLevelToSamarit(listofAllRedCrossLevels.get(ThreadLocalRandom.current().nextInt(0, listofAllRedCrossLevels.size() - 1)));
+            s.addRedCrossLevelToSamarit(listofAllRedCrossLevels.get(ThreadLocalRandom.current().nextInt(0, listofAllRedCrossLevels.size())));
+            s.addFunctionToSamarit(listofAllWatchFunctions.get(ThreadLocalRandom.current().nextInt(0, listofAllRedCrossLevels.size())));
             for (int j = 0; j < 50; j++) {
             s.addNotAvail(ocupySam(s));
             }

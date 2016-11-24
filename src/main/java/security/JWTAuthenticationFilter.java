@@ -127,9 +127,11 @@ public class JWTAuthenticationFilter implements ContainerRequestFilter {
 
     SignedJWT signedJWT = SignedJWT.parse(token);
     JWSVerifier verifier = new MACVerifier(Secret.SHARED_SECRET);
-
+    
     if (signedJWT.verify(verifier)) {
-      return signedJWT.getJWTClaimsSet().getSubject();
+        String userName = signedJWT.getJWTClaimsSet().getSubject();
+        System.out.println("Username extracted: " + userName);
+      return userName;
     } else {
       throw new JOSEException("Firm is not verified.");
     }

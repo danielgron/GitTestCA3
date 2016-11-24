@@ -12,19 +12,16 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment']
 
 
 
-        .controller('UserCalendarCtrl', ['$scope', 'moment', '$locale', 'uiCalendarConfig', '$location', 'userCalendarFactory', '$filter',
-            function ($scope, moment, $locale, uiCalendarConfig, $location, userCalendarFactory, $filter) {
+        .controller('UserCalendarCtrl', ['$scope', 'moment', '$locale', 'uiCalendarConfig', '$location', 'userCalendarFactory', '$filter', 'UserFactory',
+            function ($scope, moment, $locale, uiCalendarConfig, $location, userCalendarFactory, $filter, UserFactory) {
                 //This is where we configure how the calender behaves
                 $scope.eventSources1 = [];
                 $scope.watchList = [];
                 $scope.watchList = userCalendarFactory.getWatchlist();
                 $scope.eventSources1 = [$scope.watchList];
                 var email = 'coordinator';
-
-//             
-
-
-
+                $scope.user = {};
+                $scope.user = UserFactory.getCreatedUser();
 
                 $scope.eventSource = {
                     url: 'api/watch/coordinator',
@@ -51,67 +48,80 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment']
                         renderEvent: $scope.renderEvent,
                         selectOverlap: $scope.selectOverlap,
                         rerenderEvents: $scope.rerenderEvents,
-                        eventAfterAllRender: $scope.eventAfterRender
+                        eventAfterAllRender: $scope.eventAfterRender,
+                        eventDestroy: $scope.eventDestroy
                     }
                 };
 
 
-                $scope.addWatch = function (watch) {
+                $scope.eventDestroy = function (event) {
+                    var dateString = event.start.format("YYYY-MM-DD");
 
+                    angular.element(document).find('.fc-day[data-date="' + dateString + '"]').css('background-color', '');
                 };
 
                 $scope.eventRender = function (event, element) {
-//                    // event.start is already a moment.js object
-                    // we can apply .format()
                     var dateString = event.start.format("YYYY-MM-DD");
-                    window.console.log(dateString);
-                    
-                    result = angular.element(document).find('.fc-day[data-date="' + dateString + '"]').css('background-color', 'red');//element.find('.fc-day[data-date="' + dateString + '"]');
-                    //result.css('background-color', 'black');
-                            //document.getElementsByClassName('.fc-day[data-date=' + dateString + ']');
-                    window.console.log(result);
 
-                    //$(view.el[0]).find('.fc-day[data-date=' + dateString + ']').css('background-color', '#FAA732');
+                    angular.element(document).find('.fc-day[data-date="' + dateString + '"]').css('background-color', 'red');
                 };
-                eventAfterRender: $scope.eventAfterRender = function () {
-                    $scope.rerenderEvents();
-                };
-                $scope.rerenderEvents = function () {
+
+
+                $scope.removeEvent = function (watch) {
+                    var i;
+                    uiCalendarConfig.calendars['userCalender'].fullCalendar('removeEvents', watch.id);
+                    if ($scope.watchList.length > 0) {
+                        $scope.watchList.forEach(function(item, index){
+                            if(item.id==watch.id){
+                                $scope.watchList.splice(index,1);                            }
+                            
+                        });
+                    }
+                    
 
                 };
 
                 //This method is for setting a whole day to unavail, by clicking it
+                //TO-DO - remove when clicking day with event.
                 $scope.setUnavailForWatch = function (date, jsEvent, view) {
-                    window.console.log();
-                    this.css('background-color', 'red');
+                    var dateString = date.format("YYYY-MM-DD");
                     var watch = {};
+                    userCalendarFactory.getWatch(dateString, UserFactory.getUserName()).then(function (successResponse) {
+                        watch = successResponse.data;
+                        window.console.log(watch);
+                        if (watch === null) {
+                            setWatch(date);
+                        } else {
+                            window.console.log(watch.id);
+                            $scope.removeEvent(watch);
+                        }
+                    }, function (errorResponse) {
 
-                    watch.title = "unavail";
-                    watch.samarit = {};
-                    watch.start = date;
-
-                    watch.samarit.userName = "coordinator";
-                    watch.allDay = true;
-                    // watch.rendering = 'background';
-                    watch.color = 'red';
-                    // watch.stick = true
-
-                    userCalendarFactory.setAvailable(watch).then(function (response) {
-                        watch = response.data;
-                        window.console.log("great succes" + response.data);
-                    }, function (response) {
-                        window.console.log("great failure" + response);
                     });
 
-                    watch.stick = true;
-                    //  watch.rendering = 'background';
-                    $scope.watchList.push(watch);
-                    $scope.rerenderEvents();
+                    var setWatch = function (date) {
+                        var watch = {};
+                        watch.title = "unavail";
+                        watch.samarit = {};
+                        watch.start = date;
+
+                        watch.samarit.userName = "coordinator";
+                        watch.allDay = true;
+                        watch.color = 'red';
+
+                        userCalendarFactory.setAvailable(watch).then(function (response) {
+                            watch = response.data;
+                            window.console.log(watch);
+                            window.console.log("great succes" + response.data);
+                            $scope.watchList.push(watch);
+                        }, function (response) {
+                        });
+
+
+                    };
+
 
                 };
-
-
-
 
                 $scope.dayRender = function (date, cell) {
 
@@ -123,23 +133,16 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment']
                     $location.path(path);
                 };
 
-
-
-
-
-
-
                 //Change the view between month, week and day
                 $scope.changeView = function (view, calendar) {
                     uiCalendarConfig.calendars[calendar].fullCalendar('changeView', view);
                 };
 
-                /* event sources array*/
+
                 /* event sources array*/
                 $scope.eventSources1 = [$scope.watchList, $scope.eventSource];
 
-                window.console.log("EventScopes");
-                window.console.log($scope.watchList);
+
             }
         ])
 
@@ -150,3 +153,10 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment']
                 });
             }]);
 
+Array.prototype.remove = function (v) {
+    if (this.indexOf(v) != -1) {
+        this.splice(this.indexOf(v), 1);
+        return true;
+    }
+    return false;
+};

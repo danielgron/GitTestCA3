@@ -30,6 +30,7 @@
                         <th>Navn</th> 
                         <th> Afdeling</th> 
                         <th> UddannelsesNivauer</th> 
+                        <th> Funktioner</th> 
                         
                     </tr>
                 </thead>
@@ -38,7 +39,10 @@
                         <td>{{sam.userName}}</td>
                         <td>{{sam.department.nameOfDepartment}}</td>
                         <td ng-repeat="level in sam.redCrossLevel">
-                            {{level}},
+                            {{level.level}},
+                        </td>
+                        <td ng-repeat="wat in sam.watchFunctions">
+                            {{wat.functionName}},
                         </td>
                     </tr>
                 </tbody>

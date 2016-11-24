@@ -11,6 +11,10 @@ angular.module('myApp.usercalendar')
                 return watchList;
             };
             
+            userCalendarFactory.getWatch = function(date,userName){
+               return $http.get('api/watch/'+date +'/'+userName);
+            };
+            
             userCalendarFactory.addEvent = function(watch){
                 watchList.push(watch);
             };
@@ -27,7 +31,6 @@ angular.module('myApp.usercalendar')
             
             userCalendarFactory.setAvailable = function(watch){
                 var  jsonObject = JSON.stringify(watch);
-                                window.console.log(urlBase);
 
               return $http.post(urlBase,jsonObject);
             };

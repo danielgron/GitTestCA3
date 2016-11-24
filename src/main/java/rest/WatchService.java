@@ -33,6 +33,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import util.JacksonFilter;
 import util.WatchConverter;
+import javax.ws.rs.container.ContainerRequestContext;
 
 /**
  * REST Web Service
@@ -60,19 +61,32 @@ public class WatchService {
     @POST
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void setWatch(@PathParam("id") String id, String sWatch) {
+    @Produces(MediaType.APPLICATION_JSON)
+    public String setWatch(@PathParam("id") String id, String sWatch) {
         SamaritOccupied sw = null;
 
         try {
-
             mapper = new ObjectMapper();
             sw = mapper.readValue(sWatch, SamaritOccupied.class);
             sw.getSamarit().setUserName(id);
-
         } catch (IOException ex) {
             Logger.getLogger(WatchService.class.getName()).log(Level.SEVERE, null, ex);
         }
-        wf.addUnavailForWatch(sw);
+        
+        sw = wf.addUnavailForWatch(sw);
+
+        String json = "";
+        try {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            mapper.setDateFormat(df);
+            SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("samarit");
+            FilterProvider filters = new SimpleFilterProvider().addFilter("samaritFilter", theFilter);
+
+            json = mapper.writer(filters).writeValueAsString(sw);
+        } catch (JsonProcessingException ex) {
+            Logger.getLogger(WatchService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return json;
 
     }
 
@@ -80,9 +94,11 @@ public class WatchService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getWatchesForSamarit(@PathParam("id") String id) {
+        //  String token = request.getHeaderString("Authorization").substring("Bearer ".length());
+
         List<SamaritOccupied> watches = null;
         watches = wf.getWatchesForUser(id);
-        String json = "{fail}";
+        String json = "";
         try {
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             mapper.setDateFormat(df);
@@ -90,6 +106,28 @@ public class WatchService {
             FilterProvider filters = new SimpleFilterProvider().addFilter("samaritFilter", theFilter);
 
             json = mapper.writer(filters).writeValueAsString(watches);
+        } catch (JsonProcessingException ex) {
+            Logger.getLogger(WatchService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return json;
+    }
+
+    @Path("{date}/{userName}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getWatchesForSamarit(@PathParam("date") String date, @PathParam("userName") String userName) {
+        //  String token = request.getHeaderString("Authorization").substring("Bearer ".length());
+
+        SamaritOccupied watchForDate;
+        watchForDate = wf.getWatchesForDateUser(date, userName);
+        String json = "";
+        try {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            mapper.setDateFormat(df);
+            SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("samarit");
+            FilterProvider filters = new SimpleFilterProvider().addFilter("samaritFilter", theFilter);
+
+            json = mapper.writer(filters).writeValueAsString(watchForDate);
         } catch (JsonProcessingException ex) {
             Logger.getLogger(WatchService.class.getName()).log(Level.SEVERE, null, ex);
         }
