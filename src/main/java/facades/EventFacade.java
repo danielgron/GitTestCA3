@@ -87,7 +87,7 @@ public class EventFacade {
         } catch (Exception ex) {
             log.Log.writeToLog("Exception get events Date Range" + ex);
         } finally {
-
+            em.close();
         }
 
         return events;

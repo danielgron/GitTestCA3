@@ -42,8 +42,8 @@ public class SamaritOccupied extends SamaritCalendar{
     public SamaritOccupied() {
     }
 
-    public SamaritOccupied(Samarit testSam, Date start, Date end, boolean b) throws DateNullException {
-        super(start,end,b);
+    public SamaritOccupied(Samarit testSam, Date start, Date end, boolean allDay) throws DateNullException {
+        super(start,end,allDay);
         this.samarit = testSam;
         
     }

@@ -24,6 +24,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import rest.Coordinator;
+import startup.StartData;
 
 /**
  *
@@ -55,9 +56,11 @@ public class plainDemoTest {
 
         @Before
         public void setUp() {
-            Persistence.generateSchema("pu_test", null);
-        EntityConnector.setPersistenceUnit("pu_test");
-        EntityConnector.createEntityManagerFactory();
+            // this is already done? This is just slowing down the 
+            // test proces???!?!?!!?!?
+//            Persistence.generateSchema("pu_test", null);
+//        EntityConnector.setPersistenceUnit("pu_test"); 
+//        EntityConnector.createEntityManagerFactory();
         }
   
          @Test
@@ -175,5 +178,32 @@ public class plainDemoTest {
             System.out.println(e.getId());
              //assertEquals((int)numBefore+1,(int)e.getId());
              assertEquals(0,l.size());
+        }
+        
+        /*
+        Test when we put an "all day occupied" object in the database for
+        one Samarit, that the Samarit is registered as not avalible.
+        */
+          @Test
+        public void checkAvalibeConflictAllDay() throws DateNullException{
+            EntityManager em = EntityConnector.getEntityManager();
+            TypedQuery<Samarit> q1 = em.createQuery("Select s from Samarit s", Samarit.class);
+            List<Samarit> listallSamarit = q1.getResultList();
+            Samarit firstSam = listallSamarit.get(0);
+            Samarit secondSam = listallSamarit.get(1);
+            SamaritOccupied g = new SamaritOccupied(firstSam, new Date(), null, true); //Sets the occupied to all day
+            
+            Event e = new Event(new Date(), new Date(), false, "testEvent", "test", firstSam.getDepartment());
+            
+            em.getTransaction().begin();
+            em.persist(g);
+            em.persist(e);
+            em.getTransaction().commit();
+            
+            List<Samarit> allAvaibledforEvent = cf.getAvailableSamaritesFromEventId(e.getId());
+            
+           assertTrue(!allAvaibledforEvent.contains(firstSam));
+           assertTrue(allAvaibledforEvent.contains(secondSam));
+            
         }
 }

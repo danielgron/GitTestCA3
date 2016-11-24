@@ -32,7 +32,6 @@ public class WatchFacade {
     
 
     public WatchFacade() {
-        EntityManager em = EntityConnector.getEntityManager();
 
     }
 
@@ -76,7 +75,7 @@ public class WatchFacade {
         } catch (Exception ex) {
             Logger.getLogger(EventFacade.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-
+            em.close();
         }
         return watch;
     }

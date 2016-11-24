@@ -54,6 +54,7 @@ public class CoordinatorFacade {
         Event e;
         List<Samarit> availableSams = new ArrayList();
         EntityManager em = EntityConnector.getEntityManager();
+        em.getEntityManagerFactory().getCache().evictAll(); // IMPORTANT!!! This Clears the Cache of the JPA!
         //if (s.getRedCroosLevel()==null) throw new NoRedCrossLevelException();
         try {
             em.getTransaction().begin();
@@ -122,6 +123,22 @@ public class CoordinatorFacade {
         q.setParameter("dept", department);
         List<WatchFunction> list = q.getResultList();
         return list;
+    }
+
+    public WatchFunction createNewFunctionForDepartment(WatchFunction watchFunction) {
+       EntityManager em = EntityConnector.getEntityManager();
+       try{
+           em.getTransaction().begin();
+           em.persist(watchFunction);
+           em.getTransaction().commit();
+       }
+       catch(Exception e){
+           throw e;
+       }
+       finally{
+           em.close();
+       }
+       return watchFunction;
     }
 
 }

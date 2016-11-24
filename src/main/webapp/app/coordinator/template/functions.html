@@ -1,20 +1,35 @@
 <div class="container" ng-controller="functionctrl as ctrl">
-    
 
-<h1>New Function can be created here!</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Funktions Navn</th> 
-        </tr>
-    </thead>
-    <tbody>
-        <tr ng-repeat="func in ctrl.allDepartmentFunctions">
-            <td>{{func.functionName}}</td> 
-        </tr>
-    </tbody>
-    
-</table>
+    <h1>New Function can be created here!</h1>
+
+    <table class="table">
+        <div class="row">
+
+
+            <thead>
+                <tr>
+                    <th>Funktions Navn</th> 
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="func in ctrl.allDepartmentFunctions">
+                    <td>{{func.functionName}}</td> 
+                </tr>
+            </tbody>
+
+
+    </table>
+<div class="row">
+
+    <h3>Opret ny funktion her</h3>
+    <div class="form-group">
+        <label for="department">Funktions Navn</label>
+        <input ng-model="ctrl.newFunction.functionName" type="text" class="form-control" id="funktion">
+    </div>
+    <input ng-click="ctrl.createNewFunction()" type="button" value="Opret" />
+
+</div>
+
 
 </div>

@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -106,6 +107,22 @@ public class Coordinator {
       }
       catch(Exception e){
           log.Log.writeToLog("Exception in REST.getWatchFunctionsFromDepartment" + e);
+          throw e;
+      }
+  }
+  
+  @POST
+  @Path("functions")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public String createNewFunctionForDepartment(String functionJSON) throws Exception{
+      try {
+          ObjectMapper mapper = new ObjectMapper();
+          WatchFunction wf = mapper.readValue(functionJSON, WatchFunction.class);
+          WatchFunction newlyCreated = cf.createNewFunctionForDepartment(wf);
+          return mapper.writeValueAsString(newlyCreated);
+      } catch (Exception e) {
+          log.Log.writeToLog("Exception in REST.createNewfunctionForDepartment" + e);
           throw e;
       }
   }

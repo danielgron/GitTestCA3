@@ -21,6 +21,9 @@ import javax.persistence.ManyToOne;
 public class WatchFunction implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    
     private String functionName;
     
     @ManyToMany(mappedBy = "watchFunctions")
@@ -70,6 +73,14 @@ public class WatchFunction implements Serializable {
        }
        samaritsThatHasThisFunction.add(sam);
    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
    
    
     

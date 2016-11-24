@@ -11,6 +11,7 @@ import entity.watches.SamaritCalendar;
 import entity.watches.SamaritWatch;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -211,6 +212,13 @@ public class Samarit extends User {
         function.addSamaritToFunction(this);
     }
 
-    
-
-}
+    @Override
+    public boolean equals(Object obj) {
+           if (!(obj instanceof Samarit)) {
+            return false;
+        }
+        Samarit castedObject = (Samarit) obj;
+        return this.getUserName().equals(castedObject.getUserName());
+       
+    }
+    }
