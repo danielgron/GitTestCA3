@@ -36,6 +36,9 @@ public class Department implements Serializable {
     @JsonBackReference(value="samarit-con")
     private List<Samarit> samarites;
 //    private List<VagtKort> vagtkorts; // not Implemented!
+    
+    @OneToMany(mappedBy = "department", cascade = CascadeType.PERSIST)
+    private List<Resource> resources;
 
     public List<Samarit> getSamarites() {
         return samarites;
@@ -95,5 +98,19 @@ public class Department implements Serializable {
         watchFunctions.add(function);
         function.setDepartment(this);
     }
+
+    public List<Resource> getResources() {
+        return resources;
+    }
+
+    public void setResources(List<Resource> resources) {
+        this.resources = resources;
+    }
+    
+    public void addResource(Resource resource){
+        resources.add(resource);
+    }
+    
+    
 
 }

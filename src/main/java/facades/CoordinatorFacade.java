@@ -61,7 +61,7 @@ public class CoordinatorFacade {
             e = em.find(Event.class, eventId);
             List<Samarit> allFromDepartMent = e.getDepartment().getSamarites();
             for (Samarit samarit : allFromDepartMent) {
-                if (checkAvalibilty(samarit, e, em)) {
+                if (checkAvalibilty(samarit, e)) {
                     availableSams.add(samarit);
                 }
             }
@@ -82,7 +82,7 @@ public class CoordinatorFacade {
      * @param e Event
      * @return True if Availiby else false
      */
-    private boolean checkAvalibilty(Samarit samarit, Event e, EntityManager em) {
+    private boolean checkAvalibilty(Samarit samarit, Event e) {
         boolean available = true;
         String samNAme = samarit.getUserName();
         //Query q = em.createQuery("SELECT s FROM Samarit AS s LEFT JOIN s.watches AS sw WHERE sw IS NULL OR sw.start >= '2016-11-03' AND sw.end <='2016-11-03'");

@@ -9,6 +9,7 @@ import entity.Admin;
 import entity.Department;
 import entity.Event;
 import entity.RedCrossLevel;
+import entity.Resource;
 import entity.Samarit;
 import entity.User;
 import entity.User_Role;
@@ -151,6 +152,11 @@ public class StartData {
             Event e =testEvent();
             d.addEvent(e);
             e.setDepartment(d);
+        }
+        for (int i = 0; i < 10; i++) {
+            Resource res = new Resource();
+            res.setName("Bil nummer "+i);
+            d.
         }
         try{
         em.getTransaction().begin();

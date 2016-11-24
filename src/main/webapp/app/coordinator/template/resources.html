@@ -3,6 +3,21 @@
 
 <h3>Resources to be added:</h3>
 
+<div>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Resource:</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="res in ctrl.getAvailableResource">
+                <td>{{res.name}}</td>
+            </tr>
+            
+        </tbody>
+    </table>
 
+</div>
 
 </div>

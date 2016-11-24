@@ -7,6 +7,9 @@ package facades;
 
 import entity.Department;
 import entity.Event;
+import entity.OcupiedSlot;
+import entity.Resource;
+import entity.Samarit;
 import entityconnection.EntityConnector;
 import java.util.Date;
 import java.util.List;
@@ -15,7 +18,10 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.time.*;
+import java.util.ArrayList;
 import javax.persistence.TypedQuery;
+import log.Log;
+import util.DateUtils;
 
 /**
  *
@@ -138,5 +144,62 @@ public class EventFacade {
             createEvent(event4);
             createEvent(event5);
         }
+    }
+    public List<Resource> getEventResources(int eventId) {
+        
+        Event e;
+        List<Resource> availableRes = new ArrayList();
+        EntityManager em = EntityConnector.getEntityManager();
+        em.getEntityManagerFactory().getCache().evictAll(); // IMPORTANT!!! This Clears the Cache of the JPA!
+        //if (s.getRedCroosLevel()==null) throw new NoRedCrossLevelException();
+        try {
+            em.getTransaction().begin();
+            e = em.find(Event.class, eventId);
+            List<Resource> allResFromDepartMent = e.getDepartment().getResources();
+            for (Resource res : allResFromDepartMent) {
+                if (checkAvalibilty(res, e)) {
+                    availableRes.add(res);
+                }
+            }
+        } catch (Exception ex) {
+            Log.writeToLog("Exception in Coordinator Facade getAvailable Resources: " + ex.getMessage());
+            throw ex;
+        } finally {
+            em.close();
+        }
+        return availableRes;
+    }
+    
+    private boolean checkAvalibilty(Resource res, Event e) {
+        boolean available = true;
+        List<OcupiedSlot> blockedTimes = res.getNotAvail();
+        try {
+            for (OcupiedSlot blockedTime : blockedTimes) {
+
+                // In case of isAllDay evalutaing to true always set available to false
+                if (blockedTime.isAllDay()) {
+                    if (blockedTime.getStart().getDate() != e.getStart().getDate()) {
+                        continue;
+                    } else {
+                        return false;
+                    }
+                }
+                if ( // In case isAllDay is false check start and end times
+                        (DateUtils.dateBetween(blockedTime.getStart(), e.getStart(), e.getEnd())
+                        || DateUtils.dateBetween(blockedTime.getEnd(), e.getStart(), e.getEnd())
+                        || DateUtils.dateBetween(e.getStart(), blockedTime.getStart(), blockedTime.getEnd())
+                        || DateUtils.dateBetween(e.getStart(), blockedTime.getStart(), blockedTime.getEnd()))) {
+                    available = false;
+                }
+
+            }
+        } catch (Exception ex) {
+            Log.writeToLog("Error when loading calenderEvent for Resourcet: " + res.getName());
+            Log.writeToLog(ex.getMessage());
+            throw ex;
+
+        }
+
+        return available;
     }
 }

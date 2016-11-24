@@ -5,11 +5,19 @@
  */
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import entity.watches.ResourceWatch;
+import entity.watches.SamaritOccupied;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -23,6 +31,17 @@ public class Resource implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+    
+    @OneToMany(mappedBy = "resource", cascade = {CascadeType.PERSIST, CascadeType.MERGE},targetEntity = SamaritOccupied.class)
+    @JsonBackReference(value="watches-res")
+    private List<OcupiedSlot> notAvail;
+    @ManyToOne
+    private Department department;
+    
+
+    public Resource() {
+        this.notAvail = new ArrayList();
+    }
     
 
     public Integer getId() {
@@ -57,5 +76,30 @@ public class Resource implements Serializable {
     public String toString() {
         return "entity.Resource[ id=" + id + " ]";
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<OcupiedSlot> getNotAvail() {
+        return notAvail;
+    }
+
+    public void setNotAvail(List<OcupiedSlot> notAvail) {
+        this.notAvail = notAvail;
+    }
+    
+    public void addNotAvail(OcupiedSlot notAvail){
+        this.notAvail.add(notAvail);
+        ResourceWatch rw= (ResourceWatch)notAvail;
+        
+                rw.setResource(this);
+    }
+    
+    
     
 }

@@ -6,6 +6,7 @@
 package entity.watches;
 
 import entity.Event;
+import entity.Resource;
 import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -28,6 +29,9 @@ public class ResourceWatch implements Serializable {
     
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Event event;
+    
+    @ManyToOne
+    private Resource resource;
 
     public Integer getId() {
         return id;
@@ -60,6 +64,10 @@ public class ResourceWatch implements Serializable {
     @Override
     public String toString() {
         return "entity.watches.ResourceWatch[ id=" + id + " ]";
+    }
+
+    public void setResource(Resource aThis) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
