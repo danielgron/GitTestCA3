@@ -7,6 +7,7 @@ package entity.watches;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import entity.Event;
+import entity.OcupiedSlot;
 import entity.Samarit;
 import exceptions.DateNullException;
 import java.util.Date;

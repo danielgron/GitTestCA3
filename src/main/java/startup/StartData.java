@@ -8,6 +8,7 @@ package startup;
 import entity.Admin;
 import entity.Department;
 import entity.Event;
+import entity.OcupiedSlot;
 import entity.RedCrossLevel;
 import entity.Samarit;
 import entity.User;
@@ -164,8 +165,8 @@ public class StartData {
         }
     }
     
-    public SamaritOccupied ocupySam(Samarit sam){
-        SamaritOccupied so=null;
+    public OcupiedSlot ocupySam(Samarit sam){
+        OcupiedSlot so=null;
         try{
         int hours = (int)(Math.random()*10);
         Date start = randomDate();

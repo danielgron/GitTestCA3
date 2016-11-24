@@ -5,6 +5,7 @@
  */
 package entity.watches;
 
+import entity.OcupiedSlot;
 import exceptions.DateNullException;
 import java.io.Serializable;
 import java.util.Date;
@@ -28,7 +29,7 @@ import javax.persistence.TemporalType;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type")
 @Table(name = "SAMARITCALENDER")
-public class SamaritCalendar implements Serializable {
+public class SamaritCalendar implements Serializable, OcupiedSlot{
 
     private static final long serialVersionUID = 1L;
     
