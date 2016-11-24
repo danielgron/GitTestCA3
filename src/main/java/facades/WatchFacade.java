@@ -10,15 +10,15 @@ import entity.Samarit;
 import entity.watches.SamaritOccupied;
 import entity.watches.SamaritWatch;
 import entityconnection.EntityConnector;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.util.converter.LocalDateStringConverter;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import util.DateUtils;
 
 /**
@@ -28,8 +28,8 @@ import util.DateUtils;
 public class WatchFacade {
 
     String pattern = "yyyy-MM-dd";
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
-    private LocalDateStringConverter ldsc = new LocalDateStringConverter(formatter, null);
+     DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MM-dd");
+    
 
     public WatchFacade() {
         EntityManager em = EntityConnector.getEntityManager();
@@ -180,11 +180,12 @@ public class WatchFacade {
         EntityManager em = EntityConnector.getEntityManager();
         SamaritOccupied watch = null;
         List<SamaritOccupied> watches;
-        LocalDate dstart = ldsc.fromString(date);
+        LocalDate dstart = dtf.parseLocalDate(date);
         LocalDate dstart1 = dstart.plusDays(1);
-
-        Date d1 = DateUtils.asDate(dstart);
-        Date d2 = DateUtils.asDate(dstart1);
+        
+        
+        Date d1 = dstart.toDate();
+        Date d2 = dstart1.toDate();
 
         try {
             Query q = em.createQuery("SELECT w FROM SamaritOccupied AS w WHERE w.samarit.userName = ?1 AND w.start >= ?2 AND w.start < ?3"); // AND w.start = :date
