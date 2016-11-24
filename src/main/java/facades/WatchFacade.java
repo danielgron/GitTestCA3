@@ -8,7 +8,6 @@ package facades;
 import entity.Event;
 import entity.Samarit;
 import entity.watches.SamaritOccupied;
-import entity.User;
 import entity.watches.SamaritWatch;
 import entityconnection.EntityConnector;
 import java.time.LocalDate;
@@ -20,7 +19,6 @@ import java.util.logging.Logger;
 import javafx.util.converter.LocalDateStringConverter;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 import util.DateUtils;
 
 /**
