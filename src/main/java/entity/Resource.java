@@ -36,6 +36,7 @@ public class Resource implements Serializable {
     @JsonBackReference(value="watches-res")
     private List<OcupiedSlot> notAvail;
     @ManyToOne
+    @JsonBackReference(value="department-res")
     private Department department;
     
 

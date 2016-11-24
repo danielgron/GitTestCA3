@@ -10,8 +10,8 @@ angular.module('myApp.resources', [])
                 var self = this;
                 ResourceFactory.setEvent($scope.event);
                 console.log($scope.event);
-                
-                
+                self.getAvailableResources = ResourceFactory.getAvailableResources();
+                console.log(self.getAvailableResources);
         }])
         .factory('ResourceFactory', function ($http) {
     var event;
