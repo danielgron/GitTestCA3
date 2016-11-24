@@ -58,7 +58,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment']
                     var dateString = event.start.format("YYYY-MM-DD");
 
                     angular.element(document).find('.fc-day[data-date="' + dateString + '"]').css('background-color', '');
-                }
+                };
 
                 $scope.eventRender = function (event, element) {
                     var dateString = event.start.format("YYYY-MM-DD");
