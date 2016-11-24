@@ -123,6 +123,7 @@ function initializeFromToken($scope, token, jwtHelper, UserFactory) {
   $scope.username = tokenPayload.username;
   $scope.department = tokenPayload.department;
   UserFactory.setDepartment(tokenPayload.department);
+  UserFactory.setCreatedUser(tokenPayload.username);
   $scope.isAdmin = false;
   $scope.isUser = false;
   $scope.isCoordinator = false;

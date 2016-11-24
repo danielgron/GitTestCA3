@@ -30,7 +30,10 @@ var app = angular.module('myApp.factories', []);
               return createdUser;
           },
           setCreatedUser : function(input){
-              createdUser = input;
+              createdUser.userName = input;
+          },
+          getUserName : function(){
+              return createdUser.userName;
           }
       };
   });
