@@ -156,7 +156,8 @@ public class StartData {
         for (int i = 0; i < 10; i++) {
             Resource res = new Resource();
             res.setName("Bil nummer "+i);
-            d.
+            d.addResource(res);
+            res.setDepartment(d);
         }
         try{
         em.getTransaction().begin();

@@ -32,7 +32,7 @@ public class Resource implements Serializable {
     private Integer id;
     private String name;
     
-    @OneToMany(mappedBy = "resource", cascade = {CascadeType.PERSIST, CascadeType.MERGE},targetEntity = SamaritOccupied.class)
+    @OneToMany(mappedBy = "resource", cascade = {CascadeType.PERSIST, CascadeType.MERGE},targetEntity = ResourceWatch.class)
     @JsonBackReference(value="watches-res")
     private List<OcupiedSlot> notAvail;
     @ManyToOne
@@ -98,6 +98,14 @@ public class Resource implements Serializable {
         ResourceWatch rw= (ResourceWatch)notAvail;
         
                 rw.setResource(this);
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
     
     
