@@ -47,16 +47,42 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
                         renderEvent: $scope.renderEvent,
                         selectOverlap: $scope.selectOverlap,
                         rerenderEvents: $scope.rerenderEvents,
-                        eventAfterAllRender: $scope.eventAfterRender,
+                        eventAfterAllRender: $scope.eventAfterAllRender,
                         eventDestroy: $scope.eventDestroy,
-                        viewRender: $scope.viewRender
+                        viewRender: $scope.viewRender,
+                        eventClick: $scope.eventClick
+                        
                     }
                 };
-                $scope.viewRender = function(view, element){
-                    window.console.log(element);
-                    element.attr('bs-loading-overlay');
+
+                $scope.eventClick = function(event){
+                    if(event.title=="unavail"&&event.allDay){
+                        
+                        window.console.log(event.start);
+                        $scope.setUnavailForWatch(event.start);
+                    }
+                }
+                $scope.eventAfterAllRender = function () {
+                    bsLoadingOverlayService.stop();
+
+                }
+                $scope.viewRender = function (view, element) {
+                    bsLoadingOverlayService.start();
+
                 }
 
+                $scope.setZ = function () {
+                    //     var thing = angular.element.find('#overLay');
+                    alert('clicked');
+                    var thing = angular.element(document).find('#overLay').css('z-index', 10000);
+                    window.console.log(thing);
+                };
+
+                $scope.setZnormal = function () {
+                    //     var thing = angular.element.find('#overLay');
+
+                    angular.element(document).find('#overLay').css('z-index', 1);
+                };
 
                 $scope.eventDestroy = function (event) {
                     var dateString = event.start.format("YYYY-MM-DD");
@@ -70,7 +96,6 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
                     angular.element(document).find('.fc-day[data-date="' + dateString + '"]').css('background-color', 'red');
                 };
 
-
                 $scope.removeEvent = function (watch) {
                     var i;
                     uiCalendarConfig.calendars['userCalender'].fullCalendar('removeEvents', watch.id);
@@ -79,19 +104,16 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
                             if (item.id == watch.id) {
                                 $scope.watchList.splice(index, 1);
                             }
-
                         });
                     }
-
-
                 };
 
                 //This method is for setting a whole day to unavail, by clicking it
-                //TO-DO - remove when clicking day with event.
+                //TO-DO refactor into more methods
                 $scope.setUnavailForWatch = function (date, jsEvent, view) {
                     var dateString = date.format("YYYY-MM-DD");
-                                    
                     var watch = {};
+                    //Start spinner before restcall
                     bsLoadingOverlayService.start();
 
                     userCalendarFactory.getWatch(dateString, UserFactory.getUserName()).then(function (successResponse) {
@@ -101,8 +123,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
                             setWatch(date);
                         } else {
                             $scope.removeEvent(watch);
-                            //bsLoadingOverlayService.stop();
-
+                            bsLoadingOverlayService.stop();
                         }
                     }, function (errorResponse) {
 
@@ -114,26 +135,21 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
                         watch.samarit = {};
                         watch.start = date;
                         window.console.log(date);
-
                         watch.samarit.userName = "coordinator";
                         watch.allDay = true;
                         watch.color = 'red';
-
                         userCalendarFactory.setAvailable(watch).then(function (response) {
                             watch = response.data;
                             window.console.log(watch);
                             window.console.log("great succes" + response.data);
                             $scope.watchList.push(watch);
                             bsLoadingOverlayService.stop();
-
-
                         }, function (response) {
                         });
                     };
                 };
-
                 $scope.dayRender = function (date, cell) {
-                    cell.attr('bs-loading-overlay','true');
+                    cell.attr('bs-loading-overlay', 'true');
                 };
 
 
