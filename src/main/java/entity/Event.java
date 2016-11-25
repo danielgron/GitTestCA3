@@ -35,6 +35,7 @@ public class Event implements Serializable, OcupiedSlot {
 
     private static final long serialVersionUID = 1L;
     @OneToMany(mappedBy = "event")
+    @JsonBackReference(value="resourceWatchs-event")
     private List<ResourceWatch> resourceWatchs;
 
     /**
