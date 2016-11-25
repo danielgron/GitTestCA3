@@ -151,12 +151,15 @@ public class CoordinatorFacade {
         //if (s.getRedCroosLevel()==null) throw new NoRedCrossLevelException();
         try {
             em.getTransaction().begin();
+            // Get the event in question
             e = em.find(Event.class, eventId);
+            // Get the resources registered for the event
             List<ResourceWatch> resourceWatchs = e.getResourceWatchs();
             
             boolean isThere = false;
             ResourceWatch toRemove = null;
-            for (ResourceWatch resourceWatch : resourceWatchs) {
+            // Iterate over the 
+            for (ResourceWatch resourceWatch : resourceWatchs) {  // Det kunne godt være her der er en fejl
                 if (resourceWatch.getEvent() == e){
                     isThere=true;
                     toRemove=resourceWatch;
@@ -164,8 +167,6 @@ public class CoordinatorFacade {
             }
             // If already present - remove the shift
             if (isThere) {
-                //resourceWatchs.remove(toRemove);
-                //e.getResourceWatchs().remove(toRemove);
                 em.remove(toRemove);
                 //em.persist(e);
             }

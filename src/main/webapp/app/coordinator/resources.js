@@ -24,7 +24,9 @@ angular.module('myApp.resources', [])
                 getAvailableResources();
                 
                 self.changeResource = function (res) {
-                    console.log("Click")
+                    console.log("Click");
+                    console.log(res.id);
+                    console.log(res.name);
                     $http({
                         method: 'POST',
                         url: 'api/Resource/changeResShift/'+$scope.event+'/'+res.id,
@@ -32,12 +34,12 @@ angular.module('myApp.resources', [])
                     }).then(function successCallback(response) {
                         // this callback will be called asynchronously
                         // when the response is available
-                        alert("succes");
+                        //alert("succes");
                     }, function errorCallback(response) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         
-                        console.log("Error: " + response.statusCode );
+                        //console.log("Error: " + response.statusCode );
                     });
                 };
                 
