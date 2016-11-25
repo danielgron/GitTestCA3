@@ -1,0 +1,42 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">I'm a modal!{{atCtrl.watch.start<=atCtrl.watch.end}} </h3>
+</div>
+
+<div class="modal-body" id="modal-body">
+    <form class="form-group" novalidate>
+
+
+     
+
+        <div class="form-group c">
+            <label>Dato</label>
+            <p class="input-group">
+
+                <input id="date" type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="atCtrl.watch.start" is-open="atCtrl.popup1.opened" datepicker-options="atCtrl.dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="atCtrl.open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>  
+            </p>
+        </div>
+        <div class="form-group col-sm-4"><label for="timestart">Starttidspunkt</label>
+            <div uib-timepicker ng-model="atCtrl.watch.start" ng-change="atCtrl.changed()" hour-step="atCtrl.hstep" minute-step="atCtrl.mstep" show-meridian="ismeridian"></div>
+        </div>
+        <div class="form-group col-sm-4"><label for="timestart">Sluttidspunkt</label>
+
+            <div uib-timepicker ng-model="atCtrl.watch.end" ng-change="atCtrl.changed()" hour-step="atCtrl.hstep" minute-step="atCtrl.mstep" show-meridian="ismeridian"></div>
+        </div>
+        
+        
+        <div class="modal-footer">
+            <div class="container col-sm-8"><label class="label label-danger" ng-show="atCtrl.watch.start>atCtrl.watch.end">Starttidspunkt kan ikke være mindre end sluttidspunkt</label></div>
+            <div class="container col-sm-4">
+                 
+                <div class="btn-group">
+                   
+                    <button ng-click="atCtrl.ok()" class="btn btn-primary"  ng-disabled="atCtrl.watch.start>atCtrl.watch.end"><i class="glyphicon glyphicon-floppy-disk"/> Tilføj dato</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
