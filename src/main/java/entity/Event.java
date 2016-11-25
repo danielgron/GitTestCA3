@@ -5,7 +5,6 @@
  */
 package entity;
 
-import entity.watches.SamaritOccupied;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import entity.watches.ResourceWatch;
 import entity.watches.SamaritWatch;
@@ -18,7 +17,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;

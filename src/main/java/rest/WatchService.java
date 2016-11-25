@@ -81,7 +81,6 @@ public class WatchService {
             mapper.setDateFormat(df);
             SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("samarit");
             FilterProvider filters = new SimpleFilterProvider().addFilter("samaritFilter", theFilter);
-
             json = mapper.writer(filters).writeValueAsString(sw);
         } catch (JsonProcessingException ex) {
             Logger.getLogger(WatchService.class.getName()).log(Level.SEVERE, null, ex);
@@ -94,7 +93,6 @@ public class WatchService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getWatchesForSamarit(@PathParam("id") String id) {
-        //  String token = request.getHeaderString("Authorization").substring("Bearer ".length());
 
         List<SamaritOccupied> watches = null;
         watches = wf.getWatchesForUser(id);
@@ -129,6 +127,7 @@ public class WatchService {
 
             json = mapper.writer(filters).writeValueAsString(watchForDate);
         } catch (JsonProcessingException ex) {
+            
             Logger.getLogger(WatchService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return json;
