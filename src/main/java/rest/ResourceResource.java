@@ -73,11 +73,11 @@ private static ObjectMapper mapper = new ObjectMapper();
     public String changeResShift(@PathParam("eventId") String eventId, @PathParam("resId") String resId) throws JsonProcessingException {
         
         
+        cf.toggleResource(Integer.parseInt(eventId), Integer.parseInt(resId));
         
         
-        List<Resource> eventResources = ef.getEventResources(Integer.parseInt(eventId));
     try {
-        return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(eventResources);
+        return mapper.writerWithDefaultPrettyPrinter().writeValueAsString("");
     } catch (JsonProcessingException ex) {
         Logger.getLogger(ResourceResource.class.getName()).log(Level.SEVERE, null, ex);
         throw ex;

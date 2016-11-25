@@ -8,8 +8,10 @@ package facades;
 import entity.Department;
 import entity.Event;
 import entity.OcupiedSlot;
+import entity.Resource;
 import entity.Samarit;
 import entity.WatchFunction;
+import entity.watches.ResourceWatch;
 import entity.watches.SamaritOccupied;
 import entity.watches.SamaritCalendar;
 import entityconnection.EntityConnector;
@@ -139,6 +141,53 @@ public class CoordinatorFacade {
            em.close();
        }
        return watchFunction;
+    }
+    
+    public void toggleResource(int eventId, int resId) {
+        
+        Event e;
+        EntityManager em = EntityConnector.getEntityManager();
+        em.getEntityManagerFactory().getCache().evictAll(); // IMPORTANT!!! This Clears the Cache of the JPA!
+        //if (s.getRedCroosLevel()==null) throw new NoRedCrossLevelException();
+        try {
+            em.getTransaction().begin();
+            e = em.find(Event.class, eventId);
+            List<ResourceWatch> resourceWatchs = e.getResourceWatchs();
+            
+            boolean isThere = false;
+            ResourceWatch toRemove = null;
+            for (ResourceWatch resourceWatch : resourceWatchs) {
+                if (resourceWatch.getEvent() == e){
+                    isThere=true;
+                    toRemove=resourceWatch;
+                }
+            }
+            // If already present - remove the shift
+            if (isThere) {
+                resourceWatchs.remove(toRemove);
+                e.getResourceWatchs().remove(toRemove);
+                em.persist(e);
+            }
+            // Else create it and add it
+            else{
+                ResourceWatch resWatch = new ResourceWatch();
+                Resource res = em.find(Resource.class, resId);
+                
+                resWatch.setEvent(e);
+                resWatch.setResource(res);
+            resourceWatchs.add(resWatch);
+            em.persist(resWatch);
+        }
+                em.getTransaction().commit();
+
+                    
+        } catch (Exception ex) {
+            Log.writeToLog("Exception in Coordinator Facade toggleResource: " + ex.getMessage());
+            throw ex;
+        } finally {
+            em.close();
+        }
+        
     }
 
 }
