@@ -6,21 +6,52 @@
 
 angular.module('myApp.resources', [])
 
-        .controller("Resourcectrl", ['ResourceFactory','$scope', function ( ResourceFactory,$scope) {
+        .controller("Resourcectrl", ['ResourceFactory','$scope','$http', function ( ResourceFactory,$scope,$http) {
                 var self = this;
                 ResourceFactory.setEvent($scope.event);
                 console.log($scope.event);
-                self.getAvailableResources = ResourceFactory.getAvailableResources();
-                console.log(self.getAvailableResources);
+                //self.getAvailableResources = ResourceFactory.getAvailableResources();
+                //console.log(self.getAvailableResources);
+                self.availableResources=[];
+                function getAvailableResources() {
+                    ResourceFactory.getAvailableResources()
+                            .then(function (response) {
+                                self.availableResources = response.data;
+                            }), function (error) {
+                        console.log("Error" + error);
+                    };
+                }
+                getAvailableResources();
+                
+                self.changeResource = function (res) {
+                    console.log("Click")
+                    $http({
+                        method: 'POST',
+                        url: 'api/Resource/changeResShift/'+$scope.event+'/'+res.id,
+                        data: self.newFunction
+                    }).then(function successCallback(response) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        alert("succes");
+                    }, function errorCallback(response) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        
+                        console.log("Error: " + response.statusCode );
+                    });
+                };
+                
         }])
+        
         .factory('ResourceFactory', function ($http) {
     var event;
     var getAvailableResources = function getAvailableResources(){
-      return $http.get("api/coordinator/availableResources/" + event);
+      return $http.get("api/Resource/" + event);
     };
     var setEvent = function getAvailableResources(e){
       event = e;
     };
+    
     return {
       getAvailableResources: getAvailableResources,
       setEvent: setEvent
