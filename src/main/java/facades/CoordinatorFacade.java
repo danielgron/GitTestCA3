@@ -164,9 +164,10 @@ public class CoordinatorFacade {
             }
             // If already present - remove the shift
             if (isThere) {
-                resourceWatchs.remove(toRemove);
-                e.getResourceWatchs().remove(toRemove);
-                em.persist(e);
+                //resourceWatchs.remove(toRemove);
+                //e.getResourceWatchs().remove(toRemove);
+                em.remove(toRemove);
+                //em.persist(e);
             }
             // Else create it and add it
             else{
