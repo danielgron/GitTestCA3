@@ -37,6 +37,8 @@ public class RequestFacade {
         try {
             Query q = em.createQuery("SELECT r FROM Request r");
             requests = q.getResultList();
+        }catch(Exception e){
+            log.Log.writeToLog("Error in getting Requests " + e.getMessage());
         } finally {
             em.close();
         }
@@ -52,6 +54,7 @@ public class RequestFacade {
             em.getTransaction().commit();
         } catch(Exception e){
             em.getTransaction().rollback();
+            log.Log.writeToLog("");
         }finally {
             em.close();
         }

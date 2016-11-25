@@ -23,8 +23,9 @@ public class DepartmentFacade {
             d = em.find(Department.class, departmentName);
         }
         catch(Exception e){
-            Log.writeToLog("Exception encountered while extracting department");
-            Log.writeToLog(e.getMessage());
+            Log.writeErrorMessageToLog("Exception encountered while extracting department");
+            Log.writeErrorMessageToLog(e.getMessage());
+            throw e;
         }
         finally{
             em.close();
