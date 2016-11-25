@@ -69,15 +69,11 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
             $scope.eventClick = function (event) {
                 if (event.title == "unavail" && event.allDay) {
 
-
                     $scope.setUnavailForWatch(event.start);
                 } else if (!event.allDay) {
-                   confirm('test')
-
-
+                   
                 };
                
-
             };
           
 
