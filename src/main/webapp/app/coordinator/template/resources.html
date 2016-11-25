@@ -1,18 +1,19 @@
 <div class="container" ng-controller="Resourcectrl as ctrl">
     
 
-<h3>Resources to be added:</h3>
+<h3>Ledige resourcer:</h3>
 
 <div>
-    <table border="1">
+    <table class="table">
         <thead>
             <tr>
                 <th>Resource:</th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="res in ctrl.getAvailableResource">
+            <tr ng-repeat="res in ctrl.availableResources">
                 <td>{{res.name}}</td>
+                <td><input type="checkbox" name="useRes" value="OFF" ng-click="ctrl.changeResource(res)" /></td>
             </tr>
             
         </tbody>
