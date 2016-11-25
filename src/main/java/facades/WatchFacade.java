@@ -28,8 +28,7 @@ import util.DateUtils;
 public class WatchFacade {
 
     String pattern = "yyyy-MM-dd";
-     DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MM-dd");
-    
+    DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MM-dd");
 
     public WatchFacade() {
 
@@ -73,7 +72,7 @@ public class WatchFacade {
             watch = em.find(SamaritOccupied.class, id);
 
         } catch (Exception ex) {
-            log.Log.writeErrorMessageToLog("Error in getWatch " +ex.getMessage());
+            log.Log.writeErrorMessageToLog("Error in getWatch " + ex.getMessage());
             throw ex;
         } finally {
             em.close();
@@ -89,7 +88,7 @@ public class WatchFacade {
             em.getTransaction().commit();
 
         } catch (Exception ex) {
-            log.Log.writeErrorMessageToLog("Error i update Watch " + ex.getMessage());
+            log.Log.writeErrorMessageToLog("Error in update Watch " + ex.getMessage());
             em.getTransaction().rollback();
             throw ex;
         } finally {
@@ -107,7 +106,7 @@ public class WatchFacade {
             em.remove(watch);
             em.getTransaction().commit();
         } catch (Exception ex) {
-            log.Log.writeErrorMessageToLog("Error in deleteWatch " +ex.getMessage());
+            log.Log.writeErrorMessageToLog("Error in deleteWatch " + ex.getMessage());
             em.getTransaction().rollback();
         } finally {
             em.close();
@@ -132,7 +131,7 @@ public class WatchFacade {
             em.getTransaction().commit();
 
         } catch (Exception ex) {
-            log.Log.writeErrorMessageToLog("Error in add watch: " +ex.getMessage());
+            log.Log.writeErrorMessageToLog("Error in add watch: " + ex.getMessage());
             em.getTransaction().rollback();
             throw ex;
         } finally {
@@ -143,7 +142,7 @@ public class WatchFacade {
 
     public SamaritOccupied addUnavailForWatch(SamaritOccupied watch) {
         EntityManager em = EntityConnector.getEntityManager();
-        
+
         Samarit sm = null;
         try {
             em.getTransaction().begin();
@@ -155,8 +154,7 @@ public class WatchFacade {
             q.setParameter(1, watch.getSamarit().getUserName());
             q.setParameter(2, watch.getStart());
             List<SamaritOccupied> occ = q.getResultList();
-            
-            
+
             for (SamaritOccupied samaritOccupied : occ) {
                 if (samaritOccupied.isAllDay()) {
                     return null;
@@ -170,7 +168,7 @@ public class WatchFacade {
             em.getTransaction().commit();
 
         } catch (Exception ex) {
-            log.Log.writeErrorMessageToLog("Error in add Unavaible: " +ex.getMessage());
+            log.Log.writeErrorMessageToLog("Error in add Unavaible: " + ex.getMessage());
             throw ex;
         } finally {
             em.close();
@@ -185,8 +183,7 @@ public class WatchFacade {
         List<SamaritOccupied> watches;
         LocalDate dstart = dtf.parseLocalDate(date);
         LocalDate dstart1 = dstart.plusDays(1);
-        
-        
+
         Date d1 = dstart.toDate();
         Date d2 = dstart1.toDate();
 
@@ -205,12 +202,10 @@ public class WatchFacade {
                     watch = watche;
                 }
             }
-        }
-        catch(Exception e){
-            log.Log.writeErrorMessageToLog("Error in getwatches for User: " +e.getMessage());
+        } catch (Exception e) {
+            log.Log.writeErrorMessageToLog("Error in getwatches for User: " + e.getMessage());
             throw e;
-        }
-        finally {
+        } finally {
             em.close();
         }
         return watch;

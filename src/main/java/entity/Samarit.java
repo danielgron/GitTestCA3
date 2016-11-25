@@ -7,11 +7,9 @@ package entity;
 
 import entity.watches.SamaritOccupied;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import entity.watches.SamaritCalendar;
 import entity.watches.SamaritWatch;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -47,7 +45,7 @@ public class Samarit extends User {
     @JsonBackReference(value="watches-sam")
     private List<SamaritWatch> watches = new ArrayList();
     
-    @OneToMany(mappedBy = "samarit",fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE},targetEntity = SamaritOccupied.class)
+    @OneToMany(mappedBy = "samarit", cascade = {CascadeType.PERSIST, CascadeType.MERGE},targetEntity = SamaritOccupied.class)
     @JsonBackReference(value="occupied-sam")
     private List<OcupiedSlot> notAvail = new ArrayList();
     
