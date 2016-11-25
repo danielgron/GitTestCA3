@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h3 class="modal-title" id="modal-title">I'm a modal!{{atCtrl.watch.start<=atCtrl.watch.end}} </h3>
+    <h3 class="modal-title" id="modal-title">Vælg dato og tidspunkt</h3>
 </div>
 
 <div class="modal-body" id="modal-body">
@@ -36,8 +36,7 @@
                     <button ng-click="atCtrl.ok()" class="btn btn-primary"  ng-disabled="atCtrl.watch.start>atCtrl.watch.end"><i class="glyphicon glyphicon-floppy-disk"/> Tilføj dato</button>
                 </div>
             </div>
-            {{atCtrl.watch.start}}<br>
-            {{atCtrl.watch.end}}
+            
         </div>
 
     </form>
