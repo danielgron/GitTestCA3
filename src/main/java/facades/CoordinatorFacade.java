@@ -44,8 +44,9 @@ public class CoordinatorFacade {
             em.getTransaction().commit();
             Log.writeToLog("New samarite added");
         } catch (Exception e) {
-            Log.writeToLog("Exception encountered while adding samarite.");
-            Log.writeToLog(e.getMessage());
+            Log.writeErrorMessageToLog("Exception encountered while adding samarite.");
+            Log.writeErrorMessageToLog(e.getMessage());
+            throw e;
         } finally {
             em.close();
         }
@@ -68,7 +69,7 @@ public class CoordinatorFacade {
                 }
             }
         } catch (Exception ex) {
-            Log.writeToLog("Exception in Coordinator Facade getAvailable Samarits: " + ex.getMessage());
+            Log.writeErrorMessageToLog("Exception in Coordinator Facade getAvailable Samarits: " + ex.getMessage());
             throw ex;
         } finally {
             em.close();
@@ -110,8 +111,8 @@ public class CoordinatorFacade {
 
             }
         } catch (Exception ex) {
-            Log.writeToLog("Error when loading calenderEvent for Samarit: " + samarit.getUserName());
-            Log.writeToLog(ex.getMessage());
+            Log.writeErrorMessageToLog("Error when loading calenderEvent for Samarit: " + samarit.getUserName());
+            Log.writeErrorMessageToLog(ex.getMessage());
             throw ex;
 
         }
@@ -120,10 +121,19 @@ public class CoordinatorFacade {
     }
 
     public List<WatchFunction> getWatchFunctionsFromDepartment(String department) {
-        EntityManager em = EntityConnector.getEntityManager();
-        Query q = em.createQuery("select w from WatchFunction w where w.department.nameOfDepartment LIKE :dept", WatchFunction.class);
-        q.setParameter("dept", department);
-        List<WatchFunction> list = q.getResultList();
+        List<WatchFunction> list = null;
+            EntityManager em = EntityConnector.getEntityManager();
+        try {
+            Query q = em.createQuery("select w from WatchFunction w where w.department.nameOfDepartment LIKE :dept", WatchFunction.class);
+            q.setParameter("dept", department);
+            list = q.getResultList();
+        } catch (Exception e) {
+            log.Log.writeErrorMessageToLog("Error" + e.getMessage());
+            throw e;
+        }
+        finally{
+            em.close();
+        }
         return list;
     }
 
@@ -135,6 +145,7 @@ public class CoordinatorFacade {
            em.getTransaction().commit();
        }
        catch(Exception e){
+           log.Log.writeErrorMessageToLog("Error in Create Function: " + e);
            throw e;
        }
        finally{
@@ -151,12 +162,15 @@ public class CoordinatorFacade {
         //if (s.getRedCroosLevel()==null) throw new NoRedCrossLevelException();
         try {
             em.getTransaction().begin();
+            // Get the event in question
             e = em.find(Event.class, eventId);
+            // Get the resources registered for the event
             List<ResourceWatch> resourceWatchs = e.getResourceWatchs();
             
             boolean isThere = false;
             ResourceWatch toRemove = null;
-            for (ResourceWatch resourceWatch : resourceWatchs) {
+            // Iterate over the 
+            for (ResourceWatch resourceWatch : resourceWatchs) {  // Det kunne godt være her der er en fejl
                 if (resourceWatch.getEvent() == e){
                     isThere=true;
                     toRemove=resourceWatch;
@@ -164,8 +178,6 @@ public class CoordinatorFacade {
             }
             // If already present - remove the shift
             if (isThere) {
-                //resourceWatchs.remove(toRemove);
-                //e.getResourceWatchs().remove(toRemove);
                 em.remove(toRemove);
                 //em.persist(e);
             }
@@ -183,7 +195,7 @@ public class CoordinatorFacade {
 
                     
         } catch (Exception ex) {
-            Log.writeToLog("Exception in Coordinator Facade toggleResource: " + ex.getMessage());
+            Log.writeErrorMessageToLog("Exception in Coordinator Facade toggleResource: " + ex.getMessage());
             throw ex;
         } finally {
             em.close();

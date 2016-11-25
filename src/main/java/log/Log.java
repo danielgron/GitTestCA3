@@ -46,4 +46,8 @@ public class Log {
         Logger.getLogger(Log.logName).log(Level.INFO, s);
     }
     
+    public static void writeErrorMessageToLog(String s){
+        Logger.getLogger(Log.logName).log(Level.SEVERE, s);
+    }
+    
 }

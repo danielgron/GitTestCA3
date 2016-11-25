@@ -35,8 +35,7 @@ public class UserFacade implements IUserFacade {
         try {
             return em.find(User.class, id);
         } catch (Exception e) {
-            Log.writeToLog("Error in get User: " + e.getLocalizedMessage());
-           
+            Log.writeErrorMessageToLog("Error in get User: " + e.getLocalizedMessage());
             throw e;
         }
         finally{
@@ -62,7 +61,8 @@ public class UserFacade implements IUserFacade {
                 return null;
             }
         } catch (Exception ex) {
-            Log.writeToLog("Authenticating user failed: "+ex.getMessage());
+            Log.writeErrorMessageToLog("Authenticating user failed: "+ex.getMessage());
+            // Used by the framework. Should not throw exceptions!
         }
         finally{
             em.close();
@@ -80,6 +80,10 @@ public class UserFacade implements IUserFacade {
         {
         Query q = em.createQuery("select u from User u ", User.class);
         us = q.getResultList();
+        }
+        catch(Exception e){
+            log.Log.writeErrorMessageToLog("Error in Database Empty: " + e.getMessage());
+            return false;
         }
         finally{
             em.close();
@@ -102,8 +106,8 @@ public class UserFacade implements IUserFacade {
             em.getTransaction().commit();
             return userRole; 
         } catch (Exception e) {
-            //error
-            return null;
+            log.Log.writeErrorMessageToLog("Error in Persist Role " + e.getMessage());
+            throw e;
         }
         finally{
         em.close();
@@ -125,7 +129,7 @@ public class UserFacade implements IUserFacade {
             return u;
         } catch (Exception e) {
             Log.writeToLog("Error in findRole: " + e);
-            return null;
+            throw e;
         }
         finally{
             em.close();

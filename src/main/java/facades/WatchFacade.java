@@ -42,7 +42,7 @@ public class WatchFacade {
             Query q = em.createQuery("SELECT w FROM SamaritOccupied w");
             watches = q.getResultList();
         } catch (Exception ex) {
-            Logger.getLogger(EventFacade.class.getName()).log(Level.SEVERE, null, ex);
+            log.Log.writeErrorMessageToLog("Error in Get Watches " + ex.getMessage());
         } finally {
             em.close();
         }
@@ -59,7 +59,7 @@ public class WatchFacade {
             watches = q.getResultList();
 
         } catch (Exception ex) {
-            Logger.getLogger(EventFacade.class.getName()).log(Level.SEVERE, null, ex);
+            log.Log.writeToLog("Error in getWatches for User " + ex.getMessage());
         } finally {
             em.close();
         }
@@ -73,7 +73,8 @@ public class WatchFacade {
             watch = em.find(SamaritOccupied.class, id);
 
         } catch (Exception ex) {
-            Logger.getLogger(EventFacade.class.getName()).log(Level.SEVERE, null, ex);
+            log.Log.writeErrorMessageToLog("Error in getWatch " +ex.getMessage());
+            throw ex;
         } finally {
             em.close();
         }
@@ -88,8 +89,9 @@ public class WatchFacade {
             em.getTransaction().commit();
 
         } catch (Exception ex) {
-            Logger.getLogger(EventFacade.class.getName()).log(Level.SEVERE, null, ex);
+            log.Log.writeErrorMessageToLog("Error i update Watch " + ex.getMessage());
             em.getTransaction().rollback();
+            throw ex;
         } finally {
             em.close();
         }
@@ -105,7 +107,7 @@ public class WatchFacade {
             em.remove(watch);
             em.getTransaction().commit();
         } catch (Exception ex) {
-            Logger.getLogger(EventFacade.class.getName()).log(Level.SEVERE, null, ex);
+            log.Log.writeErrorMessageToLog("Error in deleteWatch " +ex.getMessage());
             em.getTransaction().rollback();
         } finally {
             em.close();
@@ -130,8 +132,9 @@ public class WatchFacade {
             em.getTransaction().commit();
 
         } catch (Exception ex) {
-            Logger.getLogger(EventFacade.class.getName()).log(Level.SEVERE, null, ex);
+            log.Log.writeErrorMessageToLog("Error in add watch: " +ex.getMessage());
             em.getTransaction().rollback();
+            throw ex;
         } finally {
             em.close();
         }
@@ -167,7 +170,8 @@ public class WatchFacade {
             em.getTransaction().commit();
 
         } catch (Exception ex) {
-            System.out.println("Error: " + ex);
+            log.Log.writeErrorMessageToLog("Error in add Unavaible: " +ex.getMessage());
+            throw ex;
         } finally {
             em.close();
         }
@@ -201,7 +205,12 @@ public class WatchFacade {
                     watch = watche;
                 }
             }
-        } finally {
+        }
+        catch(Exception e){
+            log.Log.writeErrorMessageToLog("Error in getwatches for User: " +e.getMessage());
+            throw e;
+        }
+        finally {
             em.close();
         }
         return watch;

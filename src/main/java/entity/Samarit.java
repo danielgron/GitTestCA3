@@ -47,7 +47,7 @@ public class Samarit extends User {
     @JsonBackReference(value="watches-sam")
     private List<SamaritWatch> watches = new ArrayList();
     
-    @OneToMany(mappedBy = "samarit", cascade = {CascadeType.PERSIST, CascadeType.MERGE},targetEntity = SamaritOccupied.class)
+    @OneToMany(mappedBy = "samarit",fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE},targetEntity = SamaritOccupied.class)
     @JsonBackReference(value="occupied-sam")
     private List<OcupiedSlot> notAvail = new ArrayList();
     

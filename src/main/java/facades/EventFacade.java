@@ -46,7 +46,8 @@ public class EventFacade {
             Query q = em.createQuery("SELECT e FROM Event e");
             events = q.getResultList();
         } catch (Exception ex) {
-            log.Log.writeToLog("Exception get events" + ex);
+            log.Log.writeErrorMessageToLog("Exception get events" + ex);
+            throw ex;
         } finally {
             em.close();
         }
@@ -61,7 +62,8 @@ public class EventFacade {
             em.getTransaction().commit();
         } catch (Exception ex) {
             em.getTransaction().rollback();
-            log.Log.writeToLog("Exception create events" + ex);
+            log.Log.writeErrorMessageToLog("Exception create events" + ex);
+            throw ex;
         } finally {
             em.close();
         }
@@ -75,7 +77,8 @@ public class EventFacade {
         try {
             event = em.find(Event.class, id);
         } catch (Exception ex) {
-            log.Log.writeToLog("Exception get event" + ex);
+            log.Log.writeErrorMessageToLog("Exception get event" + ex);
+            throw ex;
         } finally {
             em.close();
         }
@@ -91,7 +94,8 @@ public class EventFacade {
             q.setParameter("end", endDate);
             events = q.getResultList();
         } catch (Exception ex) {
-            log.Log.writeToLog("Exception get events Date Range" + ex);
+            log.Log.writeErrorMessageToLog("Exception get events Date Range" + ex);
+            throw ex;
         } finally {
             em.close();
         }
@@ -162,7 +166,7 @@ public class EventFacade {
                 }
             }
         } catch (Exception ex) {
-            Log.writeToLog("Exception in Coordinator Facade getAvailable Resources: " + ex.getMessage());
+            Log.writeErrorMessageToLog("Exception in Coordinator Facade getAvailable Resources: " + ex.getMessage());
             throw ex;
         } finally {
             em.close();
@@ -194,8 +198,8 @@ public class EventFacade {
 
             }
         } catch (Exception ex) {
-            Log.writeToLog("Error when loading calenderEvent for Resourcet: " + res.getName());
-            Log.writeToLog(ex.getMessage());
+            Log.writeErrorMessageToLog("Error when loading calenderEvent for Resourcet: " + res.getName());
+            Log.writeErrorMessageToLog(ex.getMessage());
             throw ex;
 
         }

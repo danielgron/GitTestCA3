@@ -68,7 +68,7 @@ public class RequestService {
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getRequest(@PathParam("id") String id) {
+    public String getRequest(@PathParam("id") String id) throws JsonProcessingException {
         
         //TODO return proper representation object
         int idFromString = Integer.parseInt(id);
@@ -76,9 +76,9 @@ public class RequestService {
         try {
             return  mapper.writerWithDefaultPrettyPrinter().writeValueAsString(request);
         } catch (JsonProcessingException ex) {
-            Logger.getLogger(RequestService.class.getName()).log(Level.SEVERE, null, ex);
+            log.Log.writeErrorMessageToLog("Error REST get an Request: " +ex.getMessage());
+            throw ex;
         }
-        return "";
     }
     /**
      * PUT method for updating or creating an instance of RequestService

@@ -88,7 +88,7 @@ public class EventService {
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getSingleEvent(@PathParam("id") String id){
+    public String getSingleEvent(@PathParam("id") String id) throws JsonProcessingException{
       Event event = ef.getEvent(Integer.parseInt(id));
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -96,8 +96,8 @@ public class EventService {
             mapper.setDateFormat(df);
             return  mapper.writerWithDefaultPrettyPrinter().writeValueAsString(event);
         } catch (JsonProcessingException ex) {
-           log.Log.writeToLog("Exception When Creating JSON Object single event: " + ex);
-           return null;
+           log.Log.writeErrorMessageToLog("Exception When Creating JSON Object single event: " + ex);
+           throw ex;
         }
         
     }
