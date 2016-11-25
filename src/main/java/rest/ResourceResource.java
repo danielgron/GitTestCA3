@@ -75,7 +75,6 @@ private static ObjectMapper mapper = new ObjectMapper();
         
         
         
-        
         List<Resource> eventResources = ef.getEventResources(Integer.parseInt(eventId));
     try {
         return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(eventResources);
