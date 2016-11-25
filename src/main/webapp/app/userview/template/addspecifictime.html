@@ -12,7 +12,7 @@
             <label>Dato</label>
             <p class="input-group">
 
-                <input id="date" type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="atCtrl.watch.start" is-open="atCtrl.popup1.opened" datepicker-options="atCtrl.dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                <input id="date" type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-change="atCtrl.setDate()" ng-model="atCtrl.watch.start" is-open="atCtrl.popup1.opened" datepicker-options="atCtrl.dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
                 <span class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="atCtrl.open1()"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>  
@@ -36,6 +36,8 @@
                     <button ng-click="atCtrl.ok()" class="btn btn-primary"  ng-disabled="atCtrl.watch.start>atCtrl.watch.end"><i class="glyphicon glyphicon-floppy-disk"/> Tilføj dato</button>
                 </div>
             </div>
+            {{atCtrl.watch.start}}<br>
+            {{atCtrl.watch.end}}
         </div>
 
     </form>

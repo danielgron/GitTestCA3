@@ -1,53 +1,50 @@
 angular.module('myApp.usercalendar')
-        .controller('AddTimeDayController', function ($uibModalInstance) {
+        .controller('AddTimeDayController', function ($uibModalInstance,$scope) {
 
             //Bindable models
-            var $ctrl = this;
-            $ctrl.watch = {};
-            $ctrl.watch.start = new Date();
-            $ctrl.watch.end = new Date();
-            $ctrl.watch.start.setHours(16);
-            $ctrl.watch.start.setMinutes(0);
-            $ctrl.watch.end.setHours(22);
-            $ctrl.watch.end.setMinutes(0);
+            var $scope = this;
+            $scope.watch = {};
+            $scope.watch.start = new Date();
+            $scope.watch.end = new Date();
+            $scope.watch.start.setHours(16);
+            $scope.watch.start.setMinutes(0);
+            $scope.watch.end.setHours(22);
+            $scope.watch.end.setMinutes(0);
             //For timepicker
-            $ctrl.hstep = 1;
-            $ctrl.mstep = 5;
-            $ctrl.valid = ($ctrl.watch.start < $ctrl.watch.end);
+            $scope.hstep = 1;
+            $scope.mstep = 5;
 
 
-            $ctrl.popup1 = {
+            $scope.popup1 = {
                 opened: false
             };
 
-            $ctrl.popup2 = {
+            $scope.popup2 = {
                 opened: false
             };
 
 
-            $ctrl.open1 = function () {
-                $ctrl.popup1.opened = true;
+            $scope.open1 = function () {
+                $scope.popup1.opened = true;
             };
 
-            $ctrl.setDate = function (year, month, day) {
-                var tempDate = new Date();
-                tempDate = $ctrl.watch.start;
-                $ctrl.watch.watch = new Date(year, month, day);
-                $ctrl.watch.start.setHours(tempDate.getHours());
-                $ctrl.watch.start.setMinutes(tempDate.getMinutes());
-                tempDate = $ctrl.watch.end;
-                $ctrl.watch.end = $ctrl.date;
-                $ctrl.watch.end.setHours(tempDate.getHours());
-                $ctrl.watch.end.setMinutes(tempDate.getMinutes());
+            $scope.setDate = function (year, month, day) {
+               
+              
+                
+                tempDate1 = $scope.watch.end;
+                $scope.watch.end = $scope.watch.start;
+                $scope.watch.end.setHours(tempDate1.getHours());
+                $scope.watch.end.setMinutes(tempDate1.getMinutes());
 
             };
-            $ctrl.inlineOptions = {
+            $scope.inlineOptions = {
                 customClass: getDayClass,
                 minDate: new Date(),
                 showWeeks: true
             };
 
-            $ctrl.dateOptions = {
+            $scope.dateOptions = {
                 formatYear: 'yy',
                 maxDate: new Date(2020, 5, 22),
                 minDate: new Date(),
@@ -60,19 +57,19 @@ angular.module('myApp.usercalendar')
                 if (mode === 'day') {
                     var dayToCheck = new Date(date).setHours(0, 0, 0, 0);
 
-                    for (var i = 0; i < $ctrl.watch.length; i++) {
-                        var currentDay = new Date($ctrl.watch[i].date).setHours(0, 0, 0, 0);
+                    for (var i = 0; i < $scope.watch.length; i++) {
+                        var currentDay = new Date($scope.watch[i].date).setHours(0, 0, 0, 0);
 
                         if (dayToCheck === currentDay) {
-                            return $ctrl.watch[i].status;
+                            return $scope.watch[i].status;
                         }
                     }
                 }
                 return '';
             }
 
-            $ctrl.ok = function () {
-                $uibModalInstance.close($ctrl.watch);
+            $scope.ok = function () {
+                $uibModalInstance.close($scope.watch);
             };
 
 
