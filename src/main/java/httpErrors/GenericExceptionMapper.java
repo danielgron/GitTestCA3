@@ -10,7 +10,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
-import log.Log;
 
 @Provider
 public class GenericExceptionMapper implements ExceptionMapper<Exception> {
@@ -22,7 +21,6 @@ public class GenericExceptionMapper implements ExceptionMapper<Exception> {
 
   @Override
   public Response toResponse(Exception ex) {
-    Log.writeToLog(ex.getMessage());
     JsonObject error = new JsonObject();
     JsonObject errorDetail = new JsonObject();
     int statusCode = 500;

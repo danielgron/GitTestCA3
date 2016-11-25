@@ -14,9 +14,13 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.google.gson.Gson;
 import entity.watches.SamaritOccupied;
 import facades.WatchFacade;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -24,9 +28,12 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
+import util.JacksonFilter;
 import util.WatchConverter;
+import javax.ws.rs.container.ContainerRequestContext;
 
 /**
  * REST Web Service
@@ -57,26 +64,22 @@ public class WatchService {
     @Produces(MediaType.APPLICATION_JSON)
     public String setWatch(@PathParam("id") String id, String sWatch) throws Exception {
         SamaritOccupied sw = null;
+        sw = wf.addUnavailForWatch(sw);
+
+        String json = "";
 
         try {
             mapper = new ObjectMapper();
             sw = mapper.readValue(sWatch, SamaritOccupied.class);
             sw.getSamarit().setUserName(id);
-        } catch (Exception ex) {
-            log.Log.writeErrorMessageToLog("Error in Set Watch REST " + ex.getMessage());
-            throw ex;
-        }
 
-        sw = wf.addUnavailForWatch(sw);
-
-        String json;
-        try {
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             mapper.setDateFormat(df);
             SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("samarit");
             FilterProvider filters = new SimpleFilterProvider().addFilter("samaritFilter", theFilter);
+
             json = mapper.writer(filters).writeValueAsString(sw);
-        } catch (JsonProcessingException ex) {
+        } catch (Exception ex) {
             log.Log.writeErrorMessageToLog("Error in Set Watch REST " + ex.getMessage());
             throw ex;
         }
