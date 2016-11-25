@@ -48,10 +48,7 @@ angular.module('myApp.calendar', ['ngRoute', 'ui.calendar'])
                 };
                 
                 $scope.dayClick = function (date, jsEvent, view, cell) {
-                    alert('wrong calender');
-                    angular.forEach(function (date) {
-                        window.console.log(date);
-                    });
+                    
 
 
                 };

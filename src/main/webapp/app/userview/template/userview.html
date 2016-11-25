@@ -1,16 +1,29 @@
-
-
 <div class="container">
     <section id="directives-calendar" ng-controller="UserCalendarCtrl">
-
+        
+        <div id="fullCalModal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
+                        <h4 id="modalTitle" class="modal-title"></h4>
+                    </div>
+                    <div id="modalBody" class="modal-body"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button class="btn btn-primary"><a id="eventUrl" target="_blank">Event Page</a></button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="well col-md-12 bs-loading-container" >
 
             <div class="btn-group-vertical  col-md-2">
-                <button type="button" ng-click="" class="btn btn-success text-left"><i class="glyphicon glyphicon-edit"/> Rediger</button>
-                <button type="button" ng-click="setZ()" class="btn btn-success text-left"><i class="glyphicon glyphicon-edit"/> Set z frem</button>
-                <button type="button" ng-click="setZnormal()" class="btn btn-success text-left"><i class="glyphicon glyphicon-edit"/> sæt z tilbage</button>
+                <button type="button" ng-click="open()" class="btn btn-success text-left"><i class="glyphicon glyphicon-edit"/>Tilføj tidsrum</button>
+                <button type="button" ng-click="open()" class="btn btn-success text-left"><i class="glyphicon glyphicon-edit"/>Tilføj interval*</button>
 
             </div>
+
             <div class="col-md-10">
 
                 <div class="alert-success calAlert" ng-show="alertMessage != undefined && alertMessage != ''">
@@ -19,19 +32,21 @@
                 <div class="btn-toolbar">
                     <p class="pull-right lead">Min kalender</p>
                     <div class="btn-group">
-                        <button type="button" ng-click="listEvents()" class="btn btn-primary"><i class="glyphicon glyphicon-list"/> List vagter</button>
+                        <button type="button" ng-click="changeView('listMonth', 'userCalender')" class="btn btn-primary"><i class="glyphicon glyphicon-list"/> List vagter</button>
                         <button class="btn btn-success" ng-click="changeView('agendaDay', 'userCalender')">Dag</button>
                         <button class="btn btn-success" ng-click="changeView('agendaWeek', 'userCalender')">Uge</button>
                         <button class="btn btn-success" ng-click="changeView('month', 'userCalender')">Måned</button>
                     </div>
 
                 </div>
-              
-                    <div  data-tap-disabled="true" class="calendar" ng-model="eventSources1" typeId="{{avail}}" calendar="userCalender" ui-calendar="uiConfig.calendar" bs-loading-overlay></div>
-          
+
+                <div  data-tap-disabled="true" class="calendar" ng-model="eventSources1" typeId="{{avail}}" calendar="userCalender" ui-calendar="uiConfig.calendar" bs-loading-overlay></div>
+
                 UserName: {{user.userName}}
             </div>
         </div>
 </div>
+
+
 
 
