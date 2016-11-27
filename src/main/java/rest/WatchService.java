@@ -64,17 +64,17 @@ public class WatchService {
     @Produces(MediaType.APPLICATION_JSON)
     public String setWatch(@PathParam("id") String id, String sWatch) throws Exception {
         SamaritOccupied sw = null;
-        sw = wf.addUnavailForWatch(sw);
-
+        mapper = new ObjectMapper();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        mapper.setDateFormat(df);
         String json = "";
 
         try {
-            mapper = new ObjectMapper();
+
             sw = mapper.readValue(sWatch, SamaritOccupied.class);
             sw.getSamarit().setUserName(id);
+            sw = wf.addUnavailForWatch(sw);
 
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-            mapper.setDateFormat(df);
             SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("samarit");
             FilterProvider filters = new SimpleFilterProvider().addFilter("samaritFilter", theFilter);
 
