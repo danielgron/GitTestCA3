@@ -6,8 +6,11 @@
 package entity.watches;
 
 import entity.Event;
+import entity.Eventable;
+import entity.OcupiedSlot;
 import entity.Resource;
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,16 +23,16 @@ import javax.persistence.ManyToOne;
  * @author danie
  */
 @Entity
-public class ResourceWatch implements Serializable {
+public class ResourceWatch implements Serializable, OcupiedSlot, Eventable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
+
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Event event;
-    
+
     @ManyToOne
     private Resource resource;
 
@@ -66,8 +69,37 @@ public class ResourceWatch implements Serializable {
         return "entity.watches.ResourceWatch[ id=" + id + " ]";
     }
 
-    public void setResource(Resource aThis) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void setResource(Resource resource) {
+        this.resource = resource;
     }
-    
+
+    @Override
+    public Event getEvent() {
+        return event;
+    }
+
+    @Override
+    public void setEvent(Event event) {
+        this.event = event;
+    }
+
+    @Override
+    public Date getStart() {
+        return event.getStart();
+    }
+
+    @Override
+    public Date getEnd() {
+        return event.getEnd();
+    }
+
+    @Override
+    public boolean isAllDay() {
+        return event.isAllDay();
+    }
+
+    public Resource getResource() {
+        return resource;
+    }
+
 }

@@ -20,16 +20,16 @@
 
 </div>
         
-        <div class="col-lg-6">
+        <div class="col-lg-6" bs-loading-overlay bs-loading-overlay-reference-id="samarit">
             
             Ledige Samaritter:
             
-            <table class="table">
+            <table class="table" >
                 <thead>
                     <tr>
                         <th>Navn</th> 
                         <th> Afdeling</th> 
-                        <th> UddannelsesNivauer</th> 
+                        <th> Uddannelses Nivauer</th> 
                         <th> Funktioner</th> 
                         
                     </tr>
@@ -49,8 +49,8 @@
             </table>
             
         </div>
-        <div class="col-lg-6">
-            <resource-directive event={{ctrl.eventid}}></resource-directive>
+        <div class="col-lg-6" bs-loading-overlay bs-loading-overlay-reference-id="ressource">
+            <resource-directive event={{ctrl.eventid}} ></resource-directive>
         </div>
         
         

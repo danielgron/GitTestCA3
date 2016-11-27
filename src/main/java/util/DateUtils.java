@@ -30,6 +30,6 @@ public class DateUtils {
   
   
   public static boolean dateBetween(Date toCheck, Date start, Date end) {
-        return (toCheck.after(start) && toCheck.before(end));
+        return ((toCheck.after(start) || toCheck.equals(start)) && ( toCheck.before(end)|| toCheck.equals(start)));
     }
 }

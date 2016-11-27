@@ -62,29 +62,26 @@ public class WatchService {
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String setWatch(@PathParam("id") String id, String sWatch) {
+    public String setWatch(@PathParam("id") String id, String sWatch) throws Exception {
         SamaritOccupied sw = null;
+        sw = wf.addUnavailForWatch(sw);
+
+        String json = "";
 
         try {
             mapper = new ObjectMapper();
             sw = mapper.readValue(sWatch, SamaritOccupied.class);
             sw.getSamarit().setUserName(id);
-        } catch (IOException ex) {
-            Logger.getLogger(WatchService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        sw = wf.addUnavailForWatch(sw);
 
-        String json = "";
-        try {
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             mapper.setDateFormat(df);
             SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("samarit");
             FilterProvider filters = new SimpleFilterProvider().addFilter("samaritFilter", theFilter);
 
             json = mapper.writer(filters).writeValueAsString(sw);
-        } catch (JsonProcessingException ex) {
-            Logger.getLogger(WatchService.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            log.Log.writeErrorMessageToLog("Error in Set Watch REST " + ex.getMessage());
+            throw ex;
         }
         return json;
 
@@ -93,7 +90,7 @@ public class WatchService {
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getWatchesForSamarit(@PathParam("id") String id) {
+    public String getWatchesForSamarit(@PathParam("id") String id) throws JsonProcessingException {
         //  String token = request.getHeaderString("Authorization").substring("Bearer ".length());
 
         List<SamaritOccupied> watches = null;
@@ -107,7 +104,8 @@ public class WatchService {
 
             json = mapper.writer(filters).writeValueAsString(watches);
         } catch (JsonProcessingException ex) {
-            Logger.getLogger(WatchService.class.getName()).log(Level.SEVERE, null, ex);
+            log.Log.writeErrorMessageToLog("Error in get Watch for samarit REST " + ex.getMessage());
+            throw ex;
         }
         return json;
     }
@@ -115,7 +113,7 @@ public class WatchService {
     @Path("{date}/{userName}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getWatchesForSamarit(@PathParam("date") String date, @PathParam("userName") String userName) {
+    public String getWatchesForSamarit(@PathParam("date") String date, @PathParam("userName") String userName) throws JsonProcessingException {
         //  String token = request.getHeaderString("Authorization").substring("Bearer ".length());
 
         SamaritOccupied watchForDate;
@@ -129,7 +127,8 @@ public class WatchService {
 
             json = mapper.writer(filters).writeValueAsString(watchForDate);
         } catch (JsonProcessingException ex) {
-            Logger.getLogger(WatchService.class.getName()).log(Level.SEVERE, null, ex);
+            log.Log.writeErrorMessageToLog("Error in Get Watch REST " + ex.getMessage());
+            throw ex;
         }
         return json;
     }

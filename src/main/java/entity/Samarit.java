@@ -7,11 +7,9 @@ package entity;
 
 import entity.watches.SamaritOccupied;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import entity.watches.SamaritCalendar;
 import entity.watches.SamaritWatch;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 

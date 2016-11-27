@@ -21,6 +21,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
 
             $scope.user = {};
             $scope.user = UserFactory.getCreatedUser();
+                        
 
             //****Event models and sources****//
             //Declaring main eventsource
@@ -36,6 +37,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
             $scope.go = function (path) {
                 $location.path(path);
             };
+            
             //****The calender config****//
             $scope.uiConfig = {
                 calendar: {

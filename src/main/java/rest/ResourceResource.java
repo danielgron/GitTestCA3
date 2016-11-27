@@ -62,7 +62,7 @@ private static ObjectMapper mapper = new ObjectMapper();
     try {
         return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(eventResources);
     } catch (JsonProcessingException ex) {
-        Logger.getLogger(ResourceResource.class.getName()).log(Level.SEVERE, null, ex);
+        log.Log.writeErrorMessageToLog("ERROR rest getAvailable: " + ex.getMessage());
         throw ex;
     }
     }
@@ -73,13 +73,13 @@ private static ObjectMapper mapper = new ObjectMapper();
     public String changeResShift(@PathParam("eventId") String eventId, @PathParam("resId") String resId) throws JsonProcessingException {
         
         
+        cf.toggleResource(Integer.parseInt(eventId), Integer.parseInt(resId));
         
         
-        List<Resource> eventResources = ef.getEventResources(Integer.parseInt(eventId));
     try {
-        return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(eventResources);
+        return mapper.writerWithDefaultPrettyPrinter().writeValueAsString("");
     } catch (JsonProcessingException ex) {
-        Logger.getLogger(ResourceResource.class.getName()).log(Level.SEVERE, null, ex);
+        log.Log.writeErrorMessageToLog("Error REST Change Res Shift: " + ex.getMessage());
         throw ex;
     }
     }

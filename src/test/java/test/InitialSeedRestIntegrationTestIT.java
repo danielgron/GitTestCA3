@@ -9,19 +9,20 @@ import java.net.MalformedURLException;
 import javax.servlet.ServletException;
 import org.apache.catalina.LifecycleException;
 import static org.hamcrest.Matchers.*;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import test.utils.EmbeddedTomcat;
 
-public class InitialSeedRestIntegrationTest {
+public class InitialSeedRestIntegrationTestIT {
 
   private static final int SERVER_PORT = 9999;
   private static final String APP_CONTEXT = "/vagtmanager";
   private static EmbeddedTomcat tomcat;
-  private String insertUserData = "{\"department\":{\"nameOfDepartment\":\"København\"},\"email\":\"Testmand@gmail.com\",\"firstName\":\"gklwlægkw\",\"lastName\":\"klægwklæq\",\"adresse\":\"gwælkl\",\"zip\":\"ægwqlkæ\",\"city\":\"lkægwe\",\"phone\":\"klæwglkæw\",\"redCroosLevel\":\"wgæklwglkæ\",\"medicalLevel\":\"wglækwg\",\"driverLevel\":\"wgælwklwkæg\"}";
+  private String insertUserData = "{\"department\":{\"nameOfDepartment\":\"København\"},\"userName\":\"Testmand@gmail.com\",\"firstName\":\"gklwlægkw\",\"lastName\":\"klægwklæq\",\"adresse\":\"gwælkl\",\"zip\":\"ægwqlkæ\",\"city\":\"lkægwe\",\"phone\":\"klæwglkæw\",\"redCroosLevel\":\"wgæklwglkæ\",\"medicalLevel\":\"wglækwg\",\"driverLevel\":\"wgælwklwkæg\"}";
   
-  public InitialSeedRestIntegrationTest() {
+  public InitialSeedRestIntegrationTestIT() {
   }
   private static String securityToken;
 
@@ -58,7 +59,7 @@ public class InitialSeedRestIntegrationTest {
   public static void after() throws ServletException, MalformedURLException, LifecycleException {
     tomcat.stop();
   }
-
+      
   @Test
   public void testRestNoAuthenticationRequired() {
     given()
@@ -128,5 +129,24 @@ public class InitialSeedRestIntegrationTest {
               .post("/api/coordinator").then()
               .statusCode(403); // Means that we are not authorized to preform this request
   }
+  
+  @Test
+  public void provokeJSONParsingException(){
+      String jsonToFail = "\"{\"title\":\"unavail\",\"samarit\":{\"userName\":\"coordinator\"},\"start\":\"2016-018415-08\",\"hehe\":ture,\"color\":\"red\"}\"";
+      /*
+      This JSON Doesn't fit to the JSON needed on the
+      server, and the server should then respond with a JSON error
+      */
+      login("coordinator","test");
+      given()
+              .contentType("application/json")
+              .header("Authorization", "Bearer " + securityToken)
+              .body(jsonToFail)
+      .when()
+              .post("/api/watch/1")
+      .then()
+              .body("error.code", equalTo(500),
+                      "error.message", isA(String.class) );
+          }
   
   }
