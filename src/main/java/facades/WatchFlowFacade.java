@@ -19,13 +19,18 @@ import javax.persistence.Query;
  */
 public class WatchFlowFacade {
     
-    public List<StaffedEvent> getAllStaffedEventsWithStatus(Status status){
+    /**
+     * Gets all the StaffedEventWith the
+     * @param status
+     * @param d
+     * @return
+     */
+    public List<StaffedEvent> getAllStaffedEventsWithStatus(Status status, Department d){
         EntityManager em = EntityConnector.getEntityManager();
         List<StaffedEvent> allwithThatStatus;
         try {
             Query q = em.createQuery("Select s FROM StaffedEvent s where s.status = :status AND s.department = :dept ");
             q.setParameter("status", status);
-            Department d = em.find(Department.class, "København");
             q.setParameter("dept", d);
             allwithThatStatus = q.getResultList();
         } catch (Exception e) {

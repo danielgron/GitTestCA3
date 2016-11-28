@@ -7,6 +7,7 @@ package rest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import entity.Department;
 import entity.StaffedEvent;
 import enums.Status;
 import facades.WatchFlowFacade;
@@ -14,9 +15,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Request;
 
 /**
  * REST Web Service
@@ -28,7 +31,7 @@ import javax.ws.rs.*;
 public class WatchFlowService {
 
     @Context
-    private UriInfo context;
+    private HttpServletRequest context;
     
     
     WatchFlowFacade wff;
@@ -42,12 +45,13 @@ public class WatchFlowService {
     
     @GET
     @Path("events/{status}")
-    public String getStaffedEventsFromStatus(@PathParam("status") String statusString) throws JsonProcessingException{
+    public String getStaffedEventsFromStatus(@PathParam("status") String statusString) throws Exception{
        ObjectMapper mapper = new ObjectMapper();
+       Department d = util.DepartmentDecoder.getDepartmentFromToken(context);
        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm a z");
        mapper.setDateFormat(df);
        Status statusFromParam = Status.valueOf(statusString);
-       List<StaffedEvent> allEventsWithStatus =  wff.getAllStaffedEventsWithStatus(statusFromParam);
+       List<StaffedEvent> allEventsWithStatus =  wff.getAllStaffedEventsWithStatus(statusFromParam, d);
        return mapper.writeValueAsString(allEventsWithStatus);
     }
 }

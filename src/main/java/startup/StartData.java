@@ -37,10 +37,10 @@ import log.Log;
 public class StartData {
 
     public static void main(String[] args) {
-        Persistence.generateSchema("pu_local", null);
-        StartData sd = new StartData();
-        insertTestData();
-        sd.insertRandomData();
+//        Persistence.generateSchema("pu_local", null);
+//        StartData sd = new StartData();
+//        insertTestData();
+//        sd.insertRandomData();
         createStaffedEvent();
         
     }
