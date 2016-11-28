@@ -21,7 +21,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
 
             $scope.user = {};
             $scope.user = UserFactory.getCreatedUser();
-                        
+
 
             //****Event models and sources****//
             //Declaring main eventsource
@@ -37,7 +37,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
             $scope.go = function (path) {
                 $location.path(path);
             };
-            
+
             //****The calender config****//
             $scope.uiConfig = {
                 calendar: {
@@ -73,11 +73,12 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
 
                     $scope.setUnavailForWatch(event.start);
                 } else if (!event.allDay) {
-                   
-                };
-               
+
+                }
+                ;
+
             };
-          
+
 
             $scope.eventAfterAllRender = function () {
                 bsLoadingOverlayService.stop();
@@ -122,7 +123,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
                 var watch = {};
                 //Start spinner before restcall
                 bsLoadingOverlayService.start();
-
+                
                 userCalendarFactory.getWatch(dateString, UserFactory.getUserName()).then(function (successResponse) {
 
                     watch = successResponse.data;
@@ -152,6 +153,8 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
                         $scope.watchList.push(watch);
                         bsLoadingOverlayService.stop();
                     }, function (response) {
+                        bsLoadingOverlayService.stop();
+
                     });
                 };
             };

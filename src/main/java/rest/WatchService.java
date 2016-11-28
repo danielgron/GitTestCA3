@@ -59,26 +59,28 @@ public class WatchService {
     }
 
     @POST
-    @Path("{id}")
+    @Path("{userName}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String setWatch(@PathParam("id") String id, String sWatch) throws Exception {
+    public String setWatch(@PathParam("userName") String userName, String sWatch) throws Exception {
         SamaritOccupied sw = null;
-        sw = wf.addUnavailForWatch(sw);
+        mapper = new ObjectMapper();
 
         String json = "";
 
         try {
-            mapper = new ObjectMapper();
-            sw = mapper.readValue(sWatch, SamaritOccupied.class);
-            sw.getSamarit().setUserName(id);
 
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-            mapper.setDateFormat(df);
             SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("samarit");
             FilterProvider filters = new SimpleFilterProvider().addFilter("samaritFilter", theFilter);
-
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            mapper.setDateFormat(df);
+            
+            sw = mapper.readValue(sWatch, SamaritOccupied.class);
+            sw.getSamarit().setUserName(userName);
+            sw = wf.addUnavailForWatch(sw);
+            
             json = mapper.writer(filters).writeValueAsString(sw);
+
         } catch (Exception ex) {
             log.Log.writeErrorMessageToLog("Error in Set Watch REST " + ex.getMessage());
             throw ex;
