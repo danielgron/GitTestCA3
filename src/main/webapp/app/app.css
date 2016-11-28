@@ -69,5 +69,9 @@ ol.list > li:before {
 }
 
 #overLay {
-    z-index: 0;
+    z-index: -1;
+}
+
+#view {
+    z-index: 10;
 }

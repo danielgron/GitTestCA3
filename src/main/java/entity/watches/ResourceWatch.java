@@ -6,6 +6,7 @@
 package entity.watches;
 
 import entity.Event;
+import entity.Eventable;
 import entity.OcupiedSlot;
 import entity.Resource;
 import java.io.Serializable;
@@ -22,7 +23,7 @@ import javax.persistence.ManyToOne;
  * @author danie
  */
 @Entity
-public class ResourceWatch implements Serializable, OcupiedSlot {
+public class ResourceWatch implements Serializable, OcupiedSlot, Eventable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -72,10 +73,12 @@ public class ResourceWatch implements Serializable, OcupiedSlot {
         this.resource = resource;
     }
 
+    @Override
     public Event getEvent() {
         return event;
     }
 
+    @Override
     public void setEvent(Event event) {
         this.event = event;
     }

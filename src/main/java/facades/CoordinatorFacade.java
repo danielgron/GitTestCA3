@@ -7,6 +7,7 @@ package facades;
 
 import entity.Department;
 import entity.Event;
+import entity.Eventable;
 import entity.OcupiedSlot;
 import entity.Resource;
 import entity.Samarit;
@@ -122,7 +123,7 @@ public class CoordinatorFacade {
 
     public List<WatchFunction> getWatchFunctionsFromDepartment(String department) {
         List<WatchFunction> list = null;
-            EntityManager em = EntityConnector.getEntityManager();
+        EntityManager em = EntityConnector.getEntityManager();
         try {
             Query q = em.createQuery("select w from WatchFunction w where w.department.nameOfDepartment LIKE :dept", WatchFunction.class);
             q.setParameter("dept", department);
@@ -130,32 +131,29 @@ public class CoordinatorFacade {
         } catch (Exception e) {
             log.Log.writeErrorMessageToLog("Error" + e.getMessage());
             throw e;
-        }
-        finally{
+        } finally {
             em.close();
         }
         return list;
     }
 
     public WatchFunction createNewFunctionForDepartment(WatchFunction watchFunction) {
-       EntityManager em = EntityConnector.getEntityManager();
-       try{
-           em.getTransaction().begin();
-           em.persist(watchFunction);
-           em.getTransaction().commit();
-       }
-       catch(Exception e){
-           log.Log.writeErrorMessageToLog("Error in Create Function: " + e);
-           throw e;
-       }
-       finally{
-           em.close();
-       }
-       return watchFunction;
+        EntityManager em = EntityConnector.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(watchFunction);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            log.Log.writeErrorMessageToLog("Error in Create Function: " + e);
+            throw e;
+        } finally {
+            em.close();
+        }
+        return watchFunction;
     }
-    
+
     public void toggleResource(int eventId, int resId) {
-        
+
         Event e;
         EntityManager em = EntityConnector.getEntityManager();
         em.getEntityManagerFactory().getCache().evictAll(); // IMPORTANT!!! This Clears the Cache of the JPA!
@@ -165,42 +163,44 @@ public class CoordinatorFacade {
             // Get the event in question
             e = em.find(Event.class, eventId);
             // Get the resources registered for the event
-            List<ResourceWatch> resourceWatchs = e.getResourceWatchs();
-            
+            List<ResourceWatch> eventResourceWatchs = e.getResourceWatchs();
+            // Get resource from id
+            Resource r = em.find(Resource.class, resId);
+            // Iterate
+            List<OcupiedSlot> notAvail = r.getNotAvail();
+
             boolean isThere = false;
-            ResourceWatch toRemove = null;
-            // Iterate over the 
-            for (ResourceWatch resourceWatch : resourceWatchs) {  // Det kunne godt være her der er en fejl
-                if (resourceWatch.getEvent() == e){
-                    isThere=true;
-                    toRemove=resourceWatch;
+            for (OcupiedSlot watch : notAvail) {
+                if (((ResourceWatch) watch).getEvent() == e) {
+                    isThere = true;
                 }
             }
+
             // If already present - remove the shift
             if (isThere) {
-                em.remove(toRemove);
-                //em.persist(e);
-            }
-            // Else create it and add it
-            else{
+                Query q = em.createQuery("delete from ResourceWatch rw where (rw.resource.id =:resId AND rw.event.id =:eventId)", WatchFunction.class);
+                q.setParameter("resId", resId);
+                q.setParameter("eventId", eventId);
+                q.executeUpdate();
+            } // Else create it and add it
+            else {
                 ResourceWatch resWatch = new ResourceWatch();
                 Resource res = em.find(Resource.class, resId);
-                
+
                 resWatch.setEvent(e);
                 resWatch.setResource(res);
-            resourceWatchs.add(resWatch);
-            em.persist(resWatch);
-        }
-                em.getTransaction().commit();
+                eventResourceWatchs.add(resWatch);
+                em.persist(resWatch);
+            }
+            em.getTransaction().commit();
 
-                    
         } catch (Exception ex) {
             Log.writeErrorMessageToLog("Exception in Coordinator Facade toggleResource: " + ex.getMessage());
             throw ex;
         } finally {
             em.close();
         }
-        
+
     }
 
 }

@@ -65,10 +65,15 @@ public class WatchService {
     public String setWatch(@PathParam("userName") String userName, String sWatch) throws Exception {
         SamaritOccupied sw = null;
         mapper = new ObjectMapper();
-
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        mapper.setDateFormat(df);
         String json = "";
 
         try {
+
+            sw = mapper.readValue(sWatch, SamaritOccupied.class);
+            sw.getSamarit().setUserName(id);
+            sw = wf.addUnavailForWatch(sw);
 
             SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("samarit");
             FilterProvider filters = new SimpleFilterProvider().addFilter("samaritFilter", theFilter);
