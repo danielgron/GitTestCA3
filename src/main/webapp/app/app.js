@@ -21,7 +21,8 @@ angular.module('myApp', [
     'myApp.resources',
     'myApp.usercalendar',
     'myApp.singleevent',
-    'angularMoment'
+    'angularMoment',
+    'myApp.watchflow'
 ])
         .config(['$routeProvider', function ($routeProvider) {
                 $routeProvider.otherwise({redirectTo: '/view1'});

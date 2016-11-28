@@ -14,13 +14,9 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.google.gson.Gson;
 import entity.watches.SamaritOccupied;
 import facades.WatchFacade;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -28,12 +24,9 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
-import util.JacksonFilter;
 import util.WatchConverter;
-import javax.ws.rs.container.ContainerRequestContext;
 
 /**
  * REST Web Service
@@ -72,12 +65,11 @@ public class WatchService {
         try {
 
             sw = mapper.readValue(sWatch, SamaritOccupied.class);
-            sw.getSamarit().setUserName(id);
+            sw.getSamarit().setUserName(userName);
             sw = wf.addUnavailForWatch(sw);
 
             SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("samarit");
             FilterProvider filters = new SimpleFilterProvider().addFilter("samaritFilter", theFilter);
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             mapper.setDateFormat(df);
             
             sw = mapper.readValue(sWatch, SamaritOccupied.class);
