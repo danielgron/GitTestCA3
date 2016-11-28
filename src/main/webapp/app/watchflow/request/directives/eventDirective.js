@@ -1,13 +1,13 @@
 angular.module('myApp.watchflow')
 
-        .directive('addedInfo', function () {
+        .directive('event', function () {
 
             return {
-                controller: 'AddedInfoController',
+                controller: 'eventController',
                 controllerAs: 'ctrl',
                 restrict: 'E',
                 replace: 'true',
-                templateUrl: 'app/watchflow/template/addedInfo.html'
+                templateUrl: 'app/watchflow/template/event.html'
 
             };
         })

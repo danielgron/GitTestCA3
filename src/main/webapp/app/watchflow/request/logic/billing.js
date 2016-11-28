@@ -1,6 +1,6 @@
 angular.module('myApp.watchflow')
 
-        .controller('AddedInfoController',[function(){
+        .controller('BillingController',[function(){
                 
                 
         }])
