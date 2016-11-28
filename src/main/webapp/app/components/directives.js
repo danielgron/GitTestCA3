@@ -14,15 +14,12 @@ angular.module('myApp.directives', []).
     };
   })
   .directive('resourceDirective', function() {
-      console.log("Struck directive");
   return {
     restrict: 'E',
     templateUrl: 'app/coordinator/template/resources.html',
     scope:{
     event: '@'
     }
-    
-
   };
 })
   ;

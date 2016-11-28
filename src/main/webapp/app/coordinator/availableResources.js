@@ -27,6 +27,20 @@ angular.module('myApp.resources', [])
                         console.log("Error" + error);
                     };
                 }
+                function getPickedResources() {
+                    bsLoadingOverlayService.start({referenceId: "ressource"});
+
+                    ResourceFactory.getAvailableResources()
+                            .then(function (response) {
+                                self.availableResources = response.data;
+                                bsLoadingOverlayService.stop({referenceId: "ressource"});
+
+                            }), function (error) {
+                        bsLoadingOverlayService.stop({referenceId: "ressource"});
+
+                        console.log("Error" + error);
+                    };
+                }
                 getAvailableResources();
 
                 self.changeResource = function (res) {
