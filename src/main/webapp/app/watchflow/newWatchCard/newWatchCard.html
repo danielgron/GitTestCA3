@@ -11,8 +11,8 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="shift in ctrl.shifts">
-            <td>{{shift.name}}</td>
+        <tr ng-repeat="shift in ctrl.shifts" ng-click="ctrl.go(shift)">
+            <td style="color: blue; cursor: pointer">{{shift.name}}</td>
             <td>{{shift.start}}</td>
         </tr>
     </tbody>

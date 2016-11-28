@@ -2,9 +2,9 @@ angular.module('myApp.watchflow')
         .controller('newWatchCardController', watchCardController);
 
 
-watchCardController.$inject = ['newWatchCardFactory'];
+watchCardController.$inject = ['newWatchCardFactory', '$location'];
 
-function watchCardController(newWatchCardFactory) {
+function watchCardController(newWatchCardFactory, $location) {
 
 
     var self = this;
@@ -12,6 +12,11 @@ function watchCardController(newWatchCardFactory) {
     self.hello = "Hello World";
     self.shifts = [];
     self.getShifts = getShifts;
+    self.go = go;
+    
+    
+    
+    // TO Do when Entering////
     self.getShifts();
 
 
@@ -25,7 +30,13 @@ function watchCardController(newWatchCardFactory) {
         });
         
         
+        
     }
+    
+     function go(shift){
+         newWatchCardFactory.setShift(shift);
+         $location.path("/singleNewWatchCard");
+     };
 
 }
 

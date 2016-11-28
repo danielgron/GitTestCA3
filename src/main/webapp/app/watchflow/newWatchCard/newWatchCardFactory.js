@@ -5,9 +5,12 @@ angular.module('myApp.watchflow')
 
 
 function watchFactory($http){
+    var clickedShift;
     
     var service = {
-        loadEvents: loadEvents
+        loadEvents: loadEvents,
+        getClickedShift : getClickedShift,
+        setShift: setShift
     };
     
     return service;
@@ -16,6 +19,16 @@ function watchFactory($http){
     function loadEvents(){
        return $http.get("api/watchflow/events/ReadyToCreate");
     };
+    
+    function getClickedShift(){
+        return clickedShift;
+    }
+    
+    function setShift(shift){
+        clickedShift = shift;
+    }
+    
+    
 };
 
 
