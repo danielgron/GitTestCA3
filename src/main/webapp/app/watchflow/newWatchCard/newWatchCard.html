@@ -1,0 +1,20 @@
+
+<h3>New WatchCard Template</h3>
+
+<h2>{{ctrl.hello}}</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th> VagtKort OverSkrift </th>
+            <th> Adresse</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="shift in ctrl.shifts">
+            <td>{{shift.name}}</td>
+            <td>{{shift.start}}</td>
+        </tr>
+    </tbody>
+
+</table>
