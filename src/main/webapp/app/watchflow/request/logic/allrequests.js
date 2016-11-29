@@ -10,6 +10,14 @@ angular.module('myApp.watchflow')
         .Factory('requestFactory', requestFactory);
 
 requestFactory.$inject = ['$inject'];
+
 function requestFactory($http){
-    
+            var getRequests = function getRequests() {
+                return $http.get("api/Request/");
+            };
+           
+
+            return {
+                getAvailableRequests: getRequests
+            };
 }
