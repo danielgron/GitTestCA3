@@ -264,6 +264,7 @@ public class StartData {
         i.setCvr("87654321");
         i.setName("John Doe");
         return i;
+    }
     private static void createStaffedEvent() {
         EntityManager em = EntityConnector.getEntityManager();
         try {
