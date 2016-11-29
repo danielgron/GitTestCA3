@@ -6,6 +6,7 @@
 package facades;
 
 import entity.Contact;
+import entity.Department;
 import entity.Invoice;
 import entity.Request;
 import entityconnection.EntityConnector;
@@ -84,6 +85,14 @@ public class RequestFacade {
             em.close();
         }
         return request;
+    }
+
+    public List<Request> getRequests(Department d) {
+        EntityManager em = EntityConnector.getEntityManager();
+        Query q = em.createQuery("SELECT r FROM Request r where r.department.nameOfDepartment=:dept");
+        q.setParameter("dept", d.getNameOfDepartment());
+        List resultList = q.getResultList();
+        return resultList;
     }
 
 }

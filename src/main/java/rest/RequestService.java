@@ -8,11 +8,13 @@ package rest;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import entity.Department;
 import entity.Request;
 import facades.RequestFacade;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -32,7 +34,7 @@ import javax.ws.rs.core.MediaType;
 public class RequestService {
 
     @Context
-    private UriInfo context;
+    private HttpServletRequest context;
     private RequestFacade rf = new RequestFacade();
     private static JsonFactory factory = new JsonFactory();
     private static ObjectMapper mapper = new ObjectMapper();
@@ -43,27 +45,36 @@ public class RequestService {
     public RequestService() {
     }
 
-//    /**
-//     * Retrieves representation of an instance of rest.RequestService
-//     * @return an instance of java.lang.String
-//     */
-//    @GET
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public String getRequests() {
-//        //TODO return proper representation object
-//        List<Request> requests = rf.getRequests();
-//        try {
-//            return  mapper.writerWithDefaultPrettyPrinter().writeValueAsString(requests);
-//        } catch (JsonProcessingException ex) {
-//            Logger.getLogger(RequestService.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return null;
-//    }
+    /**
+     * Retrieves representation of an instance of rest.RequestService
+     * @return an instance of java.lang.String
+     * @throws java.lang.Exception
+     */
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getRequests() throws Exception {
+        Department d = null;
+        try {
+            //TODO return proper representation object
+            d = util.DepartmentDecoder.getDepartmentFromToken(context);
+        } catch (Exception ex) {
+            Logger.getLogger(RequestService.class.getName()).log(Level.SEVERE, null, ex);
+            throw new Exception();
+        }
+        List<Request> requests = rf.getRequests(d);
+        try {
+            return  mapper.writerWithDefaultPrettyPrinter().writeValueAsString(requests);
+        } catch (JsonProcessingException ex) {
+            Logger.getLogger(RequestService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
      /**
      * Retrieves representation of an instance of rest.RequestService
      * @param id
      * @return an instance of java.lang.String
+     * @throws com.fasterxml.jackson.core.JsonProcessingException
      */
     @GET
     @Path("{id}")

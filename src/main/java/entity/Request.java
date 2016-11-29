@@ -36,6 +36,8 @@ public class Request implements Serializable {
     private String venue;
     private String street;
     private int zip;
+    @ManyToOne
+    private Department department;
 
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date doorsopen;

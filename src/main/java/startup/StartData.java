@@ -8,7 +8,9 @@ package startup;
 import entity.Admin;
 import entity.Department;
 import entity.Event;
+import entity.Invoice;
 import entity.RedCrossLevel;
+import entity.Request;
 import entity.Resource;
 import entity.Samarit;
 import entity.StaffedEvent;
@@ -37,10 +39,10 @@ import log.Log;
 public class StartData {
 
     public static void main(String[] args) {
-//        Persistence.generateSchema("pu_local", null);
-//        StartData sd = new StartData();
-//        insertTestData();
-//        sd.insertRandomData();
+        Persistence.generateSchema("pu_local", null);
+        StartData sd = new StartData();
+        insertTestData();
+        sd.insertRandomData();
         createStaffedEvent();
         
     }
@@ -104,16 +106,14 @@ public class StartData {
             em.close();
         }
     }
-
-    public void insertRandomData() {
-        String[] fName = {"Adam", "Allan", "Anders", "Brian", "Børge", "Claus", "Daniel", "Danni", "Dennis", "Egon", "Emil", "Fie", "Freja", "Grethe", "Gorm", "Henning", "Ib", "Ida", "Jens", "Klaus", "Kasper", "Kenneth", "Abel", "Jarmo", "Sonny", "Cher", "Dreng", "Lotus", "Dan", "Lars", "Mathilde", "Mads", "Morten", "Michael"};
-        String[] lName = {"Andersen", "Jespersen", "Jørgensen", "Hansen", "Thomsen", "Gram", "Hat", "Stol", "Green", "Pind", "Løkke", "Nielsen", "Flotnavn", "Avn", "Ravn", "Havn", "Barry", "Heintze", "Gønge", "Von Jarmo", "Tømrer", "Forsørensen", "Pilatus", "Ort", "Rohde", "Lund", "Greve", "Vad", "Dam", "Bondo", "Kjærsgård", "Gade", "Hassan", "Michael", "Juel"};
-        String[] emailDomain = {"hotmail", "gmail", "jubii", "yahoo"};
-        String[] emailEnd = {".com", ".net", ".dk"};
-        String[] adr1 = {"Store ", "Lille ", "", "", "", "", "", "", "", ""};
-        String[] adr2 = {"Randers", "Morgen", "Blomster", "Paradis", "Fiol", "Banan", "Vin", "Herre", "Roskilde", "Jylland", "Bøge", "Ege"};
-        String[] adr3 = {"vej", "gade", " Hovedgade", " Landevej", "stræde", "stien", "pladsen"};
-
+    
+    public void insertRandomData(){
+        String[] fName = {"Adam", "Allan", "Anders", "Brian", "Børge", "Claus", "Daniel", "Danni", "Dennis", "Egon", "Emil", "Fie", "Freja", "Grethe","Gorm","Henning","Ib","Ida","Jens","Klaus","Kasper","Kenneth","Abel","Jarmo","Sonny","Cher","Dreng","Lotus","Dan","Lars","Mathilde","Mads","Morten","Michael"};
+        String[] lName = {"Andersen","Jespersen","Jørgensen","Hansen","Thomsen","Gram","Hat","Stol","Green","Pind","Løkke","Nielsen","Flotnavn","Avn","Ravn","Havn","Barry","Heintze","Gønge","Von Jarmo","Tømrer","Forsørensen","Pilatus","Ort","Rohde","Lund","Greve","Vad","Dam","Bondo","Kjærsgård","Gade","Hassan","Michael","Juel"};
+        String[] emailDomain = {"hotmail","gmail","jubii","yahoo"};
+        String[] emailEnd = {".com",".net",".dk"};
+        
+        
         EntityManager em = EntityConnector.getEntityManager();
         Query q = em.createQuery("Select d from Department d where (d.nameOfDepartment='København')");
         Query q2 = em.createQuery("Select ur from User_Role ur where (ur.roleName='User')");
@@ -132,11 +132,11 @@ public class StartData {
         ArrayList<User> randomTestUsers = new ArrayList();
         Log.writeToLog("Test Data adding random users");
         for (int i = 0; i < 50; i++) {
-            String userFName = fName[((int) (Math.random() * fName.length))];
-            String userLName = lName[((int) (Math.random() * lName.length))];
-            String email = userFName + userLName + (int) (Math.random() * 10000) + "@" + emailDomain[((int) (Math.random() * emailDomain.length))] + emailEnd[((int) (Math.random() * emailEnd.length))];
-            String address = adr1[(int) (Math.random() * adr1.length)] + adr2[(int) (Math.random() * adr2.length)] + adr3[(int) (Math.random() * adr3.length)] + " " + (int) (Math.random() * 200);
-            Samarit s = new Samarit(email, userFName + "123");
+            String userFName = fName[((int)(Math.random()*fName.length))];
+            String userLName = lName[((int)(Math.random()*lName.length))];
+            String email = userFName+userLName+(int)(Math.random()*10000)+"@"+emailDomain[((int)(Math.random()*emailDomain.length))]+emailEnd[((int)(Math.random()*emailEnd.length))];
+            String address = randomAddress();
+            Samarit s= new Samarit(email, userFName+"123");
             s.setFirstName(userFName);
             s.setLastName(userLName);
             s.setDepartment(d);
@@ -173,20 +173,27 @@ public class StartData {
             em.close();
         }
     }
-
-    public SamaritOccupied ocupySam(Samarit sam) {
-        SamaritOccupied so = null;
-        try {
-            int hours = (int) (Math.random() * 10);
-            Date start = randomDate();
-
-            long endTime = start.getTime() + (1000 * 60 * 60 * (hours + 1));
-            Date end = new Date(endTime);
-            if (start.getTime() == end.getTime()) {
-                return null;
-            }
-            so = new SamaritOccupied(sam, start, end, false);
-        } catch (DateNullException ex) {
+    
+    public String randomAddress(){
+        String[] adr1 = {"Store ","Lille ","","","","","","","",""};
+        String[] adr2 = {"Randers","Morgen","Blomster","Paradis","Fiol","Banan","Vin","Herre","Roskilde","Jylland","Bøge","Ege"};
+        String[] adr3 = {"vej","gade"," Hovedgade"," Landevej","stræde","stien","pladsen"};
+        
+        return adr1[(int)(Math.random()*adr1.length)]+adr2[(int)(Math.random()*adr2.length)]+adr3[(int)(Math.random()*adr3.length)]+ " " + (int)(Math.random()*200);
+    }
+    
+    public SamaritOccupied ocupySam(Samarit sam){
+        SamaritOccupied so=null;
+        try{
+        int hours = (int)(Math.random()*10);
+        Date start = randomDate();
+        
+        long endTime = start.getTime()+(1000*60*60*(hours+1));
+        Date end = new Date(endTime);
+        if (start.getTime()==end.getTime()) return null;
+        so = new SamaritOccupied(sam,start,end,false);
+        }
+        catch(DateNullException ex){
             Log.writeToLog("Test Data tried to add a null start date");
         }
         return so;
@@ -219,6 +226,45 @@ public class StartData {
         return new Date(116, month, day, hour, 0);
     }
     
+    public Request testRequest(){
+        Request r = new Request();
+        String[] ageGroups = {"Voksne", "Børn", "Blandet"};
+        String[] venue = {"Parken","Forum"};
+        String[] catering = {"Rekvirant","Ingen","RK"};
+        String address = randomAddress();
+        Date start = randomDate();
+        long open = start.getTime()-(1000*60*60);
+        Date doorsOpen = new Date(open);
+        Date meet;
+        Date end = new Date(start.getTime()+(1000*60*60*5));
+        
+        
+        r.setAgegroup(ageGroups[(int)(Math.random()*ageGroups.length)]);
+        r.setEventDate(start);
+        r.setEventstart(start);
+        r.setComments("Please bring bandaid");
+        r.setEventend(end);
+        r.setVenue(venue[(int)(Math.random()*venue.length)]);
+        r.setCatering(catering[(int)(Math.random()*catering.length)]);
+        r.setZip(2100);
+        r.setStretcherTeam(false);
+        r.setResponseTeam(true);
+        r.setStreet(address);
+        
+        r.setMedics(Math.random()>0.9);
+        r.setNumberGuests((int)(Math.random()*100));
+        r.setAmbulance(Math.random()>0.9);
+        
+        
+        return null;
+    }
+    
+    public Invoice randomInvoice(){
+        Invoice i = new Invoice();
+        i.setCvr("87654321");
+        i.setName("John Doe");
+        return i;
+    }
     private static void createStaffedEvent() {
         EntityManager em = EntityConnector.getEntityManager();
         try {
