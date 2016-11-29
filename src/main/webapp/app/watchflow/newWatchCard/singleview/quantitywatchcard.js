@@ -16,12 +16,15 @@ function quantityController(newWatchCardFactory){
    self.clickedShift = {};
    self.allRedCrossLevels =[];
    self.avalibleResources = [];
+   self.selectedResources = [];
+   
    
    ///***Function Calls****
    self.getAllRedCrossLevels = getAllRedCrossLevels;
    self.getclicked = getclicked;
    self.getAvalibleResources = getAvalibleResources;
-   
+   self.moveResource = moveResource;
+   self.moveResourceBack = moveResourceBack;
    
    //** Exceute on Enter *****
     getclicked();
@@ -55,5 +58,19 @@ function quantityController(newWatchCardFactory){
            console.log("Error in callback: " + error.code); 
         });
    }
+   
+   function moveResource(){
+     var selected = self.selected; // -- Variable that is created by selecting
+     if(selected != null){
+         
+     self.avalibleResources.remove(selected);
+     self.selectedResources.push(selected);
+     }
+   };
+   
+   function moveResourceBack(resource){
+     self.avalibleResources.push(resource);
+     self.selectedResources.remove(resource);
+   };
    
 }

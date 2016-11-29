@@ -18,17 +18,28 @@
         
     </div> 
     
-    <div class="col-lg-6" id="resource">
+</div>
+    <div class="col-lg-6 col-lg-offset-3" id="resource">
         
         <h3> Vælg Ressourcer: </h3>
         
-        <select name="Resources" ng-repeat="resource in ctrl.availableResources">
-            <option value="{{resource}}">{{resource.name}}</option>
+        <select ng-options="opt.name for opt in ctrl.avalibleResources"
+                ng-model="ctrl.selected"
+                ng-change="ctrl.moveResource()">
         </select>
+        
+        <br>
+        <br>
+        
+        <h5>Valgte Resourcer:</h5>
+        <ul ng-repeat="resource in ctrl.selectedResources"  ng-bind-html-unsafe="getContent(resource)">
+            <li>
+                {{resource.name}} <span style="cursor: pointer" ng-click="ctrl.moveResourceBack(resource)">&#10060;</span>
+            </li>
+        </ul>
         
     </div>
     
-</div>
 
 
 
