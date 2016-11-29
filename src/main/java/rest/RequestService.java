@@ -43,27 +43,28 @@ public class RequestService {
     public RequestService() {
     }
 
-//    /**
-//     * Retrieves representation of an instance of rest.RequestService
-//     * @return an instance of java.lang.String
-//     */
-//    @GET
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public String getRequests() {
-//        //TODO return proper representation object
-//        List<Request> requests = rf.getRequests();
-//        try {
-//            return  mapper.writerWithDefaultPrettyPrinter().writeValueAsString(requests);
-//        } catch (JsonProcessingException ex) {
-//            Logger.getLogger(RequestService.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return null;
-//    }
+    /**
+     * Retrieves representation of an instance of rest.RequestService
+     * @return an instance of java.lang.String
+     */
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getRequests() {
+        //TODO return proper representation object
+        List<Request> requests = rf.getRequests();
+        try {
+            return  mapper.writerWithDefaultPrettyPrinter().writeValueAsString(requests);
+        } catch (JsonProcessingException ex) {
+            Logger.getLogger(RequestService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
      /**
      * Retrieves representation of an instance of rest.RequestService
      * @param id
      * @return an instance of java.lang.String
+     * @throws com.fasterxml.jackson.core.JsonProcessingException
      */
     @GET
     @Path("{id}")
