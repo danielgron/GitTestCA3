@@ -9,12 +9,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import entity.Department;
 import entity.RedCrossLevel;
+import entity.Resource;
 import entity.StaffedEvent;
 import enums.Status;
 import facades.WatchFlowFacade;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
@@ -64,4 +67,21 @@ public class WatchFlowService {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(levels);
     }
+    
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("events/updatequantity")
+    public String updateQuantityForEvent(String jsonEvent) throws IOException, Exception{
+        ObjectMapper mapper = new ObjectMapper();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        mapper.setDateFormat(df);
+        StaffedEvent event = mapper.readValue(jsonEvent, StaffedEvent.class);
+        Map<String,Integer> map = event.getLevelsQuantity();
+        List<Resource> resources = event.getResources();
+        Integer id = event.getId();
+        StaffedEvent eventAfterUpdates = wff.updateQuantityForEvent(id,map,resources);
+        return mapper.writeValueAsString(eventAfterUpdates);
+    }
+    
 }

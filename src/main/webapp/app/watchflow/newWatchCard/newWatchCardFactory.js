@@ -12,7 +12,8 @@ function watchFactory($http){
         getClickedShift : getClickedShift,
         setShift: setShift,
         getAllRedCrossLevelsFromFac: getAllRedCrossLevelsFromFac,
-        getAvalibleResources: getAvalibleResources
+        getAvalibleResources: getAvalibleResources,
+        sendDataFromQuantityWatch : sendDataFromQuantityWatch
     };
     
     return service;
@@ -38,6 +39,9 @@ function watchFactory($http){
       return  $http.get("api/Resource/" + id);
     };
     
+    function sendDataFromQuantityWatch(jsonObject){
+        return $http.post("api/watchflow/events/updatequantity",jsonObject);
+    }
     
 };
 

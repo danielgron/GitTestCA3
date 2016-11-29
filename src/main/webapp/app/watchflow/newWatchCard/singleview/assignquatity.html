@@ -8,11 +8,11 @@
 
 <div class="row col-lg-3" >
     
-    <div id="staff"  ng-repeat="level in ctrl.allRedCrossLevels">
+    <div id="staff"  ng-repeat="(key, value) in ctrl.clickedShift.levelsQuantity">
 
         <div class="form-group">
-        <label>{{level.level}}</label>
-        <input type="number" class="form-control" name="{{level.level}}" step="1" value=0 max=50 min="0"/>
+        <label>{{key}}</label>
+        <input ng-model="ctrl.clickedShift.levelsQuantity[key]" type="number" class="form-control" name="{{key}}" step="1" max=50 min="0"/>
        
         </div>
         
@@ -32,16 +32,13 @@
         <br>
         
         <h5>Valgte Resourcer:</h5>
-        <ul ng-repeat="resource in ctrl.selectedResources"  ng-bind-html-unsafe="getContent(resource)">
+        <ul ng-repeat="resource in ctrl.clickedShift.resources">
             <li>
                 {{resource.name}} <span style="cursor: pointer" ng-click="ctrl.moveResourceBack(resource)">&#10060;</span>
             </li>
         </ul>
         
     </div>
-    
-
-
-
+<input ng-click="ctrl.saveChanges()" type="button" value="Gem Ændringer" />
 
 </div>

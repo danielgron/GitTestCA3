@@ -39,10 +39,10 @@ import log.Log;
 public class StartData {
 
     public static void main(String[] args) {
-        Persistence.generateSchema("pu_local", null);
-        StartData sd = new StartData();
-        insertTestData();
-        sd.insertRandomData();
+//        Persistence.generateSchema("pu_local", null);
+//        StartData sd = new StartData();
+//        insertTestData();
+//        sd.insertRandomData();
         createStaffedEvent();
         
     }
@@ -270,6 +270,9 @@ public class StartData {
         try {
             Department d = em.find(Department.class, "København");
             StaffedEvent event = new StaffedEvent(Status.ReadyToCreate, new Date(), new Date(), false, "Håndbold", "Flot", d);
+            Query q1 = em.createQuery("Select l from RedCrossLevel l");
+            List<RedCrossLevel> allRedCrossLevels = q1.getResultList();
+            event.initilazeLinkedMap(allRedCrossLevels);
             em.getTransaction().begin();
             em.persist(event);
             em.getTransaction().commit();

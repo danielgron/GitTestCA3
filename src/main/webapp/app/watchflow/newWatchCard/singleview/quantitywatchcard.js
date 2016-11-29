@@ -16,7 +16,6 @@ function quantityController(newWatchCardFactory){
    self.clickedShift = {};
    self.allRedCrossLevels =[];
    self.avalibleResources = [];
-   self.selectedResources = [];
    
    
    ///***Function Calls****
@@ -25,10 +24,10 @@ function quantityController(newWatchCardFactory){
    self.getAvalibleResources = getAvalibleResources;
    self.moveResource = moveResource;
    self.moveResourceBack = moveResourceBack;
+   self.saveChanges = saveChanges;
    
    //** Exceute on Enter *****
     getclicked();
-    getAllRedCrossLevels();
     getAvalibleResources();
    
    
@@ -58,19 +57,35 @@ function quantityController(newWatchCardFactory){
            console.log("Error in callback: " + error.code); 
         });
    }
-   
+     
    function moveResource(){
      var selected = self.selected; // -- Variable that is created by selecting
      if(selected != null){
          
      self.avalibleResources.remove(selected);
-     self.selectedResources.push(selected);
+     self.clickedShift.resources.push(selected);
      }
    };
    
    function moveResourceBack(resource){
      self.avalibleResources.push(resource);
-     self.selectedResources.remove(resource);
+     self.clickedShift.resources.remove(resource);
    };
+   
+   /*
+    * Saves the Now editted 
+    * Object to the database!
+    */
+   function saveChanges(){
+       // Start the spinner!!!
+       newWatchCardFactory.sendDataFromQuantityWatch(self.clickedShift)
+       .then(
+           function successCallback(res) {
+               console.log("Succes - should stop spinner!");
+        }, function errorCallBack(error){
+           console.log("Error in callback: " + error.data.error.code); 
+           console.log("Stop Spinner!");
+        });
+   }
    
 }
