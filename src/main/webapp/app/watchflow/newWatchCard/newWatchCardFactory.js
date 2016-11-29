@@ -10,7 +10,9 @@ function watchFactory($http){
     var service = {
         loadEvents: loadEvents,
         getClickedShift : getClickedShift,
-        setShift: setShift
+        setShift: setShift,
+        getAllRedCrossLevelsFromFac: getAllRedCrossLevelsFromFac,
+        getAvalibleResources: getAvalibleResources
     };
     
     return service;
@@ -27,6 +29,14 @@ function watchFactory($http){
     function setShift(shift){
         clickedShift = shift;
     }
+    
+    function getAllRedCrossLevelsFromFac(){
+        return $http.get("api/watchflow/redcrooslevel");
+    }
+    
+    function getAvalibleResources(id){
+      return  $http.get("api/Resource/" + id);
+    };
     
     
 };

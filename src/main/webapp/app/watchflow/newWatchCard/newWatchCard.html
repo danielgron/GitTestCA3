@@ -1,19 +1,23 @@
 
 <h3>New WatchCard Template</h3>
 
-<h2>{{ctrl.hello}}</h2>
-
 <table class="table">
     <thead>
         <tr>
-            <th> VagtKort OverSkrift </th>
-            <th> Adresse</th>
+            <th>VagtKort OverSkrift </th>
+            <th>Tid</th>
+            <th>Rediger</th>
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="shift in ctrl.shifts" ng-click="ctrl.go(shift)">
-            <td style="color: blue; cursor: pointer">{{shift.name}}</td>
+        <tr ng-repeat="shift in ctrl.shifts" >
+            <td>{{shift.name}}</td>
             <td>{{shift.start}}</td>
+            <td>
+                <span style="color: blue; cursor: pointer" ng-click="ctrl.details(shift)"> Vagtkort Detajiler</span> /
+                <span style="color: blue; cursor: pointer" ng-click="ctrl.staffing(shift)"> Bemanding</span>
+                
+            </td>
         </tr>
     </tbody>
 

@@ -4,6 +4,7 @@ angular.module('myApp.watchflow')
 controller.$inject = ['newWatchCardFactory'];
 
 function controller(newWatchCardFactory){
+    //** Bindable Variables ****
     var self = this;
     self.clickedShift = {};
     self.getclicked = getclicked;
@@ -14,7 +15,7 @@ function controller(newWatchCardFactory){
     self.getclicked();
     
     
-    
+    //** Functions ****
     function getclicked(){
         self.clickedShift = newWatchCardFactory.getClickedShift();
     }

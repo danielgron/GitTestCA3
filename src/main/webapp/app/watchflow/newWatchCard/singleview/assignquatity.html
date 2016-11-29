@@ -1,0 +1,36 @@
+<div class="container" ng-controller="quantityController as ctrl">
+    
+<h2>Bemandings Antal og Ressourcer</h2>
+<h3>
+    Vagtkort: {{ctrl.clickedShift.name}} - {{ctrl.clickedShift.start}}
+</h3>
+
+
+<div class="row col-lg-3" >
+    
+    <div id="staff"  ng-repeat="level in ctrl.allRedCrossLevels">
+
+        <div class="form-group">
+        <label>{{level.level}}</label>
+        <input type="number" class="form-control" name="{{level.level}}" step="1" value=0 max=50 min="0"/>
+       
+        </div>
+        
+    </div> 
+    
+    <div class="col-lg-6" id="resource">
+        
+        <h3> Vælg Ressourcer: </h3>
+        
+        <select name="Resources" ng-repeat="resource in ctrl.availableResources">
+            <option value="{{resource}}">{{resource.name}}</option>
+        </select>
+        
+    </div>
+    
+</div>
+
+
+
+
+</div>

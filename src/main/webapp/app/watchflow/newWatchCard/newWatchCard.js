@@ -9,10 +9,10 @@ function watchCardController(newWatchCardFactory, $location) {
 
     var self = this;
 
-    self.hello = "Hello World";
     self.shifts = [];
     self.getShifts = getShifts;
-    self.go = go;
+    self.details = details;
+    self.staffing = staffing;
     
     
     
@@ -33,9 +33,14 @@ function watchCardController(newWatchCardFactory, $location) {
         
     }
     
-     function go(shift){
+     function details(shift){
          newWatchCardFactory.setShift(shift);
          $location.path("/singleNewWatchCard");
+     };
+     
+     function staffing(shift){
+         newWatchCardFactory.setShift(shift);
+         $location.path("/assignquatity");
      };
 
 }
