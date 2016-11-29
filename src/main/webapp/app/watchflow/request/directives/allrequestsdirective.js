@@ -1,13 +1,13 @@
 angular.module('myApp.watchflow')
 
-        .directive('allrequests', function () {
+        .directive('allRequests', function () {
 
             return {
                 controller: 'AllRequestsController',
                 controllerAs: 'ctrl',
                 restrict: 'E',
                 replace: 'true',
-                templateUrl: 'app/watchflow/template/allrequests.html'
+                templateUrl: 'app/watchflow/request/templates/allrequests.html'
 
             };
         })

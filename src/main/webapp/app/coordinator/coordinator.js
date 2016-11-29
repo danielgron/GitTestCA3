@@ -36,7 +36,6 @@ app.controller('CoordinatorCtrl', ['$window',"$scope", "$http", 'UserFactory', f
             self.data = res.data;
             UserFactory.setCreatedUser(self.data);
             $window.location.href = '#/coordinator/viewnewuser';
-            console.log(self.data);
           }, function errorCallback(res) {
             $scope.error = res.status + ": "+ res.data.statusText;
             console.log("ERROR");
