@@ -19,6 +19,9 @@ angular.module('myApp.watchflow').config(['$routeProvider', function ($routeProv
         $routeProvider.when('/singleNewWatchCard',{
            templateUrl: 'app/watchflow/newWatchCard/singleview/singlenewwatchcard.html' 
         });
+        $routeProvider.when('/request',{
+           templateUrl: 'app/watchflow/request/templates/request.html' 
+       });
     }]);
 
 

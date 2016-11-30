@@ -1,8 +1,11 @@
 angular.module('myApp.watchflow')
 
-        .controller('eventController',[function(){
-                
-                
-        }])
-
+        .controller('eventController',eventController)
 ;
+
+eventController.$inject = ['$scope'];
+
+
+function eventController($scope){
+    $scope.request;
+        };

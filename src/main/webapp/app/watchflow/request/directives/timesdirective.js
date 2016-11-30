@@ -7,7 +7,7 @@ angular.module('myApp.watchflow')
                 controllerAs: 'ctrl',
                 restrict: 'E',
                 replace: 'true',
-                templateUrl: 'app/watchflow/template/times.html'
+                templateUrl: 'app/watchflow/request/templates/times.html'
 
             };
         })

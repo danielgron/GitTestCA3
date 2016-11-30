@@ -1,8 +1,7 @@
 angular.module('myApp.watchflow')
 
-        .controller('DetailsController',[function(){
-                
-                
-        }])
+        .controller('DetailsController',detailsController);
 
-;
+function detailsController(){
+    
+}

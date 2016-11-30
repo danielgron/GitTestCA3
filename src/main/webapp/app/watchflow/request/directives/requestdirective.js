@@ -7,7 +7,7 @@ angular.module('myApp.watchflow')
                 controllerAs: 'ctrl',
                 restrict: 'E',
                 replace: 'true',
-                templateUrl: 'app/watchflow/template/request.html',
+                templateUrl: 'app/watchflow/request/templates/request.html',
                 scope: {
                     request: '@'
                 }

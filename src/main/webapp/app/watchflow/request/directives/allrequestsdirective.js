@@ -4,7 +4,7 @@ angular.module('myApp.watchflow')
 
             return {
                 controller: 'AllRequestsController',
-                controllerAs: 'ctrl',
+                controllerAs: 'allRequestCtrl',
                 restrict: 'E',
                 replace: 'true',
                 templateUrl: 'app/watchflow/request/templates/allrequests.html'

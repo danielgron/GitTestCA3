@@ -1,8 +1,7 @@
 angular.module('myApp.watchflow')
 
-        .controller('timesController',[function(){
-                
-                
-        }])
+        .controller('TimesController',timesController);
 
-;
+function timesController(){
+    
+}
