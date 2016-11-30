@@ -67,17 +67,17 @@ public class WatchFlowFacade {
     }
 
     /**
-     * Updates two things for an event. 1.How many samarits and their level that
-     * should be used for an event 2.All resources that should be added to an
-     * event. To make sure that nothing else is changed this method only takes
+     * Updates Only the LevelsQuantity for an event. 
+     * LevelsQuantity holds how many samarits and their level that
+     * should be used for an event.
+     * To make sure that nothing else is changed this method only takes
      * the id of the event, and loads the event from the database instead!
      *
      * @param eventId The ID of the Event
      * @param map Map that holds infomation about staff Quantity
-     * @param resources List of Resources that has been assigned to Event
      * @return The newly updated Entity
      */
-    public StaffedEvent updateQuantityForEvent(Integer eventId, Map<String, Integer> map, List<Resource> resources) throws Exception {
+    public StaffedEvent updateQuantityForEvent(Integer eventId, Map<String, Integer> map) throws Exception {
         EntityManager em = EntityConnector.getEntityManager();
         StaffedEvent event = null;
         try {
@@ -85,10 +85,37 @@ public class WatchFlowFacade {
             q1.setParameter("eventid", eventId);
             event = q1.getSingleResult();
 
-            // We need to remove all ResourceWatches from the "Excisting" Object.
-//        removeResourceWatches(event, em);
             em.getTransaction().begin();
             event.setLevelsQuantity(map);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            log.Log.writeErrorMessageToLog("Error in Updated Quantity For Event: " + e.getMessage());
+            throw e;
+        } finally {
+            em.close();
+        }
+        return event;
+    }
+
+    /**
+     * Updates only resources for an event.
+     * Should remove all ResourceWatches asociated with the existing object if any
+     * And also put in ResourceWatches for an new event
+     * @param eventId
+     * @param resources
+     * @return
+     */
+    public StaffedEvent updateResources(Integer eventId, List<Resource> resources) {
+        EntityManager em = EntityConnector.getEntityManager();
+        StaffedEvent event = null;
+        try {
+            TypedQuery<StaffedEvent> q1 = em.createQuery("Select e from StaffedEvent e where e.id =:eventid", StaffedEvent.class);
+            q1.setParameter("eventid", eventId);
+            event = q1.getSingleResult();
+           
+  // We need to remove all ResourceWatches from the "existing" Object.
+  //        removeResourceWatches(event, em);
+            em.getTransaction().begin();
             event.setResources(resources);
             em.getTransaction().commit();
         } catch (Exception e) {
@@ -103,10 +130,10 @@ public class WatchFlowFacade {
 
     /*
     How to Deal with ResourceWatches??!?!?!?!!?!
-    */
+     */
     private void removeResourceWatches(StaffedEvent event, EntityManager em) throws Exception {
         List<ResourceWatch> watches = event.getResourceWatchs();
-        if(watches == null || watches.isEmpty()){
+        if (watches == null || watches.isEmpty()) {
             return; // then there is no Resources assigned yet!
         }
         em.getTransaction().begin();
@@ -114,7 +141,7 @@ public class WatchFlowFacade {
             em.remove(watch);
         }
         em.getTransaction().commit();
-        
+
         /*
           List<ResourceWatch> eventResourceWatchs = event.getResourceWatchs();
           for (Resource res : resources) {
@@ -125,7 +152,7 @@ public class WatchFlowFacade {
             eventResourceWatchs.add(resWatch);
             em.persist(resWatch);
         }
-        */
+         */
     }
 
 }

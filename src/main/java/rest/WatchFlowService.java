@@ -80,7 +80,8 @@ public class WatchFlowService {
         Map<String,Integer> map = event.getLevelsQuantity();
         List<Resource> resources = event.getResources();
         Integer id = event.getId();
-        StaffedEvent eventAfterUpdates = wff.updateQuantityForEvent(id,map,resources);
+        wff.updateQuantityForEvent(id,map);
+        StaffedEvent eventAfterUpdates = wff.updateResources(id,resources);
         return mapper.writeValueAsString(eventAfterUpdates);
     }
     
