@@ -194,6 +194,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
                 watch.samarit.userName = $scope.user.userName;
                 watch.allDay = false;
                 watch.color = 'red';
+                
                 window.console.log("Date set " + watch.start);
                 window.console.log("Date set " + watch.end);
                 userCalendarFactory.setAvailable(watch).then(function (response) {

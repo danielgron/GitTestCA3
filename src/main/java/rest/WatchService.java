@@ -60,7 +60,7 @@ public class WatchService {
         try {
             SamaritOccupied sw = null;
             mapper = new ObjectMapper();
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             mapper.setDateFormat(df);
             sw = mapper.readValue(sWatch, SamaritOccupied.class);
             sw.getSamarit().setUserName(userName);
@@ -110,7 +110,8 @@ public class WatchService {
         watchForDate = wf.getWatchesForDateUser(date, userName);
         String json = "";
         try {
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            System.out.println("date");
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
             mapper.setDateFormat(df);
             SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("samarit");
             FilterProvider filters = new SimpleFilterProvider().addFilter("samaritFilter", theFilter);

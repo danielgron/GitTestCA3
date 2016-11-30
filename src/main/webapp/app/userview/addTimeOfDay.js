@@ -4,7 +4,11 @@ angular.module('myApp.usercalendar')
             //Bindable models
             var vm = this;
             vm.watch = {};
-            vm.watch.start = new Date();
+            vm.year = new Date().getFullYear();
+            vm.month = new Date().getMonth();
+            vm.day = new Date().getDay();
+            vm.watch.start = new Date(vm.year, vm.month, vm.day);
+
 
             vm.watch.startTime = new Date();
             vm.watch.startTime.setHours(16);
