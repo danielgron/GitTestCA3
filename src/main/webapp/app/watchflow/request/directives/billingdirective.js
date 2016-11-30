@@ -3,11 +3,12 @@ angular.module('myApp.watchflow')
         .directive('billing', function () {
 
             return {
-                controller: 'BillingController',
+                controller: 'RequestController',
                 controllerAs: 'ctrl',
+                bindToController: true,
                 restrict: 'E',
                 replace: 'true',
-                templateUrl: 'app/watchflow/template/billing.html'
+                templateUrl: 'app/watchflow/request/templates/billing.html'
 
             };
         })
