@@ -155,4 +155,27 @@ public class WatchFlowFacade {
          */
     }
 
-}
+    /**
+     * Updates the status of the Event.
+     * @param eventId Id of the event to be updated
+     * @param status The status that the Event should now have
+     */
+    public void updateStatusOfStaffedEvent(Integer eventId, Status status) {
+        EntityManager em = EntityConnector.getEntityManager();
+        try {
+            TypedQuery<StaffedEvent> q1 = em.createQuery("Select e from StaffedEvent e where e.id =:eventid", StaffedEvent.class);
+            q1.setParameter("eventid", eventId);
+            StaffedEvent event = q1.getSingleResult();
+            em.getTransaction().begin();
+            event.setStatus(status);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            log.Log.writeErrorMessageToLog("Eror in Updating status: " + e.getMessage());
+            throw e;
+        }
+        finally{
+            em.close();
+        }
+    }
+
+    }

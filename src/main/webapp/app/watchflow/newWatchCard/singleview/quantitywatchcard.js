@@ -5,11 +5,11 @@
 angular.module('myApp.watchflow')
         .controller('quantityController', quantityController);
 
-quantityController.$inject = ['newWatchCardFactory'];
+quantityController.$inject = ['newWatchCardFactory', '$location'];
 
 
 
-function quantityController(newWatchCardFactory){
+function quantityController(newWatchCardFactory, $location){
     
     //**Bindable Variables****
    var self = this;
@@ -82,6 +82,7 @@ function quantityController(newWatchCardFactory){
        .then(
            function successCallback(res) {
                console.log("Succes - should stop spinner!");
+               $location.path("/watchflow");
         }, function errorCallBack(error){
            console.log("Error in callback: " + error.data.error.code); 
            console.log("Stop Spinner!");

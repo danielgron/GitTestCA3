@@ -82,6 +82,7 @@ public class WatchFlowService {
         Integer id = event.getId();
         wff.updateQuantityForEvent(id,map);
         StaffedEvent eventAfterUpdates = wff.updateResources(id,resources);
+        wff.updateStatusOfStaffedEvent(id,Status.Pending);
         return mapper.writeValueAsString(eventAfterUpdates);
     }
     

@@ -11,6 +11,6 @@ package enums;
  */
 public enum Status {
     
-    ReadyToCreate, Created
+    ReadyToCreate, Pending
     
 }
