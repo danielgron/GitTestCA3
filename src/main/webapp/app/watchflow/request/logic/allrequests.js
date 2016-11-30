@@ -25,7 +25,7 @@ function allRequestsController(requestFactory, $location, $http) {
 
 
 function requestFactory($http,$location) {
-var chosenRequest = {};
+var chosenRequest;
 
     var service = {
         
@@ -41,13 +41,14 @@ var chosenRequest = {};
     };
     
     function getRequest() {
+        //console.log(chosenRequest);
         return chosenRequest;
     };
     
     
     
     function go(request){
-        console.log("CLICK");
+        //console.log("CLICK");
         chosenRequest=request;
          $location.path("/request");
      };

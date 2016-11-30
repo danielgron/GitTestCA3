@@ -5,6 +5,7 @@
  */
 package startup;
 
+import entity.Contact;
 import entity.user.Admin;
 import entity.Department;
 import entity.Event;
@@ -41,9 +42,9 @@ public class StartData {
     public static void main(String[] args) {
         //Persistence.generateSchema("pu_local", null);
         StartData sd = new StartData();
-//        insertTestData();
-//        sd.insertRandomData();
-//        createStaffedEvent();
+        insertTestData();
+        sd.insertRandomData();
+        createStaffedEvent();
 for (int i = 0; i < 10; i++) {
             sd.testRequest();
         }
@@ -111,10 +112,7 @@ for (int i = 0; i < 10; i++) {
     }
     
     public void insertRandomData(){
-        String[] fName = {"Adam", "Allan", "Anders", "Brian", "Børge", "Claus", "Daniel", "Danni", "Dennis", "Egon", "Emil", "Fie", "Freja", "Grethe","Gorm","Henning","Ib","Ida","Jens","Klaus","Kasper","Kenneth","Abel","Jarmo","Sonny","Cher","Dreng","Lotus","Dan","Lars","Mathilde","Mads","Morten","Michael"};
-        String[] lName = {"Andersen","Jespersen","Jørgensen","Hansen","Thomsen","Gram","Hat","Stol","Green","Pind","Løkke","Nielsen","Flotnavn","Avn","Ravn","Havn","Barry","Heintze","Gønge","Von Jarmo","Tømrer","Forsørensen","Pilatus","Ort","Rohde","Lund","Greve","Vad","Dam","Bondo","Kjærsgård","Gade","Hassan","Michael","Juel"};
-        String[] emailDomain = {"hotmail","gmail","jubii","yahoo"};
-        String[] emailEnd = {".com",".net",".dk"};
+        
         
         
         EntityManager em = EntityConnector.getEntityManager();
@@ -135,9 +133,9 @@ for (int i = 0; i < 10; i++) {
         ArrayList<User> randomTestUsers = new ArrayList();
         Log.writeToLog("Test Data adding random users");
         for (int i = 0; i < 50; i++) {
-            String userFName = fName[((int)(Math.random()*fName.length))];
-            String userLName = lName[((int)(Math.random()*lName.length))];
-            String email = userFName+userLName+(int)(Math.random()*10000)+"@"+emailDomain[((int)(Math.random()*emailDomain.length))]+emailEnd[((int)(Math.random()*emailEnd.length))];
+            String userFName = randomFName();
+            String userLName = randomLName();
+            String email = generateEmail(userFName,userLName);
             String address = randomAddress();
             Samarit s= new Samarit(email, userFName+"123");
             s.setFirstName(userFName);
@@ -178,7 +176,7 @@ for (int i = 0; i < 10; i++) {
     }
     
     public String randomAddress(){
-        String[] adr1 = {"Store ","Lille ","","","","","","","",""};
+        String[] adr1 = {"Store ","Lille ","Øvre ","Nedre ","Jyske","","","","","","",""};
         String[] adr2 = {"Randers","Morgen","Blomster","Paradis","Fiol","Banan","Vin","Herre","Roskilde","Jylland","Bøge","Ege"};
         String[] adr3 = {"vej","gade"," Hovedgade"," Landevej","stræde","stien","pladsen"};
         
@@ -204,12 +202,12 @@ for (int i = 0; i < 10; i++) {
 
     public Event testEvent() {
         String[] soccerName = {"Brøndby", "Randers", "B93", "Lyngby", "Porto", "Nørresundby", "Hobro", "AGF", "Ikast", "AAB", "AB", "Silkeborg"};
-        String[] firmafest = {"Novo", "Politiken", "CPHBUSINESS", "Microsoft", "ProfilOptik"};
-        String[] type = {"Julefrokost", "Påskefrokost", "Firmafest", "Teambuilding"};
+        String[] firmafest = {"Novo", "Politiken", "CPHBUSINESS", "Microsoft", "ProfilOptik","DSB","Socialdemokraterne","PostNord"};
+        String[] type = {"Julefrokost", "Påskefrokost", "Firmafest", "Teambuilding","Koncert"};
         Event e = new Event();
         String name;
         if (Math.random() < 0.5) {
-            name = "FCK vs" + soccerName[(int) (Math.random() * soccerName.length)];
+            name = "FCK vs " + soccerName[(int) (Math.random() * soccerName.length)];
         } else {
             name = firmafest[(int) (Math.random() * firmafest.length)] + " " + type[(int) (Math.random() * type.length)];
         }
@@ -228,6 +226,19 @@ for (int i = 0; i < 10; i++) {
         int hour = (int) (Math.random() * 12) + 12;
         return new Date(116, month, day, hour, 0);
     }
+    public String randomFName(){
+        String[] fName = {"Adam", "Allan", "Anders", "Brian", "Børge", "Claus", "Daniel", "Danni", "Dennis", "Egon", "Emil", "Fie", "Freja", "Grethe","Gorm","Henning","Ib","Ida","Jens","Klaus","Kasper","Kenneth","Abel","Jarmo","Sonny","Cher","Dreng","Lotus","Dan","Lars","Mathilde","Mads","Morten","Michael"};
+        return (fName[((int)(Math.random()*fName.length))]);
+    }
+    public String randomLName(){
+        String[] lName = {"Andersen","Jespersen","Jørgensen","Hansen","Thomsen","Gram","Hat","Stol","Green","Pind","Løkke","Nielsen","Flotnavn","Avn","Ravn","Havn","Barry","Heintze","Gønge","Von Jarmo","Tømrer","Forsørensen","Pilatus","Ort","Rohde","Lund","Greve","Vad","Dam","Bondo","Kjærsgård","Gade","Hassan","Michael","Juel"};
+        return (lName[((int)(Math.random()*lName.length))]);
+    }
+    public String generateEmail(String fName, String lName){
+        String[] emailDomain = {"hotmail","gmail","jubii","yahoo"};
+        String[] emailEnd = {".com",".net",".dk"};
+        return(fName+lName+(int)(Math.random()*10000)+"@"+emailDomain[((int)(Math.random()*emailDomain.length))]+emailEnd[((int)(Math.random()*emailEnd.length))]);
+    }
     
     public Request testRequest(){
         
@@ -244,25 +255,30 @@ for (int i = 0; i < 10; i++) {
         Date start = randomDate();
         long open = start.getTime()-(1000*60*60);
         Date doorsOpen = new Date(open);
-        Date meet;
         Date end = new Date(start.getTime()+(1000*60*60*5));
+        
+        
         r.setEventName("Test Request");
         r.setDepartment(d);
         r.setAgegroup(ageGroups[(int)(Math.random()*ageGroups.length)]);
         r.setEventDate(start);
         r.setEventstart(start);
+        r.setDoorsopen(doorsOpen);
+        r.setWatchStart(start);
         r.setComments("Please bring bandaid");
         r.setEventend(end);
         r.setVenue(venue[(int)(Math.random()*venue.length)]);
         r.setCatering(catering[(int)(Math.random()*catering.length)]);
         r.setZip(2100);
-        r.setStretcherTeam(false);
-        r.setResponseTeam(true);
+        r.setStretcherTeam(Math.random()>0.50);
+        r.setResponseTeam(Math.random()>0.50);
+        r.setEmergencyOffice(Math.random()>0.9);
         r.setStreet(address);
-        
+        r.setContact(randomContact());
         r.setMedics(Math.random()>0.9);
         r.setNumberGuests((int)(Math.random()*100));
         r.setAmbulance(Math.random()>0.9);
+        r.setInvoice(randomInvoice());
         em.getTransaction().begin();
         em.persist(r);
         em.getTransaction().commit();
@@ -277,7 +293,19 @@ for (int i = 0; i < 10; i++) {
         Invoice i = new Invoice();
         i.setCvr("87654321");
         i.setName("John Doe");
+        i.setStreet(randomAddress());
+        i.setZip("2200");
+        i.setCompany("");
+        
         return i;
+    }
+    public Contact randomContact(){
+        Contact c = new Contact();
+        String fname = randomFName();
+        String lname = randomLName();
+        c.setName(fname+" "+lname);
+        c.setMail(generateEmail(fname,lname));
+        return c;
     }
     private static void createStaffedEvent() {
         EntityManager em = EntityConnector.getEntityManager();

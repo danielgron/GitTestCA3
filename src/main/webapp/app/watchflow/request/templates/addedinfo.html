@@ -1,8 +1,37 @@
 <div class="col-md-6" style = "border:1px solid black">
-    <h3>Aftalen omfatter:</h3>
-<label>Vagtledere</label>
-<input type="text" name="" value="" /> <br>
-<label>Samaritter</label>
-<input type="text" name="" value="" /><br>
---Resource Valg--
+<h3>Bemanding og Ressourcer:</h3>
+
+
+    
+    <div id="staff"  ng-repeat="(key, value) in qctrl.clickedShift.levelsQuantity">
+
+        <div class="form-group">
+        <label>{{key}}</label>
+        <input ng-model="qctrl.clickedShift.levelsQuantity[key]" type="number" class="form-control" name="{{key}}" step="1" max=50 min="0"/>
+       
+        </div>
+        
+    </div> 
+
+    <div class="col-lg-6 col-lg-offset-3" id="resource">
+        
+        <h3> Vælg Ressourcer: </h3>
+        
+        <select ng-options="opt.name for opt in qctrl.avalibleResources"
+                ng-model="qctrl.selected"
+                ng-change="qctrl.moveResource()">
+        </select>
+        
+        <br>
+        <br>
+        
+        <h5>Valgte Resourcer:</h5>
+        <ul ng-repeat="resource in qctrl.clickedShift.resources">
+            <li>
+                {{resource.name}} <span style="cursor: pointer" ng-click="qctrl.moveResourceBack(resource)">&#10060;</span>
+            </li>
+        </ul>
+        
+    </div>
+<input ng-click="qctrl.saveChanges()" type="button" value="Gem Ændringer" />
 </div>

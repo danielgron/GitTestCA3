@@ -1,6 +1,6 @@
 angular.module('myApp.watchflow')
 
-        .directive('times', function () {
+        .directive('approvedRequest', function () {
 
             return {
                 controller: 'RequestController',
@@ -8,7 +8,7 @@ angular.module('myApp.watchflow')
                 bindToController: true,
                 restrict: 'E',
                 replace: 'true',
-                templateUrl: 'app/watchflow/request/templates/times.html'
+                templateUrl: 'app/watchflow/request/templates/approvedrequest.html'
 
             };
         })
