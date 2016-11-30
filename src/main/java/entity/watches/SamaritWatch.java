@@ -6,7 +6,7 @@
 package entity.watches;
 
 import entity.Event;
-import entity.Samarit;
+import entity.user.Samarit;
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;

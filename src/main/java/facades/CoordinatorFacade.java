@@ -10,7 +10,7 @@ import entity.Event;
 import entity.Eventable;
 import entity.OcupiedSlot;
 import entity.Resource;
-import entity.Samarit;
+import entity.user.Samarit;
 import entity.WatchFunction;
 import entity.watches.ResourceWatch;
 import entity.watches.SamaritOccupied;

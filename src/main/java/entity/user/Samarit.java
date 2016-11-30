@@ -3,10 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entity;
+package entity.user;
 
 import entity.watches.SamaritOccupied;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import entity.Department;
+import entity.OcupiedSlot;
+import entity.RedCrossLevel;
+import entity.WatchFunction;
 import entity.watches.SamaritWatch;
 import java.util.ArrayList;
 import java.util.List;

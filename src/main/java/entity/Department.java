@@ -5,6 +5,7 @@
  */
 package entity;
 
+import entity.user.Samarit;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.ArrayList;

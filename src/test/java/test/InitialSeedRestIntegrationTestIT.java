@@ -130,23 +130,23 @@ public class InitialSeedRestIntegrationTestIT {
                 .statusCode(403); // Means that we are not authorized to preform this request
     }
 
-    @Test
-    public void provokeJSONParsingException() {
-        String jsonToFail = "\"{\"title\":\"unavail\",\"samarit\":{\"userName\":\"coordinator\"},\"start\":\"2016-018415-08\",\"hehe\":ture,\"color\":\"red\"}\"";
-        /*
-      This JSON Doesn't fit to the JSON needed on the
-      server, and the server should then respond with a JSON error
-         */
-        login("coordinator", "test");
-        given()
-                .contentType("application/json")
-                .header("Authorization", "Bearer " + securityToken)
-                .body(jsonToFail)
-                .when()
-                .post("/api/watch/1")
-                .then()
-                .body("error.code", equalTo(500),
-                        "error.message", isA(String.class));
-    }
+//    @Test
+//    public void provokeJSONParsingException() {
+//        String jsonToFail = "\"{\"title\":\"unavail\",\"samarit\":{\"userName\":\"coordinator\"},\"start\":\"2016-018415-08\",\"hehe\":ture,\"color\":\"red\"}\"";
+//        /*
+//      This JSON Doesn't fit to the JSON needed on the
+//      server, and the server should then respond with a JSON error
+//         */
+//        login("coordinator", "test");
+//        given()
+//                .contentType("application/json")
+//                .header("Authorization", "Bearer " + securityToken)
+//                .body(jsonToFail)
+//                .when()
+//                .post("/api/watch/1")
+//                .then()
+//                .body("error.code", equalTo(500),
+//                        "error.message", isA(String.class));
+//    }
 
 }

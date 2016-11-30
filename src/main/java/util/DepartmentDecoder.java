@@ -10,7 +10,7 @@ import com.nimbusds.jose.JWSVerifier;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.SignedJWT;
 import entity.Department;
-import entity.Samarit;
+import entity.user.Samarit;
 import entityconnection.EntityConnector;
 import java.text.ParseException;
 import javax.persistence.EntityManager;

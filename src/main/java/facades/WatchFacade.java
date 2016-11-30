@@ -6,7 +6,7 @@
 package facades;
 
 import entity.Event;
-import entity.Samarit;
+import entity.user.Samarit;
 import entity.watches.SamaritOccupied;
 import entity.watches.SamaritWatch;
 import entityconnection.EntityConnector;

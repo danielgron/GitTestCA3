@@ -9,7 +9,7 @@ import entity.Department;
 import entity.Event;
 import entity.OcupiedSlot;
 import entity.Resource;
-import entity.Samarit;
+import entity.user.Samarit;
 import entityconnection.EntityConnector;
 import java.util.Date;
 import java.util.List;

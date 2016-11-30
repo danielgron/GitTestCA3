@@ -2,9 +2,9 @@ package test;
 
 import entity.Department;
 import entity.Event;
-import entity.Samarit;
+import entity.user.Samarit;
 import entity.watches.SamaritOccupied;
-import entity.User;
+import entity.user.User;
 import entityconnection.EntityConnector;
 import exceptions.DateNullException;
 import facades.CoordinatorFacade;

@@ -1,4 +1,4 @@
-package entity;
+package entity.user;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import java.io.Serializable;

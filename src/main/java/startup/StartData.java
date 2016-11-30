@@ -5,17 +5,17 @@
  */
 package startup;
 
-import entity.Admin;
+import entity.user.Admin;
 import entity.Department;
 import entity.Event;
 import entity.Invoice;
 import entity.RedCrossLevel;
 import entity.Request;
 import entity.Resource;
-import entity.Samarit;
+import entity.user.Samarit;
 import entity.StaffedEvent;
-import entity.User;
-import entity.User_Role;
+import entity.user.User;
+import entity.user.User_Role;
 import entity.WatchFunction;
 import entity.watches.SamaritOccupied;
 import entity.watches.SamaritWatch;

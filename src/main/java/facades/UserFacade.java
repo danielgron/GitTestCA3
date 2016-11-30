@@ -1,8 +1,8 @@
 package facades;
 
 import security.IUserFacade;
-import entity.User;
-import entity.User_Role;
+import entity.user.User;
+import entity.user.User_Role;
 import entityconnection.EntityConnector;
 import java.util.List;
 import java.util.logging.Level;
