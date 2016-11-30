@@ -15,6 +15,7 @@ function pendingcontroller(pendingFactory, $location){
    
    ///***Function Calls****
    self.getShifts = getShifts;
+   self.go = go;
    
    //** Exceute on Enter *****
     getShifts();
@@ -30,6 +31,12 @@ function pendingcontroller(pendingFactory, $location){
            console.log("Error in callback: " + error.data.error.code); 
         });
     }
+    
+    function go(shift){
+         pendingFactory.setShift(shift);
+         $location.path("/singlePending");
+     };    
+   
     
 };
 
