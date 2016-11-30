@@ -153,7 +153,6 @@ public class CoordinatorFacade {
     }
 
     public void toggleResource(int eventId, int resId) {
-
         Event e;
         EntityManager em = EntityConnector.getEntityManager();
         em.getEntityManagerFactory().getCache().evictAll(); // IMPORTANT!!! This Clears the Cache of the JPA!

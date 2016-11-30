@@ -1,10 +1,12 @@
 angular.module('myApp.watchflow')
 
         .directive('request', function () {
-
+console.log("requestDirective");
             return {
-                controller: 'requestController',
+                
+                controller: 'RequestController',
                 controllerAs: 'ctrl',
+                bindToController: true,
                 restrict: 'E',
                 replace: 'true',
                 templateUrl: 'app/watchflow/request/templates/request.html',

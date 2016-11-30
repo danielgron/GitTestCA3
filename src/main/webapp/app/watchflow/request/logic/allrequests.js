@@ -30,6 +30,7 @@ var chosenRequest = {};
     var service = {
         
         getRequests: getRequests,
+        getRequest: getRequest,
         go: go
     };
 
@@ -38,6 +39,12 @@ var chosenRequest = {};
     function getRequests() {
         return $http.get("api/request/");
     };
+    
+    function getRequest() {
+        return chosenRequest;
+    };
+    
+    
     
     function go(request){
         console.log("CLICK");
