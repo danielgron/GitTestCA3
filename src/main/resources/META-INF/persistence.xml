@@ -8,17 +8,17 @@
     <class>entity.Invoice</class>
     <class>entity.RedCrossLevel</class>
     <class>entity.Request</class>
+    <class>entity.Resource</class>
     <class>entity.StaffedEvent</class>
+    <class>entity.WatchFunction</class>
+    <class>entity.user.Admin</class>
+    <class>entity.user.Samarit</class>
+    <class>entity.user.User</class>
+    <class>entity.user.User_Role</class>
+    <class>entity.watches.ResourceWatch</class>
     <class>entity.watches.SamaritCalendar</class>
     <class>entity.watches.SamaritOccupied</class>
     <class>entity.watches.SamaritWatch</class>
-    <class>entity.Resource</class>
-    <class>entity.WatchFunction</class>
-    <class>entity.watches.ResourceWatch</class>
-    <class>entity.user.Admin</class>
-    <class>entity.user.User</class>
-    <class>entity.user.User_Role</class>
-    <class>entity.user.Samarit</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://46.101.166.154:3306/RK?zeroDateTimeBehavior=convertToNull"/>

@@ -5,7 +5,7 @@ console.log("requestDirective");
             return {
                 
                 controller: 'RequestController',
-                controllerAs: 'ctrl',
+                controllerAs: 'requestCtrl',
                 bindToController: true,
                 restrict: 'E',
                 replace: 'true',
