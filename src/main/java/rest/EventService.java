@@ -122,11 +122,11 @@ public class EventService {
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm a z");
             mapper.setDateFormat(df);
             
-            //Using eventfilter to filter out watches
-            SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("watches","department");
-            FilterProvider filters = new SimpleFilterProvider().addFilter("eventFilter", theFilter);
-            
-            return  mapper.writer(filters).writeValueAsString(event);
+//            //Using eventfilter to filter out watches
+            SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("watches");
+            FilterProvider filters = new SimpleFilterProvider().addFilter("samaritFilter", theFilter);
+//            
+            return  mapper.writer().writeValueAsString(event);
             
         } catch (JsonProcessingException ex) {
            log.Log.writeErrorMessageToLog("Exception When Creating JSON Object single event: " + ex);

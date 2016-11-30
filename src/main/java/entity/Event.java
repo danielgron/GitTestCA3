@@ -23,14 +23,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author dennisschmock
  */
 @Entity
-@JsonFilter("eventFilter")
+@JsonFilter("samaritFilter")
 public class Event implements Serializable, OcupiedSlot {
 
     private static final long serialVersionUID = 1L;

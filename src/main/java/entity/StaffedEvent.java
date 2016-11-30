@@ -5,6 +5,7 @@
  */
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import enums.Status;
 import java.util.Date;
 import java.util.HashMap;
@@ -31,7 +32,6 @@ import javax.persistence.OneToMany;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-
 @DiscriminatorColumn(name = "DT", discriminatorType = DiscriminatorType.CHAR)
 public class StaffedEvent extends Event{
     

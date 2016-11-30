@@ -34,7 +34,7 @@
 
     </head>
     <body ng-app="myApp">
-        <div class="container"  >
+     <div class="container"  >
             <nav class="navbar navbar-static-top  navbar-default " role="navigation" ng-controller="AppLoginCtrl as authCtrl">
                 <div class="container">
                     <div class="navbar-header">
@@ -44,15 +44,17 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="#">{{title}}</a>
+
+                        <a class="navbar-brand" href="#"><img src="icons/apple-icon-60x60.png"/>
+                        </a>
                     </div>
                     <div id="navbar" class="collapse navbar-collapse">
                         <ul class="nav navbar-nav">
-                            <li><a href="#/view1">Home</a></li>
+                            <li><a href="#/">Forside</a></li>
 
-                            <li ng-show="isCoordinator"><a href="#/coordinator">Page For Coordinators</a></li>
+                            <li ng-show="isCoordinator"><a href="#/coordinator">Koordinator</a></li>
                             <li ng-show="isCoordinator"><a href="#/eventcalender">Events</a></li>
-                            <li ng-show="isUser"><a href="#/userview">Min side</a></li>
+                            <li ng-show="isUser"><a href="#/userview">Samaritside</a></li>
                         </ul>
                         <div>
                             <form class="navbar-form navbar-right" role="form" ng-show="!isAuthenticated" ng-submit="login()"  >

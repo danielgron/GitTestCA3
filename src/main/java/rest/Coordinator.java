@@ -48,7 +48,7 @@ public class Coordinator {
             ObjectMapper mapper = new ObjectMapper();
             SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("password");
             FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter", theFilter);
-           return mapper.writer(filters).writeValueAsString(sams);
+            return mapper.writer(filters).writeValueAsString(sams);
         }
         else{
             return "[]"; // returns an empty array if the size of the list is 0

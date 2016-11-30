@@ -8,6 +8,9 @@ package rest;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import entity.Department;
 import entity.Request;
 import facades.RequestFacade;
@@ -43,6 +46,8 @@ public class RequestService {
      * Creates a new instance of RequestResource
      */
     public RequestService() {
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("watches");
+            FilterProvider filters = new SimpleFilterProvider().addFilter("samaritFilter", theFilter);
     }
 
     /**

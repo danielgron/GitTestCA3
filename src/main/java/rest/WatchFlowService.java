@@ -7,6 +7,9 @@ package rest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import entity.Department;
 import entity.RedCrossLevel;
 import entity.Resource;
@@ -33,10 +36,12 @@ import javax.ws.rs.core.MediaType;
 @RolesAllowed("Coordinator")
 public class WatchFlowService {
 
+    SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept();
+    FilterProvider filters = new SimpleFilterProvider().addFilter("samaritFilter", theFilter);
+
     @Context
     private HttpServletRequest context;
-    
-    
+
     WatchFlowFacade wff;
 
     /**
@@ -44,46 +49,49 @@ public class WatchFlowService {
      */
     public WatchFlowService() {
         wff = new WatchFlowFacade();
+
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("events/{status}")
-    public String getStaffedEventsFromStatus(@PathParam("status") String statusString) throws Exception{
-       ObjectMapper mapper = new ObjectMapper();
-       Department d = util.DepartmentDecoder.getDepartmentFromToken(context);
-       DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-       mapper.setDateFormat(df);
-       Status statusFromParam = Status.valueOf(statusString);
-       List<StaffedEvent> allEventsWithStatus =  wff.getAllStaffedEventsWithStatus(statusFromParam, d);
-       return mapper.writeValueAsString(allEventsWithStatus);
+    public String getStaffedEventsFromStatus(@PathParam("status") String statusString) throws Exception {
+        
+        ObjectMapper mapper = new ObjectMapper();
+        Department d = util.DepartmentDecoder.getDepartmentFromToken(context);
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        mapper.setDateFormat(df);
+        Status statusFromParam = Status.valueOf(statusString);
+        List<StaffedEvent> allEventsWithStatus = wff.getAllStaffedEventsWithStatus(statusFromParam, d);
+        String json = mapper.writer(filters).writeValueAsString(allEventsWithStatus);
+        return json;
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("redcrooslevel")
-    public String getAllRedCrosslevels() throws JsonProcessingException{
+    public String getAllRedCrosslevels() throws JsonProcessingException {
         List<RedCrossLevel> levels = wff.getRedCrossLevels();
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(levels);
     }
-    
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("events/updatequantity")
-    public String updateQuantityForEvent(String jsonEvent) throws IOException, Exception{
+    public String updateQuantityForEvent(String jsonEvent) throws IOException, Exception {
         ObjectMapper mapper = new ObjectMapper();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         mapper.setDateFormat(df);
         StaffedEvent event = mapper.readValue(jsonEvent, StaffedEvent.class);
-        Map<String,Integer> map = event.getLevelsQuantity();
+        Map<String, Integer> map = event.getLevelsQuantity();
         List<Resource> resources = event.getResources();
         Integer id = event.getId();
-        wff.updateQuantityForEvent(id,map);
-        StaffedEvent eventAfterUpdates = wff.updateResources(id,resources);
-        wff.updateStatusOfStaffedEvent(id,Status.Pending);
+        wff.updateQuantityForEvent(id, map);
+        StaffedEvent eventAfterUpdates = wff.updateResources(id, resources);
+        wff.updateStatusOfStaffedEvent(id, Status.Pending);
         return mapper.writeValueAsString(eventAfterUpdates);
     }
-    
+
 }

@@ -6,15 +6,12 @@
 package entity.watches;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
-import entity.Event;
-import entity.OcupiedSlot;
 import entity.user.Samarit;
 import exceptions.DateNullException;
 import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -23,36 +20,29 @@ import javax.persistence.NamedQuery;
  *
  * @author dennisschmock
  */
-
 @NamedQueries({
-@NamedQuery(name = "SamaritOccupied.findByUserName", query = "SELECT w FROM SamaritOccupied AS w WHERE w.samarit.userName = :userName")})
+    @NamedQuery(name = "SamaritOccupied.findByUserName", query = "SELECT w FROM SamaritOccupied AS w WHERE w.samarit.userName = :userName")})
 @JsonFilter("samaritFilter")
 @DiscriminatorValue(value = "SC")
 @Entity
-public class SamaritOccupied extends SamaritCalendar{
+public class SamaritOccupied extends SamaritCalendar {
 
     private String title;
     private String rendering;
     private String color;
-   
+
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Samarit samarit;
-    
 
     public SamaritOccupied() {
     }
 
     public SamaritOccupied(Samarit testSam, Date start, Date end, boolean allDay) throws DateNullException {
-        super(start,end,allDay);
+        super(start, end, allDay);
         this.samarit = testSam;
-        
+
     }
 
-   
-
-    
-
-    
     public String getTitle() {
         return title;
     }
@@ -90,18 +80,5 @@ public class SamaritOccupied extends SamaritCalendar{
     public void setSamarit(Samarit samarit) {
         this.samarit = samarit;
     }
-
-
-    
-
-    
-    
-   
-
-   
-
-   
-
-   
 
 }
