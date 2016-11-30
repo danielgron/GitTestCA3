@@ -1,0 +1,44 @@
+<div class="container" ng-controller="quantityController as ctrl">
+    
+<h2>Bemandings Antal og Ressourcer</h2>
+<h3>
+    Vagtkort: {{ctrl.clickedShift.name}} - {{ctrl.clickedShift.start}}
+</h3>
+
+
+<div class="row col-lg-3" >
+    
+    <div id="staff"  ng-repeat="(key, value) in ctrl.clickedShift.levelsQuantity">
+
+        <div class="form-group">
+        <label>{{key}}</label>
+        <input ng-model="ctrl.clickedShift.levelsQuantity[key]" type="number" class="form-control" name="{{key}}" step="1" max=50 min="0"/>
+       
+        </div>
+        
+    </div> 
+    
+</div>
+    <div class="col-lg-6 col-lg-offset-3" id="resource">
+        
+        <h3> Vælg Ressourcer: </h3>
+        
+        <select ng-options="opt.name for opt in ctrl.avalibleResources"
+                ng-model="ctrl.selected"
+                ng-change="ctrl.moveResource()">
+        </select>
+        
+        <br>
+        <br>
+        
+        <h5>Valgte Resourcer:</h5>
+        <ul ng-repeat="resource in ctrl.clickedShift.resources">
+            <li>
+                {{resource.name}} <span style="cursor: pointer" ng-click="ctrl.moveResourceBack(resource)">&#10060;</span>
+            </li>
+        </ul>
+        
+    </div>
+<input ng-click="ctrl.saveChanges()" type="button" value="Gem Ændringer" />
+
+</div>

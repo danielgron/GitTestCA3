@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,7 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Event implements Serializable, OcupiedSlot {
 
     private static final long serialVersionUID = 1L;
-    @OneToMany(mappedBy = "event")
+    @OneToMany (cascade = CascadeType.PERSIST, mappedBy = "event") // Events can persist new ResourceWatches.
     @JsonBackReference(value="resourceWatchs-event")
     private List<ResourceWatch> resourceWatchs;
 

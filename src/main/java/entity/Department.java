@@ -23,6 +23,9 @@ import javax.persistence.OneToMany;
 public class Department implements Serializable {
 
     @OneToMany(mappedBy = "department")
+    private List<Request> requests;
+
+    @OneToMany(mappedBy = "department")
     @JsonBackReference(value="watchfunction-dep")
     private List<WatchFunction> watchFunctions;
 
