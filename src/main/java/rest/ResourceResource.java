@@ -17,6 +17,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -68,7 +69,7 @@ private static ObjectMapper mapper = new ObjectMapper();
     @POST
     @Path("changeResShift/{eventId}/{resId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String changeResShift(@PathParam("eventId") String eventId, @PathParam("resId") String resId) throws JsonProcessingException {
+    public String changeResShift(@PathParam("eventId") String eventId, @PathParam("resId") String resId) throws JsonProcessingException, Exception {
         
         
         cf.toggleResource(Integer.parseInt(eventId), Integer.parseInt(resId));
@@ -80,6 +81,40 @@ private static ObjectMapper mapper = new ObjectMapper();
         log.Log.writeErrorMessageToLog("Error REST Change Res Shift: " + ex.getMessage());
         throw ex;
     }
+    }
+    
+    @POST
+    @Path("shift/{eventId}/{resId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String addShift(@PathParam("eventId") String eventId, @PathParam("resId") String resId) throws JsonProcessingException {
+        
+        
+        cf.addResourceToEvent(Integer.parseInt(eventId), Integer.parseInt(resId));
+        
+        
+    try {
+        return mapper.writerWithDefaultPrettyPrinter().writeValueAsString("");
+    } catch (JsonProcessingException ex) {
+        log.Log.writeErrorMessageToLog("Error REST Add Res Shift: " + ex.getMessage());
+        throw ex;
+    }
+    }
+    
+    @DELETE
+    @Path("shift/{eventId}/{resId}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void delShift(@PathParam("eventId") String eventId, @PathParam("resId") String resId) throws JsonProcessingException, Exception {
+        
+        
+        cf.deleteResourceFromEvent(Integer.parseInt(eventId), Integer.parseInt(resId));
+        
+        
+//    try {
+//        return mapper.writerWithDefaultPrettyPrinter().writeValueAsString("");
+//    } catch (JsonProcessingException ex) {
+//        log.Log.writeErrorMessageToLog("Error REST Add Res Shift: " + ex.getMessage());
+//        throw ex;
+//    }
     }
 
     /**

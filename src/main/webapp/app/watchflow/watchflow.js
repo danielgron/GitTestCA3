@@ -22,6 +22,9 @@ angular.module('myApp.watchflow').config(['$routeProvider', function ($routeProv
         $routeProvider.when('/assignquatity',{
            templateUrl: 'app/watchflow/newWatchCard/singleview/assignquatity.html' 
         });
+        $routeProvider.when('/request',{
+           templateUrl: 'app/watchflow/request/templates/request.html' 
+       });
     }]);
 
 

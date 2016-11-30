@@ -1,6 +1,6 @@
 <div>
-    
-    {{ctrl.test}}
+    allrequest directive <br>
+    {{allRequestCtrl.test}}
     <table class="table">
         <thead>
             <tr>
@@ -9,14 +9,11 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td></td>
-                <td></td>
+            <tr ng-repeat="request in allRequestCtrl.requests" ng-click="allRequestCtrl.go(request)">
+                <td>{{request.eventName}}</td>
+                <td>{{request.eventDate}}</td>
             </tr>
-            <tr>
-                <td></td>
-                <td></td>
-            </tr>
+            
         </tbody>
     </table>
 
