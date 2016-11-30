@@ -5,11 +5,13 @@ angular.module('myApp.usercalendar')
             var vm = this;
             vm.watch = {};
             vm.watch.start = new Date();
-            vm.watch.end = new Date();
-            vm.watch.start.setHours(16);
-            vm.watch.start.setMinutes(0);
-            vm.watch.end.setHours(22);
-            vm.watch.end.setMinutes(0);
+
+            vm.watch.startTime = new Date();
+            vm.watch.startTime.setHours(16);
+            vm.watch.startTime.setMinutes(0);
+            vm.watch.endTime = new Date();
+            vm.watch.endTime.setHours(22);
+            vm.watch.endTime.setMinutes(0);
 
             vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
             vm.format = vm.formats[0];
@@ -20,16 +22,9 @@ angular.module('myApp.usercalendar')
             vm.mstep = 5;
 
             //Functions
-            vm.open1 = open1;
             vm.setDate = setDate;
 
-            vm.popup1 = {
-                opened: false
-            };
 
-            vm.popup2 = {
-                opened: false
-            };
 
 
             function open1() {
@@ -37,21 +32,12 @@ angular.module('myApp.usercalendar')
             }
             ;
 
-            vm.setDate = function (year, month, day) {
-                window.console.log(year,month,day);
-                vm.watch.start = new Date(year, month, day);
-                window.console.log(vm.watch.start);
-//                vm.watch.start.setHours(tempDate2.getHours());
-//                vm.watch.start.setMinutes(tempDate2.getMinutes());
-//                
-//                var tempDate1 = vm.watch.end;
-//                vm.watch.end = vm.watch.start;
-//                vm.watch.end.setHours(tempDate1.getHours());
-//                vm.watch.end.setMinutes(tempDate1.getMinutes());
+            function setDate(year, month, day) {
+
 
             }
             ;
-            vm.inlineOptions = {
+            vm.options = {
                 customClass: getDayClass,
                 minDate: new Date(),
                 showWeeks: true

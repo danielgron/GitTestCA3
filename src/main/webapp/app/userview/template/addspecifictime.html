@@ -5,39 +5,32 @@
 <div class="modal-body" id="modal-body">
     <form class="form-group" novalidate>
 
+        <label>Dato</label>
 
-     
+        <div style="display:inline-block; min-height:290px;">
+            <div uib-datepicker ng-model="atCtrl.watch.start" class="well well-sm" datepicker-options="atCtrl.options"></div>
+        </div>            
 
-        <div class="form-group c">
-            <label>Dato</label>
-            <p class="input-group">
-
-                <input id="date" type="text" class="form-control" uib-datepicker-popup="{{format}}"  ng-model="atCtrl.watch.start" is-open="atCtrl.popup1.opened" datepicker-options="atCtrl.dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="atCtrl.open1()"><i class="glyphicon glyphicon-calendar"></i></button>
-                </span>  
-            </p>
-        </div>
         <div class="form-group col-sm-4"><label for="timestart">Starttidspunkt</label>
-            <div uib-timepicker ng-model="atCtrl.watch.start" ng-change="atCtrl.changed()" hour-step="atCtrl.hstep" minute-step="atCtrl.mstep" show-meridian="ismeridian"></div>
+            <div uib-timepicker ng-model="atCtrl.watch.startTime" ng-change="atCtrl.changed()" hour-step="atCtrl.hstep" minute-step="atCtrl.mstep" show-meridian="ismeridian"></div>
         </div>
         <div class="form-group col-sm-4"><label for="timestart">Sluttidspunkt</label>
 
-            <div uib-timepicker ng-model="atCtrl.watch.end" ng-change="atCtrl.changed()" hour-step="atCtrl.hstep" minute-step="atCtrl.mstep" show-meridian="ismeridian"></div>
+            <div uib-timepicker ng-model="atCtrl.watch.endTime" ng-change="atCtrl.changed()" hour-step="atCtrl.hstep" minute-step="atCtrl.mstep" show-meridian="ismeridian"></div>
         </div>
-        
-        
-        <div class="modal-footer">
-            <div class="container col-sm-8"><label class="label label-danger" ng-show="atCtrl.watch.start>atCtrl.watch.end">Starttidspunkt kan ikke være mindre end sluttidspunkt</label></div>
-            <div class="container col-sm-4">
-                 
-                <div class="btn-group">
-                   
-                    <button ng-click="atCtrl.ok()" class="btn btn-primary"  ng-disabled="atCtrl.watch.start>atCtrl.watch.end"><i class="glyphicon glyphicon-floppy-disk"/> Tilføj dato</button>
-                </div>
-            </div>
-            
-        </div>
-
-    </form>
 </div>
+
+<div class="modal-footer">
+    <div class="container col-sm-8"><label class="label label-danger" ng-show="atCtrl.watch.startTime > atCtrl.watch.endTime">Starttidspunkt kan ikke være mindre end sluttidspunkt</label></div>
+    <div class="container col-sm-4">
+
+        <div class="btn-group">
+
+            <button ng-click="atCtrl.ok()" class="btn btn-primary"  ng-disabled="atCtrl.watch.startTime > atCtrl.watch.endTime"><i class="glyphicon glyphicon-floppy-disk"/> Tilføj dato</button>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+

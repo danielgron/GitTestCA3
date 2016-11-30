@@ -171,27 +171,37 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
             };
 
             $scope.setOccupiedDetail = function (date) {
-                window.console.log(date.start);
+                window.console.log(date);
+                var startHours = date.startTime.getHours();
+                var startMinutes = date.startTime.getMinutes();
+                var endHours = date.endTime.getHours()
+                var endMinutes = date.endTime.getHours();
+                
+                
                 var watch = {};
 
                 //Start spinner before restcall
                 bsLoadingOverlayService.start();
+                //Configure occupied object
                 watch.title = "Blocked";
                 watch.samarit = {};
-                watch.start = date.start;
-                watch.end = date.end;
+                watch.start = new Date(date.start);
+                watch.start.setHours(startHours);
+                watch.start.setMinutes(startMinutes);
+                watch.end = new Date(date.start);
+                watch.end.setHours(endHours);
+                watch.end.setMinutes(endMinutes);
                 watch.samarit.userName = $scope.user.userName;
                 watch.allDay = false;
                 watch.color = 'red';
-                window.console.log($scope.user.userName);
+                window.console.log("Date set " + watch.start);
+                window.console.log("Date set " + watch.end);
                 userCalendarFactory.setAvailable(watch).then(function (response) {
                     watch = response.data;
-                    window.console.log(watch);
-                    window.console.log("great succes" + response.data);
                     $scope.watchList.push(watch);
                     bsLoadingOverlayService.stop();
                 }, function (response) {
-                    window.console.log('failure');
+                    bsLoadingOverlayService.stop();
                 });
             };
 
@@ -208,8 +218,8 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
                     ariaDescribedBy: 'modal-body',
                     templateUrl: 'app/userview/template/addspecifictime.html',
                     controller: 'AddTimeDayController',
-                    controllerAs: 'atCtrl',
-                    size: 'md'
+                    size: 'md',
+                    controllerAs: 'atCtrl'
 
                 });
 
