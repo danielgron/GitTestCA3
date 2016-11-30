@@ -6,9 +6,9 @@ angular.module('myApp.usercalendar')
             vm.watch = {};
             vm.year = new Date().getFullYear();
             vm.month = new Date().getMonth();
-            vm.day = new Date().getDay();
+            vm.day = new Date().getDate();
             vm.watch.start = new Date(vm.year, vm.month, vm.day);
-
+            window.console.log(vm.watch.start);
 
             vm.watch.startTime = new Date();
             vm.watch.startTime.setHours(16);

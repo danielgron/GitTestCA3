@@ -60,8 +60,8 @@ public class WatchService {
         try {
             SamaritOccupied sw = null;
             mapper = new ObjectMapper();
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-            mapper.setDateFormat(df);
+//            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+//            mapper.setDateFormat(df);
             sw = mapper.readValue(sWatch, SamaritOccupied.class);
             sw.getSamarit().setUserName(userName);
             sw = wf.addUnavailForWatch(sw);

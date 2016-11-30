@@ -45,6 +45,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
                     editable: false,
                     locale: 'da',
                     aspectRatio: 1,
+                    timezone: 'local',
                     header: {
                         left: 'title',
                         center: '',
@@ -175,7 +176,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
                 var startHours = date.startTime.getHours();
                 var startMinutes = date.startTime.getMinutes();
                 var endHours = date.endTime.getHours()
-                var endMinutes = date.endTime.getHours();
+                var endMinutes = date.endTime.getMinutes();
                 
                 
                 var watch = {};
@@ -185,7 +186,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
                 //Configure occupied object
                 watch.title = "Blocked";
                 watch.samarit = {};
-                watch.start = new Date(date.start);
+                watch.start = date.start;
                 watch.start.setHours(startHours);
                 watch.start.setMinutes(startMinutes);
                 watch.end = new Date(date.start);
