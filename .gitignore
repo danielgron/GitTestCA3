@@ -87,8 +87,6 @@ hs_err_pid*
 # Persistence
 src/main/resources/META-INF/persistence.xml
 
-# Rest
-src/main/java/rest/ApplicationConfig.java
 
 # Derby log
 derby.log
