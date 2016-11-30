@@ -410,4 +410,14 @@ public class Request implements Serializable {
         this.visibility = visibility;
     }
 
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+    
+    
+
 }

@@ -1,8 +1,8 @@
 angular.module('myApp.watchflow')
 
-        .controller('RequestController',[function(){
-                
-                
-        }])
+        .controller('RequestController',requestController);
 
-;
+
+function requestController() {
+    console.log("RequestController");
+};

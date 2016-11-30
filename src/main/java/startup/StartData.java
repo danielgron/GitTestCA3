@@ -39,11 +39,14 @@ import log.Log;
 public class StartData {
 
     public static void main(String[] args) {
-        Persistence.generateSchema("pu_local", null);
+        //Persistence.generateSchema("pu_local", null);
         StartData sd = new StartData();
-        insertTestData();
-        sd.insertRandomData();
-        createStaffedEvent();
+//        insertTestData();
+//        sd.insertRandomData();
+//        createStaffedEvent();
+for (int i = 0; i < 10; i++) {
+            sd.testRequest();
+        }
         
     }
 
@@ -227,6 +230,12 @@ public class StartData {
     }
     
     public Request testRequest(){
+        
+        EntityManager em = EntityConnector.getEntityManager();
+        try {
+            
+            Department d = em.find(Department.class, "København");
+        
         Request r = new Request();
         String[] ageGroups = {"Voksne", "Børn", "Blandet"};
         String[] venue = {"Parken","Forum"};
@@ -237,8 +246,8 @@ public class StartData {
         Date doorsOpen = new Date(open);
         Date meet;
         Date end = new Date(start.getTime()+(1000*60*60*5));
-        
-        
+        r.setEventName("Test Request");
+        r.setDepartment(d);
         r.setAgegroup(ageGroups[(int)(Math.random()*ageGroups.length)]);
         r.setEventDate(start);
         r.setEventstart(start);
@@ -254,8 +263,13 @@ public class StartData {
         r.setMedics(Math.random()>0.9);
         r.setNumberGuests((int)(Math.random()*100));
         r.setAmbulance(Math.random()>0.9);
-        
-        
+        em.getTransaction().begin();
+        em.persist(r);
+        em.getTransaction().commit();
+        }
+        finally{
+                em.close();
+                }
         return null;
     }
     
