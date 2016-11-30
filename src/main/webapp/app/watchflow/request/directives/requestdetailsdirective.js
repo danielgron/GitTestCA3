@@ -3,11 +3,12 @@ angular.module('myApp.watchflow')
         .directive('details', function () {
 
             return {
-                controller: 'detailsController',
+                controller: 'RequestController',
                 controllerAs: 'ctrl',
+                bindToController: true,
                 restrict: 'E',
                 replace: 'true',
-                templateUrl: 'app/watchflow/template/details.html'
+                templateUrl: 'app/watchflow/request/templates/details.html'
 
             };
         })

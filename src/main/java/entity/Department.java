@@ -24,6 +24,7 @@ import javax.persistence.OneToMany;
 public class Department implements Serializable {
 
     @OneToMany(mappedBy = "department")
+    @JsonBackReference(value="request-dep")
     private List<Request> requests;
 
     @OneToMany(mappedBy = "department")
@@ -113,6 +114,14 @@ public class Department implements Serializable {
     
     public void addResource(Resource resource){
         resources.add(resource);
+    }
+
+    public List<Request> getRequests() {
+        return requests;
+    }
+
+    public void setRequests(List<Request> requests) {
+        this.requests = requests;
     }
     
     
