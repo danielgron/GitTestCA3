@@ -152,7 +152,7 @@ public class CoordinatorFacade {
         return watchFunction;
     }
 
-    public void toggleResource(int eventId, int resId) {
+    public void toggleResource(int eventId, int resId) throws Exception {
         Event e;
         EntityManager em = EntityConnector.getEntityManager();
         em.getEntityManagerFactory().getCache().evictAll(); // IMPORTANT!!! This Clears the Cache of the JPA!
@@ -177,10 +177,7 @@ public class CoordinatorFacade {
 
             // If already present - remove the shift
             if (isThere) {
-                Query q = em.createQuery("delete from ResourceWatch rw where (rw.resource.id =:resId AND rw.event.id =:eventId)", WatchFunction.class);
-                q.setParameter("resId", resId);
-                q.setParameter("eventId", eventId);
-                q.executeUpdate();
+                deleteResourceFromEvent(resId,eventId);
             } // Else create it and add it
             else {
                 ResourceWatch resWatch = new ResourceWatch();
@@ -189,7 +186,7 @@ public class CoordinatorFacade {
                 resWatch.setEvent(e);
                 resWatch.setResource(res);
                 eventResourceWatchs.add(resWatch);
-                em.persist(resWatch);
+                //em.persist(resWatch);
             }
             em.getTransaction().commit();
 
@@ -202,4 +199,51 @@ public class CoordinatorFacade {
 
     }
 
-}
+    public void addResourceToEvent(int eventId,int resId) {
+        Event e;
+        EntityManager em = EntityConnector.getEntityManager();
+        em.getEntityManagerFactory().getCache().evictAll(); // IMPORTANT!!! This Clears the Cache of the JPA!
+        //if (s.getRedCroosLevel()==null) throw new NoRedCrossLevelException();
+
+        try {
+            em.getTransaction().begin();
+            // Get the event in question
+            e = em.find(Event.class, eventId);
+            ResourceWatch resWatch = new ResourceWatch();
+            Resource res = em.find(Resource.class, resId);
+            List<ResourceWatch> eventResourceWatchs = e.getResourceWatchs();
+            // Get resource from id
+            Resource r = em.find(Resource.class, resId);
+
+            resWatch.setEvent(e);
+            resWatch.setResource(res);
+            eventResourceWatchs.add(resWatch);
+            //em.persist(resWatch);
+            em.getTransaction().commit();
+        }
+        finally{
+            em.close();
+        }
+
+        }
+    
+    public void deleteResourceFromEvent(int eventId,int resId) throws Exception{
+        EntityManager em = EntityConnector.getEntityManager();
+        try{
+        em.getTransaction().begin();
+        Query q = em.createQuery("delete from ResourceWatch rw where (rw.resource.id =:resId AND rw.event.id =:eventId)", WatchFunction.class);
+                q.setParameter("resId", resId);
+                q.setParameter("eventId", eventId);
+                q.executeUpdate();
+                em.getTransaction().commit();
+        }
+        catch (Exception ex){
+            Log.writeErrorMessageToLog(ex.getMessage());
+            throw new Exception();
+        }
+        finally{
+            em.close();
+        }
+    }
+
+    }
