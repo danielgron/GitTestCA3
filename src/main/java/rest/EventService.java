@@ -7,8 +7,12 @@ package rest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.google.gson.Gson;
 import entity.Event;
+import entity.StaffedEvent;
 import facades.EventFacade;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -95,6 +99,35 @@ public class EventService {
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm a z");
             mapper.setDateFormat(df);
             return  mapper.writerWithDefaultPrettyPrinter().writeValueAsString(event);
+        } catch (JsonProcessingException ex) {
+           log.Log.writeErrorMessageToLog("Exception When Creating JSON Object single event: " + ex);
+           throw ex;
+        }
+        
+    }
+    
+    /**
+     * This api is for returning a service that with ONLY the eventinfo. Everything else is filtered out
+     * @param id
+     * @return
+     * @throws JsonProcessingException
+     */
+    @GET
+    @Path("staffedevent/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getSingleStaffedEvent(@PathParam("id") String id) throws JsonProcessingException{
+      StaffedEvent event = (StaffedEvent) ef.getEvent(Integer.parseInt(id));
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm a z");
+            mapper.setDateFormat(df);
+            
+            //Using eventfilter to filter out watches
+            SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("watches","department");
+            FilterProvider filters = new SimpleFilterProvider().addFilter("eventFilter", theFilter);
+            
+            return  mapper.writer(filters).writeValueAsString(event);
+            
         } catch (JsonProcessingException ex) {
            log.Log.writeErrorMessageToLog("Exception When Creating JSON Object single event: " + ex);
            throw ex;
