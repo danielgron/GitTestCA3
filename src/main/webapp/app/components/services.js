@@ -8,3 +8,6 @@ angular.module('myApp.services', [])
     var info = "Hello World from a Service";
     this.getInfo = function(){return info;};
   }]);
+  
+  
+  

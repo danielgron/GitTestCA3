@@ -8,8 +8,7 @@ angular.module('myApp', [
     'ui.bootstrap',
     'myApp.security',
    
-    'myApp.view3',
-    'myApp.view4',
+    
     'myApp.filters',
     'myApp.directives',
     'myApp.factories',

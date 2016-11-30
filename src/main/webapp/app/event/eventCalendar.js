@@ -86,10 +86,7 @@ angular.module('myApp.calendar', ['ngRoute', 'ui.calendar'])
                     color: '#f00',
                     textColor: 'yellow',
                     events: [
-                        {type: 'party', title: 'Lunch', start: new Date(y, m, d, 12, 0), end: new Date(y, m, d, 14, 0), allDay: false},
-                        {type: 'party', title: 'Lunch 2', start: new Date(y, m, d, 12, 0), end: new Date(y, m, d, 14, 0), allDay: false},
-                        {type: 'party', title: 'Click for Google', start: new Date(y, m, 28), end: new Date(y, m, 29), url: 'http://google.com/'}
-                    ]
+                         ]
                 };
 
                 //Change the view between month, week and day

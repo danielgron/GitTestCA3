@@ -50,7 +50,6 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
                         center: '',
                         right: 'today prev,next'
                     },
-                    eventClick: $scope.alertOnEventClick,
                     eventDrop: $scope.alertOnDrop,
                     eventResize: $scope.alertOnResize,
                     eventRender: $scope.eventRender,
@@ -121,9 +120,14 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
             $scope.setUnavailForWatch = function (date, jsEvent, view) {
                 var dateString = date.format("YYYY-MM-DD");
                 var watch = {};
+                if (moment().format('YYYY-MM-DD') === date.format('YYYY-MM-DD') || date.isAfter(moment())) {
+                    // This allows today and future date
+                } else {
+                   return;
+                }
                 //Start spinner before restcall
                 bsLoadingOverlayService.start();
-                
+
                 userCalendarFactory.getWatch(dateString, UserFactory.getUserName()).then(function (successResponse) {
 
                     watch = successResponse.data;
@@ -134,7 +138,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
                         bsLoadingOverlayService.stop();
                     }
                 }, function (errorResponse) {
-                        bsLoadingOverlayService.stop();
+                    bsLoadingOverlayService.stop();
 
                 });
 
@@ -144,7 +148,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
                     watch.samarit = {};
                     watch.start = date;
                     window.console.log(watch.start);
-                    
+
 //                    watch.start.setHours(00);
 //                    watch.start.setMinutes(0);
                     watch.samarit.userName = $scope.user.userName;
@@ -157,7 +161,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
                         $scope.watchList.push(watch);
                         bsLoadingOverlayService.stop();
                     }, function (response) {
-                          bsLoadingOverlayService.stop();
+                        bsLoadingOverlayService.stop();
                     });
                 };
             };
@@ -178,7 +182,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
                 watch.end = date.end;
                 watch.samarit.userName = $scope.user.userName;
                 watch.allDay = false;
-                watch.color = 'blue';
+                watch.color = 'red';
                 window.console.log($scope.user.userName);
                 userCalendarFactory.setAvailable(watch).then(function (response) {
                     watch = response.data;
@@ -227,14 +231,15 @@ angular.module('myApp.usercalendar').config(['$routeProvider', function ($routeP
         });
     }]);
 
+
+
+//***Custom functions and prototypes***//
 //Spinner setup
 angular.module('myApp.usercalendar').run(function (bsLoadingOverlayService) {
     bsLoadingOverlayService.setGlobalConfig({
         templateUrl: 'app/templates/loading-overlay-template.html'
     });
 });
-
-//***Custom functions and prototypes***//
 
 
 

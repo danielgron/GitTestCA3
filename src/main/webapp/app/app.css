@@ -29,6 +29,12 @@ ol.list > li:before {
     counter-increment: li-counter;
 }
 
+.navbar-header a{
+    color: darkred !important;
+}
+
+
+
 
 /*** Calendar ***/
 
@@ -52,6 +58,10 @@ ol.list > li:before {
 .fc-event.customFeed .fc-event-skin{
     background-color: rgb(132, 222, 175);
     color: black;
+}
+
+td.fc-day.fc-past {
+    background-color: #EEEEEE;
 }
 
 .calTools{

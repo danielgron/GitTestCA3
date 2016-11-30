@@ -1,6 +1,6 @@
 angular.module('myApp.usercalendar')
         .controller('AddTimeDayController', function ($uibModalInstance) {
-
+            var vm = this;
             //Bindable models
             var vm = this;
             vm.watch = {};
@@ -10,18 +10,10 @@ angular.module('myApp.usercalendar')
             vm.watch.start.setMinutes(0);
             vm.watch.end.setHours(22);
             vm.watch.end.setMinutes(0);
-
-            vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-            vm.format = vm.formats[0];
-            vm.altInputFormats = ['M!/d!/yyyy'];
-
             //For timepicker
             vm.hstep = 1;
             vm.mstep = 5;
 
-            //Functions
-            vm.open1 = open1;
-            vm.setDate = setDate;
 
             vm.popup1 = {
                 opened: false
@@ -32,25 +24,20 @@ angular.module('myApp.usercalendar')
             };
 
 
-            function open1() {
+            vm.open1 = function () {
                 vm.popup1.opened = true;
-            }
-            ;
+            };
 
             vm.setDate = function (year, month, day) {
-                window.console.log(year,month,day);
-                vm.watch.start = new Date(year, month, day);
-                window.console.log(vm.watch.start);
-//                vm.watch.start.setHours(tempDate2.getHours());
-//                vm.watch.start.setMinutes(tempDate2.getMinutes());
-//                
-//                var tempDate1 = vm.watch.end;
-//                vm.watch.end = vm.watch.start;
-//                vm.watch.end.setHours(tempDate1.getHours());
-//                vm.watch.end.setMinutes(tempDate1.getMinutes());
+               
+              
+                
+                tempDate1 = vm.watch.end;
+                vm.watch.end = vm.watch.start;
+                vm.watch.end.setHours(tempDate1.getHours());
+                vm.watch.end.setMinutes(tempDate1.getMinutes());
 
-            }
-            ;
+            };
             vm.inlineOptions = {
                 customClass: getDayClass,
                 minDate: new Date(),

@@ -75,7 +75,6 @@ public class WatchService {
             throw ex;
         }
         return json;
-
     }
 
     @Path("{id}")

@@ -216,7 +216,6 @@
                                 //thing.css('background','red');
                                 var thing = angular.element(document).find('#overLay').css('z-index', 10000);
 
-                                window.console.log('START');
                                 if (options === void 0) {
                                     options = {};
                                 }
@@ -242,7 +241,6 @@
                                 });
                             };
                             BsLoadingOverlayService.prototype.stop = function (options) {
-                                window.console.log('STOP');
                                 var thing = angular.element(document).find('#overLay').css('z-index', 0);
 
                                 if (options === void 0) {
