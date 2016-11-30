@@ -6,7 +6,7 @@ function watchCardDir(){
         restrict : "AE",
         templateUrl : 'app/watchflow/pending/pendingwatchcards.html',
         controller: "PendingController",
-        controllerAs : "ctrl"
+        controllerAs : "pctrl"
            };                 
 };      
 
