@@ -13,9 +13,7 @@
         <tr ng-repeat="shift in pctrl.shifts" >
             <td>{{shift.name}}</td>
             <td>{{shift.start}}</td>
-            <td>
-                <span style="color: blue; cursor: pointer" ng-click="pctrl.go(shift)"> Rediger</span>
-                
+            <td><a href="#/singlepending/{{shift.id}}">Rediger</a>
             </td>
         </tr>
     </tbody>

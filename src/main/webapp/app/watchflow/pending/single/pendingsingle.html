@@ -1,7 +1,7 @@
-<div class="container" ng-controller="PendingSingleCtrl as pendingCtrl">
-    
+<div class="container">
     <h2>{{pendingCtrl.clickedShift.name}}</h2>
     
-    
-    
+    <ul>
+        <li ng-repeat="shift in pendingCtrl.clickedShift.levelsQuantity">{{key}}</li>
+    </ul>
 </div>

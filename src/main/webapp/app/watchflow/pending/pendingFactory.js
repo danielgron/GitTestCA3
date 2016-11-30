@@ -17,8 +17,12 @@ function pendingFactory($http){
     
     //*** Functions ****
     function loadEvents(){
-       return $http.get("api/watchflow/events/Pending");
+       return $http.get("api/watchflow/events/pending");
     };
+    
+    function getEvent(id){
+        return $http.get("api/event/staffedevent/"+id);
+    }
     
     function getClickedShift(){
         return clickedShift;

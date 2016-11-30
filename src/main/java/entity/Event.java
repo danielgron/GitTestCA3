@@ -6,6 +6,7 @@
 package entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFilter;
 import entity.watches.ResourceWatch;
 import entity.watches.SamaritWatch;
 import java.io.Serializable;
@@ -29,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author dennisschmock
  */
 @Entity
-@XmlRootElement
+@JsonFilter("eventFilter")
 public class Event implements Serializable, OcupiedSlot {
 
     private static final long serialVersionUID = 1L;
