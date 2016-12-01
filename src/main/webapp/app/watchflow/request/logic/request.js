@@ -13,11 +13,11 @@ function requestController($scope,requestFactory,newWatchCardFactory) {
      self.getAllRedCrossLevels = getAllRedCrossLevels;
      self.moveResource = moveResource;
    self.moveResourceBack = moveResourceBack;
+     self.createEventFromRequest = createEventFromRequest;
     
     //** Exceute on Enter *****
      self.request = requestFactory.getRequest();
      self.getResources = getResources();
-     self.createEventFromRequest = createEventFromRequest();
     
      //*** Functions*****
      
