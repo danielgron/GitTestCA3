@@ -13,7 +13,8 @@ function pendingFactory($http){
         setShift: setShift,
         getEvent: getEvent,
         getAvaliableSamaritsForEvent: getAvaliableSamaritsForEvent,
-        getFunctionsForDepartment : getFunctionsForDepartment
+        getFunctionsForDepartment : getFunctionsForDepartment,
+        postNewWatchFunctions: postNewWatchFunctions
     };
     
     return service;
@@ -44,6 +45,10 @@ function pendingFactory($http){
     };
     function getFunctionsForDepartment(){
         return $http.get("api/watchflow/functions");
+    }
+    
+    function postNewWatchFunctions(data){
+        return $http.post("api/watchflow/functions", data);
     }
     
 }

@@ -5,6 +5,7 @@
  */
 package entity.watches;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import entity.StaffedEvent;
 import java.io.Serializable;
 import javax.persistence.Entity;
@@ -21,6 +22,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class SamaritFunctionsOnWatch implements Serializable {
 
+    @JsonBackReference(value="samarit-Functions")
     @ManyToOne
     private StaffedEvent staffedEvent;
 

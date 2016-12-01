@@ -15,6 +15,7 @@ import entity.RedCrossLevel;
 import entity.Resource;
 import entity.StaffedEvent;
 import entity.WatchFunction;
+import entity.watches.SamaritFunctionsOnWatch;
 import enums.Status;
 import facades.WatchFlowFacade;
 import java.io.IOException;
@@ -104,6 +105,20 @@ public class WatchFlowService {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         mapper.setDateFormat(df);
         return mapper.writeValueAsString(d.getWatchFunctions());
+    }
+    
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("functions")
+    public String saveSamaritFunctionsForEvent(String jsonEvent) throws Exception{
+        ObjectMapper mapper = new ObjectMapper();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        mapper.setDateFormat(df);
+        StaffedEvent event = mapper.readValue(jsonEvent, StaffedEvent.class);
+        List<SamaritFunctionsOnWatch> functionsForThisWatch = event.getWatchFunctions();
+        StaffedEvent eventAfterUpdates = wff.updateWatchFunctionsForEvent(functionsForThisWatch, event.getId());
+        return mapper.writer(filters).writeValueAsString(eventAfterUpdates);
     }
 
 }
