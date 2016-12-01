@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container well">
     <h2>{{pendingCtrl.shift.name}}</h2>
 
 
@@ -11,21 +11,27 @@
 
             <div class="panel-body" bs-loading-overlay>
                 <div class="container col-md-12">
-    <select class="input-sm col-md-12" ng-model="selected[key]" ng-change="pendingCtrl.add(selected[key])" ng-options="samarit as samarit.firstName +  ' ' +  samarit.lastName for samarit in pendingCtrl.samarits|samaritlevel:key" >
-<option value="" disabled selected style="display: none;"> -- Please Select -- </option>
+    <select id="this{{key}}" class="input-sm col-md-12" ng-model="selected[key]" ng-change="pendingCtrl.add(selected[key], key)" ng-options="samarit as samarit.firstName +    ' ' +    samarit.lastName for samarit in pendingCtrl.samarits|samaritlevel:key" >
+                            <option value="" disabled selected style="display: none;"> -- Please Select -- </option>
 
-                    </select>
-</div>
+                        </select>
+                    </div>
                     <br>
                     <div class="container col-md-12">
                         <ul class="list-group">
                             <li class="list-group-item" ng-repeat="samarit in pendingCtrl.samaritOnWatch|samaritlevel:key">{{samarit.firstName + ' ' + samarit.lastName}}
-                                <i style="cursor: pointer" ng-click="PendingSingleCtrl.remove(samarit)" class="glyphicon glyphicon-remove right"></i>
+                                <i style="cursor: pointer" ng-click="pendingSingleCtrl.remove(samarit)" class="glyphicon glyphicon-remove right"></i>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
+            
         </div>
+    <div class="btn-group col-md-12">
+                <button class="btn btn-group btn-danger" ng-click="pendingSingleCtrl">Reset</button>
+                <button class="btn btn-group btn-primary" ng-click="pendingSingleCtrl">Cancel</button>
+                <button class="btn btn-group btn-success" ng-click="pendingSingleCtrl">Save</button>
+            </div>
     </div>
 

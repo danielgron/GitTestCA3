@@ -19,13 +19,6 @@
     <class>entity.watches.SamaritCalendar</class>
     <class>entity.watches.SamaritOccupied</class>
     <class>entity.watches.SamaritWatch</class>
-    <class>entity.Resource</class>
-    <class>entity.WatchFunction</class>
-    <class>entity.watches.ResourceWatch</class>
-    <class>entity.user.Admin</class>
-    <class>entity.user.User</class>
-    <class>entity.user.User_Role</class>
-    <class>entity.user.Samarit</class>
     <class>entity.watches.SamaritFunctionsOnWatch</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>

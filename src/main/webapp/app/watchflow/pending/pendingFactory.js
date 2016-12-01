@@ -14,6 +14,7 @@ function pendingFactory($http){
         getEvent: getEvent,
         getAvaliableSamaritsForEvent: getAvaliableSamaritsForEvent,
         getFunctionsForDepartment : getFunctionsForDepartment,
+        saveWatches : saveWatches,
         postNewWatchFunctions: postNewWatchFunctions
     };
     
@@ -47,6 +48,10 @@ function pendingFactory($http){
         return $http.get("api/watchflow/functions");
     }
     
+    function saveWatches(id,samarits){
+        var jsonString = JSON.stringify(samarits);
+        return $http.post("api/watchflow/"+id,jsonString);
+    }
     function postNewWatchFunctions(data){
         return $http.post("api/watchflow/functions", data);
     }
