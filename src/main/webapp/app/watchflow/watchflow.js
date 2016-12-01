@@ -30,6 +30,9 @@ angular.module('myApp.watchflow').config(['$routeProvider', function ($routeProv
            controller: 'PendingSingleCtrl',
            controllerAs: 'pendingCtrl'
        });
+        $routeProvider.when('/singlefunctions/:param',{
+           templateUrl: 'app/watchflow/pending/single/TEMPfunction.html'
+       });
     }]);
 
 

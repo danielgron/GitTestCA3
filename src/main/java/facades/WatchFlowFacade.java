@@ -9,6 +9,7 @@ import entity.Department;
 import entity.RedCrossLevel;
 import entity.Resource;
 import entity.StaffedEvent;
+import entity.WatchFunction;
 import entity.watches.ResourceWatch;
 import entityconnection.EntityConnector;
 import enums.Status;
@@ -17,6 +18,8 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import org.eclipse.persistence.config.CacheUsage;
+import org.eclipse.persistence.config.QueryHints;
 
 /**
  *
@@ -48,7 +51,7 @@ public class WatchFlowFacade {
             Query q = em.createQuery("Select s FROM StaffedEvent s where s.status = :status AND s.department = :dept ");
             q.setParameter("status", status);
             q.setParameter("dept", d);
-            allwithThatStatus = q.getResultList();
+            allwithThatStatus = q.setHint(QueryHints.CACHE_USAGE, CacheUsage.DoNotCheckCache).getResultList();
         } catch (Exception e) {
             log.Log.writeErrorMessageToLog("Error in get all Staffed Events: " + e.getMessage());
             throw e;
@@ -185,6 +188,9 @@ public class WatchFlowFacade {
             em.close();
         }
     }
+    
+    
+    
 
 
-    }
+   }

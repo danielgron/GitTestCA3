@@ -10,7 +10,10 @@ function pendingFactory($http){
     var service = {
         loadEvents: loadEvents,
         getClickedShift : getClickedShift,
-        setShift: setShift
+        setShift: setShift,
+        getEvent: getEvent,
+        getAvaliableSamaritsForEvent: getAvaliableSamaritsForEvent,
+        getFunctionsForDepartment : getFunctionsForDepartment
     };
     
     return service;
@@ -24,12 +27,23 @@ function pendingFactory($http){
         return $http.get("api/event/staffedevent/"+id);
     }
     
+    function getAvailable(date){
+        return $http.get("api/");
+    }
+    
     function getClickedShift(){
         return clickedShift;
     }
     
     function setShift(shift){
         clickedShift = shift;
+    }
+    
+   function getAvaliableSamaritsForEvent(id){
+        return $http.get("api/coordinator/" + id);
+    };
+    function getFunctionsForDepartment(){
+        return $http.get("api/watchflow/functions");
     }
     
 }
