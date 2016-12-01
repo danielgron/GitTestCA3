@@ -14,11 +14,13 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams,bsLoadingOver
     self.samarits = {};
     self.selectedSamarit;
     self.samaritOnWatch = [];
+    self.selected = [];
+    
     ///***Function Calls****
     self.getEvent = getEvent;
     self.getSamarits = getSamarits;
     self.add = add;
-    self.selected = [];
+    
 
     //** Exceute on Enter *****
     getEvent(self.id);
