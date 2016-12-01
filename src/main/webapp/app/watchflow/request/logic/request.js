@@ -17,6 +17,7 @@ function requestController($scope,requestFactory,newWatchCardFactory) {
     //** Exceute on Enter *****
      self.request = requestFactory.getRequest();
      self.getResources = getResources();
+     self.createEventFromRequest = createEventFromRequest();
     
      //*** Functions*****
      
@@ -56,6 +57,15 @@ function requestController($scope,requestFactory,newWatchCardFactory) {
    
      //** Not sorted**
     
+    function createEventFromRequest(){
+        requestFactory.createEventFromRequest(self.request)
+       .then(
+           function successCallback(res) {
+                    self.resources = res.data;
+        }, function errorCallBack(error){
+           console.log("Error in callback: " + error.code); 
+        });
+    }
     
     
      

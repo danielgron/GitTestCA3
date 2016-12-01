@@ -35,7 +35,8 @@ var chosenRequest;
         getRequests: getRequests,
         getRequest: getRequest,
         go: go,
-        getResources: getResources
+        getResources: getResources,
+        createEventFromRequest: createEventFromRequest
     };
 
 
@@ -50,6 +51,10 @@ var chosenRequest;
         //console.log(chosenRequest);
         return chosenRequest;
     };
+    
+    function createEventFromRequest(){
+        return $http.post("api/request/requesttoevent/");
+    }
     
     
     
