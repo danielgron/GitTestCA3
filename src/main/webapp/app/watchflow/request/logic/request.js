@@ -11,10 +11,12 @@ function requestController($scope,requestFactory,newWatchCardFactory) {
     
     ///***Function Calls****
      self.getAllRedCrossLevels = getAllRedCrossLevels;
+     self.moveResource = moveResource;
+   self.moveResourceBack = moveResourceBack;
     
     //** Exceute on Enter *****
      self.request = requestFactory.getRequest();
-     self.resources = getResources();
+     self.getResources = getResources();
     
      //*** Functions*****
      
@@ -32,11 +34,26 @@ function requestController($scope,requestFactory,newWatchCardFactory) {
       requestFactory.getResources(self.request)
        .then(
            function successCallback(res) {
-                    self.allRedCrossLevels = res.data;
+                    self.resources = res.data;
         }, function errorCallBack(error){
            console.log("Error in callback: " + error.code); 
         });
    }
+   
+   function moveResource(){
+     var selected = self.selected; // -- Variable that is created by selecting
+     if(selected != null){
+         
+     self.avalibleResources.remove(selected);
+     self.clickedShift.resources.push(selected);
+     }
+   };
+   
+   function moveResourceBack(resource){
+     self.avalibleResources.push(resource);
+     self.clickedShift.resources.remove(resource);
+   };
+   
      //** Not sorted**
     
     

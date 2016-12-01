@@ -44,7 +44,7 @@ var chosenRequest;
         return $http.get("api/request/");
     };
     function getResources(request) {
-        return $http.get("api/request/resource/"+request.start+"/"+request.start+"/");
+        return $http.get("api/request/resource/"+request.eventstart+"/"+request.eventend+"/");
     };
     function getRequest() {
         //console.log(chosenRequest);
