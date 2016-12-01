@@ -247,7 +247,7 @@ angular.module('myApp.usercalendar').config(['$routeProvider', function ($routeP
 
 //***Custom functions and prototypes***//
 //Spinner setup
-angular.module('myApp.usercalendar').run(function (bsLoadingOverlayService) {
+angular.module('myApp').run(function (bsLoadingOverlayService) {
     bsLoadingOverlayService.setGlobalConfig({
         templateUrl: 'app/templates/loading-overlay-template.html'
     });

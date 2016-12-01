@@ -1,7 +1,31 @@
 <div class="container">
-    <h2>{{pendingCtrl.clickedShift.name}}</h2>
-    
-    <ul>
-        <li ng-repeat="shift in pendingCtrl.clickedShift.levelsQuantity">{{key}}</li>
-    </ul>
+    <h2>{{pendingCtrl.shift.name}}</h2>
+
+
+
+    <div class="form-group col-md-4" ng-repeat="(key, value) in pendingCtrl.shift.levelsQuantity">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                {{key}} <i ng-show="value > 0">- påsæt {{value}}</i>
+            </div>
+
+            <div class="panel-body" bs-loading-overlay>
+                <div class="container col-md-12">
+    <select class="input-sm col-md-12" ng-model="selected[key]" ng-change="pendingCtrl.add(selected[key])" ng-options="samarit as samarit.firstName +  ' ' +  samarit.lastName for samarit in pendingCtrl.samarits|samaritlevel:key" >
+<option value="" disabled selected style="display: none;"> -- Please Select -- </option>
+
+                    </select>
 </div>
+                    <br>
+                    <div class="container col-md-12">
+                        <ul class="list-group">
+                            <li class="list-group-item" ng-repeat="samarit in pendingCtrl.samaritOnWatch|samaritlevel:key">{{samarit.firstName + ' ' + samarit.lastName}}
+                                <i style="cursor: pointer" ng-click="PendingSingleCtrl.remove(samarit)" class="glyphicon glyphicon-remove right"></i>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+

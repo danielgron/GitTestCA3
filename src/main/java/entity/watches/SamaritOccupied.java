@@ -21,7 +21,7 @@ import javax.persistence.NamedQuery;
  * @author dennisschmock
  */
 @NamedQueries({
-    @NamedQuery(name = "SamaritOccupied.findByUserName", query = "SELECT w FROM SamaritOccupied AS w WHERE w.samarit.userName = :userName")})
+@NamedQuery(name = "SamaritOccupied.findByUserName", query = "SELECT w FROM SamaritOccupied AS w WHERE w.samarit.userName = :userName")})
 @JsonFilter("samaritFilter")
 @DiscriminatorValue(value = "SC")
 @Entity
