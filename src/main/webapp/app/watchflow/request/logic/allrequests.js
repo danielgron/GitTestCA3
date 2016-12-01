@@ -34,7 +34,8 @@ var chosenRequest;
         
         getRequests: getRequests,
         getRequest: getRequest,
-        go: go
+        go: go,
+        getResources: getResources
     };
 
 
@@ -42,7 +43,9 @@ var chosenRequest;
     function getRequests() {
         return $http.get("api/request/");
     };
-    
+    function getResources(request) {
+        return $http.get("api/request/resource/"+request.start+"/"+request.start+"/");
+    };
     function getRequest() {
         //console.log(chosenRequest);
         return chosenRequest;
@@ -90,7 +93,7 @@ function allRequestFilter(){
    // Create the return function and set the required parameter name to **input**
   return function(input) {
     var requests=[];
-    console.log("Filter return function");
+    
     // Using the angular.forEach method, go through the array of data and perform the operation of figuring out if the language is statically or dynamically typed.
     angular.forEach(input, function(request) {
         if (request.requestStatus=='SENT') requests.push(request);

@@ -91,6 +91,22 @@ public class RequestService {
             throw ex;
         }
     }
+    
+    @GET
+    @Path("resource/{start}/{end}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getResourceInTimeslot(@PathParam("start") String start,@PathParam("end") String end) throws JsonProcessingException {
+        
+        //TODO return proper representation object
+        int idFromString = Integer.parseInt("2");
+        Request request = rf.getRequest(idFromString);
+        try {
+            return  mapper.writerWithDefaultPrettyPrinter().writeValueAsString(request);
+        } catch (JsonProcessingException ex) {
+            log.Log.writeErrorMessageToLog("Error REST get an Request: " +ex.getMessage());
+            throw ex;
+        }
+    }
     /**
      * PUT method for updating or creating an instance of RequestService
      * @param content representation for the resource
