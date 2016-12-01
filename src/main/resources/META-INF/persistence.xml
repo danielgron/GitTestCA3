@@ -8,7 +8,14 @@
     <class>entity.Invoice</class>
     <class>entity.RedCrossLevel</class>
     <class>entity.Request</class>
+    <class>entity.Resource</class>
     <class>entity.StaffedEvent</class>
+    <class>entity.WatchFunction</class>
+    <class>entity.user.Admin</class>
+    <class>entity.user.Samarit</class>
+    <class>entity.user.User</class>
+    <class>entity.user.User_Role</class>
+    <class>entity.watches.ResourceWatch</class>
     <class>entity.watches.SamaritCalendar</class>
     <class>entity.watches.SamaritOccupied</class>
     <class>entity.watches.SamaritWatch</class>

@@ -1,12 +1,12 @@
-<div class="col-md-6">
+<div class="col-md-6" style = "border:1px solid black">
     <h3>Arrangement</h3>
     <label>Arrangement</label> 
 
-    {{ctrl.request.eventName}} <br>
+    {{requestCtrl.request.eventName}} <br>
     <label>Antal Gæster</label>
-{{ctrl.request.numberGuests}} <br>
-<label>Dato-</label>
-<label>--evt stednavn--</label>
-<label>--Adresse--</label>
-<label>--postnr--</label> <label>by--</label>
+    {{requestCtrl.request.numberGuests}} <br>
+    <label>Dato</label> <br>
+    <label>Stednavn</label>  <input type="text" name="" value="" ng-model='requestCtrl.request.venue'/><br>
+    <label>Adresse</label><input type="text" name="" value="" ng-model='requestCtrl.request.street'/> <br>
+    <label>Postnummer</label><input type="text" name="" value="" ng-model='requestCtrl.request.zip'/> <label>by</label>
 </div>

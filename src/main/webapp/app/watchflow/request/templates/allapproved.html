@@ -9,7 +9,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="request in (allRequestCtrl.requests | allRequestFilter)" ng-click="allRequestCtrl.go(request)">
+            <tr ng-repeat="request in allRequestCtrl.requests | allApprovedFilter" ng-click="allRequestCtrl.go(request)">
                 <td>{{request.eventName}}</td>
                 <td>{{request.eventDate}}</td>
             </tr>

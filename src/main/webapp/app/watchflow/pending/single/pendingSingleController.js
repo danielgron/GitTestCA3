@@ -1,34 +1,62 @@
 angular.module('myApp.watchflow')
         .controller('PendingSingleCtrl', PendingSingleCtrl);
 
-PendingSingleCtrl.$inject = ['pendingFactory', '$location', '$routeParams'];
+PendingSingleCtrl.$inject = ['pendingFactory', '$location', '$routeParams','bsLoadingOverlayService'];
 
 
-function PendingSingleCtrl(pendingFactory, $location, $routeParams) {
+function PendingSingleCtrl(pendingFactory, $location, $routeParams,bsLoadingOverlayService) {
 
 
     //**Bindable Variables****
     var self = this;
-    self.clickedShift = {};
-    self.params = $routeParams.param;
+    self.id = $routeParams.param;
     self.shift = {};
-    window.console.log(self.params);
-
+    self.samarits = {};
+    self.selectedSamarit;
+    self.samaritOnWatch = [];
+    self.selected = [];
+    
     ///***Function Calls****
-    //self.getclicked = getclicked();
+    self.getEvent = getEvent;
+    self.getSamarits = getSamarits;
+    self.add = add;
+    
 
     //** Exceute on Enter *****
-    getEvent();
+    getEvent(self.id);
+    getSamarits(self.id);
 
 
     //*** Functions*****
-    function getEvent() {
-        pendingFactory.getEvent(self.params).then(function(successResponse) {
-                            self.shift = successResponse.data;
-                            window.console.log(self.shift);
-                        }, function (errorResponse) {
-                    console.log("Error in callback: " + errorResponse.data.error.code);
-                });
+    function getEvent(id) {
+        
+        pendingFactory.getEvent(id).then(function (successResponse) {
+            self.shift = successResponse.data;
+        }, function (errorResponse) {
+            console.log("Error in callback: " + errorResponse.data.error.code);
+        });
+    }
+
+    function getSamarits(id) {
+                        bsLoadingOverlayService.start();
+
+        pendingFactory.getAvaliableSamaritsForEvent(id).then(function (successResponse) {
+            self.samarits = successResponse.data;
+                            bsLoadingOverlayService.stop();
+
+
+        }, function (errorResponse) {
+                            bsLoadingOverlayService.stop();
+
+            window.console.log("Error in callback: " + errorResponse.data.error.code);
+        });
+
+    }
+    
+    function add(samarit){
+        self.samaritOnWatch.push(samarit);
+        window.console.log('added ' + samarit);
+        
     }
 
 }

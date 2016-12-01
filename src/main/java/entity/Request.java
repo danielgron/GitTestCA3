@@ -6,10 +6,14 @@
 package entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import enums.RequestStatus;
+import enums.Status;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,6 +33,8 @@ public class Request implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String eventName;
+    @Enumerated(EnumType.STRING)
+    private RequestStatus requestStatus;
     private int numberGuests;
     private String agegroup;
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -417,7 +423,16 @@ public class Request implements Serializable {
     public void setDepartment(Department department) {
         this.department = department;
     }
-    
+
+    public RequestStatus getRequestStatus() {
+        return requestStatus;
+    }
+
+    public void setRequestStatus(RequestStatus requestStatus) {
+        this.requestStatus = requestStatus;
+    }
+
+
     
 
 }
