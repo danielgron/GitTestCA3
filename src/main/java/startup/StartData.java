@@ -18,6 +18,7 @@ import entity.StaffedEvent;
 import entity.user.User;
 import entity.user.User_Role;
 import entity.WatchFunction;
+import entity.watches.SamaritFunctionsOnWatch;
 import entity.watches.SamaritOccupied;
 import entity.watches.SamaritWatch;
 import entityconnection.EntityConnector;
@@ -309,7 +310,7 @@ for (int i = 0; i < 10; i++) {
     }
     private static void createStaffedEvent() {
         for (int i = 0; i < 3; i++) {
-        EntityManager em = EntityConnector.getEntityManager();
+EntityManager em = EntityConnector.getEntityManager();
            
             
         try {
@@ -318,13 +319,13 @@ for (int i = 0; i < 10; i++) {
             Query q1 = em.createQuery("Select l from RedCrossLevel l");
             List<RedCrossLevel> allRedCrossLevels = q1.getResultList();
             event.initilazeLinkedMap(allRedCrossLevels);
-            em.getTransaction().begin();
+em.getTransaction().begin();
             em.persist(event);
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
             System.out.println("EXECPTION IN CREATED STAFFED EVENT!! " + e.getMessage() );
-        }
-        }
+    }
+}
     }
 }

@@ -5,14 +5,17 @@
  */
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import entity.watches.SamaritFunctionsOnWatch;
 import enums.Status;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -53,7 +56,7 @@ public class StaffedEvent extends Event{
     private Map<String,Integer> levelsQuantity;
     
 
-    @OneToMany(mappedBy = "staffedEvent")
+    @OneToMany(mappedBy = "staffedEvent", cascade = CascadeType.ALL)
     private List<SamaritFunctionsOnWatch> watchFunctions;
 
     public StaffedEvent() {
@@ -62,6 +65,7 @@ public class StaffedEvent extends Event{
     public StaffedEvent(Status status, Date start, Date end, boolean allDay, String name, String desc, Department department) {
         super(start, end, allDay, name, desc, department);
         this.status = status;
+        watchFunctions = new ArrayList<>();
     }
     
    

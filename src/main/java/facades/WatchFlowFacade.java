@@ -11,6 +11,7 @@ import entity.Resource;
 import entity.StaffedEvent;
 import entity.WatchFunction;
 import entity.watches.ResourceWatch;
+import entity.watches.SamaritFunctionsOnWatch;
 import entityconnection.EntityConnector;
 import enums.Status;
 import java.util.List;
@@ -187,6 +188,36 @@ public class WatchFlowFacade {
         finally{
             em.close();
         }
+    }
+
+    /**
+     * Updates the functions for an event, and the assiged samarits.
+     * Also deletes what already there
+     * @param functionsForThisWatch
+     * @param eventId
+     * @return
+     */
+    public StaffedEvent updateWatchFunctionsForEvent(List<SamaritFunctionsOnWatch> functionsForThisWatch, int eventId) {
+        EntityManager em = EntityConnector.getEntityManager();
+        StaffedEvent event = null;
+        try {
+            em.getTransaction().begin();
+            TypedQuery<StaffedEvent> q1 = em.createQuery("Select e from StaffedEvent e where e.id =:eventid", StaffedEvent.class);
+            q1.setParameter("eventid", eventId);
+            event = q1.getSingleResult();
+            for (SamaritFunctionsOnWatch samaritFunctionsOnWatch : functionsForThisWatch) {
+                samaritFunctionsOnWatch.setStaffedEvent(event);
+            }
+            event.setWatchFunctions(functionsForThisWatch);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            log.Log.writeErrorMessageToLog("Error in updateWatchFunction" + e.getMessage());
+            throw e;
+        }
+        finally{
+            em.close();
+        }
+        return event;
     }
     
     
