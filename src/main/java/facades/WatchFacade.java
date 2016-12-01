@@ -6,10 +6,12 @@
 package facades;
 
 import entity.Event;
+import entity.StaffedEvent;
 import entity.user.Samarit;
 import entity.watches.SamaritOccupied;
 import entity.watches.SamaritWatch;
 import entityconnection.EntityConnector;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -209,5 +211,38 @@ public class WatchFacade {
             em.close();
         }
         return watch;
+    }
+
+    public List<Samarit> setWatchesForSamarits(List<Samarit> samarits, int eventId) {
+        List<SamaritWatch> watches = new ArrayList();
+        EntityManager em = EntityConnector.getEntityManager();
+        try {
+            StaffedEvent event = em.find(StaffedEvent.class, eventId);
+            em.getTransaction().begin();
+            for (Samarit samarit : samarits) {
+                SamaritWatch watch = new SamaritWatch();
+
+                //Method sets the bidirectional reference
+                event.addWatch(watch);
+                //Method also sets the bidirectional reference
+                samarit.addWatch(watch);
+                watch.setTitle(event.getName());
+                watch.setStart(event.getStart());
+                watch.setEnd(event.getEnd());
+                watch.setRole("tbi");
+                watch.setColor("blue");
+                em.persist(watch);
+
+            }
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            em.getTransaction().rollback();
+            log.Log.writeErrorMessageToLog("Error in getwatches for User: " + ex.getMessage());
+            throw ex;
+        } finally {
+            em.close();
+        }
+        return samarits;
+
     }
 }
