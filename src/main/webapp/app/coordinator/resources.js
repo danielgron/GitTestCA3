@@ -30,9 +30,9 @@ angular.module('myApp.resources', [])
                 getAvailableResources();
 
                 self.changeResource = function (res) {
-                    console.log("Click");
-                    console.log(res.id);
-                    console.log(res.name);
+                    //console.log("Click");
+                    //console.log(res.id);
+                    //console.log(res.name);
                     $http({
                         method: 'POST',
                         url: 'api/Resource/changeResShift/' + $scope.event + '/' + res.id,

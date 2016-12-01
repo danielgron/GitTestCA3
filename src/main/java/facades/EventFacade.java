@@ -174,6 +174,26 @@ public class EventFacade {
         return availableRes;
     }
     
+    public List<Resource> getAvailableResourcesForDates(Date start, Date end){
+        List<Resource> allRes = new ArrayList();
+        EntityManager em = EntityConnector.getEntityManager();
+        Query createQuery = em.createQuery("select r from Resource r",Resource.class);
+        allRes=createQuery.getResultList();
+        List<Resource> res = new ArrayList();
+        Event mockEvent = new Event();
+        mockEvent.setStart(start);
+        mockEvent.setEnd(end);
+        
+        for (Resource resource : allRes) {
+            if(checkAvalibilty(resource,mockEvent)){
+                res.add(resource);
+            }
+        }
+        
+        
+        return res;
+    }
+    
     private boolean checkAvalibilty(Resource res, Event e) {
         boolean available = true;
         List<OcupiedSlot> blockedTimes = res.getNotAvail();
