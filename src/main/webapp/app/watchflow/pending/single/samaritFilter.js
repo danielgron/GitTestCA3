@@ -3,11 +3,16 @@ angular.module('myApp.watchflow')
             return function (input, param) {
                 var filtered = [];
                 angular.forEach(input, function (value, key) {
+                    if (value!=undefined){
+                        
+                    
                     angular.forEach(value.redCrossLevel, function (value1, key) {
+                        
                         if (param === value1.level) {
                             filtered.push(value);
                         } 
                     });
+                    }
                 });
 
                 

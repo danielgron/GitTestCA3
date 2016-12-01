@@ -20,6 +20,7 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOve
     self.getEvent = getEvent;
     self.getSamarits = getSamarits;
     self.add = add;
+    self.save = save;
 
 
     //** Exceute on Enter *****
@@ -29,7 +30,7 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOve
 
     //*** Functions*****
     function getEvent(id) {
-
+        window.console.log('test getEvent');
         pendingFactory.getEvent(id).then(function (successResponse) {
             self.shift = successResponse.data;
         }, function (errorResponse) {
@@ -53,21 +54,36 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOve
 
     }
 
-    function add(samarit) {
+    function add(samarit, role) {
+        var samarit1 = {};
+        samarit1 = samarit;
+        // window.console.log("from add: " + samarit);
+        window.console.log(role);
+        window.console.log(samarit1);
+        if(role!==null&&samarit!=null){
+            samarit1.role= role;
+        }
+        self.samaritOnWatch.push(samarit1);
+        self.samarits.remove(samarit1);
+        //self.samarits = self.samarits.remove(samarit);
+    }
+    
+    function remove(samarit){
         window.console.log(samarit);
-        self.samaritOnWatch.push(samarit);
+    }
 
-        self.samarits.forEach(function (item, index) {
-            window.console.log(item);
-            if (item !== null) {
+    function save() {
+        bsLoadingOverlayService.start();
+        pendingFactory.saveWatches(self.samaritOnWatch.push)
+                .then(function (successResponse) {
+                    window.console.log(successResponse);
+                }, function (errorResponse) {
+                    window.console.log("Error in callback: " + errorResponse.data.error.code);
 
+                });
 
-                if (samarit.userName==='test') {
-                    self.samarits.splice(index, 1);
-                }
-            }
-        });
 
     }
+
 
 }

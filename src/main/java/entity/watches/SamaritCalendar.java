@@ -31,6 +31,34 @@ import javax.persistence.TemporalType;
 @Table(name = "SAMARITCALENDER")
 public class SamaritCalendar implements Serializable, OcupiedSlot{
 
+    /**
+     * @return the title
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * @param title the title to set
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    /**
+     * @return the color
+     */
+    public String getColor() {
+        return color;
+    }
+
+    /**
+     * @param color the color to set
+     */
+    public void setColor(String color) {
+        this.color = color;
+    }
+
     private static final long serialVersionUID = 1L;
     
     @Id
@@ -44,6 +72,9 @@ public class SamaritCalendar implements Serializable, OcupiedSlot{
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "WATCHEND")
     private Date end;
+    
+    private String title;
+    private String color;
 
     private boolean allDay;
 

@@ -6,6 +6,7 @@
 package rest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
@@ -15,7 +16,9 @@ import entity.RedCrossLevel;
 import entity.Resource;
 import entity.StaffedEvent;
 import entity.WatchFunction;
+import entity.user.Samarit;
 import enums.Status;
+import facades.WatchFacade;
 import facades.WatchFlowFacade;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -44,6 +47,7 @@ public class WatchFlowService {
     private HttpServletRequest context;
 
     WatchFlowFacade wff;
+    private static WatchFacade wf = new WatchFacade();
 
     /**
      * Creates a new instance of WatchFlowService
@@ -104,6 +108,18 @@ public class WatchFlowService {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         mapper.setDateFormat(df);
         return mapper.writeValueAsString(d.getWatchFunctions());
+    }
+    
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("{id}")
+    public String registerWatches(@PathParam("id") int id, String json) throws IOException{
+        ObjectMapper mapper = new ObjectMapper();
+        List<Samarit> samarits = mapper.readValue(json, new TypeReference<List<Samarit>>(){});
+        samarits = wf.setWatchesForSamarits(samarits, id);
+        String returnJson = mapper.writer(filters).writeValueAsString(samarits);
+        return returnJson;
     }
 
 }

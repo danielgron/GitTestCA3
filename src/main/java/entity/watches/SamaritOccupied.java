@@ -27,9 +27,7 @@ import javax.persistence.NamedQuery;
 @Entity
 public class SamaritOccupied extends SamaritCalendar {
 
-    private String title;
     private String rendering;
-    private String color;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Samarit samarit;
@@ -43,13 +41,7 @@ public class SamaritOccupied extends SamaritCalendar {
 
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    
 
     public String getRendering() {
         return rendering;
@@ -59,13 +51,7 @@ public class SamaritOccupied extends SamaritCalendar {
         this.rendering = rendering;
     }
 
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
+    
 
     /**
      * @return the samarit

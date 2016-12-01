@@ -26,7 +26,9 @@ public class SamaritWatch extends SamaritCalendar {
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Samarit samarit;
-
+    
+    private String watchRole;
+    
     public SamaritWatch() {
     }
 
@@ -59,6 +61,20 @@ public class SamaritWatch extends SamaritCalendar {
      */
     public void setSamarit(Samarit samarit) {
         this.samarit = samarit;
+    }
+
+    /**
+     * @return the role
+     */
+    public String getRole() {
+        return watchRole;
+    }
+
+    /**
+     * @param role the role to set
+     */
+    public void setRole(String role) {
+        this.watchRole = role;
     }
 
 }
