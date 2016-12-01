@@ -1,26 +1,26 @@
 angular.module('myApp.watchflow')
         .controller('PendingSingleCtrl', PendingSingleCtrl);
 
-PendingSingleCtrl.$inject = ['pendingFactory', '$location', '$routeParams','bsLoadingOverlayService'];
+PendingSingleCtrl.$inject = ['pendingFactory', '$location', '$routeParams', 'bsLoadingOverlayService'];
 
 
-function PendingSingleCtrl(pendingFactory, $location, $routeParams,bsLoadingOverlayService) {
+function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOverlayService) {
 
 
     //**Bindable Variables****
     var self = this;
     self.id = $routeParams.param;
     self.shift = {};
-    self.samarits = {};
+    self.samarits = [];
     self.selectedSamarit;
     self.samaritOnWatch = [];
     self.selected = [];
-    
+
     ///***Function Calls****
     self.getEvent = getEvent;
     self.getSamarits = getSamarits;
     self.add = add;
-    
+
 
     //** Exceute on Enter *****
     getEvent(self.id);
@@ -29,7 +29,7 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams,bsLoadingOver
 
     //*** Functions*****
     function getEvent(id) {
-        
+
         pendingFactory.getEvent(id).then(function (successResponse) {
             self.shift = successResponse.data;
         }, function (errorResponse) {
@@ -38,25 +38,36 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams,bsLoadingOver
     }
 
     function getSamarits(id) {
-                        bsLoadingOverlayService.start();
+        bsLoadingOverlayService.start();
 
         pendingFactory.getAvaliableSamaritsForEvent(id).then(function (successResponse) {
             self.samarits = successResponse.data;
-                            bsLoadingOverlayService.stop();
+            bsLoadingOverlayService.stop();
 
 
         }, function (errorResponse) {
-                            bsLoadingOverlayService.stop();
+            bsLoadingOverlayService.stop();
 
             window.console.log("Error in callback: " + errorResponse.data.error.code);
         });
 
     }
-    
-    function add(samarit){
+
+    function add(samarit) {
+        window.console.log(samarit);
         self.samaritOnWatch.push(samarit);
-        window.console.log('added ' + samarit);
-        
+
+        self.samarits.forEach(function (item, index) {
+            window.console.log(item);
+            if (item !== null) {
+
+
+                if (samarit.userName==='test') {
+                    self.samarits.splice(index, 1);
+                }
+            }
+        });
+
     }
 
 }
