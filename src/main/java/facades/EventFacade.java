@@ -8,9 +8,12 @@ package facades;
 import entity.Department;
 import entity.Event;
 import entity.OcupiedSlot;
+import entity.Request;
 import entity.Resource;
+import entity.StaffedEvent;
 import entity.user.Samarit;
 import entityconnection.EntityConnector;
+import enums.Status;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -226,4 +229,51 @@ public class EventFacade {
 
         return available;
     }
+
+    public Event createEventFromRequest(Request request) {
+        request.getEventDate();
+        Date eventstart = request.getEventstart();
+        Date eventend = request.getEventend();
+        Department department = request.getDepartment();
+        String eventName = request.getEventName();
+        String street = request.getStreet();
+        
+        request.getAgegroup();
+        request.getCatering();
+        request.getComments();
+        request.getContact();
+        request.getDoorsopen();
+        request.getInvoice();
+        request.getNumberGuests();
+        request.getRequestStatus();
+        request.getVenue();
+        request.getVisibility();
+        request.getWatchStart();
+        request.getZip();
+        request.isAmbulance();
+        request.isEmergencyOffice();
+        request.isMedics();
+        request.isResponseTeam();
+        request.isStretcherTeam();
+        request.isTreatmentfacility();
+        
+        
+        
+    StaffedEvent event= new StaffedEvent();
+    event.setName(eventName);
+    event.setStart(eventstart);
+    event.setEnd(eventend);
+    event.setStatus(Status.ReadyToCreate);
+    event.setDepartment(department);
+    event.setAddress(street);
+
+    
+    EntityManager em = EntityConnector.getEntityManager();
+    em.getTransaction().begin();
+    em.persist(event);
+    em.getTransaction().commit();
+    
+    return event;
+    }
+
 }
