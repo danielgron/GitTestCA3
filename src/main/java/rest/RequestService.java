@@ -5,6 +5,7 @@
  */
 package rest;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,12 +13,14 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import entity.Department;
 import entity.Event;
 import entity.Request;
 import entity.Resource;
 import facades.EventFacade;
 import facades.RequestFacade;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -40,6 +43,8 @@ import util.JSON_Converter;
  *
  * @author dennisschmock
  */
+//Nope... Synes ikke at virke
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Path("request")
 public class RequestService {
 
@@ -49,7 +54,7 @@ public class RequestService {
     private static JsonFactory factory = new JsonFactory();
     private static ObjectMapper mapper = new ObjectMapper();
     private static JSON_Converter eJson = new JSON_Converter();
-    private Gson gson = new Gson();
+    private Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
 
     /**
      * Creates a new instance of RequestResource
@@ -128,7 +133,7 @@ public class RequestService {
     @POST
     @Path("requesttoevent")
     @Produces(MediaType.APPLICATION_JSON)
-    public String postRequestToEvent(String json) throws JsonProcessingException {
+    public String postRequestToEvent(String json) throws JsonProcessingException, Exception {
 
         EventFacade ef = new EventFacade();
         Request r;
@@ -136,7 +141,9 @@ public class RequestService {
 //        System.out.println("Got here");
 
         try {
-        r = gson.fromJson(json, Request.class);
+        //r = gson.fromJson(json, Request.class);
+        mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm a z"));
+        r =mapper.readValue(json, Request.class);
         //TODO return proper representation object
         Event e = ef.createEventFromRequest(r);
             return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(e);
