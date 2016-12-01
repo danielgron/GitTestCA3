@@ -29,7 +29,7 @@ function requestController($scope, requestFactory, newWatchCardFactory) {
                         }, function errorCallBack(error) {
                     console.log("Error in callback: " + error.code);
                 });
-    }
+    };
 
     function getResources() {
         requestFactory.getResources(self.request)
@@ -58,14 +58,14 @@ function requestController($scope, requestFactory, newWatchCardFactory) {
     ;
 
     function createEventFromRequest() {
-        requestFactory.createEventFromRequest(self.request)
+        requestFactory.createEventFromRequest()
                 .then(
                         function successCallback(res) {
-                            self.resources = res.data;
+                            //self.resources = res.data;
                         }, function errorCallBack(error) {
                     console.log("Error in callback: " + error.code);
                 });
-    }
+    };
     //** Not sorted**
 
 

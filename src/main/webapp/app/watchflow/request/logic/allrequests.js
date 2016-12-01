@@ -13,6 +13,7 @@ function allRequestsController(requestFactory, $location) {
     //self.test = "Controller is working";
     self.requests = [];
     self.go = requestFactory.go;
+    self.goApproved = requestFactory.goApproved;
 
     promise.then(
             function successCallback(res) {
@@ -34,6 +35,7 @@ function requestFactory($http, $location) {
         getRequests: getRequests,
         getRequest: getRequest,
         go: go,
+        goApproved: goApproved,
         getResources: getResources,
         createEventFromRequest: createEventFromRequest
     };
@@ -55,7 +57,8 @@ function requestFactory($http, $location) {
     ;
 
     function createEventFromRequest() {
-        return $http.post("api/request/requesttoevent/");
+        var jsonString = JSON.stringify(chosenRequest);
+        return $http.post("api/request/requesttoevent/",jsonString);
     }
 
 
@@ -64,6 +67,12 @@ function requestFactory($http, $location) {
         //console.log("CLICK");
         chosenRequest = request;
         $location.path("/request");
+    }
+    ;
+    function goApproved(request) {
+        //console.log("CLICK");
+        chosenRequest = request;
+        $location.path("/approvedrequest");
     }
     ;
     return service;

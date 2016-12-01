@@ -25,6 +25,12 @@ angular.module('myApp.watchflow').config(['$routeProvider', function ($routeProv
         $routeProvider.when('/request',{
            templateUrl: 'app/watchflow/request/templates/request.html' 
        });
+       $routeProvider.when('/approvedrequest',{
+           templateUrl: 'app/watchflow/request/templates/approvedrequest.html' 
+       });
+       $routeProvider.when('/sent',{
+           templateUrl: 'app/watchflow/request/templates/request.html' 
+       });
        $routeProvider.when('/singlepending/:param',{
            templateUrl: 'app/watchflow/pending/single/pendingsingle.html',
            controller: 'PendingSingleCtrl',

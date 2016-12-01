@@ -134,12 +134,17 @@ public class RequestService {
         Request r;
         System.out.println(json);
 //        System.out.println("Got here");
+
+        try {
         r = gson.fromJson(json, Request.class);
         //TODO return proper representation object
         Event e = ef.createEventFromRequest(r);
-        try {
             return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(e);
         } catch (JsonProcessingException ex) {
+            log.Log.writeErrorMessageToLog("Error REST request to event: " + ex.getMessage());
+            throw ex;
+        }
+        catch (Exception ex){
             log.Log.writeErrorMessageToLog("Error REST request to event: " + ex.getMessage());
             throw ex;
         }

@@ -8,7 +8,7 @@ angular.module('myApp.watchflow')
                 bindToController: true,
                 restrict: 'E',
                 replace: 'true',
-                templateUrl: 'app/watchflow/request/templates/watchcard.html'
+                templateUrl: 'app/watchflow/request/templates/watchcardsent.html'
 
             };
         })
