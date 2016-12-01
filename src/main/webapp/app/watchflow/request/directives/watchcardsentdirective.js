@@ -1,6 +1,6 @@
 angular.module('myApp.watchflow')
 
-        .directive('addedInfo', function () {
+        .directive('watchCardSent', function () {
 
             return {
                 controller: 'RequestController',
@@ -8,7 +8,7 @@ angular.module('myApp.watchflow')
                 bindToController: true,
                 restrict: 'E',
                 replace: 'true',
-                templateUrl: 'app/watchflow/request/templates/addedinfo.html'
+                templateUrl: 'app/watchflow/request/templates/watchcard.html'
 
             };
         })

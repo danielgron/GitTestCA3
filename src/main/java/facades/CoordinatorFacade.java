@@ -210,10 +210,9 @@ public class CoordinatorFacade {
             // Get the event in question
             e = em.find(Event.class, eventId);
             ResourceWatch resWatch = new ResourceWatch();
-            Resource res = em.find(Resource.class, resId);
             List<ResourceWatch> eventResourceWatchs = e.getResourceWatchs();
             // Get resource from id
-            Resource r = em.find(Resource.class, resId);
+            Resource res = em.find(Resource.class, resId);
 
             resWatch.setEvent(e);
             resWatch.setResource(res);

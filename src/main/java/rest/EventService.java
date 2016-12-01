@@ -46,7 +46,9 @@ public class EventService {
     private static EventFacade ef = new EventFacade();
     private static JSON_Converter eJson = new JSON_Converter();
     private Gson gson = new Gson();
-
+    SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept();
+    FilterProvider filters = new SimpleFilterProvider().addFilter("samaritFilter", theFilter);
+    
     @Context
     private UriInfo context;
 
@@ -98,7 +100,7 @@ public class EventService {
             ObjectMapper mapper = new ObjectMapper();
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm a z");
             mapper.setDateFormat(df);
-            return  mapper.writerWithDefaultPrettyPrinter().writeValueAsString(event);
+            return  mapper.writer(filters).writeValueAsString(event);
         } catch (JsonProcessingException ex) {
            log.Log.writeErrorMessageToLog("Exception When Creating JSON Object single event: " + ex);
            throw ex;

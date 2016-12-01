@@ -13,7 +13,10 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import entity.Department;
 import entity.Request;
+import entity.Resource;
+import facades.EventFacade;
 import facades.RequestFacade;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -93,6 +96,23 @@ public class RequestService {
             return  mapper.writerWithDefaultPrettyPrinter().writeValueAsString(request);
         } catch (JsonProcessingException ex) {
             log.Log.writeErrorMessageToLog("Error REST get an Request: " +ex.getMessage());
+            throw ex;
+        }
+    }
+    
+    @GET
+    @Path("resource/{start}/{end}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getResourceInTimeslot(@PathParam("start") String start,@PathParam("end") String end) throws JsonProcessingException {
+        EventFacade ef = new EventFacade();
+        //TODO return proper representation object
+        long eStart = Long.parseLong(start);
+        long eEnd = Long.parseLong(end);
+        List<Resource> res = ef.getAvailableResourcesForDates(new Date(eStart), new Date (eEnd));
+        try {
+            return  mapper.writerWithDefaultPrettyPrinter().writeValueAsString(res);
+        } catch (JsonProcessingException ex) {
+            log.Log.writeErrorMessageToLog("Error REST get resourcelist: " +ex.getMessage());
             throw ex;
         }
     }
