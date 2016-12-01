@@ -39,11 +39,11 @@ import log.Log;
 public class StartData {
 
     public static void main(String[] args) {
-        //Persistence.generateSchema("pu_local", null);
+        Persistence.generateSchema("pu_local", null);
         StartData sd = new StartData();
-//        insertTestData();
-//        sd.insertRandomData();
-//        createStaffedEvent();
+        insertTestData();
+        sd.insertRandomData();
+        createStaffedEvent();
 for (int i = 0; i < 10; i++) {
             sd.testRequest();
         }
@@ -280,10 +280,13 @@ for (int i = 0; i < 10; i++) {
         return i;
     }
     private static void createStaffedEvent() {
+        for (int i = 0; i < 3; i++) {
         EntityManager em = EntityConnector.getEntityManager();
+           
+            
         try {
             Department d = em.find(Department.class, "København");
-            StaffedEvent event = new StaffedEvent(Status.ReadyToCreate, new Date(), new Date(), false, "Håndbold", "Flot", d);
+            StaffedEvent event = new StaffedEvent(Status.ReadyToCreate, new Date(), new Date(), false, "Svømme Stævne", "Flot", d);
             Query q1 = em.createQuery("Select l from RedCrossLevel l");
             List<RedCrossLevel> allRedCrossLevels = q1.getResultList();
             event.initilazeLinkedMap(allRedCrossLevels);
@@ -293,6 +296,7 @@ for (int i = 0; i < 10; i++) {
             em.close();
         } catch (Exception e) {
             System.out.println("EXECPTION IN CREATED STAFFED EVENT!! " + e.getMessage() );
+        }
         }
     }
 }

@@ -23,6 +23,15 @@ import javax.persistence.TypedQuery;
  * @author Daniel
  */
 public class WatchFlowFacade {
+    
+    
+    CoordinatorFacade cf;
+
+    public WatchFlowFacade(){ 
+     cf = new CoordinatorFacade();
+    }
+    
+    
 
     /**
      * Gets all the StaffedEventWith the
@@ -33,6 +42,7 @@ public class WatchFlowFacade {
      */
     public List<StaffedEvent> getAllStaffedEventsWithStatus(Status status, Department d) {
         EntityManager em = EntityConnector.getEntityManager();
+        em.getEntityManagerFactory().getCache().evictAll();
         List<StaffedEvent> allwithThatStatus;
         try {
             Query q = em.createQuery("Select s FROM StaffedEvent s where s.status = :status AND s.department = :dept ");
@@ -102,10 +112,10 @@ public class WatchFlowFacade {
      * Should remove all ResourceWatches asociated with the existing object if any
      * And also put in ResourceWatches for an new event
      * @param eventId
-     * @param resources
+     * @param incommingResources
      * @return
      */
-    public StaffedEvent updateResources(Integer eventId, List<Resource> resources) {
+    public StaffedEvent updateResources(Integer eventId, List<Resource> incommingResources) throws Exception {
         EntityManager em = EntityConnector.getEntityManager();
         StaffedEvent event = null;
         try {
@@ -113,10 +123,12 @@ public class WatchFlowFacade {
             q1.setParameter("eventid", eventId);
             event = q1.getSingleResult();
            
-  // We need to remove all ResourceWatches from the "existing" Object.
-  //        removeResourceWatches(event, em);
+//   We need to remove all ResourceWatches from the "existing" Object.
+//   And Add one for each Resource.
+          removeResourceWatchesfromEvent(event, em);
+          addNewResourceWatchesToEvent(eventId, incommingResources, em);
             em.getTransaction().begin();
-            event.setResources(resources);
+            event.setResources(incommingResources);
             em.getTransaction().commit();
         } catch (Exception e) {
             log.Log.writeErrorMessageToLog("Error in Updated Quantity For Event: " + e.getMessage());
@@ -131,30 +143,26 @@ public class WatchFlowFacade {
     /*
     How to Deal with ResourceWatches??!?!?!?!!?!
      */
-    private void removeResourceWatches(StaffedEvent event, EntityManager em) throws Exception {
-        List<ResourceWatch> watches = event.getResourceWatchs();
-        if (watches == null || watches.isEmpty()) {
+    private void removeResourceWatchesfromEvent(StaffedEvent event, EntityManager em) throws Exception {
+        List<Resource> resourcesBeforeUpdate = event.getResources();
+        if (resourcesBeforeUpdate == null || resourcesBeforeUpdate.isEmpty()) {
             return; // then there is no Resources assigned yet!
         }
         em.getTransaction().begin();
-        for (ResourceWatch watch : watches) {
-            em.remove(watch);
+        for (Resource resource : resourcesBeforeUpdate) {
+            cf.deleteResourceFromEvent(event.getId(), resource.getId());
         }
         em.getTransaction().commit();
 
-        /*
-          List<ResourceWatch> eventResourceWatchs = event.getResourceWatchs();
-          for (Resource res : resources) {
-            ResourceWatch resWatch = new ResourceWatch();
-            resWatch.setEvent(event);
-            resWatch.setResource(res);
-            resWatch
-            eventResourceWatchs.add(resWatch);
-            em.persist(resWatch);
-        }
-         */
     }
 
+    private void addNewResourceWatchesToEvent(Integer eventId, List<Resource> incommingResources, EntityManager em) throws Exception {
+        for (Resource incommingResource : incommingResources) {
+            em.getTransaction().begin();
+            cf.addResourceToEvent(eventId, incommingResource.getId());
+            em.getTransaction().commit();
+        }
+    }
     /**
      * Updates the status of the Event.
      * @param eventId Id of the event to be updated
@@ -177,5 +185,6 @@ public class WatchFlowFacade {
             em.close();
         }
     }
+
 
     }

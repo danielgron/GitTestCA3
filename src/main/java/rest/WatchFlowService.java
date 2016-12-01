@@ -91,7 +91,7 @@ public class WatchFlowService {
         wff.updateQuantityForEvent(id, map);
         StaffedEvent eventAfterUpdates = wff.updateResources(id, resources);
         wff.updateStatusOfStaffedEvent(id, Status.Pending);
-        return mapper.writeValueAsString(eventAfterUpdates);
+        return mapper.writer(filters).writeValueAsString(eventAfterUpdates);
     }
 
 }
