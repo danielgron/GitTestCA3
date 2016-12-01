@@ -1,6 +1,6 @@
 angular.module('myApp.watchflow')
 
-        .directive('shiftType', function () {
+        .directive('watchCard', function () {
 
             return {
                 controller: 'RequestController',
@@ -8,7 +8,7 @@ angular.module('myApp.watchflow')
                 bindToController: true,
                 restrict: 'E',
                 replace: 'true',
-                templateUrl: 'app/watchflow/request/templates/shifttype.html'
+                templateUrl: 'app/watchflow/request/templates/watchcardsent.html'
 
             };
         })

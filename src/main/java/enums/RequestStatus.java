@@ -10,5 +10,5 @@ package enums;
  * @author Daniel
  */
 public enum RequestStatus {
-    received,sent,approved
+    RECIEVED,SENT,APPROVED
 }

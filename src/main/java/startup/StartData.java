@@ -42,9 +42,9 @@ public class StartData {
     public static void main(String[] args) {
         //Persistence.generateSchema("pu_local", null);
         StartData sd = new StartData();
-        insertTestData();
-        sd.insertRandomData();
-        createStaffedEvent();
+//        insertTestData();
+//        sd.insertRandomData();
+//        createStaffedEvent();
 for (int i = 0; i < 10; i++) {
             sd.testRequest();
         }

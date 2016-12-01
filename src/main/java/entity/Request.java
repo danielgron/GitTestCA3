@@ -34,7 +34,7 @@ public class Request implements Serializable {
     private int id;
     private String eventName;
     @Enumerated(EnumType.STRING)
-    private RequestStatus status;
+    private RequestStatus requestStatus;
     private int numberGuests;
     private String agegroup;
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -424,14 +424,15 @@ public class Request implements Serializable {
         this.department = department;
     }
 
-    public RequestStatus getStatus() {
-        return status;
+    public RequestStatus getRequestStatus() {
+        return requestStatus;
     }
 
-    public void setStatus(RequestStatus status) {
-        this.status = status;
+    public void setRequestStatus(RequestStatus requestStatus) {
+        this.requestStatus = requestStatus;
     }
-    
+
+
     
 
 }
