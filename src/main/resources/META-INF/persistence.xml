@@ -19,6 +19,7 @@
     <class>entity.user.User</class>
     <class>entity.user.User_Role</class>
     <class>entity.user.Samarit</class>
+    <class>entity.watches.SamaritFunctionsOnWatch</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://46.101.166.154:3306/RK?zeroDateTimeBehavior=convertToNull"/>
@@ -73,6 +74,7 @@
     <class>entity.user.User</class>
     <class>entity.user.User_Role</class>
     <class>entity.user.Samarit</class>
+    <class>entity.watches.SamaritFunctionsOnWatch</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>

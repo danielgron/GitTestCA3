@@ -6,6 +6,7 @@
 package entity;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
+import entity.watches.SamaritFunctionsOnWatch;
 import enums.Status;
 import java.util.Date;
 import java.util.HashMap;
@@ -50,6 +51,10 @@ public class StaffedEvent extends Event{
     @Column(name="numberneeded")
     @CollectionTable(name="STAFFNUMBER_EVENT", joinColumns=@JoinColumn(name="event_id"))
     private Map<String,Integer> levelsQuantity;
+    
+
+    @OneToMany(mappedBy = "staffedEvent")
+    private List<SamaritFunctionsOnWatch> watchFunctions;
 
     public StaffedEvent() {
     }
@@ -83,6 +88,16 @@ public class StaffedEvent extends Event{
     public void setLevelsQuantity(Map<String, Integer> levelsQuantity) {
         this.levelsQuantity = levelsQuantity;
     }
+
+    public List<SamaritFunctionsOnWatch> getWatchFunctions() {
+        return watchFunctions;
+    }
+
+    public void setWatchFunctions(List<SamaritFunctionsOnWatch> watchFunctions) {
+        this.watchFunctions = watchFunctions;
+    }
+
+
     
     /**
      * This method should be called right after an Staffed Event is created.

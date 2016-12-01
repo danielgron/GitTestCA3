@@ -1,0 +1,35 @@
+<div class="container" ng-controller="TEMPfunctionCTRL as tempCtrl">
+    
+    
+    <h2>
+    {{tempCtrl.hello}}
+    
+    </h2>
+    
+    
+    Vælg Funktioner til Vagt: 
+    <select id="functionsDropDown" name="functions"
+                ng-options="func.functionName for func in tempCtrl.functionsforDepartment"
+                ng-model="tempCtrl.selected"
+                ng-change="tempCtrl.moveFunction()">
+    </select>
+    
+    <br>
+    
+    Valgte Ressourcer:
+    
+    <ul ng-repeat="func in tempCtrl.clickedEvent.watchFunctions track by $index" >
+        <li>
+            {{func}} <span style="cursor: pointer" ng-click="tempCtrl.movefuncBack(func)">&#10060;</span>
+            <br>
+            Vælg Samarit til at Besidde Funktion:
+            <select id="functionsDropDown" name="Samarit"
+                ng-options="sam.userName for sam in tempCtrl.samaritter | functionfilter: func"
+                ng-model="tempCtrl.selectedSamForFunction[$index]"  
+                ng-change="tempCtrl.samaritSelectedForFunction($index)">
+            </select>
+        </li> 
+    </ul>
+    
+    
+</div>

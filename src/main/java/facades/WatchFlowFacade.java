@@ -9,6 +9,7 @@ import entity.Department;
 import entity.RedCrossLevel;
 import entity.Resource;
 import entity.StaffedEvent;
+import entity.WatchFunction;
 import entity.watches.ResourceWatch;
 import entityconnection.EntityConnector;
 import enums.Status;
@@ -185,6 +186,9 @@ public class WatchFlowFacade {
             em.close();
         }
     }
+    
+    
+    
 
 
-    }
+   }

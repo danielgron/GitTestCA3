@@ -10,7 +10,9 @@ function pendingFactory($http){
     var service = {
         loadEvents: loadEvents,
         getClickedShift : getClickedShift,
-        setShift: setShift
+        setShift: setShift,
+        getFunctionsForDepartment : getFunctionsForDepartment,
+        getEvent: getEvent
     };
     
     return service;
@@ -30,6 +32,10 @@ function pendingFactory($http){
     
     function setShift(shift){
         clickedShift = shift;
+    }
+    
+    function getFunctionsForDepartment(){
+        return $http.get("api/watchflow/functions");
     }
     
 }

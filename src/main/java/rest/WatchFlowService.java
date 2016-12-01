@@ -14,6 +14,7 @@ import entity.Department;
 import entity.RedCrossLevel;
 import entity.Resource;
 import entity.StaffedEvent;
+import entity.WatchFunction;
 import enums.Status;
 import facades.WatchFlowFacade;
 import java.io.IOException;
@@ -92,6 +93,17 @@ public class WatchFlowService {
         StaffedEvent eventAfterUpdates = wff.updateResources(id, resources);
         wff.updateStatusOfStaffedEvent(id, Status.Pending);
         return mapper.writer(filters).writeValueAsString(eventAfterUpdates);
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("functions")
+    public String getAllFunctionsForDepartment() throws Exception{
+        ObjectMapper mapper = new ObjectMapper();
+        Department d = util.DepartmentDecoder.getDepartmentFromToken(context);
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        mapper.setDateFormat(df);
+        return mapper.writeValueAsString(d.getWatchFunctions());
     }
 
 }
