@@ -116,6 +116,24 @@ public class RequestService {
             throw ex;
         }
     }
+    @GET
+    @Path("requesttoevent")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String postRequestToEvent() throws JsonProcessingException {
+        EventFacade ef = new EventFacade();
+        //TODO return proper representation object
+        long eStart = Long.parseLong("");
+        long eEnd = Long.parseLong("");
+        List<Resource> res = ef.getAvailableResourcesForDates(new Date(eStart), new Date (eEnd));
+        try {
+            return  mapper.writerWithDefaultPrettyPrinter().writeValueAsString(res);
+        } catch (JsonProcessingException ex) {
+            log.Log.writeErrorMessageToLog("Error REST get resourcelist: " +ex.getMessage());
+            throw ex;
+        }
+    }
+    
+    
     /**
      * PUT method for updating or creating an instance of RequestService
      * @param content representation for the resource
