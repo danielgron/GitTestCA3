@@ -68,7 +68,6 @@ angular.module('myApp.calendar', ['ngRoute', 'ui.calendar'])
                 
                 calendarFactory.getEvents().then(function (response) {
                     $scope.events = response.data;
-                    window.console.log("try to get events: " + response.data);
                 }, function (error) {
                     $scope.status = 'Unable to load customer data: ' + error.message;
                 });

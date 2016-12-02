@@ -1,22 +1,27 @@
-<div>
-    
-    <table class="table">
-        <thead>
-            <tr>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="request in allRequestCtrl.requests | allApprovedFilter" ng-click="allRequestCtrl.goApproved(request)">
-                <td>{{request.eventName}}</td>
-                <td>{{request.eventDate}}</td>
-            </tr>
-            
-        </tbody>
-    </table>
 
-    
-    
-    
-</div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="h3">Godkendte tilbud</div>
+
+
+        </div>
+        <div class="panel-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="request in allRequestCtrl.requests| allApprovedFilter" ng-click="allRequestCtrl.goApproved(request)">
+                        <td>{{request.eventName}}</td>
+                        <td>{{request.eventDate}}</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+

@@ -1,21 +1,26 @@
+<div style="padding: 10px">
+    <div class="panel panel-primary" >
+        <div class="panel-heading"><h3 class="">Rediger VagtKort</h3>
+        </div>
+        <div class="panel-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>VagtKort OverSkrift </th>
+                        <th>Tid</th>
+                        <th>Rediger</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="shift in pctrl.shifts" >
+                        <td>{{shift.name}}</td>
+                        <td>{{shift.start}}</td>
+                        <td><a href="#/singlepending/{{shift.id}}">Rediger</a> 
+                        </td>
+                    </tr>
+                </tbody>
 
-<h3>Rediger VagtKort</h3>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>VagtKort OverSkrift </th>
-            <th>Tid</th>
-            <th>Rediger</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr ng-repeat="shift in pctrl.shifts" >
-            <td>{{shift.name}}</td>
-            <td>{{shift.start}}</td>
-            <td><a href="#/singlepending/{{shift.id}}">Rediger</a> / <a href="#/singlefunctions/{{shift.id}}">Fucntions</a>
-            </td>
-        </tr>
-    </tbody>
-
-</table>
+            </table>
+        </div>
+    </div>
+</div>

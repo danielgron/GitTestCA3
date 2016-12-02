@@ -4,7 +4,8 @@ angular.module('myApp.watchflow')
                 var filtered = [];
                 angular.forEach(input, function (value, key) {
                     angular.forEach(value.watchFunctions, function(watchfunctionUserHas){
-                       if(watchfunctionUserHas === param){
+                        window.console.log(watchfunctionUserHas);
+                       if(watchfunctionUserHas.functionName === param){
                            filtered.push(value);
                        }
                     });
