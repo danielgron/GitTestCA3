@@ -58,10 +58,9 @@ public class WatchService {
     public String setWatch(@PathParam("userName") String userName, String sWatch) throws Exception {
         String json = "";
         try {
+            System.out.println(sWatch);
             SamaritOccupied sw = null;
             mapper = new ObjectMapper();
-//            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-//            mapper.setDateFormat(df);
             sw = mapper.readValue(sWatch, SamaritOccupied.class);
             sw.getSamarit().setUserName(userName);
             sw = wf.addUnavailForWatch(sw);
