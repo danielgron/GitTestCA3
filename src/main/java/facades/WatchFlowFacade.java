@@ -205,6 +205,11 @@ public class WatchFlowFacade {
             TypedQuery<StaffedEvent> q1 = em.createQuery("Select e from StaffedEvent e where e.id =:eventid", StaffedEvent.class);
             q1.setParameter("eventid", eventId);
             event = q1.getSingleResult();
+            if(event.getWatchFunctions() != null || !event.getWatchFunctions().isEmpty()){
+            Query q2  =em.createQuery("delete from SamaritFunctionsOnWatch w WHERE w.staffedEvent =:event");
+            q2.setParameter("event", event);
+            q2.executeUpdate();
+            }
             for (SamaritFunctionsOnWatch samaritFunctionsOnWatch : functionsForThisWatch) {
                 samaritFunctionsOnWatch.setStaffedEvent(event);
             }

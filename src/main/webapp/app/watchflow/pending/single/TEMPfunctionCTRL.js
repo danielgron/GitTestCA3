@@ -15,6 +15,7 @@ function TEMPfunctionCTRL(pendingFactory, $location, $routeParams) {
     self.samaritter = [];
     self.selectedSamaritForFunction = [];
     self.excistingFunctions= [];
+    self.newFunctions = [];
 
     ///***Function Calls****
     self.getclickedEvent = getclickedEvent;
@@ -25,6 +26,8 @@ function TEMPfunctionCTRL(pendingFactory, $location, $routeParams) {
     self.samaritSelectedForFunction = samaritSelectedForFunction;
     self.sendFunctions = sendWatchFunctions;
     self.mapToStart = mapToStart;
+    self.mapToEventWatchFunctions = mapToEventWatchFunctions;
+    self.deleteFromExcistingFunctions = deleteFromExcistingFunctions;
 
     //** Exceute on Enter *****
     getFunctionsForDepartment();
@@ -69,20 +72,24 @@ function TEMPfunctionCTRL(pendingFactory, $location, $routeParams) {
             var functionString = selected.functionName;
             var newFunctionForWatch = new Object();
             newFunctionForWatch.functionName = functionString;
-            if(self.clickedEvent.watchFunctions.length === 0){
+            if(self.newFunctions.length === 0){
                 newFunctionForWatch.id=1;
             }
             else{
-                newFunctionForWatch.id=self.clickedEvent.watchFunctions.length+1;
+                newFunctionForWatch.id=self.newFunctions.length+1;
             }
             newFunctionForWatch.samaritUserName = "Ikke Besat";
-            self.clickedEvent.watchFunctions.push(newFunctionForWatch);
+            self.newFunctions.push(newFunctionForWatch);
             self.selected = null;
         }
     }
 
     function deleteFunctionFromWatch(func) {
-        self.clickedEvent.watchFunctions.remove(func);
+        self.newFunctions.remove(func);
+    }
+    
+      function deleteFromExcistingFunctions(func) {
+        self.excistingFunctions.remove(func);
     }
     
     function samaritSelectedForFunction(idofFunction, index){
@@ -116,9 +123,9 @@ function TEMPfunctionCTRL(pendingFactory, $location, $routeParams) {
     }
     
     function mapSamaritToFunction(selected, idofFunction){
-        angular.forEach(self.clickedEvent.watchFunctions, function (value, key) {
+        angular.forEach(self.newFunctions, function (value, key) {
             if(value.id === idofFunction){
-                self.clickedEvent.watchFunctions[key].samaritUserName = selected.userName;
+                self.newFunctions[key].samaritUserName = selected.userName;
             }
         });
     }
@@ -137,9 +144,23 @@ function TEMPfunctionCTRL(pendingFactory, $location, $routeParams) {
     
     function mapToStart(value){
         var obj = new Object();
-        obj.userName = value.samaritUserName;
+        obj.samaritUserName = value.samaritUserName;
         obj.functionName = value.functionName;        
         self.excistingFunctions.push(obj);
+    }
+    
+    function mapToEventWatchFunctions(){
+        angular.forEach(self.excistingFunctions, function(value,key){
+           self.clickedEvent.watchFunctions.push(value);
+        });
+        mapNewFunctions();
+    }
+    
+    function mapNewFunctions(){
+        angular.forEach(self.newFunctions, function(value,key){
+                     self.clickedEvent.watchFunctions.push(value);
+                });
+                sendWatchFunctions();
     }
     
 }
