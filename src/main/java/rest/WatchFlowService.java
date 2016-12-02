@@ -41,7 +41,7 @@ import javax.ws.rs.core.MediaType;
 @RolesAllowed("Coordinator")
 public class WatchFlowService {
 
-    SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept();
+    SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("department","resources");
     FilterProvider filters = new SimpleFilterProvider().addFilter("samaritFilter", theFilter);
 
     @Context
@@ -116,12 +116,16 @@ public class WatchFlowService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{id}")
     public String registerWatches(@PathParam("id") int id, String json) throws IOException{
+        System.out.println(json);
         ObjectMapper mapper = new ObjectMapper();
         List<Samarit> samarits = mapper.readValue(json, new TypeReference<List<Samarit>>(){});
-        samarits = wf.setWatchesForSamarits(samarits, id);
-        String returnJson = mapper.writer(filters).writeValueAsString(samarits);
-        return returnJson;
+       
+        
+        wf.setWatchesForSamarits(samarits, id);
+      //  String returnJson = mapper.writer(filters).writeValueAsString(samarits);
+        return json;
     }
+    
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)

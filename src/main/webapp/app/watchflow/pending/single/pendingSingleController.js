@@ -21,6 +21,8 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOve
     self.getSamarits = getSamarits;
     self.add = add;
     self.save = save;
+    self.remove = remove;
+    self.reset = reset;
 
 
     //** Exceute on Enter *****
@@ -55,34 +57,36 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOve
     }
 
     function add(samarit, role) {
-        var samarit1 = {};
-        samarit1 = samarit;
-        // window.console.log("from add: " + samarit);
-        window.console.log(role);
-        window.console.log(samarit1);
-        if(role!==null&&samarit!=null){
-            samarit1.role= role;
+        
+        if (role !== null && samarit != null) {
+            samarit.role = role;
+            self.samaritOnWatch.push(samarit);
+            self.samarits.remove(samarit);
         }
-        self.samaritOnWatch.push(samarit1);
-        self.samarits.remove(samarit1);
-        //self.samarits = self.samarits.remove(samarit);
+
     }
-    
-    function remove(samarit){
-        window.console.log(samarit);
+
+    function remove(samarit) {
+        self.samarits.push(samarit);
+        self.samaritOnWatch.remove(samarit);
+
     }
 
     function save() {
         bsLoadingOverlayService.start();
-        pendingFactory.saveWatches(self.samaritOnWatch.push)
+        pendingFactory.saveWatches(self.id,self.samaritOnWatch)
                 .then(function (successResponse) {
                     window.console.log(successResponse);
+             bsLoadingOverlayService.stop();
                 }, function (errorResponse) {
+                     bsLoadingOverlayService.stop();
                     window.console.log("Error in callback: " + errorResponse.data.error.code);
 
                 });
-
-
+    }
+    function reset(){
+         self.samaritOnWatch = [];
+         getSamarits(self.id);
     }
 
 

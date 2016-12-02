@@ -49,6 +49,7 @@ function pendingFactory($http){
     }
     
     function saveWatches(id,samarits){
+        window.console.log("id" + id);
         var jsonString = JSON.stringify(samarits);
         return $http.post("api/watchflow/"+id,jsonString);
     }

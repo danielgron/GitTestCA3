@@ -5,6 +5,13 @@ angular.module('myApp.watchflow', ['ngRoute']);
 
 
 angular.module('myApp.watchflow').controller('WatchFlowCtrl', [function () {
+        var vm = this;
+        vm.active = 1;
+        vm.select = select;
+        
+        function select(){
+            window.console.log('hurra!');
+        }
 
 
     }]);

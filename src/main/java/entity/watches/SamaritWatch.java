@@ -21,10 +21,10 @@ import javax.persistence.ManyToOne;
 @Entity
 public class SamaritWatch extends SamaritCalendar {
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     private Event event;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     private Samarit samarit;
     
     private String watchRole;

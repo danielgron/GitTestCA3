@@ -14,14 +14,11 @@ import entityconnection.EntityConnector;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import util.DateUtils;
 
 /**
  *
@@ -214,12 +211,13 @@ public class WatchFacade {
     }
 
     public List<Samarit> setWatchesForSamarits(List<Samarit> samarits, int eventId) {
-        List<SamaritWatch> watches = new ArrayList();
-        EntityManager em = EntityConnector.getEntityManager();
+ EntityManager em = EntityConnector.getEntityManager();
         try {
             StaffedEvent event = em.find(StaffedEvent.class, eventId);
+           
             em.getTransaction().begin();
             for (Samarit samarit : samarits) {
+
                 SamaritWatch watch = new SamaritWatch();
 
                 //Method sets the bidirectional reference
@@ -231,16 +229,19 @@ public class WatchFacade {
                 watch.setEnd(event.getEnd());
                 watch.setRole("tbi");
                 watch.setColor("blue");
+//                em.merge(event);
+//                em.merge(samarit);
                 em.persist(watch);
 
             }
             em.getTransaction().commit();
+
         } catch (Exception ex) {
-            em.getTransaction().rollback();
+            // em.getTransaction().rollback();
             log.Log.writeErrorMessageToLog("Error in getwatches for User: " + ex.getMessage());
             throw ex;
         } finally {
-            em.close();
+            //em.close();
         }
         return samarits;
 

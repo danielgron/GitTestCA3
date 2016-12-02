@@ -1,37 +1,58 @@
 <div class="container well">
     <h2>{{pendingCtrl.shift.name}}</h2>
 
-
-
-    <div class="form-group col-md-4" ng-repeat="(key, value) in pendingCtrl.shift.levelsQuantity">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                {{key}} <i ng-show="value > 0">- påsæt {{value}}</i>
-            </div>
-
-            <div class="panel-body" bs-loading-overlay>
+    <div class="container col-md-3">
+        <div class="btn-group col-md-12"">
+            <button class="btn btn-group btn-danger" ng-click="pendingCtrl.reset()">Reset</button>
+            <button class="btn btn-group btn-primary" ng-click="pendingCtrl.go()">Cancel</button>
+            <button class="btn btn-group btn-success" ng-click="pendingCtrl.save()">Save</button>
+        </div>
+        <div class="container col-md-12" style=" padding: 10px">       
+            <div class="panel panel-primary">
+                
+                <div class="panel-heading">Ikke-ledige samaritter</div>
+                <div class="panel-body">
                 <div class="container col-md-12">
-    <select id="this{{key}}" class="input-sm col-md-12" ng-model="selected[key]" ng-change="pendingCtrl.add(selected[key], key)" ng-options="samarit as samarit.firstName +    ' ' +    samarit.lastName for samarit in pendingCtrl.samarits|samaritlevel:key" >
+                        <ul class="list list-group list-unstyled  ">
+                            <li class="list-group-item" ng-repeat="samarit in pendingCtrl.samaritOnWatch">{{samarit.firstName + ' ' + samarit.lastName}}
+                                <i style="cursor: pointer" ng-click="pendingCtrl.remove(samarit)" class="glyphicon glyphicon-remove"></i>
+                            </li>
+                        </ul>
+                    </div>    
+                    
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="container col-md-9">
+
+        <div class="form-group col-md-4" ng-repeat="(key, value) in pendingCtrl.shift.levelsQuantity">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    {{key}} <i ng-show="value > 0">- påsæt {{value}}</i>
+                </div>
+
+                <div class="panel-body" bs-loading-overlay>
+                    <div class="container col-md-12">
+                        <select id="this{{key}}" class="input-sm col-md-12" ng-model="selected[key]" ng-change="pendingCtrl.add(selected[key], key)" ng-options="samarit as samarit.firstName +       ' ' +       samarit.lastName for samarit in pendingCtrl.samarits|samaritlevel:key" >
                             <option value="" disabled selected style="display: none;"> -- Please Select -- </option>
 
                         </select>
                     </div>
                     <br>
                     <div class="container col-md-12">
-                        <ul class="list-group">
+                        <ul class="list list-group list-unstyled  ">
                             <li class="list-group-item" ng-repeat="samarit in pendingCtrl.samaritOnWatch|samaritlevel:key">{{samarit.firstName + ' ' + samarit.lastName}}
-                                <i style="cursor: pointer" ng-click="pendingSingleCtrl.remove(samarit)" class="glyphicon glyphicon-remove right"></i>
+                                <i style="cursor: pointer" ng-click="pendingCtrl.remove(samarit)" class="glyphicon glyphicon-remove"></i>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
-            
+
         </div>
-    <div class="btn-group col-md-12">
-                <button class="btn btn-group btn-danger" ng-click="pendingSingleCtrl">Reset</button>
-                <button class="btn btn-group btn-primary" ng-click="pendingSingleCtrl">Cancel</button>
-                <button class="btn btn-group btn-success" ng-click="pendingSingleCtrl">Save</button>
-            </div>
     </div>
+
+</div>
 

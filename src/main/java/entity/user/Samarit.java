@@ -7,6 +7,7 @@ package entity.user;
 
 import entity.watches.SamaritOccupied;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import entity.Department;
 import entity.OcupiedSlot;
 import entity.RedCrossLevel;
@@ -24,7 +25,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 @DiscriminatorColumn(name = "DT", discriminatorType = DiscriminatorType.CHAR)
 public class Samarit extends User {
 
