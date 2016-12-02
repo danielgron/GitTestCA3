@@ -20,6 +20,7 @@ import entity.Request;
 import entity.Resource;
 import facades.EventFacade;
 import facades.RequestFacade;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -54,7 +55,7 @@ public class RequestService {
     private static JsonFactory factory = new JsonFactory();
     private static ObjectMapper mapper = new ObjectMapper();
     private static JSON_Converter eJson = new JSON_Converter();
-    private Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+    //private Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
 
     /**
      * Creates a new instance of RequestResource
@@ -83,6 +84,7 @@ public class RequestService {
         }
         List<Request> requests = rf.getRequests(d);
         try {
+            
             return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(requests);
         } catch (JsonProcessingException ex) {
             Logger.getLogger(RequestService.class.getName()).log(Level.SEVERE, null, ex);
@@ -142,8 +144,10 @@ public class RequestService {
 
         try {
         //r = gson.fromJson(json, Request.class);
+        DateFormat df= mapper.getDateFormat();
         mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm a z"));
         r =mapper.readValue(json, Request.class);
+        mapper.setDateFormat(df);
         //TODO return proper representation object
         Event e = ef.createEventFromRequest(r);
             return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(e);

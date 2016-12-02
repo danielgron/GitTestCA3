@@ -30,6 +30,7 @@ public class WatchServiceIT {
     private static final String APP_CONTEXT = "/vagtmanager";
     private static EmbeddedTomcat tomcat;
     private static String securityToken;
+    private static String watch = "{\"title\":\"unavail\",\"samarit\":{\"userName\":\"sam\"},\"start\":\"2016-12-15\",\"allDay\":true,\"color\":\"red\"}";
 
     public WatchServiceIT() {
 
@@ -73,7 +74,14 @@ public class WatchServiceIT {
 
     @Test
     public void testSetWatch() throws Exception {
-        
+           login("sam", "test");
+            given()
+                .contentType("application/json")
+                .header("Authorization", "Bearer " + securityToken)
+                .body(watch)
+                .when()
+                .post("/api/watch/sam").then()
+                .statusCode(200); // Succes call
     }
 
     @Test
