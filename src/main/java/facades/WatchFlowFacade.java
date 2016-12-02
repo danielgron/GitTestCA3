@@ -10,6 +10,7 @@ import entity.RedCrossLevel;
 import entity.Resource;
 import entity.StaffedEvent;
 import entity.WatchFunction;
+import entity.user.Samarit;
 import entity.watches.ResourceWatch;
 import entity.watches.SamaritFunctionsOnWatch;
 import entityconnection.EntityConnector;
@@ -212,6 +213,10 @@ public class WatchFlowFacade {
             }
             for (SamaritFunctionsOnWatch samaritFunctionsOnWatch : functionsForThisWatch) {
                 samaritFunctionsOnWatch.setStaffedEvent(event);
+                Query q3 = em.createQuery("select u from Samarit u where u.userName =:username");
+                q3.setParameter("username", samaritFunctionsOnWatch.getSamaritUserName());
+                Samarit temp = (Samarit) q3.getSingleResult();
+                samaritFunctionsOnWatch.setSamaritUserName(temp.getFirstName() + " " + temp.getLastName());
             }
             event.setWatchFunctions(functionsForThisWatch);
             em.getTransaction().commit();

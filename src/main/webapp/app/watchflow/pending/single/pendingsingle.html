@@ -56,31 +56,31 @@
 
 </div>
 
-<div class="container" ng-controller="TEMPfunctionCTRL as tempCtrl">
+<div class="container" >
     <div class="row">
         <div class="col-lg-6">
 
             
             Vælg Funktioner til Vagt: 
             <select id="functionsDropDown" name="functions"
-                    ng-options="func.functionName for func in tempCtrl.functionsforDepartment"
-                    ng-model="tempCtrl.selected"
-                    ng-change="tempCtrl.moveFunction()">
+                    ng-options="func.functionName for func in pendingCtrl.functionsforDepartment"
+                    ng-model="pendingCtrl.selected"
+                    ng-change="pendingCtrl.moveFunction()">
             </select>
 
             <br>
 
             Valgte Ressourcer:
 
-            <ul ng-repeat="func in tempCtrl.newFunctions track by $index" >
+            <ul ng-repeat="func in pendingCtrl.newFunctions track by $index" >
                 <li>
-                    {{func.functionName}} <span style="cursor: pointer" ng-click="tempCtrl.deleteFunctionFromWatch(func)">&#10060;</span>
+                    {{func.functionName}} <span style="cursor: pointer" ng-click="pendingCtrl.deleteFunctionFromWatch(func)">&#10060;</span>
                     <br>
                     Vælg Samarit til at Besidde Funktion:
                     <select id="functionsDropDown" name="Samarit"
-                            ng-options="sam.userName for sam in tempCtrl.samaritter| functionfilter: func.functionName"
-                            ng-model="tempCtrl.selectedSamaritForFunction[$index]"  
-                            ng-change="tempCtrl.samaritSelectedForFunction(func.id, $index)">
+                            ng-options="sam.userName as sam.firstName + ' ' + sam.lastName for sam in pendingCtrl.samaritOnWatch| functionfilter: func.functionName"
+                            ng-model="pendingCtrl.selectedSamaritForFunction[$index]"  
+                            ng-change="pendingCtrl.samaritSelectedForFunction(func.id, $index)">
                     </select>
                 </li> 
             </ul>
@@ -90,14 +90,14 @@
             <br>
             <br>
 
-            <input type="button" value="Gem Ændringer" name="save" ng-click="tempCtrl.mapToEventWatchFunctions()" />
+            <input type="button" value="Gem Ændringer" name="save" ng-click="pendingCtrl.mapToEventWatchFunctions()" />
         </div>
 
         <div class="col-lg-6">
             Allerede Oprettede Funktioner:
-            <ul ng-repeat="excitingFunc in tempCtrl.excistingFunctions">
+            <ul ng-repeat="excitingFunc in pendingCtrl.excistingFunctions">
                 <li>
-                    {{excitingFunc.functionName}} : {{excitingFunc.samaritUserName}} <span style="cursor: pointer" ng-click="tempCtrl.deleteFromExcistingFunctions(excitingFunc)">&#10060;</span>
+                    {{excitingFunc.functionName}} : {{excitingFunc.samaritUserName}} <span style="cursor: pointer" ng-click="pendingCtrl.deleteFromExcistingFunctions(excitingFunc)">&#10060;</span>
                 </li>
             </ul>
         </div>
