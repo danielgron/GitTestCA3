@@ -57,7 +57,7 @@ function requestFactory($http, $location) {
     ;
 
     function createEventFromRequest() {
-        var jsonString = JSON.stringify(chosenRequest);
+        var jsonString = angular.toJson(chosenRequest);
         return $http.post("api/request/requesttoevent/",jsonString);
     }
 
