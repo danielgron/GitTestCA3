@@ -12,6 +12,8 @@ import io.restassured.parsing.Parser;
 import java.net.MalformedURLException;
 import javax.servlet.ServletException;
 import org.apache.catalina.LifecycleException;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.isA;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -74,8 +76,8 @@ public class WatchServiceIT {
 
     @Test
     public void testSetWatch() throws Exception {
-           login("sam", "test");
-            given()
+        login("sam", "test");
+        given()
                 .contentType("application/json")
                 .header("Authorization", "Bearer " + securityToken)
                 .body(watch)
@@ -85,7 +87,20 @@ public class WatchServiceIT {
     }
 
     @Test
+    public void testSetWatchError() throws Exception {
+        login("sam", "test");
+        given()
+                .contentType("appplication/json")
+                .header("Authorization", "Bearer " + securityToken)
+                .body(watch + "adfsda")
+                .get("/api/watch/sam").then()
+                .body("error.code", equalTo(500),"error.message", isA(String.class));
+
+    }
+
+    @Test
     public void testGetWatchesForSamarit_String() throws Exception {
+        login("sam", "test");
     }
 
     @Test

@@ -8,7 +8,7 @@
             <button class="btn btn-group btn-success" ng-click="pendingCtrl.save()">Save</button>
         </div>
         <div class="container col-md-12" style=" padding: 10px">       
-            <div class="panel panel-primary">
+            <div class="panel panel-success">
                 
                 <div class="panel-heading">Ikke-ledige samaritter</div>
                 <div class="panel-body">
@@ -56,3 +56,52 @@
 
 </div>
 
+<div class="container" ng-controller="TEMPfunctionCTRL as tempCtrl">
+    <div class="row">
+        <div class="col-lg-6">
+
+            
+            Vælg Funktioner til Vagt: 
+            <select id="functionsDropDown" name="functions"
+                    ng-options="func.functionName for func in tempCtrl.functionsforDepartment"
+                    ng-model="tempCtrl.selected"
+                    ng-change="tempCtrl.moveFunction()">
+            </select>
+
+            <br>
+
+            Valgte Ressourcer:
+
+            <ul ng-repeat="func in tempCtrl.newFunctions track by $index" >
+                <li>
+                    {{func.functionName}} <span style="cursor: pointer" ng-click="tempCtrl.deleteFunctionFromWatch(func)">&#10060;</span>
+                    <br>
+                    Vælg Samarit til at Besidde Funktion:
+                    <select id="functionsDropDown" name="Samarit"
+                            ng-options="sam.userName for sam in tempCtrl.samaritter| functionfilter: func.functionName"
+                            ng-model="tempCtrl.selectedSamaritForFunction[$index]"  
+                            ng-change="tempCtrl.samaritSelectedForFunction(func.id, $index)">
+                    </select>
+                </li> 
+            </ul>
+
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <input type="button" value="Gem Ændringer" name="save" ng-click="tempCtrl.mapToEventWatchFunctions()" />
+        </div>
+
+        <div class="col-lg-6">
+            Allerede Oprettede Funktioner:
+            <ul ng-repeat="excitingFunc in tempCtrl.excistingFunctions">
+                <li>
+                    {{excitingFunc.functionName}} : {{excitingFunc.samaritUserName}} <span style="cursor: pointer" ng-click="tempCtrl.deleteFromExcistingFunctions(excitingFunc)">&#10060;</span>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+</div>

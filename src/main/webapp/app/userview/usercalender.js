@@ -18,11 +18,14 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
             $scope.eventSources1 = [];
             $scope.watchList = [];
             $scope.watchList = userCalendarFactory.getWatchlist();
+            $scope.shiftsList = [];
 
             $scope.user = {};
             $scope.user = UserFactory.getCreatedUser();
 
-
+            //*****Function Declarations*****//
+            $scope.getShifts = getShifts();
+            
             //****Event models and sources****//
             //Declaring main eventsource
             $scope.eventSources1 = [$scope.watchList];
@@ -30,9 +33,21 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
                 url: 'api/watch/' + $scope.user.userName,
                 color: 'red'
             };
+            
+            function getShifts(userName){
+                userCalendarFactory.getShifts(userName).then(function(successResponse){
+                    $scope.shiftsList = successResponse.date;
+                    window.console.log($scope.shiftsList);
+                },function(errorResponse){
+                    window.console.log("An error occured" + errorResponse);
+                });
+                
+            }
+            
+            
 
             /* event sources array*/
-            $scope.eventSources1 = [$scope.watchList, $scope.eventSource];
+            $scope.eventSources1 = [$scope.watchList, $scope.eventSource,$scope.shiftsList];
 
             $scope.go = function (path) {
                 $location.path(path);
