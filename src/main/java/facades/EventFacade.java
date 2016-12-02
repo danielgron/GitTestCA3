@@ -13,6 +13,7 @@ import entity.Resource;
 import entity.StaffedEvent;
 import entity.user.Samarit;
 import entityconnection.EntityConnector;
+import enums.RequestStatus;
 import enums.Status;
 import java.util.Date;
 import java.util.List;
@@ -152,8 +153,9 @@ public class EventFacade {
             createEvent(event5);
         }
     }
+
     public List<Resource> getEventResources(int eventId) {
-        
+
         Event e;
         List<Resource> availableRes = new ArrayList();
         EntityManager em = EntityConnector.getEntityManager();
@@ -176,27 +178,26 @@ public class EventFacade {
         }
         return availableRes;
     }
-    
-    public List<Resource> getAvailableResourcesForDates(Date start, Date end){
+
+    public List<Resource> getAvailableResourcesForDates(Date start, Date end) {
         List<Resource> allRes = new ArrayList();
         EntityManager em = EntityConnector.getEntityManager();
-        Query createQuery = em.createQuery("select r from Resource r",Resource.class);
-        allRes=createQuery.getResultList();
+        Query createQuery = em.createQuery("select r from Resource r", Resource.class);
+        allRes = createQuery.getResultList();
         List<Resource> res = new ArrayList();
         Event mockEvent = new Event();
         mockEvent.setStart(start);
         mockEvent.setEnd(end);
-        
+
         for (Resource resource : allRes) {
-            if(checkAvalibilty(resource,mockEvent)){
+            if (checkAvalibilty(resource, mockEvent)) {
                 res.add(resource);
             }
         }
-        
-        
+
         return res;
     }
-    
+
     private boolean checkAvalibilty(Resource res, Event e) {
         boolean available = true;
         List<OcupiedSlot> blockedTimes = res.getNotAvail();
@@ -230,14 +231,15 @@ public class EventFacade {
         return available;
     }
 
-    public Event createEventFromRequest(Request request) {
+    public Event createEventFromRequest(Request request) throws Exception {
+        EntityManager em;
         request.getEventDate();
         Date eventstart = request.getEventstart();
         Date eventend = request.getEventend();
         Department department = request.getDepartment();
         String eventName = request.getEventName();
         String street = request.getStreet();
-        
+
         request.getAgegroup();
         request.getCatering();
         request.getComments();
@@ -256,24 +258,29 @@ public class EventFacade {
         request.isResponseTeam();
         request.isStretcherTeam();
         request.isTreatmentfacility();
-        
-        
-        
-    StaffedEvent event= new StaffedEvent();
-    event.setName(eventName);
-    event.setStart(eventstart);
-    event.setEnd(eventend);
-    event.setStatus(Status.ReadyToCreate);
-    event.setDepartment(department);
-    event.setAddress(street);
 
-    
-    EntityManager em = EntityConnector.getEntityManager();
-    em.getTransaction().begin();
-    em.persist(event);
-    em.getTransaction().commit();
-    
-    return event;
+        StaffedEvent event = new StaffedEvent();
+        event.setName(eventName);
+        event.setStart(eventstart);
+        event.setEnd(eventend);
+        event.setStatus(Status.ReadyToCreate);
+        event.setDepartment(department);
+        event.setAddress(street);
+
+            request.setRequestStatus(RequestStatus.PROCCESED);
+        em = EntityConnector.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge(request);
+            em.persist(event);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            Log.writeErrorMessageToLog("Failed to persist event created from request" + ex.getMessage());
+            throw new Exception();
+        } finally {
+            em.close();
+        }
+        return event;
     }
-
+    
 }

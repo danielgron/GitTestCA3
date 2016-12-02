@@ -37,6 +37,7 @@ private static JsonFactory factory = new JsonFactory();
 private static EventFacade ef = new EventFacade();
 private static CoordinatorFacade cf = new CoordinatorFacade();
 private static ObjectMapper mapper = new ObjectMapper();
+
     @Context
     private UriInfo context;
 
