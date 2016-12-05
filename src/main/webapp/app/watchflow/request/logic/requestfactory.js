@@ -17,6 +17,7 @@ function requestFactory($http, $location) {
         getRequest: getRequest,
         go: go,
         goApproved: goApproved,
+        goSent: goSent,
         getResources: getResources,
         createEventFromRequest: createEventFromRequest
     }
@@ -56,6 +57,13 @@ function requestFactory($http, $location) {
         //console.log("CLICK");
         chosenRequest = request;
         $location.path("/approvedrequest");
+    }
+    ;
+    
+    function goSent(request) {
+        //console.log("CLICK");
+        chosenRequest = request;
+        $location.path("/sentrequest");
     }
     ;
     
