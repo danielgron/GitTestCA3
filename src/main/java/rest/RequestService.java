@@ -151,18 +151,8 @@ public class RequestService {
 
         EventFacade ef = new EventFacade();
         Request r;
-        //System.out.println(json);
-//        System.out.println("Got here");
-
         try {
-            //r = gson.fromJson(json, Request.class);
-            //DateFormat df = mapper.getDateFormat();
-            //mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm"));
-
             r = mapper.readValue(json, Request.class);
-            //mapper.setDateFormat(df);
-            //df= mapper.getDateFormat();
-            //TODO return proper representation object
             Event e = ef.createEventFromRequest(r);
             return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(e);
         } catch (JsonProcessingException ex) {
@@ -173,6 +163,24 @@ public class RequestService {
             throw ex;
         }
     }
+    
+    @POST
+    @Path("requesttoapproved/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String moveRequestToApproved(@PathParam("id") String id) throws JsonProcessingException, Exception {
+
+        Request r = rf.approveRequest(Integer.parseInt(id));
+        try {
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(r);
+        } catch (JsonProcessingException ex) {
+            log.Log.writeErrorMessageToLog("Error REST request approve: " + ex.getMessage());
+            throw ex;
+        } catch (Exception ex) {
+            log.Log.writeErrorMessageToLog("Error REST request approve: " + ex.getMessage());
+            throw ex;
+        }
+    }
+    
 
     /**
      * PUT method for updating or creating an instance of RequestService
