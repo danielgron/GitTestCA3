@@ -1,0 +1,388 @@
+﻿<!DOCTYPE html>
+<html ng-app="redCrossApp">
+<head>
+    <title>Samaritter Forspørgelse </title>
+    <meta charset="utf-8" />
+    <link href="../../css/bootstrap.css" rel="stylesheet" type="text/css"/>
+</head>
+<body ng-controller="indexController as vm">
+    <div class="col-lg-12 wrapper page-heading">
+        <div class="col-lg-12">
+            <h2>Bestilling/forespørgsel på samaritervagt i Hovedstadsområdet</h2>
+        </div>
+        <div class="col-md-9">
+            <p>Nedenstående skabelon udfyldes ved rekvirering af samaritter til arrangement. Rekvirering skal foregå minimum tre uger før arrangementets afholdelse. Ved rekvirering af samaritter under tre uger før arrangementsstart, vil prisen blive forhøjet.</p>
+        </div>
+        <div class="col-md-9">
+            <p class="font-bold">Felter markeret med * skal udfyldes</p>
+        </div>
+    </div>
+    <input type="button" name="hej" ng-click="vm.saveDetails()" value="TestApi" />
+    <form class="form-horizontal" name="redCrossForm" novalidate angular-validator angular-validator-submit="vm.saveDetails()">
+        <!-- angular-validator-submit="vm.saveDetails()" novalidate angular-validator -->
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Arrangement</div>
+                <div class="panel-body">
+                    <div class="col-md-3">
+                        <strong>
+                            Hvor skal arrangementet foregå og hvor mange gæster/tilskuere forventes?
+                        </strong>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Arrangement <span class="text-danger">*</span></label>
+                            <div class="col-sm-8">
+                                <input type="text" name="eventName" id="eventName" class="form-control" ng-model="vm.items.eventName" required-message="'Required'" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Antal gæster (ca.) <span class="text-danger">*</span></label>
+                            <div class="col-sm-8">
+                                <input type="number" name="numberGuests" id="numberGuests" class="form-control" ng-model="vm.items.numberGuests" required-message="'Required'" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Aldersgrupp</label>
+                            <div class="col-sm-8">
+                                <label>
+                                    <input checked="" value="Børn" id="Børn" name="Børn" type="radio" ng-model="vm.items.agegroup" /> Børn
+                                    <input checked="" value="voksne" id="voksne" name="voksne" type="radio" ng-model="vm.items.agegroup" /> voksne
+                                    <input checked="" value="blandet" id="blandet" name="blandet" type="radio" ng-model="vm.items.agegroup" /> blandet
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Dato Start <span class="text-danger">*</span></label>
+                            <div class="col-sm-8">
+                                <!--<input type="text" class="form-control" name="arremngementDate" id="arremngementDate" uib-datepicker-popup="{{vm.dateOptions.format}}" ng-model="vm.items.date" is-open="vm.popup1.opened" ng-click="vm.open1()" datepicker-options="vm.dateOptions" close-text="Close" alt-input-formats="altInputFormats" readonly required-message="'Required'" required />-->
+                                <input type="text" class="form-control" name="arremngementDate" ng-click="vm.dateTimePickers.datePicker1.open = true" datetime-picker="yyyy-MM-dd" ng-model="vm.items.date" is-open="vm.dateTimePickers.datePicker1.open" enable-time="false" datepicker-options="vm.dateTimePickers.datePickerOptions" close-on-date-selection="false" datepicker-append-to-body="true" required-message="'Required'"  required readonly />
+                                <!--<p class="input-group">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ><i class="glyphicon glyphicon-calendar"></i></button>
+                                    </span>
+                                </p>-->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Evt. stednavn </label>
+                            <div class="col-sm-8">
+                                <input type="text" name="vanueaddress" id="vanueaddress" class="form-control" ng-model="vm.items.venue">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Addresse <span class="text-danger">*</span></label>
+                            <div class="col-sm-8">
+                                <input type="text" name="venue" id="venue" class="form-control" ng-model="vm.items.street" required-message="'Required'" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Postnr. <span class="text-danger">*</span>  / By<span class="text-danger"></span> <span class="text-danger">*</span></label>
+                            <div class="col-sm-2">
+                                <input type="number" validator="vm.validFourDigitZip(vm.items.zip, 4)" name="zip" id="zip" class="form-control" ng-model="vm.items.zip" required-message="'Required'" invalid-message="'Please enter 4 digit zip'" required />
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="text" name="city" id="city" class="form-control" ng-model="vm.items.city" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+        </div>
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Tidspunkter</div>
+                <div class="panel-body">
+                    <div class="col-md-3">
+                        <strong>
+                            Hvad tid skal samaritterne møde, hvad tid ankommer gæster/tilskuere og hvornår begynder og slutter arrangementet?
+                        </strong>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Samarit mødetid</label>
+                            <div class="col-sm-8">
+                                <!--<div uib-timepicker ng-model="vm.items.watchStart" hour-step="1" minute-step="5" show-meridian="true"></div>-->
+                                    <input type="text" name="watchStart" class="form-control" ng-click="vm.dateTimePickers.timePicker1.open = true" datetime-picker="HH:mm" ng-model="vm.items.watchStart" is-open="vm.dateTimePickers.timePicker1.open" enable-date="false" timepicker-options="vm.dateTimePickers.timepickerOptions" close-on-selection="true" readonly />
+                                <!--<p class="input-group">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="vm.dateTimePickers.timePicker1.open = true"><i class="fa fa-clock-o"></i>{{vm.items.watchStart}}</button>
+                                    </span>
+                                </p>-->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Døre/porte åbner</label>
+                            <div class="col-sm-8">
+                                <!--<div uib-timepicker ng-model="vm.items.doorsopen" hour-step="1" minute-step="5" show-meridian="true"></div>-->
+                                    <input type="text" name="doorsopen" class="form-control" ng-click="vm.dateTimePickers.timePicker2.open = true" datetime-picker="HH:mm" ng-model="vm.items.doorsopen" is-open="vm.dateTimePickers.timePicker2.open" enable-date="false" timepicker-options="vm.dateTimePickers.timepickerOptions" close-on-selection="true" readonly />
+                                <!--<p class="input-group">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="vm.dateTimePickers.timePicker2.open = true"><i class="fa fa-clock-o"></i></button>
+                                    </span>
+                                </p>-->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Arrangement start <span class="text-danger">*</span></label>
+                            <div class="col-sm-8">
+                                <!--<div uib-timepicker hour-step="1" minute-step="5" show-meridian="true" ng-model="vm.items.eventstart"></div>-->
+                                    <input type="text" name="eventstart" class="form-control" ng-click="vm.dateTimePickers.timePicker3.open = true" datetime-picker="HH:mm" ng-model="vm.items.eventstart" is-open="vm.dateTimePickers.timePicker3.open" enable-date="false" timepicker-options="vm.dateTimePickers.timepickerOptions" close-on-selection="true" required-message="'Required'" required readonly />
+                                <!--<p class="input-group">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="vm.dateTimePickers.timePicker3.open = true"><i class="fa fa-clock-o"></i></button>
+                                    </span>
+                                </p>-->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Arrangement slut <span class="text-danger">*</span></label>
+                            <div class="col-sm-8">
+                                <!--<div uib-timepicker ng-model="vm.items.eventend" hour-step="1" minute-step="5" show-meridian="true"></div>-->
+                                    <input type="text" name="eventend" class="form-control" ng-click="vm.dateTimePickers.timePicker4.open = true" datetime-picker="HH:mm" ng-model="vm.items.eventend" is-open="vm.dateTimePickers.timePicker4.open" enable-date="false" timepicker-options="vm.dateTimePickers.timepickerOptions" close-on-selection="true" required-message="'Required'" required readonly />
+                                <!--<p class="input-group">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="vm.dateTimePickers.timePicker4.open = true"><i class="fa fa-clock-o"></i></button>
+                                    </span>
+                                </p>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+        </div>
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Detaljer</div>
+                <div class="panel-body">
+                    <div class="col-md-3">
+                        <strong>
+                            Særlige detaljer om vagten: Forplejning skal ydes ved arrangementer over 3½ timer eller ved arrangementer som løber over et måltid. Ved arrangementer der strækker sig over flere måltider, skal der være yderligere forplejning.
+                            Hvis kunden ønsker selv at levere vagtfaciliteter, skal disse bestå af enten et pænt og ryddet rum eller et telt på min. 9 kvm. med lys.
+                        </strong>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-4"></label>
+                            <div class="col-sm-8">
+                                <label>
+                                    <input checked="" value="Ingen" id="catering" name="catering" type="radio" ng-model="vm.items.catering"> Ingen forplejning
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4"></label>
+                            <div class="col-sm-8">
+                                <label>
+                                    <input checked="" value="Arrangør" id="catering" name="catering" type="radio" ng-model="vm.items.catering"> Arrangør stiller forplejning stilles til rådighed
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4"></label>
+                            <div class="col-sm-8">
+                                <label>
+                                    <input checked="" value="Samariterkorps" id="catering" name="catering" type="radio" ng-model="vm.items.catering"> Hovedstadens Samariterkorps sørger for forplejning
+                                </label>
+                            </div>
+                            <br />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4"></label>
+                            <div class="col-sm-8">
+                                <label>
+                                    <input value="check1" id="treatmentfacility" name="treatmentfacility" type="checkbox" ng-true-value="true" ng-false-value="false" ng-model="vm.items.treatmentfacility">  Arrangør stiller behandlingslokaler/telt til rådighed
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Evt. kommentarer? </label>
+                            <div class="col-sm-8">
+                                <textarea type="text" name="comments" id="comments" class="form-control" ng-model="vm.items.comments"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <br />
+        </div>
+        <div class="col-lg-12">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">Fakturering</div>
+                <div class="panel-body">
+                    <div class="col-md-3">
+                        <strong>
+                            Hvem skal faktureres?
+                        </strong>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Firma </label>
+                            <div class="col-sm-8">
+                                <input type="text" id="invoice_company" name="invoice_company" class="form-control" ng-model="vm.items.invoice.company" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">cvr </label>
+                            <div class="col-sm-8">
+                                <input type="number" id="invoice_cvr" name="invoice_cvr" class="form-control" ng-model="vm.items.invoice.cvr" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Navn <span class="text-danger">*</span></label>
+                            <div class="col-sm-8">
+                                <input type="text" name="cName" id="cName" class="form-control" ng-model="vm.items.invoice.name" required required-message="'Required'" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Addresse <span class="text-danger">*</span></label>
+                            <div class="col-sm-8">
+                                <input type="text" name="cStreet" id="cStreet" class="form-control" ng-model="vm.items.invoice.street" required required-message="'Required'" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Postnr. <span class="text-danger">*</span>  / By<span class="text-danger"></span> <span class="text-danger">*</span></label>
+                            <div class="col-sm-2">
+                                <input type="text" name="cZip" id="cZip" class="form-control" ng-model="vm.items.invoice.zip" required required-message="'Required'" validator="vm.validFourDigitZip(vm.items.invoice.zip, 4)" invalid-message="'Please enter 4 digit zip'" />
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="text" name="cCity" id="cCity" class="form-control" ng-model="cCity" />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <br />
+        </div>
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Kontaktperson</div>
+                <div class="panel-body">
+                    <div class="col-md-3">
+                        <strong>
+                            Indtast kontaktoplysninger på arrangementets kontaktperson. Denne person vil blive kontaktet med et tilbud fra Hovedstadens Samariterkorps.
+                        </strong>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Navn <span class="text-danger">*</span></label>
+                            <div class="col-sm-8">
+                                <input type="text" name="coName" id="coName" class="form-control" ng-model="vm.items.contact.name"  required required-message="'Required'" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Telefon <span class="text-danger">*</span></label>
+                            <div class="col-sm-8">
+                                <input type="text" name="coPhone" id="coPhone" class="form-control" ng-model="vm.items.contact.phone" required required-message="'Required'" validator="vm.validFourDigitZip(vm.items.contact.phone, 8)" invalid-message="'Please enter 8 digit zip'" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">E-mai <span class="text-danger">*</span></label>
+                            <div class="col-sm-8">
+                                <input type="text" name="coMail" id="coMail" class="form-control" required-message="'Required'" validator="vm.validateEmail(vm.items.contact.mail)" invalid-message="'Please enter valid email'" ng-model="vm.items.contact.mail" required />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <br />
+        </div>
+
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Beredskabsniveau</div>
+                <div class="panel-body">
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-4"></label>
+                            <div class="col-sm-8">
+                                <label>
+                                    <input value="check1" id="medics" name="medics" type="checkbox" ng-true-value="true" ng-false-value="false" ng-model="vm.items.medics" />  Ønskes læge tilstede?
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4"></label>
+                            <div class="col-sm-8">
+                                <label>
+                                    <input id="ambulance" name="ambulance" ng-true-value="true" ng-false-value="false" type="checkbox" ng-model="vm.items.ambulance" />  Ønskes ambulance tilstede?
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4"></label>
+                            <div class="col-sm-8">
+                                <label>
+                                    <input id="emergencyOffice" name="emergencyOffice" type="checkbox" ng-true-value="true" ng-false-value="false" ng-model="vm.items.emergencyOffice" /> Er derberedskabskontortilgængeligt?
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4"></label>
+                            <div class="col-sm-8">
+                                <label>
+                                    <input id="stretcherTeam" name="stretcherTeam" ng-true-value="true" ng-false-value="false" type="checkbox" ng-model="vm.items.stretcherTeam" />  Ønskes derbanehold?
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4"></label>
+                            <div class="col-sm-8">
+                                <label>
+                                    <input id="responseTeam" name="responseTeam" ng-true-value="true" ng-false-value="false" type="checkbox" ng-model="vm.items.responseTeam" />  Ønskes stationærvagt, eller ønskesder udrykning?
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4"></label>
+                            <div class="col-sm-8">
+                                <label>
+                                    <input value="visi" id="visibility" name="visibility" type="radio" ng-model="vm.items.visibility" /> Hvor synlige ønskesSamaritterne?
+                                </label>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+        </div>
+
+        <div class="col-md-12 ">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <br /><br />
+        </div>
+        <div class="col-md-12 " ng-if="vm.isSuccess == true">
+            <div class="alert alert-warning">
+                <!--<span ng-show="vm.isError == true">Detail are successfully saved.</span>-->
+                <h3>Details are successfully saved.</h3>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
+<script src="js/jquery-1.9.1.min.js"></script>
+<!-- Angular -->
+<script src="../../bower_components/angular/angular.min.js" type="text/javascript"></script>
+<!-- Angular UI -->
+<script src="../../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
+<!-- DateTimePicker -->
+<script src="js/datetime-picker.min.js"></script>
+<!-- Validator -->
+<script src="js/angular-validator.min.js"></script>
+<!-- Module -->
+<script src="js/ng-module/formapp.js" type="text/javascript"></script>
+<!-- Controllers -->
+<script src="js/ng-controllers/formController.js" type="text/javascript"></script>
+<!-- Services -->
+<script src="js/ng-sevices/formService.js" type="text/javascript"></script>
