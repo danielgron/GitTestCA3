@@ -5,9 +5,14 @@
     Vagtkort: {{qctrl.clickedShift.name}} - {{qctrl.clickedShift.start}}
 </h3>
 
+<div class="row">
+    <input class="btn-success btn" ng-click="qctrl.saveChanges()" type="button" value="Gem Ændringer" />
+    <br>
+    <br>
+</div>
 
-<div class="row col-lg-3" >
-    
+<div class="row col-md-3 well well-sm">
+        <h3>Bemanding</h3>
     <div id="staff"  ng-repeat="(key, value) in qctrl.clickedShift.levelsQuantity">
 
         <div class="form-group">
@@ -19,9 +24,8 @@
     </div> 
     
 </div>
-    <div class="col-lg-6 col-lg-offset-3" id="resource">
-        
-        <h3> Vælg Ressourcer: </h3>
+<div class="col-md-6 col-md-offset-3 well well-sm" style="top: -30px" id="resource">
+        <h3> Ressourcer </h3>
         
         <select ng-options="opt.name for opt in qctrl.avalibleResources"
                 ng-model="qctrl.selected"
@@ -39,6 +43,5 @@
         </ul>
         
     </div>
-<input ng-click="qctrl.saveChanges()" type="button" value="Gem Ændringer" />
 
 </div>

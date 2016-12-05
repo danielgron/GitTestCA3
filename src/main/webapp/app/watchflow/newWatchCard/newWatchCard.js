@@ -13,8 +13,11 @@ function watchCardController(newWatchCardFactory, $location) {
     self.getShifts = getShifts;
     self.details = details;
     self.staffing = staffing;
+    self.searchText;
+    self.sortType = "name";
+    self.sortReverse  = false;
     
-    
+
     
     // TO Do when Entering////
     self.getShifts();
@@ -42,8 +45,8 @@ function watchCardController(newWatchCardFactory, $location) {
          newWatchCardFactory.setShift(shift);
          $location.path("/assignquatity");
      };
-
-}
+     
+     }
 
 
 

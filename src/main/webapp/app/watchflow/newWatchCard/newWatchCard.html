@@ -2,19 +2,32 @@
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h3>Nye vagtkort</h3>
+            <label> Søg <input style="color: black" ng-model="ctrl.searchText"></label>
         </div>
 
         <div class="panel-body">
             <table class="table">
                 <thead>
                     <tr>
-                        <th>VagtKort OverSkrift </th>
-                        <th>Tid</th>
+                        <th>
+                            <a href="" ng-click="ctrl.sortType = 'name'; ctrl.sortReverse = !ctrl.sortReverse">
+             VagtKort Overskrift
+            <span ng-show="ctrl.sortType == 'name' && !ctrl.sortReverse" class="glyphicon glyphicon-arrow-down"></span>
+            <span ng-show="ctrl.sortType == 'name' && ctrl.sortReverse" class="glyphicon glyphicon-arrow-up"></span>
+          </a>
+                        </th>
+                        <th>
+                             <a href="" ng-click="ctrl.sortType = 'start'; ctrl.sortReverse = !ctrl.sortReverse">
+             Tid
+            <span ng-show="ctrl.sortType == 'start' && !ctrl.sortReverse" class="glyphicon glyphicon-arrow-up"></span>
+            <span ng-show="ctrl.sortType == 'start' && ctrl.sortReverse" class="glyphicon glyphicon-arrow-down"></span>
+          </a>
+                        </th>
                         <th>Rediger</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="shift in ctrl.shifts" >
+                    <tr ng-repeat="shift in ctrl.shifts | filter:ctrl.searchText  | orderBy:ctrl.sortType:ctrl.sortReverse " >
                         <td>{{shift.name}}</td>
                         <td>{{shift.start}}</td>
                         <td>

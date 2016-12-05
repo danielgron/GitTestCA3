@@ -28,14 +28,14 @@ import org.eclipse.persistence.config.QueryHints;
  * @author Daniel
  */
 public class WatchFlowFacade {
-    
+
     
     CoordinatorFacade cf;
 
     public WatchFlowFacade(){ 
-     cf = new CoordinatorFacade();
+        cf = new CoordinatorFacade();
     }
-    
+
     
 
     /**
@@ -127,11 +127,11 @@ public class WatchFlowFacade {
             TypedQuery<StaffedEvent> q1 = em.createQuery("Select e from StaffedEvent e where e.id =:eventid", StaffedEvent.class);
             q1.setParameter("eventid", eventId);
             event = q1.getSingleResult();
-           
+
 //   We need to remove all ResourceWatches from the "existing" Object.
 //   And Add one for each Resource.
-          removeResourceWatchesfromEvent(event, em);
-          addNewResourceWatchesToEvent(eventId, incommingResources, em);
+            removeResourceWatchesfromEvent(event, em);
+            addNewResourceWatchesToEvent(eventId, incommingResources, em);
             em.getTransaction().begin();
             event.setResources(incommingResources);
             em.getTransaction().commit();
@@ -210,7 +210,7 @@ public class WatchFlowFacade {
             Query q2  =em.createQuery("delete from SamaritFunctionsOnWatch w WHERE w.staffedEvent =:event");
             q2.setParameter("event", event);
             q2.executeUpdate();
-            }
+        }
             for (SamaritFunctionsOnWatch samaritFunctionsOnWatch : functionsForThisWatch) {
                 samaritFunctionsOnWatch.setStaffedEvent(event);
                 Query q3 = em.createQuery("select u from Samarit u where u.userName =:username");
@@ -219,7 +219,7 @@ public class WatchFlowFacade {
                 samaritFunctionsOnWatch.setSamaritUserName(temp.getFirstName() + " " + temp.getLastName());
             }
             event.setWatchFunctions(functionsForThisWatch);
-            em.getTransaction().commit();
+                em.getTransaction().commit();
         } catch (Exception e) {
             log.Log.writeErrorMessageToLog("Error in updateWatchFunction" + e.getMessage());
             throw e;
@@ -229,9 +229,9 @@ public class WatchFlowFacade {
         }
         return event;
     }
-    
+
     
     
 
 
-   }
+}
