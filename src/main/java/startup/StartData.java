@@ -43,9 +43,9 @@ public class StartData {
     public static void main(String[] args) {
         Persistence.generateSchema("pu_local", null);
         StartData sd = new StartData();
-        insertTestData();
-        sd.insertRandomData();
-        createStaffedEvent();
+        //insertTestData();
+        //sd.insertRandomData();
+        //createStaffedEvent();
 for (int i = 0; i < 10; i++) {
             sd.testRequest();
         }
@@ -200,18 +200,22 @@ for (int i = 0; i < 10; i++) {
         }
         return so;
     }
-
-    public Event testEvent() {
+    public String eventName(){
+        String name;
         String[] soccerName = {"Brøndby", "Randers", "B93", "Lyngby", "Porto", "Nørresundby", "Hobro", "AGF", "Ikast", "AAB", "AB", "Silkeborg"};
         String[] firmafest = {"Novo", "Politiken", "CPHBUSINESS", "Microsoft", "ProfilOptik","DSB","Socialdemokraterne","PostNord"};
         String[] type = {"Julefrokost", "Påskefrokost", "Firmafest", "Teambuilding","Koncert"};
-        Event e = new Event();
-        String name;
         if (Math.random() < 0.5) {
             name = "FCK vs " + soccerName[(int) (Math.random() * soccerName.length)];
         } else {
             name = firmafest[(int) (Math.random() * firmafest.length)] + " " + type[(int) (Math.random() * type.length)];
         }
+        return name;
+    }
+
+    public Event testEvent() {
+        Event e = new Event();
+        String name = eventName();
         e.setName(name);
         int duration = (int) (Math.random() * 10);
         Date dStart = randomDate();
@@ -259,7 +263,7 @@ for (int i = 0; i < 10; i++) {
         Date end = new Date(start.getTime()+(1000*60*60*5));
         
         
-        r.setEventName("Test Request");
+        r.setEventName(eventName());
         r.setDepartment(d);
         r.setAgegroup(ageGroups[(int)(Math.random()*ageGroups.length)]);
         r.setEventDate(start);

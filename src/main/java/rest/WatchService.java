@@ -123,4 +123,13 @@ public class WatchService {
         return json;
     }
 
+    @Path("shifts/{userName}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getShifts(@PathParam("userName") String userName) {
+        String json ="";
+        
+        
+        return json;
+    }
 }

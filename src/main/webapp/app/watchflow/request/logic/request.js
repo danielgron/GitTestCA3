@@ -58,11 +58,13 @@ function requestController($scope, requestFactory, newWatchCardFactory) {
     ;
 
     function createEventFromRequest() {
+        
         requestFactory.createEventFromRequest()
                 .then(
                         function successCallback(res) {
                             //self.resources = res.data;
                         }, function errorCallBack(error) {
+                            self.request.requestStatus="APPROVED";
                     console.log("Error in callback: " + error.code);
                 });
     };
