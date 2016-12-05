@@ -14,9 +14,13 @@ function allRequestsController(requestFactory, $location) {
     // *** Bindable
     var self = this;
     self.requests = [];
+    
+    
     self.go = requestFactory.go;
     self.goApproved = requestFactory.goApproved;
     self.goSent = requestFactory.goSent;
+    self.setReadOnly=requestFactory.setReadOnly;
+    
 
     promise.then(
             function successCallback(res) {

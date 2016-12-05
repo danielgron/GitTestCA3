@@ -1,36 +1,27 @@
 angular.module('myApp.watchflow')
 
-        .controller('RequestController', RequestController);
-RequestController.$inject = ['$scope', 'requestFactory', 'newWatchCardFactory'];
+        .controller('SendRequestController', sendRequestController);
+sendRequestController.$inject = ['$scope', 'requestFactory', 'newWatchCardFactory'];
 
-function RequestController($scope, requestFactory, newWatchCardFactory) {
+function sendRequestController($scope, requestFactory, newWatchCardFactory) {
 
     //**Bindable Variables****
     var self = this;
     self.resources = [];
-    self.readOnly = true;
+    self.readOnly=true;
 
     ///***Function Calls****
     self.getAllRedCrossLevels = getAllRedCrossLevels;
     self.moveResource = moveResource;
     self.moveResourceBack = moveResourceBack;
     self.createEventFromRequest = createEventFromRequest;
-    self.setReadOnly = requestFactory.setReadOnly;
 
     //** Exceute on Enter *****
     self.request = requestFactory.getRequest();
     self.getResources = getResources();
-    self.readOnly = requestFactory.getReadOnly();
 
     //*** Functions*****
 
-    function setRead() {
-        self.readOnly = true;
-    }
-
-    function readOnlyFalse() {
-        self.readOnly = false;
-    }
     function getAllRedCrossLevels() {
         newWatchCardFactory.getAllRedCrossLevelsFromFac()
                 .then(
@@ -39,8 +30,7 @@ function RequestController($scope, requestFactory, newWatchCardFactory) {
                         }, function errorCallBack(error) {
                     console.log("Error in callback: " + error.code);
                 });
-    }
-    ;
+    };
 
     function getResources() {
         requestFactory.getResources(self.request)
@@ -51,7 +41,6 @@ function RequestController($scope, requestFactory, newWatchCardFactory) {
                     console.log("Error in callback: " + error.code);
                 });
     }
-    ;
 
     function moveResource() {
         var selected = self.selected; // -- Variable that is created by selecting
@@ -70,17 +59,16 @@ function RequestController($scope, requestFactory, newWatchCardFactory) {
     ;
 
     function createEventFromRequest() {
-
+        
         requestFactory.createEventFromRequest()
                 .then(
                         function successCallback(res) {
                             //self.resources = res.data;
                         }, function errorCallBack(error) {
-                    self.request.requestStatus = "APPROVED";
+                            self.request.requestStatus="APPROVED";
                     console.log("Error in callback: " + error.code);
                 });
-    }
-    ;
+    };
     //** Not sorted**
 
 

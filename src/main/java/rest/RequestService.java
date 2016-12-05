@@ -151,13 +151,13 @@ public class RequestService {
 
         EventFacade ef = new EventFacade();
         Request r;
-        System.out.println(json);
+        //System.out.println(json);
 //        System.out.println("Got here");
 
         try {
             //r = gson.fromJson(json, Request.class);
-            DateFormat df = mapper.getDateFormat();
-            mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm"));
+            //DateFormat df = mapper.getDateFormat();
+            //mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm"));
 
             r = mapper.readValue(json, Request.class);
             //mapper.setDateFormat(df);

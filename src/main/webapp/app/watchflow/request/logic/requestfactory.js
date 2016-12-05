@@ -11,6 +11,7 @@ requestFactory.$inject = ['$http', '$location'];
 // *** Main Function ***
 function requestFactory($http, $location) {
     var chosenRequest;
+    var readOnly;
 
     var service = {
         getRequests: getRequests,
@@ -19,7 +20,19 @@ function requestFactory($http, $location) {
         goApproved: goApproved,
         goSent: goSent,
         getResources: getResources,
-        createEventFromRequest: createEventFromRequest
+        createEventFromRequest: createEventFromRequest,
+        setReadOnly: setReadOnly,
+        getReadOnly: getReadOnly
+    }
+    ;
+    
+    function getReadOnly() {
+        return readOnly;
+    }
+    ;
+    
+    function setReadOnly(newValue) {
+        readOnly=newValue;
     }
     ;
     
