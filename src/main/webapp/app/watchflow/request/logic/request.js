@@ -8,6 +8,7 @@ function requestController($scope, requestFactory, newWatchCardFactory) {
     //**Bindable Variables****
     var self = this;
     self.resources = [];
+    var readOnly = true;
 
     ///***Function Calls****
     self.getAllRedCrossLevels = getAllRedCrossLevels;

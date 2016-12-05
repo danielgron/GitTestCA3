@@ -7,6 +7,7 @@ angular.module('myApp.watchflow')
                 //controller: 'RequestController',
                 //controllerAs: 'requestCtrl',
                 //bindToController: true,
+                readOnly:'=',
                 restrict: 'E',
                 replace: 'true',
                 templateUrl: 'app/watchflow/request/templates/event.html'

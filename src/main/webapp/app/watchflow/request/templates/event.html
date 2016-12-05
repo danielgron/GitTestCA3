@@ -1,4 +1,4 @@
-<div class="col-md-6" style = "border:1px solid black">
+<div class="col-md-6" style = "border:1px solid black" ng-readonly="requestCtrl.readOnly">
     <h3>Arrangement</h3>
     <label>Arrangement</label> 
 
@@ -6,7 +6,7 @@
     <label>Antal Gæster</label>
     {{requestCtrl.request.numberGuests}} <br>
     <label>Dato</label> <br>
-    <label>Stednavn</label>  <input type="text" name="" value="" ng-model='requestCtrl.request.venue'/><br>
-    <label>Adresse</label><input type="text" name="" value="" ng-model='requestCtrl.request.street'/> <br>
-    <label>Postnummer</label><input type="text" name="" value="" ng-model='requestCtrl.request.zip'/> <label>by</label>
+    <label>Stednavn</label>  <input type="text"  ng-readonly="requestCtrl.readOnly" ng-model='requestCtrl.request.venue'/><br>
+    <label>Adresse</label><input type="text" ng-readonly="requestCtrl.readOnly" ng-model='requestCtrl.request.street'/> <br>
+    <label>Postnummer</label><input type="text" ng-readonly="requestCtrl.readOnly" ng-model='requestCtrl.request.zip'/> <label>by</label>
 </div>
