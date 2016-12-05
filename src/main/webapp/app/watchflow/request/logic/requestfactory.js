@@ -28,6 +28,9 @@ function requestFactory($http, $location) {
     ;
     
     function getResources(request) {
+        window.console.log(request);
+        
+        
         return $http.get("api/request/resource/" + request.eventstart + "/" + request.eventend + "/");
     }
     ;
