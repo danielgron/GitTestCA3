@@ -159,12 +159,22 @@ for (int i = 0; i < 10; i++) {
             d.addEvent(e);
             e.setDepartment(d);
         }
-        for (int i = 0; i < 10; i++) {
+        for (int i = 1; i < 4; i++) {
             Resource res = new Resource();
-            res.setName("Bil nummer " + i);
+            res.setName("Bil #" + i);
             d.addResource(res);
             res.setDepartment(d);
         }
+        for (int i = 1; i < 4; i++) {
+            Resource res = new Resource();
+            res.setName("Telefon #" + i);
+            d.addResource(res);
+            res.setDepartment(d);
+        }
+        Resource res = new Resource();
+            res.setName("Hjertestarter");
+            d.addResource(res);
+            res.setDepartment(d);
         try {
             em.getTransaction().begin();
             for (User randomTestUser : randomTestUsers) {

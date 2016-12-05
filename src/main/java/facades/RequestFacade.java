@@ -95,4 +95,12 @@ public class RequestFacade {
         return resultList;
     }
 
+    public Request approveRequest(int id) {
+        EntityManager em = EntityConnector.getEntityManager();
+        Query q = em.createQuery("SELECT r FROM Request r where r.id=:id");
+        q.setParameter("id", id);
+        Request r = (Request) q.getSingleResult();
+    return r;
+    }
+
 }
