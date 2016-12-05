@@ -11,6 +11,10 @@ angular.module('myApp.usercalendar')
                 return watchList;
             };
             
+            userCalendarFactory.getShifts = function(){
+                return $http.get('api/watch/shifts/' + username);
+            };
+            
             userCalendarFactory.getWatch = function(date,userName){
                return $http.get('api/watch/'+date +'/'+userName);
             };
