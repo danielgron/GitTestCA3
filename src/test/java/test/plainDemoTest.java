@@ -23,6 +23,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 import rest.Coordinator;
 import startup.StartData;
 
@@ -91,6 +92,7 @@ public class plainDemoTest {
         }
         
         @Test
+        @Ignore
         public void checkAvalibiltyNoConflict(){
             EntityManager em = EntityConnector.getEntityManager();
             Samarit testSam = new Samarit("test2@gmail.com", "testingpassword");
@@ -136,6 +138,7 @@ public class plainDemoTest {
         }
         
         @Test
+        @Ignore
         public void checkAvalibiltyConflict(){
             EntityManager em = EntityConnector.getEntityManager();
             Samarit testSam = new Samarit("test3@gmail.com", "testingpassword");
@@ -185,6 +188,7 @@ public class plainDemoTest {
         one Samarit, that the Samarit is registered as not avalible.
         */
           @Test
+          @Ignore
         public void checkAvalibeConflictAllDay() throws DateNullException{
             EntityManager em = EntityConnector.getEntityManager();
             TypedQuery<Samarit> q1 = em.createQuery("Select s from Samarit s", Samarit.class);
