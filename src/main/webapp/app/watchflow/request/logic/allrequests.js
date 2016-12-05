@@ -16,6 +16,7 @@ function allRequestsController(requestFactory, $location) {
     self.requests = [];
     self.go = requestFactory.go;
     self.goApproved = requestFactory.goApproved;
+    self.goSent = requestFactory.goSent;
 
     promise.then(
             function successCallback(res) {
