@@ -14,7 +14,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="request in allRequestCtrl.requests| allApprovedFilter" ng-click="allRequestCtrl.goApproved(request)">
+                    <tr ng-repeat="request in allRequestCtrl.requests| allApprovedFilter" ng-click="allRequestCtrl.goApproved(request); allRequestCtrl.setReadOnly(true)">
                         <td>{{request.eventName}}</td>
                         <td>{{request.eventDate}}</td>
                     </tr>

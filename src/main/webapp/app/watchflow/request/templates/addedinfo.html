@@ -33,7 +33,7 @@
         -->
        <select ng-options="opt.name for opt in requestCtrl.availableResources"
                 ng-model="requestCtrl.selected"
-                ng-change="requestCtrl.moveResource()">
+                ng-change="requestCtrl.moveResource();requestCtrl.updateRequest()">
         </select>
         
         <br>

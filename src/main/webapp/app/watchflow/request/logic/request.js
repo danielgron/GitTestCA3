@@ -67,7 +67,7 @@ function RequestController($scope, requestFactory, newWatchCardFactory, $locatio
         requestFactory.updateRequest(self.request)
                 .then(
                         function successCallback(res) {
-                            self.request = res.data;
+                            //self.request = res.data;
                             console.log(res.data);
                         }, function errorCallBack(error) {
                     console.log("Error in callback: " + error.code);
