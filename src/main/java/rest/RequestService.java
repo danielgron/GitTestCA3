@@ -18,6 +18,7 @@ import entity.Request;
 import entity.Resource;
 import facades.EventFacade;
 import facades.RequestFacade;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -186,9 +187,16 @@ public class RequestService {
      * PUT method for updating or creating an instance of RequestService
      *
      * @param content representation for the resource
+     * @return 
+     * @throws java.io.IOException 
      */
     @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(String content) {
+    @Produces(MediaType.APPLICATION_JSON)
+    public String putJson(String content) throws IOException {
+        
+        Request r;
+        r = mapper.readValue(content, Request.class);
+        Request updateRequest = rf.updateRequest(r);
+        return mapper.writeValueAsString(updateRequest);
     }
 }

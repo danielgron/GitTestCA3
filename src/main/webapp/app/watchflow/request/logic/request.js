@@ -20,6 +20,7 @@ function RequestController($scope, requestFactory, newWatchCardFactory, $locatio
     self.setReadOnly = requestFactory.setReadOnly;
     self.goHome = goHome;
     self.approveRequest = requestFactory.approveRequest;
+    self.updateRequest= updateRequest;
     
     
    self.getAvailableResources = getResources;
@@ -56,6 +57,18 @@ function RequestController($scope, requestFactory, newWatchCardFactory, $locatio
                 .then(
                         function successCallback(res) {
                             self.availableResources = res.data;
+                        }, function errorCallBack(error) {
+                    console.log("Error in callback: " + error.code);
+                });
+    }
+    
+    
+    function updateRequest() {
+        requestFactory.updateRequest(self.request)
+                .then(
+                        function successCallback(res) {
+                            self.request = res.data;
+                            console.log(res.data);
                         }, function errorCallBack(error) {
                     console.log("Error in callback: " + error.code);
                 });

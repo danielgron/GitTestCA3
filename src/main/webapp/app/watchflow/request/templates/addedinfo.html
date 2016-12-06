@@ -2,7 +2,7 @@
 <h3>Bemanding og Ressourcer:</h3>
 
 <label>Bemanding</label> <br>
-<label>Pris</label><input type="text" ng-model="requestCtrl.request.price" /> <br>
+<label>Pris</label><input type="text" ng-model="requestCtrl.request.price" ng-change="requestCtrl.updateRequest()"/> <br>
 <!--
         <h3> Vælg Ressourcer fra liste: </h3>
         <table cellpadding="1" class="table">

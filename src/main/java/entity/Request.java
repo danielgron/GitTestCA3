@@ -64,6 +64,7 @@ public class Request implements Serializable {
     private String catering;
     private boolean treatmentfacility;
     private String comments;
+    private int price;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Contact contact;
@@ -444,6 +445,14 @@ public class Request implements Serializable {
 
     public void setResources(List<Resource> resources) {
         this.resources = resources;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
 

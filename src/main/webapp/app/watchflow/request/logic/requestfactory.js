@@ -16,6 +16,7 @@ function requestFactory($http, $location) {
     var service = {
         getRequests: getRequests,
         getRequest: getRequest,
+        updateRequest: updateRequest,
         go: go,
         goApproved: goApproved,
         goSent: goSent,
@@ -41,6 +42,11 @@ function requestFactory($http, $location) {
         return $http.get("api/request/");
     }
     ;
+    
+    function updateRequest(request){
+        console.log("Update Request!");
+        return $http.put("api/request/",request);
+    }
     
     function getResources(request) {
         window.console.log(request);
