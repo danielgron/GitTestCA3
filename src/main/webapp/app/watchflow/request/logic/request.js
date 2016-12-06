@@ -1,9 +1,9 @@
 angular.module('myApp.watchflow')
 
         .controller('RequestController', RequestController);
-RequestController.$inject = ['$scope', 'requestFactory', 'newWatchCardFactory'];
+RequestController.$inject = ['$scope', 'requestFactory', 'newWatchCardFactory','$location'];
 
-function RequestController($scope, requestFactory, newWatchCardFactory) {
+function RequestController($scope, requestFactory, newWatchCardFactory, $location) {
 
     //**Bindable Variables****
     var self = this;
@@ -16,6 +16,8 @@ function RequestController($scope, requestFactory, newWatchCardFactory) {
     self.moveResourceBack = moveResourceBack;
     self.createEventFromRequest = createEventFromRequest;
     self.setReadOnly = requestFactory.setReadOnly;
+    self.goHome = goHome;
+    self.approveRequest = requestFactory.approveRequest;
 
     //** Exceute on Enter *****
     self.request = requestFactory.getRequest();
@@ -84,7 +86,10 @@ function RequestController($scope, requestFactory, newWatchCardFactory) {
     //** Not sorted**
 
 
-
+function goHome() {
+        $location.path("/watchflow");
+    }
+    ;
 
 
 }

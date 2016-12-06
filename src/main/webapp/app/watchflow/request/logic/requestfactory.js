@@ -20,6 +20,7 @@ function requestFactory($http, $location) {
         goApproved: goApproved,
         goSent: goSent,
         getResources: getResources,
+        approveRequest: approveRequest,
         createEventFromRequest: createEventFromRequest,
         setReadOnly: setReadOnly,
         getReadOnly: getReadOnly
@@ -43,15 +44,18 @@ function requestFactory($http, $location) {
     
     function getResources(request) {
         window.console.log(request);
-        
-        
         return $http.get("api/request/resource/" + request.eventstart + "/" + request.eventend + "/");
     }
     ;
     
     function getRequest() {
-        //console.log(chosenRequest);
         return chosenRequest;
+    }
+    ;
+    
+    function approveRequest() {
+        return $http.post("api/request/requesttoapproved/"+chosenRequest.id);
+       
     }
     ;
 

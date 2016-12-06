@@ -10,6 +10,7 @@ import entity.Department;
 import entity.Invoice;
 import entity.Request;
 import entityconnection.EntityConnector;
+import enums.RequestStatus;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -20,7 +21,7 @@ import javax.persistence.Query;
  * @author dennisschmock
  */
 public class RequestFacade {
-    
+
     public static void main(String[] args) {
         RequestFacade rf = new RequestFacade();
         Invoice invoice = new Invoice("Google", "55667788", "test", "Somestreet", "2222");
@@ -38,50 +39,50 @@ public class RequestFacade {
         try {
             Query q = em.createQuery("SELECT r FROM Request r");
             requests = q.getResultList();
-        }catch(Exception e){
+        } catch (Exception e) {
             log.Log.writeToLog("Error in getting Requests " + e.getMessage());
         } finally {
             em.close();
         }
         return requests;
     }
-    
-    public Request createRequest(Request request){
-         EntityManager em = EntityConnector.getEntityManager();
+
+    public Request createRequest(Request request) {
+        EntityManager em = EntityConnector.getEntityManager();
 
         try {
             em.getTransaction().begin();
             em.persist(request);
             em.getTransaction().commit();
-        } catch(Exception e){
+        } catch (Exception e) {
             em.getTransaction().rollback();
             log.Log.writeToLog("");
-        }finally {
+        } finally {
             em.close();
         }
         return request;
     }
-    
-    public Request updateRequest(Request request){
-         EntityManager em = EntityConnector.getEntityManager();
+
+    public Request updateRequest(Request request) {
+        EntityManager em = EntityConnector.getEntityManager();
 
         try {
             em.getTransaction().begin();
             em.merge(request);
             em.getTransaction().commit();
-            
-        }finally{
+
+        } finally {
             em.close();
         }
         return request;
     }
-    
-    public Request getRequest(int id){
-         EntityManager em = EntityConnector.getEntityManager();
-         Request request;
+
+    public Request getRequest(int id) {
+        EntityManager em = EntityConnector.getEntityManager();
+        Request request;
         try {
             request = em.find(Request.class, id);
-        } finally{
+        } finally {
             em.close();
         }
         return request;
@@ -97,10 +98,18 @@ public class RequestFacade {
 
     public Request approveRequest(int id) {
         EntityManager em = EntityConnector.getEntityManager();
-        Query q = em.createQuery("SELECT r FROM Request r where r.id=:id");
-        q.setParameter("id", id);
-        Request r = (Request) q.getSingleResult();
-    return r;
+        Request r = null;
+        try {
+            em.getTransaction().begin();
+            Query q = em.createQuery("SELECT r FROM Request r where r.id=:id");
+            q.setParameter("id", id);
+            r = (Request) q.getSingleResult();
+            r.setRequestStatus(RequestStatus.APPROVED);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return r;
     }
 
 }
