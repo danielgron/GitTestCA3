@@ -198,6 +198,8 @@ public class RequestService {
         r = mapper.readValue(content, Request.class);
         Request updateRequest = rf.updateRequest(r);
         return mapper.writeValueAsString(updateRequest);
+    }
+    /*
      * @param json representation for the resource
      */
     @POST
