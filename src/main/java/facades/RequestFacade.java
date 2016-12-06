@@ -9,6 +9,7 @@ import entity.Contact;
 import entity.Department;
 import entity.Invoice;
 import entity.Request;
+import entity.Resource;
 import entityconnection.EntityConnector;
 import enums.RequestStatus;
 import java.util.Date;
@@ -21,6 +22,7 @@ import javax.persistence.Query;
  * @author dennisschmock
  */
 public class RequestFacade {
+    private static EventFacade ef = new EventFacade();
 
     public static void main(String[] args) {
         RequestFacade rf = new RequestFacade();
@@ -110,6 +112,23 @@ public class RequestFacade {
             em.close();
         }
         return r;
+    }
+
+    public List<Resource> getRequestResources(int requestId) {
+        
+        EntityManager em = EntityConnector.getEntityManager();
+        Request r = null;
+        try {
+            Query q = em.createQuery("SELECT r FROM Request r where r.id=:id");
+            q.setParameter("id", requestId);
+            r = (Request) q.getSingleResult();
+        }
+        finally{
+            em.close();
+        }
+        List<Resource> availableResources = ef.getAvailableResourcesForDates(r.getEventstart(), r.getEventend());
+        
+        return availableResources;
     }
 
 }

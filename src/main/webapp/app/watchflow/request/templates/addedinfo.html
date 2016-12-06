@@ -3,7 +3,7 @@
 
 <label>Bemanding</label>
 <label>Pris</label><input type="text" ng-model="requestCtrl.request.price" /> <br>
-
+<!--
         <h3> Vælg Ressourcer fra liste: </h3>
         <table cellpadding="1" class="table">
             <tbody>
@@ -18,7 +18,7 @@
                 ng-model="requestCtrl.selected">
         </select>
        
-      
+      -->
         
         <br>
         <br>
@@ -31,7 +31,7 @@
             </li>
         </ul>
         -->
-       <select ng-options="opt.name for opt in requestCtrl.avalibleResources"
+       <select ng-options="opt.name for opt in requestCtrl.availableResources"
                 ng-model="requestCtrl.selected"
                 ng-change="requestCtrl.moveResource()">
         </select>
@@ -40,7 +40,7 @@
         <br>
         
         <h5>Valgte Resourcer:</h5>
-        <ul ng-repeat="resource in requestCtrl.clickedShift.resources">
+        <ul ng-repeat="resource in requestCtrl.request.resources">
             <li>
                 {{resource.name}} <span style="cursor: pointer" ng-click="requestCtrl.moveResourceBack(resource)">&#10060;</span>
             </li>

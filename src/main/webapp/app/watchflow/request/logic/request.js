@@ -7,7 +7,9 @@ function RequestController($scope, requestFactory, newWatchCardFactory, $locatio
 
     //**Bindable Variables****
     var self = this;
-    self.resources = [];
+    self.request = {};
+    self.availableResources = [];
+    self.clickedShift = {};
     self.readOnly = true;
 
     ///***Function Calls****
@@ -18,6 +20,11 @@ function RequestController($scope, requestFactory, newWatchCardFactory, $locatio
     self.setReadOnly = requestFactory.setReadOnly;
     self.goHome = goHome;
     self.approveRequest = requestFactory.approveRequest;
+    
+    
+   self.getAvailableResources = getResources;
+   self.moveResource = moveResource;
+   self.moveResourceBack = moveResourceBack;
 
     //** Exceute on Enter *****
     self.request = requestFactory.getRequest();
@@ -48,7 +55,7 @@ function RequestController($scope, requestFactory, newWatchCardFactory, $locatio
         requestFactory.getResources(self.request)
                 .then(
                         function successCallback(res) {
-                            self.resources = res.data;
+                            self.availableResources = res.data;
                         }, function errorCallBack(error) {
                     console.log("Error in callback: " + error.code);
                 });
@@ -58,16 +65,19 @@ function RequestController($scope, requestFactory, newWatchCardFactory, $locatio
     function moveResource() {
         var selected = self.selected; // -- Variable that is created by selecting
         if (selected != null) {
+            if (typeof(self.request.resources) == "undefined"){
+                self.request.resources=[];
+            }
 
-            self.avalibleResources.remove(selected);
-            self.clickedShift.resources.push(selected);
+            self.availableResources.remove(selected);
+            self.request.resources.push(selected);
         }
     }
     ;
 
     function moveResourceBack(resource) {
-        self.avalibleResources.push(resource);
-        self.clickedShift.resources.remove(resource);
+        self.availableResources.push(resource);
+        self.request.resources.remove(resource);
     }
     ;
 
