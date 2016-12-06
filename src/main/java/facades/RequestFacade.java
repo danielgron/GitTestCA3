@@ -10,6 +10,7 @@ import entity.Department;
 import entity.Invoice;
 import entity.Request;
 import entityconnection.EntityConnector;
+import enums.RequestStatus;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -49,6 +50,13 @@ public class RequestFacade {
     public Request createRequest(Request request){
          EntityManager em = EntityConnector.getEntityManager();
 
+         if(request.getDepartment() == null){
+             Department dept = em.find(Department.class, "København");
+             request.setDepartment(dept);
+         }
+         if(request.getRequestStatus() == null){
+             request.setRequestStatus(RequestStatus.RECIEVED);
+         }
         try {
             em.getTransaction().begin();
             em.persist(request);
