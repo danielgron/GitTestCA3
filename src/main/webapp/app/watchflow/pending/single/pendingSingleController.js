@@ -34,7 +34,6 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOve
     self.getFunctionsForDepartment = getFunctionsForDepartment;
     self.moveFunction = moveFunction;
     self.deleteFunctionFromWatch = deleteFunctionFromWatch;
-  //  self.testSamaritter = testSamaritter;
     self.samaritSelectedForFunction = samaritSelectedForFunction;
     self.sendFunctions = sendWatchFunctions;
     self.mapToStart = mapToStart;
@@ -47,7 +46,6 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOve
     getSamarits(self.id);
     getFunctionsForDepartment();
     getclickedEvent();
-//    testSamaritter();
 
 
     //*** Functions*****
@@ -166,16 +164,28 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOve
     }
 
     function samaritSelectedForFunction(idofFunction, index) {
-        var selected = self.selectedSamaritForFunction[index];
-        mapSamaritToFunction(selected, idofFunction);
+        var selectedObj = self.selectedSamaritForFunction[index];
+        self.selectedSamaritForFunction.remove(selectedObj);
+        var samaritUserName = selectedObj.firstName + ' ' +      selectedObj.lastName;
+        mapSamaritToFunction(samaritUserName, idofFunction);
+        
     }
 
 
-    function mapSamaritToFunction(selected, idofFunction) {
+    function mapSamaritToFunction(samaritUserName, idofFunction) {
         angular.forEach(self.newFunctions, function (value, key) {
             if (value.id === idofFunction) {
-                self.newFunctions[key].samaritUserName = selected;
+        var obj = new Object();
+        obj.samaritUserName = samaritUserName;
+        obj.functionName = value.functionName;
+        self.excistingFunctions.push(obj);
             }
+            //remove from newFunctions
+            angular.forEach(self.newFunctions, function (value, key) {
+                if(value.id === idofFunction){
+                    self.newFunctions.remove(value);
+                }
+            });
         });
     }
 
