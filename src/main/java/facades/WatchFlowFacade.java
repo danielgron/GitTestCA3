@@ -200,26 +200,36 @@ public class WatchFlowFacade {
      */
     public StaffedEvent updateWatchFunctionsForEvent(List<SamaritFunctionsOnWatch> functionsForThisWatch, int eventId) {
         EntityManager em = EntityConnector.getEntityManager();
-        StaffedEvent event = null;
         try {
+            Query q1  =em.createNativeQuery("delete from SAMARITFUNCTIONSONWATCH where STAFFEDEVENT_ID = ?1");
+            q1.setParameter(1, eventId);
             em.getTransaction().begin();
-            TypedQuery<StaffedEvent> q1 = em.createQuery("Select e from StaffedEvent e where e.id =:eventid", StaffedEvent.class);
-            q1.setParameter("eventid", eventId);
-            event = q1.getSingleResult();
-            if(event.getWatchFunctions() != null || !event.getWatchFunctions().isEmpty()){
-            Query q2  =em.createQuery("delete from SamaritFunctionsOnWatch w WHERE w.staffedEvent =:event");
-            q2.setParameter("event", event);
-            q2.executeUpdate();
+            q1.executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            log.Log.writeErrorMessageToLog("Error in updateWatchFunction" + e.getMessage());
+            throw e;
         }
+        finally{
+            em.close();
+        }
+         return persistNewFunctions(functionsForThisWatch, eventId);
+    }
+
+    private StaffedEvent persistNewFunctions(List<SamaritFunctionsOnWatch> functionsForThisWatch, int eventId) {
+        EntityManager em = EntityConnector.getEntityManager();
+        StaffedEvent event = null;
+        try{
+            TypedQuery<StaffedEvent> q1 = em.createQuery("Select e from StaffedEvent e where e.id =:id", StaffedEvent.class);
+            q1.setParameter("id", eventId);
+            event = q1.getSingleResult();
+            em.getTransaction().begin();
             for (SamaritFunctionsOnWatch samaritFunctionsOnWatch : functionsForThisWatch) {
                 samaritFunctionsOnWatch.setStaffedEvent(event);
-                Query q3 = em.createQuery("select u from Samarit u where u.userName =:username");
-                q3.setParameter("username", samaritFunctionsOnWatch.getSamaritUserName());
-                Samarit temp = (Samarit) q3.getSingleResult();
-                samaritFunctionsOnWatch.setSamaritUserName(temp.getFirstName() + " " + temp.getLastName());
             }
             event.setWatchFunctions(functionsForThisWatch);
-                em.getTransaction().commit();
+            em.getTransaction().commit();
+            
         } catch (Exception e) {
             log.Log.writeErrorMessageToLog("Error in updateWatchFunction" + e.getMessage());
             throw e;

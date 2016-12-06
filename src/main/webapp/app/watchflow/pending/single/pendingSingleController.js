@@ -22,8 +22,9 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOve
     self.selectedSamaritForFunction = [];
     self.excistingFunctions = [];
     self.newFunctions = [];
+     self.selectedUser;
 
-    ///***Function Calls****
+    ///***Function Declarations****
     self.getEvent = getEvent;
     self.getSamarits = getSamarits;
     self.add = add;
@@ -39,6 +40,8 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOve
     self.mapToStart = mapToStart;
     self.mapToEventWatchFunctions = mapToEventWatchFunctions;
     self.deleteFromExcistingFunctions = deleteFromExcistingFunctions;
+    self.saveFunction = saveFunction;
+    self.changeUserNameForFunction = changeUserNameForFunction;
 
 
     //** Exceute on Enter *****
@@ -147,10 +150,14 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOve
             if (self.newFunctions.length === 0) {
                 newFunctionForWatch.id = 1;
             } else {
-                newFunctionForWatch.id = self.newFunctions.length + 1;
+                alert("Gem Eksisterende funktion først");
+                self.selected = null;
+                return;
+                
             }
             newFunctionForWatch.samaritUserName = "Ikke Besat";
             self.newFunctions.push(newFunctionForWatch);
+            self.selectedUser = "Ikke Besat";
             self.selected = null;
         }
     }
@@ -212,14 +219,21 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOve
         angular.forEach(self.excistingFunctions, function (value, key) {
             self.clickedEvent.watchFunctions.push(value);
         });
-        mapNewFunctions();
+        sendWatchFunctions();
     }
 
-    function mapNewFunctions() {
-        angular.forEach(self.newFunctions, function (value, key) {
-            self.clickedEvent.watchFunctions.push(value);
-        });
-        sendWatchFunctions();
+    
+    function saveFunction(func){
+        var obj = new Object();
+        obj.functionName = func.functionName;
+        obj.samaritUserName = func.samaritUserName;
+        self.excistingFunctions.push(obj);
+        self.newFunctions.remove(func); 
+    }
+    
+    function changeUserNameForFunction(func){
+       var selecteduser = self.selectedUser;
+       self.newFunctions[0].samaritUserName = selecteduser;
     }
 
 }
