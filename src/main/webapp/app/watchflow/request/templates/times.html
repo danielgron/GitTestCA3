@@ -1,15 +1,15 @@
 <div class="col-md-6" style = "border:1px solid black">
     <h3>Tidspunkter</h3>
     
-    <label>Døre/porte åbner</label>         <input type="text" name="" value="" /><br>
-    <label>Arrangement starter</label>        <input type="text" name="" value="" /><br>
+    <label>Døre/porte åbner</label>   <div uib-timepicker ng-model="requestCtrl.request.doorsopen"  ng-change="requestCtrl.updateRequest()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian" ></div><br>
+    <label>Arrangement starter</label>  <div uib-timepicker ng-model="requestCtrl.request.eventstart" ng-change="requestCtrl.updateRequest()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian" ></div><br>
     
     <div><label>Vagt Start</label>
-                <div uib-timepicker ng-model="requestCtrl.request.watchStart"  hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></div>
+                <div uib-timepicker ng-model="requestCtrl.request.watchStart" ng-change="requestCtrl.updateRequest()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian" ></div>
             </div>
             <div><label>Vagt Slut</label>
 
-                <div uib-timepicker ng-model="requestCtrl.request.eventend" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></div>
+                <div uib-timepicker ng-model="requestCtrl.request.eventend" ng-change="requestCtrl.updateRequest()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian" ></div>
             </div>
     <label>Arrangement varighed:</label>    <input type="text" name="" value="" /><br>
 </div>

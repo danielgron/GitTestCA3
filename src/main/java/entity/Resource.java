@@ -38,6 +38,8 @@ public class Resource implements Serializable {
     @ManyToOne
     @JsonBackReference(value="department-res")
     private Department department;
+    @ManyToOne
+    private Request request;
     
 
     public Resource() {

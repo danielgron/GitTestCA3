@@ -12,8 +12,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import entity.Department;
 import entity.Event;
 import entity.Request;
@@ -23,14 +21,12 @@ import facades.RequestFacade;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -39,9 +35,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
-import org.joda.time.LocalDate;
+import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import util.DateUtils;
 import util.JSON_Converter;
 
 /**
@@ -61,6 +58,7 @@ public class RequestService {
     private static ObjectMapper mapper = new ObjectMapper();
     private static JSON_Converter eJson = new JSON_Converter();
     DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MM-dd");
+    
     //private Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
 
     /**
@@ -90,7 +88,8 @@ public class RequestService {
         }
         List<Request> requests = rf.getRequests(d);
         try {
-            
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+            mapper.setDateFormat(df);
             return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(requests);
         } catch (JsonProcessingException ex) {
             Logger.getLogger(RequestService.class.getName()).log(Level.SEVERE, null, ex);
@@ -114,6 +113,8 @@ public class RequestService {
         int idFromString = Integer.parseInt(id);
         Request request = rf.getRequest(idFromString);
         try {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+            mapper.setDateFormat(df);
             return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(request);
         } catch (JsonProcessingException ex) {
             log.Log.writeErrorMessageToLog("Error REST get an Request: " + ex.getMessage());
@@ -127,14 +128,15 @@ public class RequestService {
     public String getResourceInTimeslot(@PathParam("start") String start, @PathParam("end") String end) throws JsonProcessingException {
         EventFacade ef = new EventFacade();
         //TODO return proper representation object
-        //org.joda.time.LocalDateTime lStart = dtf.parseLocalDateTime(start);
-        //org.joda.time.LocalDateTime lEnd = dtf.parseLocalDateTime(end);
-        long eStart = dtf.parseMillis(start);
-        long eEnd = dtf.parseMillis(end);
-        Date sDate = new Date(eStart);
-        Date eDate = new Date(eEnd);
-        //long eEnd = Long.parseLong(end);
-        List<Resource> res = ef.getAvailableResourcesForDates(sDate, eDate);
+       
+        DateTime dtStart = new DateTime(start);
+        DateTime dtEnd = new DateTime(end);
+        Date dStart = dtStart.toDate();
+        Date dEnd = dtStart.toDate();
+        
+       
+
+        List<Resource> res = ef.getAvailableResourcesForDates(dStart, dEnd);
         try {
             return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(res);
         } catch (JsonProcessingException ex) {
@@ -150,33 +152,52 @@ public class RequestService {
 
         EventFacade ef = new EventFacade();
         Request r;
-        System.out.println(json);
-//        System.out.println("Got here");
-
         try {
-        //r = gson.fromJson(json, Request.class);
-        DateFormat df= mapper.getDateFormat();
-        mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm"));
-        
-        r =mapper.readValue(json, Request.class);
-        //mapper.setDateFormat(df);
-        //df= mapper.getDateFormat();
-        //TODO return proper representation object
-        Event e = ef.createEventFromRequest(r);
+            r = mapper.readValue(json, Request.class);
+            Event e = ef.createEventFromRequest(r);
             return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(e);
         } catch (JsonProcessingException ex) {
             log.Log.writeErrorMessageToLog("Error REST request to event: " + ex.getMessage());
             throw ex;
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             log.Log.writeErrorMessageToLog("Error REST request to event: " + ex.getMessage());
             throw ex;
         }
     }
+    
+    @POST
+    @Path("requesttoapproved/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String moveRequestToApproved(@PathParam("id") String id) throws JsonProcessingException, Exception {
+
+        Request r = rf.approveRequest(Integer.parseInt(id));
+        try {
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(r);
+        } catch (JsonProcessingException ex) {
+            log.Log.writeErrorMessageToLog("Error REST request approve: " + ex.getMessage());
+            throw ex;
+        } catch (Exception ex) {
+            log.Log.writeErrorMessageToLog("Error REST request approve: " + ex.getMessage());
+            throw ex;
+        }
+    }
+    
 
     /**
      * PUT method for updating or creating an instance of RequestService
      *
+     * @param content representation for the resource
+     * @return 
+     * @throws java.io.IOException 
+     */
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    public String putJson(String content) throws IOException {
+        
+        Request r;
+        r = mapper.readValue(content, Request.class);
+        Request updateRequest = rf.updateRequest(r);
+        return mapper.writeValueAsString(updateRequest);
      * @param json representation for the resource
      */
     @POST

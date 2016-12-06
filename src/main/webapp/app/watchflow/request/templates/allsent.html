@@ -1,6 +1,6 @@
 
 
-    <div class="panel panel-primary">
+    <div class="panel panel-primary" >
         <div class="panel-heading">
             <div class="h3">Afsendte Tilbud</div>
             {{allRequestCtrl.test}}
@@ -14,7 +14,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="request in (allRequestCtrl.requests| allSentFilter)" ng-click="allRequestCtrl.go(request)">
+                    <tr ng-repeat="request in (allRequestCtrl.requests| allSentFilter)" ng-click="allRequestCtrl.goSent(request); allRequestCtrl.setReadOnly(true)">
                         <td>{{request.eventName}}</td>
                         <td>{{request.eventDate}}</td>
                     </tr>

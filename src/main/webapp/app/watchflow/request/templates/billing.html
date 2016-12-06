@@ -1,8 +1,9 @@
 <div class="col-md-6" style = "border:1px solid black">
     <h3>Fakturering</h3>
-    <label>Firma</label> <input type="text" name="" ng-model="requestCtrl.request.invoice.company" /><br>
-    <label>CVR</label> <input type="text" name="" ng-model="requestCtrl.request.invoice.cvr" /><br>
-    <label>Navn</label><input type="text" name="" ng-model="requestCtrl.request.invoice.name" /><br>
-    <label>Addresse</label><input type="text" name="" ng-model="requestCtrl.request.invoice.street" /><br>
-    <label>Postnr.</label><input type="text" name="" ng-model="requestCtrl.request.invoice.zip" /> <label>By</label><input type="text" name="" ng-model="requestCtrl.invoice.city" /><br>
+    <label>Firma</label> <input type="text" ng-model="requestCtrl.request.invoice.company" ng-change="requestCtrl.updateRequest()"  ng-readonly="{{requestCtrl.readOnly}}"/><br>
+    <label>CVR</label> <input type="text"  ng-model="requestCtrl.request.invoice.cvr" ng-change="requestCtrl.updateRequest()"  ng-readonly="{{requestCtrl.readOnly}}"/><br>
+    <label>Navn</label><input type="text" ng-model="requestCtrl.request.invoice.name" ng-change="requestCtrl.updateRequest()"  ng-readonly="{{requestCtrl.readOnly}}"/><br>
+    <label>Addresse</label><input type="text" ng-model="requestCtrl.request.invoice.street" ng-change="requestCtrl.updateRequest()"  ng-readonly="{{requestCtrl.readOnly}}"/><br>
+    <label>Postnr.</label><input type="text" ng-model="requestCtrl.request.invoice.zip" ng-change="requestCtrl.updateRequest()"  ng-readonly="{{requestCtrl.readOnly}}"/> <label>By</label>
+    <input type="text" name="" ng-model="requestCtrl.invoice.city" /><br>
 </div>
