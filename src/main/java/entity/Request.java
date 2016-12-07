@@ -35,18 +35,21 @@ public class Request implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String eventName;
-    @Enumerated(EnumType.STRING)
-    private RequestStatus requestStatus;
-    private int numberGuests;
+    
+    
     private String agegroup;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date eventDate;
-    private String venue;
-    private String street;
-    private int zip;
     @ManyToOne
     private Department department;
+    private String details;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date eventDate;
+    private String eventName;
+    private int numberGuests;
+    @Enumerated(EnumType.STRING)
+    private RequestStatus requestStatus;
+    private String street;
+    private String venue;
+    private int zip;
     @OneToMany(mappedBy = "request")
     @JsonBackReference(value="resources-req")
     private List<Resource> resources;
@@ -453,6 +456,14 @@ public class Request implements Serializable {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
     }
 
 

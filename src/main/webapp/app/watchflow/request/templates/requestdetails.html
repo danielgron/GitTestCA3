@@ -10,7 +10,9 @@
         <label>Ønskes Læge?</label><input type="checkbox" value="ON" /><br>
         <label>Ønskes Ambulance?</label><input type="checkbox" value="ON" ng-model="requestCtrl.request.ambulance" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"/><br>
         <label>Ønskes Bårehold?</label><input type="checkbox" value="ON" ng-model="requestCtrl.request.stretcherTeam" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"/><br>
-        <label>Ønskes --response team--?</label><input type="checkbox" name="" value="ON" ng-model="requestCtrl.request.responseTeam" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"/><br>
+        <label>Ønskes Response Team</label><input type="checkbox" name="" value="ON" ng-model="requestCtrl.request.responseTeam" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"/><br>
+        <input type="text" ng-model="requestCtrl.request.visibility" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"/>
+        <textarea name="" rows="4" cols="20" ng-model="requestCtrl.request.details" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}">
         <textarea name="" rows="4" cols="20" ng-model="requestCtrl.request.comments" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}">
         </textarea>
     </div>
