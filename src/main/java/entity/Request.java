@@ -37,18 +37,13 @@ public class Request implements Serializable {
     private int id;
     
     
-    private String agegroup;
     @ManyToOne
     private Department department;
     private String details;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date eventDate;
-    private String eventName;
-    private int numberGuests;
     @Enumerated(EnumType.STRING)
     private RequestStatus requestStatus;
-    private String street;
-    private String venue;
     private int zip;
     @OneToMany(mappedBy = "request")
     @JsonBackReference(value="resources-req")
@@ -64,10 +59,16 @@ public class Request implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date watchStart;
 
+    private String street;
+    private String venue;
+    private String agegroup;
+    private String eventName;
     private String catering;
-    private boolean treatmentfacility;
     private String comments;
+    private String visibility;
+    
     private int price;
+    private int numberGuests;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Contact contact;
@@ -75,12 +76,12 @@ public class Request implements Serializable {
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Invoice invoice;
 
+    private boolean treatmentfacility;
     private boolean medics;
     private boolean ambulance;
     private boolean emergencyOffice;
     private boolean stretcherTeam;
     private boolean responseTeam;
-    private String visibility;
 
     public Request() {
     }
