@@ -5,17 +5,18 @@
 angular.module('myApp.watchflow')
         .controller('quantityController', quantityController);
 
-quantityController.$inject = ['newWatchCardFactory', '$location'];
+quantityController.$inject = ['newWatchCardFactory', '$location', '$routeParams'];
 
 
 
-function quantityController(newWatchCardFactory, $location){
+function quantityController(newWatchCardFactory, $location, $routeParams){
     
     //**Bindable Variables****
    var self = this;
    self.clickedShift = {};
    self.allRedCrossLevels =[];
    self.avalibleResources = [];
+   self.eventId = $routeParams.param;
    
    
    ///***Function Calls****
@@ -27,14 +28,20 @@ function quantityController(newWatchCardFactory, $location){
    self.saveChanges = saveChanges;
    
    //** Exceute on Enter *****
-    getclicked();
+    getclicked(self.eventId);
     getAvalibleResources();
    
    
    //*** Functions*****
-   function getclicked(){
-       self.clickedShift = newWatchCardFactory.getClickedShift();
-   }
+   function getclicked(id) {
+        newWatchCardFactory.getEventfromId(id)
+                .then(
+                        function successCallback(res) {
+                            self.clickedShift = res.data;
+                        }, function errorCallBack(errorResponse) {
+                    console.log("Error in callback: " + errorResponse.data.error.code);
+                });
+    }
    
    function getAllRedCrossLevels(){
        newWatchCardFactory.getAllRedCrossLevelsFromFac()
@@ -49,7 +56,7 @@ function quantityController(newWatchCardFactory, $location){
    
    
    function getAvalibleResources(){
-       newWatchCardFactory.getAvalibleResources(self.clickedShift.id)
+       newWatchCardFactory.getAvalibleResources(self.eventId)
        .then(
            function successCallback(res) {
                     self.avalibleResources = res.data;

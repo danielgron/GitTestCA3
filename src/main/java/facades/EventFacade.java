@@ -10,6 +10,7 @@ import entity.Department;
 import entity.Event;
 import entity.Invoice;
 import entity.OcupiedSlot;
+import entity.RedCrossLevel;
 import entity.Request;
 import entity.Resource;
 import entity.StaffedEvent;
@@ -292,6 +293,9 @@ public class EventFacade {
 
         request.setRequestStatus(RequestStatus.PROCCESED);
         em = EntityConnector.getEntityManager();
+        Query q1 = em.createQuery("Select l from RedCrossLevel l");
+        List<RedCrossLevel> allRedCrossLevels = q1.getResultList();
+        event.initilazeLinkedMap(allRedCrossLevels);
         try {
             em.getTransaction().begin();
             em.merge(request);

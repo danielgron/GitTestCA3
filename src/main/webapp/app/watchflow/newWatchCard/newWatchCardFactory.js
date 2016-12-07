@@ -9,6 +9,7 @@ function watchFactory($http){
     
     var service = {
         loadEvents: loadEvents,
+        getEventfromId: getEventfromId,
         getClickedShift : getClickedShift,
         setShift: setShift,
         getAllRedCrossLevelsFromFac: getAllRedCrossLevelsFromFac,
@@ -41,6 +42,10 @@ function watchFactory($http){
     
     function sendDataFromQuantityWatch(jsonObject){
         return $http.post("api/watchflow/events/updatequantity",jsonObject);
+    }
+    
+    function getEventfromId (id){
+        return $http.get("api/event/staffedevent/"+id);
     }
     
 };
