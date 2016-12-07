@@ -18,6 +18,7 @@ import entity.Request;
 import entity.Resource;
 import facades.EventFacade;
 import facades.RequestFacade;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -186,9 +187,40 @@ public class RequestService {
      * PUT method for updating or creating an instance of RequestService
      *
      * @param content representation for the resource
+     * @return 
+     * @throws java.io.IOException 
      */
     @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    public String putJson(String content) throws IOException {
+        
+        Request r;
+        r = mapper.readValue(content, Request.class);
+        Request updateRequest = rf.updateRequest(r);
+        return mapper.writeValueAsString(updateRequest);
+    }
+    
+    
+    /*
+     *
+     * @param json representation for the resource
+     */
+    @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(String content) {
+    @Produces(MediaType.APPLICATION_JSON)
+    public String postNewSamaritterRequest(String json) throws IOException {
+        try {
+            ObjectMapper localMapper = new ObjectMapper();
+//            DateFormat df = localMapper.getDateFormat();
+//            localMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm"));
+//            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm a z");
+//            localMapper.setDateFormat(df);
+            Request incomingRequest = localMapper.readValue(json, Request.class);
+            Request afterDbUpdate = rf.createRequest(incomingRequest);
+            return localMapper.writeValueAsString(afterDbUpdate);
+        } catch (IOException ex) {
+           log.Log.writeErrorMessageToLog("Error in Rest postSamaritterRequest : " +ex.getMessage());
+           throw ex;
+        }
     }
 }

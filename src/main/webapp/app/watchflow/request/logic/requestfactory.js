@@ -16,10 +16,12 @@ function requestFactory($http, $location) {
     var service = {
         getRequests: getRequests,
         getRequest: getRequest,
+        updateRequest: updateRequest,
         go: go,
         goApproved: goApproved,
         goSent: goSent,
         getResources: getResources,
+        approveRequest: approveRequest,
         createEventFromRequest: createEventFromRequest,
         setReadOnly: setReadOnly,
         getReadOnly: getReadOnly
@@ -41,17 +43,25 @@ function requestFactory($http, $location) {
     }
     ;
     
+    function updateRequest(request){
+        console.log("Update Request!");
+        return $http.put("api/request/",request);
+    }
+    
     function getResources(request) {
         window.console.log(request);
-        
-        
         return $http.get("api/request/resource/" + request.eventstart + "/" + request.eventend + "/");
     }
     ;
     
     function getRequest() {
-        //console.log(chosenRequest);
         return chosenRequest;
+    }
+    ;
+    
+    function approveRequest() {
+        return $http.post("api/request/requesttoapproved/"+chosenRequest.id);
+       
     }
     ;
 

@@ -22,8 +22,9 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOve
     self.selectedSamaritForFunction = [];
     self.excistingFunctions = [];
     self.newFunctions = [];
+     self.selectedUser;
 
-    ///***Function Calls****
+    ///***Function Declarations****
     self.getEvent = getEvent;
     self.getSamarits = getSamarits;
     self.add = add;
@@ -34,12 +35,13 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOve
     self.getFunctionsForDepartment = getFunctionsForDepartment;
     self.moveFunction = moveFunction;
     self.deleteFunctionFromWatch = deleteFunctionFromWatch;
-  //  self.testSamaritter = testSamaritter;
     self.samaritSelectedForFunction = samaritSelectedForFunction;
     self.sendFunctions = sendWatchFunctions;
     self.mapToStart = mapToStart;
     self.mapToEventWatchFunctions = mapToEventWatchFunctions;
     self.deleteFromExcistingFunctions = deleteFromExcistingFunctions;
+    self.saveFunction = saveFunction;
+    self.changeUserNameForFunction = changeUserNameForFunction;
 
 
     //** Exceute on Enter *****
@@ -47,7 +49,6 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOve
     getSamarits(self.id);
     getFunctionsForDepartment();
     getclickedEvent();
-//    testSamaritter();
 
 
     //*** Functions*****
@@ -149,10 +150,14 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOve
             if (self.newFunctions.length === 0) {
                 newFunctionForWatch.id = 1;
             } else {
-                newFunctionForWatch.id = self.newFunctions.length + 1;
+                alert("Gem Eksisterende funktion først");
+                self.selected = null;
+                return;
+                
             }
             newFunctionForWatch.samaritUserName = "Ikke Besat";
             self.newFunctions.push(newFunctionForWatch);
+            self.selectedUser = "Ikke Besat";
             self.selected = null;
         }
     }
@@ -166,16 +171,28 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOve
     }
 
     function samaritSelectedForFunction(idofFunction, index) {
-        var selected = self.selectedSamaritForFunction[index];
-        mapSamaritToFunction(selected, idofFunction);
+        var selectedObj = self.selectedSamaritForFunction[index];
+        self.selectedSamaritForFunction.remove(selectedObj);
+        var samaritUserName = selectedObj.firstName + ' ' +      selectedObj.lastName;
+        mapSamaritToFunction(samaritUserName, idofFunction);
+        
     }
 
 
-    function mapSamaritToFunction(selected, idofFunction) {
+    function mapSamaritToFunction(samaritUserName, idofFunction) {
         angular.forEach(self.newFunctions, function (value, key) {
             if (value.id === idofFunction) {
-                self.newFunctions[key].samaritUserName = selected;
+        var obj = new Object();
+        obj.samaritUserName = samaritUserName;
+        obj.functionName = value.functionName;
+        self.excistingFunctions.push(obj);
             }
+            //remove from newFunctions
+            angular.forEach(self.newFunctions, function (value, key) {
+                if(value.id === idofFunction){
+                    self.newFunctions.remove(value);
+                }
+            });
         });
     }
 
@@ -202,14 +219,21 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOve
         angular.forEach(self.excistingFunctions, function (value, key) {
             self.clickedEvent.watchFunctions.push(value);
         });
-        mapNewFunctions();
+        sendWatchFunctions();
     }
 
-    function mapNewFunctions() {
-        angular.forEach(self.newFunctions, function (value, key) {
-            self.clickedEvent.watchFunctions.push(value);
-        });
-        sendWatchFunctions();
+    
+    function saveFunction(func){
+        var obj = new Object();
+        obj.functionName = func.functionName;
+        obj.samaritUserName = func.samaritUserName;
+        self.excistingFunctions.push(obj);
+        self.newFunctions.remove(func); 
+    }
+    
+    function changeUserNameForFunction(func){
+       var selecteduser = self.selectedUser;
+       self.newFunctions[0].samaritUserName = selecteduser;
     }
 
 }

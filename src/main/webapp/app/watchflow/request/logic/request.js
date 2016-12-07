@@ -1,13 +1,15 @@
 angular.module('myApp.watchflow')
 
         .controller('RequestController', RequestController);
-RequestController.$inject = ['$scope', 'requestFactory', 'newWatchCardFactory'];
+RequestController.$inject = ['$scope', 'requestFactory', 'newWatchCardFactory','$location'];
 
-function RequestController($scope, requestFactory, newWatchCardFactory) {
+function RequestController($scope, requestFactory, newWatchCardFactory, $location) {
 
     //**Bindable Variables****
     var self = this;
-    self.resources = [];
+    self.request = {};
+    self.availableResources = [];
+    self.clickedShift = {};
     self.readOnly = true;
 
     ///***Function Calls****
@@ -16,6 +18,14 @@ function RequestController($scope, requestFactory, newWatchCardFactory) {
     self.moveResourceBack = moveResourceBack;
     self.createEventFromRequest = createEventFromRequest;
     self.setReadOnly = requestFactory.setReadOnly;
+    self.goHome = goHome;
+    self.approveRequest = requestFactory.approveRequest;
+    self.updateRequest= updateRequest;
+    
+    
+   self.getAvailableResources = getResources;
+   self.moveResource = moveResource;
+   self.moveResourceBack = moveResourceBack;
 
     //** Exceute on Enter *****
     self.request = requestFactory.getRequest();
@@ -46,7 +56,19 @@ function RequestController($scope, requestFactory, newWatchCardFactory) {
         requestFactory.getResources(self.request)
                 .then(
                         function successCallback(res) {
-                            self.resources = res.data;
+                            self.availableResources = res.data;
+                        }, function errorCallBack(error) {
+                    console.log("Error in callback: " + error.code);
+                });
+    }
+    
+    
+    function updateRequest() {
+        requestFactory.updateRequest(self.request)
+                .then(
+                        function successCallback(res) {
+                            //self.request = res.data;
+                            console.log(res.data);
                         }, function errorCallBack(error) {
                     console.log("Error in callback: " + error.code);
                 });
@@ -56,16 +78,19 @@ function RequestController($scope, requestFactory, newWatchCardFactory) {
     function moveResource() {
         var selected = self.selected; // -- Variable that is created by selecting
         if (selected != null) {
+            if (typeof(self.request.resources) == "undefined"){
+                self.request.resources=[];
+            }
 
-            self.avalibleResources.remove(selected);
-            self.clickedShift.resources.push(selected);
+            self.availableResources.remove(selected);
+            self.request.resources.push(selected);
         }
     }
     ;
 
     function moveResourceBack(resource) {
-        self.avalibleResources.push(resource);
-        self.clickedShift.resources.remove(resource);
+        self.availableResources.push(resource);
+        self.request.resources.remove(resource);
     }
     ;
 
@@ -84,7 +109,10 @@ function RequestController($scope, requestFactory, newWatchCardFactory) {
     //** Not sorted**
 
 
-
+function goHome() {
+        $location.path("/watchflow");
+    }
+    ;
 
 
 }
