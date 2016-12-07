@@ -35,18 +35,16 @@ public class Request implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String eventName;
-    @Enumerated(EnumType.STRING)
-    private RequestStatus requestStatus;
-    private int numberGuests;
-    private String agegroup;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date eventDate;
-    private String venue;
-    private String street;
-    private int zip;
+    
+    
     @ManyToOne
     private Department department;
+    private String details;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date eventDate;
+    @Enumerated(EnumType.STRING)
+    private RequestStatus requestStatus;
+    private int zip;
     @OneToMany(mappedBy = "request")
     @JsonBackReference(value="resources-req")
     private List<Resource> resources;
@@ -61,10 +59,16 @@ public class Request implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date watchStart;
 
+    private String street;
+    private String venue;
+    private String agegroup;
+    private String eventName;
     private String catering;
-    private boolean treatmentfacility;
     private String comments;
+    private String visibility;
+    
     private int price;
+    private int numberGuests;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Contact contact;
@@ -72,12 +76,12 @@ public class Request implements Serializable {
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Invoice invoice;
 
+    private boolean treatmentfacility;
     private boolean medics;
     private boolean ambulance;
     private boolean emergencyOffice;
     private boolean stretcherTeam;
     private boolean responseTeam;
-    private String visibility;
 
     public Request() {
     }
@@ -453,6 +457,14 @@ public class Request implements Serializable {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
     }
 
 

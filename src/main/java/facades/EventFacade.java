@@ -5,8 +5,10 @@
  */
 package facades;
 
+import entity.Contact;
 import entity.Department;
 import entity.Event;
+import entity.Invoice;
 import entity.OcupiedSlot;
 import entity.RedCrossLevel;
 import entity.Request;
@@ -240,33 +242,54 @@ public class EventFacade {
         Department department = request.getDepartment();
         String eventName = request.getEventName();
         String street = request.getStreet();
+        String catering = request.getCatering();
+        String comments = request.getComments();
+        Contact contact = request.getContact();
+        Date doorsopen = request.getDoorsopen();
+        boolean ambulance = request.isAmbulance();
+        boolean emergencyOffice = request.isEmergencyOffice();
+        String visibility = request.getVisibility();
+        boolean stretcherTeam = request.isStretcherTeam();
+        boolean medics = request.isMedics();
+        Invoice invoice = request.getInvoice();
+        int price = request.getPrice();
+        int numberGuests = request.getNumberGuests();
+        String venue = request.getVenue();
+        int zip = request.getZip();
+        boolean responseTeam = request.isResponseTeam();
+        String agegroup = request.getAgegroup();
+        Date watchStart = request.getWatchStart();
+        boolean treatmentfacility = request.isTreatmentfacility();
 
-        request.getAgegroup();
-        request.getCatering();
-        request.getComments();
-        request.getContact();
-        request.getDoorsopen();
-        request.getInvoice();
-        request.getNumberGuests();
         request.getRequestStatus();
-        request.getVenue();
-        request.getVisibility();
-        request.getWatchStart();
-        request.getZip();
-        request.isAmbulance();
-        request.isEmergencyOffice();
-        request.isMedics();
-        request.isResponseTeam();
-        request.isStretcherTeam();
-        request.isTreatmentfacility();
 
         StaffedEvent event = new StaffedEvent();
+
+        event.setTreatmentfacility(treatmentfacility);
+        event.setWatchStart(watchStart);
+        event.setNumberGuests(numberGuests);
+        event.setVenue(venue);
+        event.setAgegroup(agegroup);
+        event.setZip(zip);
+        event.setResponseTeam(responseTeam);
+        event.setPrice(price);
+        event.setInvoice(invoice);
+        event.setMedics(medics);
+        event.setAmbulance(ambulance);
+        event.setEmergencyOffice(emergencyOffice);
+        event.setDoorsopen(doorsopen);
+        event.setAddress(street);
+        event.setCatering(catering);
+        event.setComments(comments);
+        event.setContact(contact);
+        event.setDepartment(department);
+        event.setDoorsopen(eventend);
+        event.setEnd(eventend);
         event.setName(eventName);
         event.setStart(eventstart);
-        event.setEnd(eventend);
         event.setStatus(Status.ReadyToCreate);
-        event.setDepartment(department);
-        event.setAddress(street);
+        event.setStretcherTeam(stretcherTeam);
+        event.setVisibility(visibility);
 
         request.setRequestStatus(RequestStatus.PROCCESED);
         em = EntityConnector.getEntityManager();
@@ -286,5 +309,5 @@ public class EventFacade {
         }
         return event;
     }
-    
+
 }

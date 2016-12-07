@@ -134,7 +134,7 @@ for (int i = 0; i < 10; i++) {
         User_Role userRole = (User_Role) q2.getSingleResult();
         ArrayList<User> randomTestUsers = new ArrayList();
         Log.writeToLog("Test Data adding random users");
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 30; i++) {
             String userFName = randomFName();
             String userLName = randomLName();
             String email = generateEmail(userFName,userLName);
@@ -155,7 +155,7 @@ for (int i = 0; i < 10; i++) {
             randomTestUsers.add(s);
         }
         Log.writeToLog("Test Data adding random events");
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 30; i++) {
             Event e = testEvent();
             d.addEvent(e);
             e.setDepartment(d);
