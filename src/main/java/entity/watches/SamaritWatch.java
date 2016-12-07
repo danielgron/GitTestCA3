@@ -13,7 +13,10 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 /**
- *
+ * This Class is a reprenstation of an Samarit that is put on an StaffedEvent.(An watch)
+ * The class holds a refrence back to the event, An Refrence to an Samarit
+ * And a String that represents the RedCrossLevel the Samarit will have for this
+ * Watch.
  * @author Dennis
  */
 

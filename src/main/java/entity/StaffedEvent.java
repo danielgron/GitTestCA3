@@ -58,7 +58,7 @@ public class StaffedEvent extends Event{
 
     @OneToMany(mappedBy = "staffedEvent", cascade = CascadeType.ALL)
     private List<SamaritFunctionsOnWatch> watchFunctions;
-
+    
     public StaffedEvent() {
     }
 
@@ -101,7 +101,7 @@ public class StaffedEvent extends Event{
         this.watchFunctions = watchFunctions;
     }
 
-
+    
     
     /**
      * This method should be called right after an Staffed Event is created.

@@ -22,7 +22,8 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOve
     self.selectedSamaritForFunction = [];
     self.excistingFunctions = [];
     self.newFunctions = [];
-     self.selectedUser;
+    self.selectedUser;
+    self.samaritWatches = [];
 
     ///***Function Declarations****
     self.getEvent = getEvent;
@@ -42,6 +43,7 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOve
     self.deleteFromExcistingFunctions = deleteFromExcistingFunctions;
     self.saveFunction = saveFunction;
     self.changeUserNameForFunction = changeUserNameForFunction;
+    self.mapSamarits = mapSamarits;
 
 
     //** Exceute on Enter *****
@@ -95,7 +97,7 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOve
 
     function save() {
         bsLoadingOverlayService.start();
-        pendingFactory.saveWatches(self.id, self.samaritOnWatch)
+        pendingFactory.saveWatches(self.id, self.samaritWatches)
                 .then(function (successResponse) {
                     window.console.log(successResponse);
                     bsLoadingOverlayService.stop();
@@ -234,6 +236,17 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOve
     function changeUserNameForFunction(func){
        var selecteduser = self.selectedUser;
        self.newFunctions[0].samaritUserName = selecteduser;
+    }
+    
+    function mapSamarits(){
+        angular.forEach(self.samaritOnWatch, function(value,key){
+           var obj = new Object();
+           obj.samarit = new Object();
+           obj.samarit.userName = value.userName;
+           obj.watchRole = value.role;
+           self.samaritWatches.push(obj);
+        });
+        save();
     }
 
 }
