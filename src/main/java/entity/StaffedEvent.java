@@ -72,6 +72,7 @@ public class StaffedEvent extends Event{
     private int zip;
     private int numberGuests;
     private String agegroup;
+    private String coordinatorcomment;
     
     /*
     Hold track of how many of each RedCrossLevel is needed!
@@ -299,6 +300,12 @@ public class StaffedEvent extends Event{
     public void setWatchStart(Date watchStart) {
         this.watchStart = watchStart;
     }
-    
-    
+
+    public String getCoordinatorcomment() {
+        return coordinatorcomment;
+    }
+
+    public void setCoordinatorcomment(String coordinatorcomment) {
+        this.coordinatorcomment = coordinatorcomment;
+    }
 }

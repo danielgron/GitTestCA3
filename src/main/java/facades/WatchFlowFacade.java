@@ -240,6 +240,40 @@ public class WatchFlowFacade {
         return event;
     }
 
+    public StaffedEvent updateCateringComment(Integer id, String catering) {
+        EntityManager em = EntityConnector.getEntityManager();
+        StaffedEvent event = null;
+        try {
+            event = em.find(StaffedEvent.class, id);
+            em.getTransaction().begin();
+            event.setCatering(catering);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            log.Log.writeErrorMessageToLog("Error in update Catering Comment: " + e.getMessage());
+        }
+        finally{
+            em.close();
+        }
+        return event;
+    }
+
+    public StaffedEvent updateCoordinatorComment(Integer id, String coordinatorcomment) {
+        EntityManager em = EntityConnector.getEntityManager();
+        StaffedEvent event = null;
+        try {
+            event = em.find(StaffedEvent.class, id);
+            em.getTransaction().begin();
+            event.setCoordinatorcomment(coordinatorcomment);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            log.Log.writeErrorMessageToLog("Error in update Coordinator Comment: " + e.getMessage());
+        }
+        finally{
+            em.close();
+        }
+        return event;
+    }
+
     
     
 

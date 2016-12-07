@@ -141,5 +141,20 @@ public class WatchFlowService {
         StaffedEvent eventAfterUpdates = wff.updateWatchFunctionsForEvent(functionsForThisWatch, event.getId());
         return mapper.writer(filters).writeValueAsString(eventAfterUpdates);
     }
+    
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("updatecateringandcomment")
+    public String updateCateringAndComment(String jsonEvent) throws IOException{
+        ObjectMapper mapper = new ObjectMapper();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        mapper.setDateFormat(df);
+        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        StaffedEvent event = mapper.readValue(jsonEvent, StaffedEvent.class);
+        wff.updateCateringComment(event.getId(), event.getCatering());
+        StaffedEvent updatedEvent = wff.updateCoordinatorComment(event.getId(), event.getCoordinatorcomment());
+        return mapper.writer(filters).writeValueAsString(updatedEvent); 
+    }
 
 }

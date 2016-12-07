@@ -14,6 +14,7 @@ function watchFactory($http){
         setShift: setShift,
         getAllRedCrossLevelsFromFac: getAllRedCrossLevelsFromFac,
         getAvalibleResources: getAvalibleResources,
+        saveCommentCatering: saveCommentCatering,
         sendDataFromQuantityWatch : sendDataFromQuantityWatch
     };
     
@@ -46,6 +47,10 @@ function watchFactory($http){
     
     function getEventfromId (id){
         return $http.get("api/event/staffedevent/"+id);
+    }
+    
+    function saveCommentCatering(event){
+        return $http.post("api/watchflow/updatecateringandcomment", event);
     }
     
 };

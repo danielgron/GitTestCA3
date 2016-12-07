@@ -2,13 +2,16 @@ package test;
 
 import entity.Department;
 import entity.Event;
+import entity.StaffedEvent;
 import entity.user.Samarit;
 import entity.watches.SamaritOccupied;
 import entity.user.User;
 import entityconnection.EntityConnector;
+import enums.Status;
 import exceptions.DateNullException;
 import facades.CoordinatorFacade;
 import facades.UserFacade;
+import facades.WatchFlowFacade;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -205,5 +208,21 @@ public class plainDemoTest {
            assertTrue(!allAvaibledforEvent.contains(firstSam));
            assertTrue(allAvaibledforEvent.contains(secondSam));
             
+        }
+        
+        @Test
+        public void testAddComment(){
+            EntityManager em = EntityConnector.getEntityManager();
+            String testComment = "This is how we party";
+            Department d = em.find(Department.class, "København");
+            StaffedEvent event = new StaffedEvent(Status.Pending, new Date(), new Date(), true, "Test", "Test", d);
+            em.getTransaction().begin();
+            em.persist(event);
+            em.getTransaction().commit();
+            WatchFlowFacade wff = new WatchFlowFacade();
+            wff.updateCoordinatorComment(event.getId(), testComment);
+            EntityManager newEm = EntityConnector.getEntityManager();
+            StaffedEvent updatedEvent = newEm.find(StaffedEvent.class, event.getId());
+            assertTrue(updatedEvent.getCoordinatorcomment().equals(testComment));
         }
 }
