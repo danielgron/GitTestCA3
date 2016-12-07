@@ -22,6 +22,7 @@ import entity.watches.SamaritFunctionsOnWatch;
 import entity.watches.SamaritOccupied;
 import entity.watches.SamaritWatch;
 import entityconnection.EntityConnector;
+import enums.RequestStatus;
 import enums.Status;
 import exceptions.DateNullException;
 import java.util.ArrayList;
@@ -294,6 +295,7 @@ for (int i = 0; i < 10; i++) {
         r.setNumberGuests((int)(Math.random()*100));
         r.setAmbulance(Math.random()>0.9);
         r.setInvoice(randomInvoice());
+        r.setRequestStatus(RequestStatus.RECIEVED);
         em.getTransaction().begin();
         em.persist(r);
         em.getTransaction().commit();

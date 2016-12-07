@@ -36,9 +36,10 @@ function watchCardController(newWatchCardFactory, $location) {
         
     }
     
-     function details(shift){
-         newWatchCardFactory.setShift(shift);
-         $location.path("/singleNewWatchCard");
+     function details(path){
+//         newWatchCardFactory.setShift(shift);
+//         $location.path("/singleNewWatchCard");
+         $location.path(path);
      };
      
      function staffing(shift){

@@ -23,10 +23,10 @@ angular.module('myApp.watchflow').config(['$routeProvider', function ($routeProv
             controller: 'WatchFlowCtrl',
             controllerAs: 'wfc'
         });
-        $routeProvider.when('/singleNewWatchCard',{
+        $routeProvider.when('/singleNewWatchCard/:param',{
            templateUrl: 'app/watchflow/newWatchCard/singleview/singlenewwatchcard.html' 
         });
-        $routeProvider.when('/assignquatity',{
+        $routeProvider.when('/assignquatity/:param',{
            templateUrl: 'app/watchflow/newWatchCard/singleview/assignquatity.html' 
         });
         $routeProvider.when('/request',{

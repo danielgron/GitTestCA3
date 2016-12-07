@@ -8,6 +8,7 @@ package facades;
 import entity.Department;
 import entity.Event;
 import entity.OcupiedSlot;
+import entity.RedCrossLevel;
 import entity.Request;
 import entity.Resource;
 import entity.StaffedEvent;
@@ -267,8 +268,11 @@ public class EventFacade {
         event.setDepartment(department);
         event.setAddress(street);
 
-            request.setRequestStatus(RequestStatus.PROCCESED);
+        request.setRequestStatus(RequestStatus.PROCCESED);
         em = EntityConnector.getEntityManager();
+        Query q1 = em.createQuery("Select l from RedCrossLevel l");
+        List<RedCrossLevel> allRedCrossLevels = q1.getResultList();
+        event.initilazeLinkedMap(allRedCrossLevels);
         try {
             em.getTransaction().begin();
             em.merge(request);
