@@ -248,5 +248,5 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOve
         });
         save();
     }
-
-}
+    
+    }

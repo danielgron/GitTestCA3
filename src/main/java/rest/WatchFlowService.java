@@ -120,7 +120,6 @@ public class WatchFlowService {
     public String registerWatches(@PathParam("id") int id, String json) throws IOException {
         System.out.println(json);
         ObjectMapper mapper = new ObjectMapper();
-        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         List<SamaritWatch> allWatches = mapper.readValue(json, new TypeReference<List<SamaritWatch>>(){});
 //        List<Samarit> samarits = mapper.readValue(json, new TypeReference<List<Samarit>>(){});
 
@@ -128,7 +127,7 @@ public class WatchFlowService {
         //  String returnJson = mapper.writer(filters).writeValueAsString(samarits);
         return json;
     }
-
+    
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
