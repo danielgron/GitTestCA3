@@ -24,7 +24,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
             $scope.user = UserFactory.getCreatedUser();
 
             //*****Function Declarations*****//
-            $scope.getShifts = getShifts();
+            $scope.getShifts = getShifts;
             
             //****Event models and sources****//
             //Declaring main eventsource
