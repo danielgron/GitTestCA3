@@ -101,6 +101,7 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOve
                 .then(function (successResponse) {
                     window.console.log(successResponse);
                     bsLoadingOverlayService.stop();
+                    mapToEventWatchFunctions();
                 }, function (errorResponse) {
                     bsLoadingOverlayService.stop();
                     window.console.log("Error in callback: " + errorResponse.data.error.code);
