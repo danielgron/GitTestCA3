@@ -5,6 +5,7 @@
  */
 package entity.watches;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import entity.Event;
 import entity.user.Samarit;
 import javax.persistence.CascadeType;
@@ -13,7 +14,10 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 /**
- *
+ * This Class is a reprenstation of an Samarit that is put on an StaffedEvent.(An watch)
+ * The class holds a refrence back to the event, An Refrence to an Samarit
+ * And a String that represents the RedCrossLevel the Samarit will have for this
+ * Watch.
  * @author Dennis
  */
 
@@ -21,7 +25,23 @@ import javax.persistence.ManyToOne;
 @Entity
 public class SamaritWatch extends SamaritCalendar {
 
+    /**
+     * @return the watchRole
+     */
+    public String getWatchRole() {
+        return watchRole;
+    }
+
+    /**
+     * @param watchRole the watchRole to set
+     */
+    public void setWatchRole(String watchRole) {
+        this.watchRole = watchRole;
+    }
+
     @ManyToOne(cascade = {CascadeType.MERGE})
+        @JsonBackReference (value="watches-event")
+
     private Event event;
 
     @ManyToOne(cascade = {CascadeType.MERGE})
@@ -63,18 +83,6 @@ public class SamaritWatch extends SamaritCalendar {
         this.samarit = samarit;
     }
 
-    /**
-     * @return the role
-     */
-    public String getRole() {
-        return watchRole;
-    }
-
-    /**
-     * @param role the role to set
-     */
-    public void setRole(String role) {
-        this.watchRole = role;
-    }
+  
 
 }

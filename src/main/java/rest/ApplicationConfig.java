@@ -34,7 +34,7 @@ public class ApplicationConfig extends Application {
         resources.add(httpErrors.NotFoundExceptionMapper.class);
         resources.add(rest.Admin.class);
         resources.add(rest.All.class);
-        resources.add(rest.Coordinator.class);
+        resources.add(rest.CoordinatorService.class);
         resources.add(rest.DepartmentAdmin.class);
         resources.add(rest.EventService.class);
         resources.add(rest.RequestService.class);

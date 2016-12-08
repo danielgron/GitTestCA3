@@ -5,11 +5,13 @@
  */
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import enums.RequestStatus;
 import enums.Status;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -17,7 +19,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
@@ -32,32 +36,43 @@ public class Request implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String eventName;
-    @Enumerated(EnumType.STRING)
-    private RequestStatus requestStatus;
-    private int numberGuests;
-    private String agegroup;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date eventDate;
-    private String venue;
-    private String street;
-    private int zip;
+    
+    @JsonBackReference(value="requests-dep")
     @ManyToOne
     private Department department;
+    
+    @Enumerated(EnumType.STRING)
+    private RequestStatus requestStatus;
+    
+    @JsonBackReference(value="requests-res")
+    @ManyToMany
+    private List<Resource> resources;
 
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date eventDate;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date doorsopen;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date eventstart;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date eventend;
-
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date watchStart;
 
+
+    private String street;
+    private String venue;
+    private String agegroup;
+    private String eventName;
     private String catering;
-    private boolean treatmentfacility;
     private String comments;
+    private String visibility;
+    private String type;
+    private String details;
+    
+    private int price;
+    private int numberGuests;
+    private int zip;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Contact contact;
@@ -65,12 +80,12 @@ public class Request implements Serializable {
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Invoice invoice;
 
+    private boolean treatmentfacility;
     private boolean medics;
     private boolean ambulance;
     private boolean emergencyOffice;
     private boolean stretcherTeam;
     private boolean responseTeam;
-    private String visibility;
 
     public Request() {
     }
@@ -430,6 +445,38 @@ public class Request implements Serializable {
 
     public void setRequestStatus(RequestStatus requestStatus) {
         this.requestStatus = requestStatus;
+    }
+
+    public List<Resource> getResources() {
+        return resources;
+    }
+
+    public void setResources(List<Resource> resources) {
+        this.resources = resources;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
 

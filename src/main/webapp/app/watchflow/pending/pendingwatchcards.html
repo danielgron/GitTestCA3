@@ -1,21 +1,35 @@
 <div style="padding: 10px">
     <div class="panel panel-primary" >
         <div class="panel-heading"><h3 class="">Rediger VagtKort</h3>
+                <label> Søg <input style="color: black" ng-model="pctrl.searchText"></label>
         </div>
         <div class="panel-body">
             <table class="table">
                 <thead>
                     <tr>
-                        <th>VagtKort OverSkrift </th>
-                        <th>Tid</th>
+                        <th>
+                            <a href="" ng-click="pctrl.sortType = 'name'; pctrl.sortReverse = !pctrl.sortReverse">
+             VagtKort Overskrift
+            <span ng-show="pctrl.sortType == 'name' && !pctrl.sortReverse" class="glyphicon glyphicon-arrow-down"></span>
+            <span ng-show="pctrl.sortType == 'name' && pctrl.sortReverse" class="glyphicon glyphicon-arrow-up"></span>
+          </a>
+                        </th>
+                        <th>
+                             <a href="" ng-click="pctrl.sortType = 'start'; pctrl.sortReverse = !pctrl.sortReverse">
+             Tid
+            <span ng-show="pctrl.sortType == 'start' && !pctrl.sortReverse" class="glyphicon glyphicon-arrow-up"></span>
+            <span ng-show="pctrl.sortType == 'start' && pctrl.sortReverse" class="glyphicon glyphicon-arrow-down"></span>
+          </a>
+                        </th>
                         <th>Rediger</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="shift in pctrl.shifts" >
+                    <tr ng-repeat="shift in pctrl.shifts | filter:pctrl.searchText  | orderBy:pctrl.sortType:ctrl.sortReverse" >
                         <td>{{shift.name}}</td>
                         <td>{{shift.start}}</td>
-                        <td><a href="#/singlepending/{{shift.id}}">Rediger</a> 
+                        <td><a href="#/singlepending/{{shift.id}}">Rediger /</a>
+                            <a href="#/watchcard/{{shift.id}}">Se Færdigt Vagtkort</a>
                         </td>
                     </tr>
                 </tbody>

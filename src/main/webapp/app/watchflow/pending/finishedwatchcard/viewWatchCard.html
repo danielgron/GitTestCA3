@@ -1,0 +1,88 @@
+<div class="container" style="font-size: small" ng-controller="viewWatchController as vwCtrl">
+    
+    <h2> VagtKort:  {{vwCtrl.shift.name}}</h2>
+    <div class="row">
+        
+    <div class="col-md-5">
+        <div class="well well-sm">
+            
+        <h3>Møde Tid og Sted</h3>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>Sted</td>   
+                    <td>{{vwCtrl.shift.venue}}</td>   
+                </tr>
+                <tr>
+                    <td>Adresse</td>   
+                    <td>{{vwCtrl.shift.address}} {{vwCtrl.shift.zip}} København Ø </td>
+                    
+                </tr>
+                <tr>
+                    <td>Dato</td>   
+                    <td>{{vwCtrl.watchStartDate}}</td>
+                    
+                </tr>
+                <tr>
+                    <td>Vagt Start Tidspunkt</td>   
+                    <td>{{vwCtrl.watchStartTime}}</td>
+                    
+                </tr>
+                <tr>
+                    <td>Vagt Slut Tidspunkt</td>   
+                    <td>{{vwCtrl.endTime}}</td>
+                    
+                </tr>
+            </tbody>
+            
+        </table>
+        </div>
+   
+    <div class="well well-sm">
+            <h4>Vagt Leder og Funktioner</h4>
+            <ul>
+                <li ng-repeat="func in vwCtrl.shift.watchFunctions">
+                    {{func.samaritUserName}}: {{func.functionName}}
+                </li>
+            </ul>
+        </div>
+    <div class="well well-sm">
+            <h4>Bemanding</h4>
+            <ul>
+                <li ng-repeat="samwatch in vwCtrl.shift.watches">
+                    <b>{{samwatch.watchRole}}:</b> {{samwatch.samarit.firstName}} {{samwatch.samarit.lastName}} ({{samwatch.samarit.phone}})
+                    <br>
+                </li> 
+            </ul>
+    </div>
+            
+        </div>
+        
+        <div class="col-md-offset-3 col-md-3 well well-sm">
+            <h4>Kommentar Fra VagtKoordinator</h4>
+            {{vwCtrl.shift.coordinatorcomment}}
+            
+        </div>
+        <br>
+        <br>
+        <div class="col-md-offset-3 col-md-3 well well-sm">
+            <h4>Ressourcer </h4>
+                <ul>
+                    <li ng-repeat="res in vwCtrl.shift.resources">
+                        {{res.name}}
+                    </li> 
+                </ul>
+            
+        </div>
+        
+    <div class="col-md-offset-3 col-md-3 well well-sm">
+            <h4>Forplejning</h4>
+             {{vwCtrl.shift.catering}}
+            
+            
+        </div>
+
+        
+    </div>
+    
+    </div>

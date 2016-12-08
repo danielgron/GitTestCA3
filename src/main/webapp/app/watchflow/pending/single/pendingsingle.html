@@ -1,107 +1,107 @@
-<div class="container well">
+<div class="container well col-md-12">
     <h2>{{pendingCtrl.shift.name}}</h2>
 
-    <div class="container col-md-3">
-        <div class="btn-group col-md-12"">
+
+    <div class="container col-md-8">
+        <div class="container col-md-12">
+            <div class="form-group col-md-6" ng-repeat="(key, value) in pendingCtrl.shift.levelsQuantity">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        {{key}} <i ng-show="value > 0">- påsæt {{value}}</i>
+                    </div>
+                    <div class="panel-body" bs-loading-overlay>
+                        <div class="container col-md-12">
+                            <select id="this{{key}}" class="input-sm col-md-12" ng-model="selected[key]" ng-change="pendingCtrl.add(selected[key], key)" ng-options="samarit as samarit.firstName +                        ' ' +                        samarit.lastName for samarit in pendingCtrl.samarits|samaritlevel:key" >
+                                <option value="" disabled selected style="display: none;"> -- Please Select -- </option>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container col-md-12">
+            <div class="col-md-6">
+                <div class="panel panel-primary ">
+                    <div class="panel-heading">
+                        Opret funktioner til vagt
+                    </div>
+                    <div class="panel-body">
+                        <select id="functionsDropDown" name="functions"
+                                ng-options="func.functionName for func in pendingCtrl.functionsforDepartment"
+                                ng-model="pendingCtrl.selected"
+                                ng-change="pendingCtrl.moveFunction()">
+                        </select>
+
+                        <ul class="list list-unstyled" ng-repeat="func in pendingCtrl.newFunctions track by $index" >
+                            <li>
+                                {{func.functionName}} <span style="cursor: pointer" ng-click="pendingCtrl.deleteFunctionFromWatch(func)">&#10060;</span>
+                                            <span style="cursor: pointer" ng-click="pendingCtrl.saveFunction(func)">&#x2713;</span>
+                                <br>
+                                Vælg Samarit til at Besidde Funktion:
+                                <select id="selectSamDropDown" name="Samarit" ng-change="pendingCtrl.changeUserNameForFunction({{func}})" ng-model="pendingCtrl.selectedUser">
+                                    <option ng-repeat="sam in pendingCtrl.samaritOnWatch| functionfilter: func.functionName">{{sam.firstName}} {{sam.lastName}}</option>
+                                    <option selected="selected">Ikke Besat</option>
+                                </select>
+                            </li> 
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div> 
+                <div class="col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            Oprettede Funktioner:
+                        </div>
+                        <div class="panel-body">
+                            <ul ng-repeat="excitingFunc in pendingCtrl.excistingFunctions">
+                                <li>
+                                    {{excitingFunc.functionName}} : {{excitingFunc.samaritUserName}} <span style="cursor: pointer" ng-click="pendingCtrl.deleteFromExcistingFunctions(excitingFunc)">&#10060;</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container col-md-4">
+        <div class="btn-group col-md-12">
             <button class="btn btn-group btn-danger" ng-click="pendingCtrl.reset()">Reset</button>
             <button class="btn btn-group btn-primary" ng-click="pendingCtrl.go()">Cancel</button>
-            <button class="btn btn-group btn-success" ng-click="pendingCtrl.save()">Save</button>
+            <button class="btn btn-group btn-success" ng-click="pendingCtrl.mapSamarits()">Save</button>
         </div>
         <div class="container col-md-12" style=" padding: 10px">       
             <div class="panel panel-success">
-                
-                <div class="panel-heading">Ikke-ledige samaritter</div>
+
+                <div class="panel-heading">Valgte samaritter</div>
                 <div class="panel-body">
-                <div class="container col-md-12">
+                    <div class="container col-md-12">
                         <ul class="list list-group list-unstyled  ">
-                            <li class="list-group-item" ng-repeat="samarit in pendingCtrl.samaritOnWatch">{{samarit.firstName + ' ' + samarit.lastName}}
-                                <i style="cursor: pointer" ng-click="pendingCtrl.remove(samarit)" class="glyphicon glyphicon-remove"></i>
+                            <li class="list-group-item" ng-repeat="samarit in pendingCtrl.samaritOnWatch">{{samarit.firstName + ' ' + samarit.lastName + ' (' + samarit.role + ')'}}
+                                <i style="cursor: pointer;float: right" ng-click="pendingCtrl.remove(samarit)" class="glyphicon glyphicon-remove"></i>
                             </li>
                         </ul>
                     </div>    
-                    
+
                 </div>
 
             </div>
         </div>
     </div>
-    <div class="container col-md-9">
-
-        <div class="form-group col-md-4" ng-repeat="(key, value) in pendingCtrl.shift.levelsQuantity">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    {{key}} <i ng-show="value > 0">- påsæt {{value}}</i>
-                </div>
-
-                <div class="panel-body" bs-loading-overlay>
-                    <div class="container col-md-12">
-                        <select id="this{{key}}" class="input-sm col-md-12" ng-model="selected[key]" ng-change="pendingCtrl.add(selected[key], key)" ng-options="samarit as samarit.firstName +       ' ' +       samarit.lastName for samarit in pendingCtrl.samarits|samaritlevel:key" >
-                            <option value="" disabled selected style="display: none;"> -- Please Select -- </option>
-
-                        </select>
-                    </div>
-                    <br>
-                    <div class="container col-md-12">
-                        <ul class="list list-group list-unstyled  ">
-                            <li class="list-group-item" ng-repeat="samarit in pendingCtrl.samaritOnWatch|samaritlevel:key">{{samarit.firstName + ' ' + samarit.lastName}}
-                                <i style="cursor: pointer" ng-click="pendingCtrl.remove(samarit)" class="glyphicon glyphicon-remove"></i>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
 </div>
 
-<div class="container" >
-    <div class="row">
-        <div class="col-lg-6">
 
-            
-            Vælg Funktioner til Vagt: 
-            <select id="functionsDropDown" name="functions"
-                    ng-options="func.functionName for func in pendingCtrl.functionsforDepartment"
-                    ng-model="pendingCtrl.selected"
-                    ng-change="pendingCtrl.moveFunction()">
-            </select>
 
-            <br>
 
-            Valgte Ressourcer:
-
-            <ul ng-repeat="func in pendingCtrl.newFunctions track by $index" >
-                <li>
-                    {{func.functionName}} <span style="cursor: pointer" ng-click="pendingCtrl.deleteFunctionFromWatch(func)">&#10060;</span>
-                    <br>
-                    Vælg Samarit til at Besidde Funktion:
-                    <select id="functionsDropDown" name="Samarit"
-                            ng-options="sam.userName as sam.firstName + ' ' + sam.lastName for sam in pendingCtrl.samaritOnWatch| functionfilter: func.functionName"
-                            ng-model="pendingCtrl.selectedSamaritForFunction[$index]"  
-                            ng-change="pendingCtrl.samaritSelectedForFunction(func.id, $index)">
-                    </select>
-                </li> 
-            </ul>
-
-            <br>
-            <br>
-            <br>
-            <br>
-
-            <input type="button" value="Gem Ændringer" name="save" ng-click="pendingCtrl.mapToEventWatchFunctions()" />
-        </div>
-
-        <div class="col-lg-6">
-            Allerede Oprettede Funktioner:
-            <ul ng-repeat="excitingFunc in pendingCtrl.excistingFunctions">
-                <li>
-                    {{excitingFunc.functionName}} : {{excitingFunc.samaritUserName}} <span style="cursor: pointer" ng-click="pendingCtrl.deleteFromExcistingFunctions(excitingFunc)">&#10060;</span>
-                </li>
-            </ul>
-        </div>
-
+<div class="row">
+    <div class="col-lg-6">
+        <br>
+        <!--<input type="button" value="Gem Ændringer" name="save" ng-click="pendingCtrl.mapToEventWatchFunctions()" /> -->
     </div>
-
 </div>
+

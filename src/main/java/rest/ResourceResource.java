@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import entity.Resource;
 import facades.CoordinatorFacade;
 import facades.EventFacade;
+import facades.RequestFacade;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.core.Context;
@@ -35,6 +36,7 @@ import javax.ws.rs.core.MediaType;
 public class ResourceResource {
 private static JsonFactory factory = new JsonFactory();
 private static EventFacade ef = new EventFacade();
+private static RequestFacade rf = new RequestFacade();
 private static CoordinatorFacade cf = new CoordinatorFacade();
 private static ObjectMapper mapper = new ObjectMapper();
 
@@ -63,6 +65,19 @@ private static ObjectMapper mapper = new ObjectMapper();
         return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(eventResources);
     } catch (JsonProcessingException ex) {
         log.Log.writeErrorMessageToLog("ERROR rest getAvailable: " + ex.getMessage());
+        throw ex;
+    }
+    }
+    
+    @Path("/request/{requestId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getAvailableForRequest(@PathParam("requestId") String id) throws JsonProcessingException {
+        
+        List<Resource> requestResources = rf.getRequestResources(Integer.parseInt(id));
+    try {
+        return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(requestResources);
+    } catch (JsonProcessingException ex) {
+        log.Log.writeErrorMessageToLog("ERROR rest getAvailableForRequest: " + ex.getMessage());
         throw ex;
     }
     }

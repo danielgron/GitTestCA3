@@ -23,7 +23,7 @@
 
             <div class="btn-group-vertical  col-md-2">
                 <button type="button" ng-click="open()" class="btn btn-success text-left"><i class="glyphicon glyphicon-edit"/>Tilføj tidsrum</button>
-                <button type="button" ng-click="open()" class="btn btn-success text-left"><i class="glyphicon glyphicon-edit"/>Tilføj interval*</button>
+                <button type="button" ng-click="openinterval()" class="btn btn-success text-left"><i class="glyphicon glyphicon-edit"/>Tilføj interval*</button>
 
             </div>
 
@@ -45,7 +45,6 @@
 
                 <div  data-tap-disabled="true" class="calendar" ng-model="eventSources1" typeId="{{avail}}" calendar="userCalender" ui-calendar="uiConfig.calendar"></div>
 
-                UserName: {{user.userName}}
             </div>
         </div>
 </div>

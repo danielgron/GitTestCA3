@@ -10,6 +10,9 @@ function pendingcontroller(pendingFactory, $location) {
     //**Bindable Variables****
     var self = this;
     self.shifts = [];
+    self.searchText;
+    self.sortType = "name";
+    self.sortReverse  = false;
 
 
 

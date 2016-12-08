@@ -56,26 +56,34 @@ public class CoordinatorFacade {
 
     public List<Samarit> getAvailableSamaritesFromEventId(int eventId) {
         Event e;
-        List<Samarit> availableSams = new ArrayList();
+        List<Samarit> availableSamarites = new ArrayList();
         EntityManager em = EntityConnector.getEntityManager();
         em.getEntityManagerFactory().getCache().evictAll(); // IMPORTANT!!! This Clears the Cache of the JPA!
         //if (s.getRedCroosLevel()==null) throw new NoRedCrossLevelException();
         try {
             em.getTransaction().begin();
             e = em.find(Event.class, eventId);
-            List<Samarit> allFromDepartMent = e.getDepartment().getSamarites();
-            for (Samarit samarit : allFromDepartMent) {
-                if (checkAvalibilty(samarit, e)) {
-                    availableSams.add(samarit);
-                }
-            }
+            //List<Samarit> allFromDepartMent = e.getDepartment().getSamarites();
+            String name = e.getDepartment().getNameOfDepartment();
+            Query q = em.createQuery("select s from Samarit s WHERE s.department.nameOfDepartment = ?3 AND s.userName NOT IN \n"
+                    + "(select distinct s.samarit.userName FROM SamaritOccupied s WHERE (s.start >= ?1 AND s.start<= ?2) OR \n"
+                    + "(s.start >= ?1 and s.end<= ?2) or (s.start = ?1 and s.allDay = TRUE))");
+            q.setParameter(1, e.getStart());
+            q.setParameter(2, e.getEnd());
+            q.setParameter(3, name);
+            availableSamarites = q.getResultList();
+//            for (Samarit samarit : allFromDepartMent) {
+//                if (checkAvalibilty(samarit, e)) {
+//                    availableSams.add(samarit);
+//                }
+//            }
         } catch (Exception ex) {
             Log.writeErrorMessageToLog("Exception in Coordinator Facade getAvailable Samarits: " + ex.getMessage());
             throw ex;
         } finally {
             em.close();
         }
-        return availableSams;
+        return availableSamarites;
     }
 
     /**
@@ -177,7 +185,7 @@ public class CoordinatorFacade {
 
             // If already present - remove the shift
             if (isThere) {
-                deleteResourceFromEvent(resId,eventId);
+                deleteResourceFromEvent(resId, eventId);
             } // Else create it and add it
             else {
                 ResourceWatch resWatch = new ResourceWatch();
@@ -199,7 +207,7 @@ public class CoordinatorFacade {
 
     }
 
-    public void addResourceToEvent(int eventId,int resId) {
+    public void addResourceToEvent(int eventId, int resId) {
         Event e;
         EntityManager em = EntityConnector.getEntityManager();
         em.getEntityManagerFactory().getCache().evictAll(); // IMPORTANT!!! This Clears the Cache of the JPA!
@@ -219,30 +227,27 @@ public class CoordinatorFacade {
             eventResourceWatchs.add(resWatch);
             //em.persist(resWatch);
             em.getTransaction().commit();
-        }
-        finally{
+        } finally {
             em.close();
         }
 
-        }
-    
-    public void deleteResourceFromEvent(int eventId,int resId) throws Exception{
+    }
+
+    public void deleteResourceFromEvent(int eventId, int resId) throws Exception {
         EntityManager em = EntityConnector.getEntityManager();
-        try{
-        em.getTransaction().begin();
-        Query q = em.createQuery("delete from ResourceWatch rw where (rw.resource.id =:resId AND rw.event.id =:eventId)", WatchFunction.class);
-                q.setParameter("resId", resId);
-                q.setParameter("eventId", eventId);
-                q.executeUpdate();
-                em.getTransaction().commit();
-        }
-        catch (Exception ex){
+        try {
+            em.getTransaction().begin();
+            Query q = em.createQuery("delete from ResourceWatch rw where (rw.resource.id =:resId AND rw.event.id =:eventId)", WatchFunction.class);
+            q.setParameter("resId", resId);
+            q.setParameter("eventId", eventId);
+            q.executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception ex) {
             Log.writeErrorMessageToLog(ex.getMessage());
             throw new Exception();
-        }
-        finally{
+        } finally {
             em.close();
         }
     }
 
-    }
+}

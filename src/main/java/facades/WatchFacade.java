@@ -210,28 +210,26 @@ public class WatchFacade {
         return watch;
     }
 
-    public List<Samarit> setWatchesForSamarits(List<Samarit> samarits, int eventId) {
- EntityManager em = EntityConnector.getEntityManager();
+    public List<Samarit> setWatchesForSamarits(List<SamaritWatch> samaritWatches, int eventId) {
+        EntityManager em = EntityConnector.getEntityManager();
         try {
             StaffedEvent event = em.find(StaffedEvent.class, eventId);
-           
-            em.getTransaction().begin();
-            for (Samarit samarit : samarits) {
 
-                SamaritWatch watch = new SamaritWatch();
+            em.getTransaction().begin();
+            for (SamaritWatch samaritWatch : samaritWatches) {
 
                 //Method sets the bidirectional reference
-                event.addWatch(watch);
+                event.addWatch(samaritWatch);
+
                 //Method also sets the bidirectional reference
-                samarit.addWatch(watch);
-                watch.setTitle(event.getName());
-                watch.setStart(event.getStart());
-                watch.setEnd(event.getEnd());
-                watch.setRole("tbi");
-                watch.setColor("blue");
+                samaritWatch.setTitle(event.getName());
+                samaritWatch.setStart(event.getStart());
+                samaritWatch.setEnd(event.getEnd());
+
+                samaritWatch.setColor("blue");
 //                em.merge(event);
 //                em.merge(samarit);
-                em.persist(watch);
+                em.persist(samaritWatch);
 
             }
             em.getTransaction().commit();
@@ -241,9 +239,29 @@ public class WatchFacade {
             log.Log.writeErrorMessageToLog("Error in getwatches for User: " + ex.getMessage());
             throw ex;
         } finally {
-            //em.close();
+            em.close();
         }
-        return samarits;
+//        return samarits;
+        return null;
+
+    }
+
+    public List<SamaritWatch> getShifts(String userName) {
+        EntityManager em = EntityConnector.getEntityManager();
+        List<SamaritWatch> watches = new ArrayList<>();
+        try {
+            Query q = em.createQuery("Select sw FROM SamaritWatch AS sw WHERE sw.samarit.userName = ?1");
+            q.setParameter(1, userName);
+            watches = q.getResultList();
+        } catch (Exception ex) {
+            // em.getTransaction().rollback();
+            log.Log.writeErrorMessageToLog("Error in getwatches for User: " + ex.getMessage());
+            throw ex;
+        } finally {
+            em.close();
+        }
+
+        return watches;
 
     }
 }

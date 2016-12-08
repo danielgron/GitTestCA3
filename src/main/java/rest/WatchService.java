@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.google.gson.Gson;
 import entity.watches.SamaritOccupied;
+import entity.watches.SamaritWatch;
 import facades.WatchFacade;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -116,11 +117,31 @@ public class WatchService {
             FilterProvider filters = new SimpleFilterProvider().addFilter("samaritFilter", theFilter);
 
             json = mapper.writer(filters).writeValueAsString(watchForDate);
-        } catch (JsonProcessingException ex) {
+        } catch (Exception ex) {
             log.Log.writeErrorMessageToLog("Error in Get Watch REST " + ex.getMessage());
             throw ex;
         }
         return json;
     }
 
+    @Path("shifts/{userName}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getShifts(@PathParam("userName") String userName) throws Exception {
+        String json = "";
+        List<SamaritWatch> watches = wf.getShifts(userName);
+        try {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            mapper.setDateFormat(df);
+
+            SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("department");
+            FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter", theFilter);
+            //  FilterProvider filters2 = new SimpleFilterProvider().addFilter(json, theFilter);
+            json = mapper.writer(filters).writeValueAsString(watches);
+        } catch (JsonProcessingException ex) {
+            log.Log.writeErrorMessageToLog("Error in Get Watch REST " + ex.getMessage());
+            throw ex;
+        }
+        return json;
+    }
 }

@@ -13,8 +13,11 @@ function watchCardController(newWatchCardFactory, $location) {
     self.getShifts = getShifts;
     self.details = details;
     self.staffing = staffing;
+    self.searchText;
+    self.sortType = "name";
+    self.sortReverse  = false;
     
-    
+
     
     // TO Do when Entering////
     self.getShifts();
@@ -33,17 +36,18 @@ function watchCardController(newWatchCardFactory, $location) {
         
     }
     
-     function details(shift){
-         newWatchCardFactory.setShift(shift);
-         $location.path("/singleNewWatchCard");
+     function details(path){
+//         newWatchCardFactory.setShift(shift);
+//         $location.path("/singleNewWatchCard");
+         $location.path(path);
      };
      
      function staffing(shift){
          newWatchCardFactory.setShift(shift);
          $location.path("/assignquatity");
      };
-
-}
+     
+     }
 
 
 

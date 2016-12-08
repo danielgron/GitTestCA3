@@ -7,6 +7,7 @@ package rest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
@@ -15,9 +16,8 @@ import entity.Department;
 import entity.RedCrossLevel;
 import entity.Resource;
 import entity.StaffedEvent;
-import entity.WatchFunction;
-import entity.user.Samarit;
 import entity.watches.SamaritFunctionsOnWatch;
+import entity.watches.SamaritWatch;
 import enums.Status;
 import facades.WatchFacade;
 import facades.WatchFlowFacade;
@@ -41,7 +41,7 @@ import javax.ws.rs.core.MediaType;
 @RolesAllowed("Coordinator")
 public class WatchFlowService {
 
-    SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("department","resources");
+    SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("department", "resources");
     FilterProvider filters = new SimpleFilterProvider().addFilter("samaritFilter", theFilter);
 
     @Context
@@ -62,14 +62,16 @@ public class WatchFlowService {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("events/{status}")
     public String getStaffedEventsFromStatus(@PathParam("status") String statusString) throws Exception {
-        
+
         ObjectMapper mapper = new ObjectMapper();
         Department d = util.DepartmentDecoder.getDepartmentFromToken(context);
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         mapper.setDateFormat(df);
         Status statusFromParam = Status.valueOf(statusString);
         List<StaffedEvent> allEventsWithStatus = wff.getAllStaffedEventsWithStatus(statusFromParam, d);
-        String json = mapper.writer(filters).writeValueAsString(allEventsWithStatus);
+        SimpleBeanPropertyFilter UserFilter = SimpleBeanPropertyFilter.serializeAllExcept("password","department","event");
+        FilterProvider userFilterProvider = new SimpleFilterProvider().addFilter("UserFilter", UserFilter);
+        String json = mapper.writer(userFilterProvider).writeValueAsString(allEventsWithStatus);
         return json;
     }
 
@@ -97,32 +99,35 @@ public class WatchFlowService {
         wff.updateQuantityForEvent(id, map);
         StaffedEvent eventAfterUpdates = wff.updateResources(id, resources);
         wff.updateStatusOfStaffedEvent(id, Status.Pending);
-        return mapper.writer(filters).writeValueAsString(eventAfterUpdates);
+        SimpleBeanPropertyFilter UserFilter = SimpleBeanPropertyFilter.serializeAllExcept("password","department","event");
+        FilterProvider userFilterProvider = new SimpleFilterProvider().addFilter("UserFilter", UserFilter);
+        return mapper.writer(userFilterProvider).writeValueAsString(eventAfterUpdates);
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("functions")
-    public String getAllFunctionsForDepartment() throws Exception{
+    public String getAllFunctionsForDepartment() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         Department d = util.DepartmentDecoder.getDepartmentFromToken(context);
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         mapper.setDateFormat(df);
         return mapper.writeValueAsString(d.getWatchFunctions());
     }
-    
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{id}")
-    public String registerWatches(@PathParam("id") int id, String json) throws IOException{
+    public String registerWatches(@PathParam("id") int id, String json) throws IOException {
         System.out.println(json);
         ObjectMapper mapper = new ObjectMapper();
-        List<Samarit> samarits = mapper.readValue(json, new TypeReference<List<Samarit>>(){});
-       
         
-        wf.setWatchesForSamarits(samarits, id);
-      //  String returnJson = mapper.writer(filters).writeValueAsString(samarits);
+        List<SamaritWatch> allWatches = mapper.readValue(json, new TypeReference<List<SamaritWatch>>(){});
+//        List<Samarit> samarits = mapper.readValue(json, new TypeReference<List<Samarit>>(){});
+
+        wf.setWatchesForSamarits(allWatches, id);
+//          String returnJson = mapper.writer(filters).writeValueAsString(samarits);
         return json;
     }
     
@@ -130,14 +135,33 @@ public class WatchFlowService {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("functions")
-    public String saveSamaritFunctionsForEvent(String jsonEvent) throws Exception{
+    public String saveSamaritFunctionsForEvent(String jsonEvent) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         mapper.setDateFormat(df);
         StaffedEvent event = mapper.readValue(jsonEvent, StaffedEvent.class);
         List<SamaritFunctionsOnWatch> functionsForThisWatch = event.getWatchFunctions();
         StaffedEvent eventAfterUpdates = wff.updateWatchFunctionsForEvent(functionsForThisWatch, event.getId());
-        return mapper.writer(filters).writeValueAsString(eventAfterUpdates);
+        SimpleBeanPropertyFilter UserFilter = SimpleBeanPropertyFilter.serializeAllExcept("password","department","event");
+        FilterProvider userFilterProvider = new SimpleFilterProvider().addFilter("UserFilter", UserFilter);
+        return mapper.writer(userFilterProvider).writeValueAsString(eventAfterUpdates);
+    }
+    
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("updatecateringandcomment")
+    public String updateCateringAndComment(String jsonEvent) throws IOException{
+        ObjectMapper mapper = new ObjectMapper();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        mapper.setDateFormat(df);
+        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        StaffedEvent event = mapper.readValue(jsonEvent, StaffedEvent.class);
+        wff.updateCateringComment(event.getId(), event.getCatering());
+        StaffedEvent updatedEvent = wff.updateCoordinatorComment(event.getId(), event.getCoordinatorcomment());
+        SimpleBeanPropertyFilter UserFilter = SimpleBeanPropertyFilter.serializeAllExcept("password","department","event");
+        FilterProvider userFilterProvider = new SimpleFilterProvider().addFilter("UserFilter", UserFilter);
+        return mapper.writer(userFilterProvider).writeValueAsString(updatedEvent); 
     }
 
 }

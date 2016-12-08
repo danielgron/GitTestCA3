@@ -28,14 +28,14 @@ import org.eclipse.persistence.config.QueryHints;
  * @author Daniel
  */
 public class WatchFlowFacade {
-    
+
     
     CoordinatorFacade cf;
 
     public WatchFlowFacade(){ 
-     cf = new CoordinatorFacade();
+        cf = new CoordinatorFacade();
     }
-    
+
     
 
     /**
@@ -127,11 +127,11 @@ public class WatchFlowFacade {
             TypedQuery<StaffedEvent> q1 = em.createQuery("Select e from StaffedEvent e where e.id =:eventid", StaffedEvent.class);
             q1.setParameter("eventid", eventId);
             event = q1.getSingleResult();
-           
+
 //   We need to remove all ResourceWatches from the "existing" Object.
 //   And Add one for each Resource.
-          removeResourceWatchesfromEvent(event, em);
-          addNewResourceWatchesToEvent(eventId, incommingResources, em);
+            removeResourceWatchesfromEvent(event, em);
+            addNewResourceWatchesToEvent(eventId, incommingResources, em);
             em.getTransaction().begin();
             event.setResources(incommingResources);
             em.getTransaction().commit();
@@ -200,26 +200,36 @@ public class WatchFlowFacade {
      */
     public StaffedEvent updateWatchFunctionsForEvent(List<SamaritFunctionsOnWatch> functionsForThisWatch, int eventId) {
         EntityManager em = EntityConnector.getEntityManager();
-        StaffedEvent event = null;
         try {
+            Query q1  =em.createNativeQuery("delete from SAMARITFUNCTIONSONWATCH where STAFFEDEVENT_ID = ?1");
+            q1.setParameter(1, eventId);
             em.getTransaction().begin();
-            TypedQuery<StaffedEvent> q1 = em.createQuery("Select e from StaffedEvent e where e.id =:eventid", StaffedEvent.class);
-            q1.setParameter("eventid", eventId);
+            q1.executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            log.Log.writeErrorMessageToLog("Error in updateWatchFunction" + e.getMessage());
+            throw e;
+        }
+        finally{
+            em.close();
+        }
+         return persistNewFunctions(functionsForThisWatch, eventId);
+    }
+
+    private StaffedEvent persistNewFunctions(List<SamaritFunctionsOnWatch> functionsForThisWatch, int eventId) {
+        EntityManager em = EntityConnector.getEntityManager();
+        StaffedEvent event = null;
+        try{
+            TypedQuery<StaffedEvent> q1 = em.createQuery("Select e from StaffedEvent e where e.id =:id", StaffedEvent.class);
+            q1.setParameter("id", eventId);
             event = q1.getSingleResult();
-            if(event.getWatchFunctions() != null || !event.getWatchFunctions().isEmpty()){
-            Query q2  =em.createQuery("delete from SamaritFunctionsOnWatch w WHERE w.staffedEvent =:event");
-            q2.setParameter("event", event);
-            q2.executeUpdate();
-            }
+            em.getTransaction().begin();
             for (SamaritFunctionsOnWatch samaritFunctionsOnWatch : functionsForThisWatch) {
                 samaritFunctionsOnWatch.setStaffedEvent(event);
-                Query q3 = em.createQuery("select u from Samarit u where u.userName =:username");
-                q3.setParameter("username", samaritFunctionsOnWatch.getSamaritUserName());
-                Samarit temp = (Samarit) q3.getSingleResult();
-                samaritFunctionsOnWatch.setSamaritUserName(temp.getFirstName() + " " + temp.getLastName());
             }
             event.setWatchFunctions(functionsForThisWatch);
             em.getTransaction().commit();
+            
         } catch (Exception e) {
             log.Log.writeErrorMessageToLog("Error in updateWatchFunction" + e.getMessage());
             throw e;
@@ -229,9 +239,43 @@ public class WatchFlowFacade {
         }
         return event;
     }
-    
+
+    public StaffedEvent updateCateringComment(Integer id, String catering) {
+        EntityManager em = EntityConnector.getEntityManager();
+        StaffedEvent event = null;
+        try {
+            event = em.find(StaffedEvent.class, id);
+            em.getTransaction().begin();
+            event.setCatering(catering);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            log.Log.writeErrorMessageToLog("Error in update Catering Comment: " + e.getMessage());
+        }
+        finally{
+            em.close();
+        }
+        return event;
+    }
+
+    public StaffedEvent updateCoordinatorComment(Integer id, String coordinatorcomment) {
+        EntityManager em = EntityConnector.getEntityManager();
+        StaffedEvent event = null;
+        try {
+            event = em.find(StaffedEvent.class, id);
+            em.getTransaction().begin();
+            event.setCoordinatorcomment(coordinatorcomment);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            log.Log.writeErrorMessageToLog("Error in update Coordinator Comment: " + e.getMessage());
+        }
+        finally{
+            em.close();
+        }
+        return event;
+    }
+
     
     
 
 
-   }
+}

@@ -40,7 +40,7 @@ public class Samarit extends User {
 
     @ManyToMany(cascade = CascadeType.MERGE)
     @NotNull
-    private List<RedCrossLevel> redCrossLevel; // f.eks Samarit, eller Teamleder
+    private List<RedCrossLevel> redCrossLevel = new ArrayList<>(); // f.eks Samarit, eller Teamleder
     private int shiftsThisSeason;
     private int shiftsTotal;
 //  private List<VagtKort> vagtKorts; // Not implemented yet!

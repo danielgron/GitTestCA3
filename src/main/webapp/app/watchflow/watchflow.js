@@ -23,10 +23,10 @@ angular.module('myApp.watchflow').config(['$routeProvider', function ($routeProv
             controller: 'WatchFlowCtrl',
             controllerAs: 'wfc'
         });
-        $routeProvider.when('/singleNewWatchCard',{
+        $routeProvider.when('/singleNewWatchCard/:param',{
            templateUrl: 'app/watchflow/newWatchCard/singleview/singlenewwatchcard.html' 
         });
-        $routeProvider.when('/assignquatity',{
+        $routeProvider.when('/assignquatity/:param',{
            templateUrl: 'app/watchflow/newWatchCard/singleview/assignquatity.html' 
         });
         $routeProvider.when('/request',{
@@ -35,8 +35,8 @@ angular.module('myApp.watchflow').config(['$routeProvider', function ($routeProv
        $routeProvider.when('/approvedrequest',{
            templateUrl: 'app/watchflow/request/templates/approvedrequest.html' 
        });
-       $routeProvider.when('/sent',{
-           templateUrl: 'app/watchflow/request/templates/request.html' 
+       $routeProvider.when('/sentrequest',{
+           templateUrl: 'app/watchflow/request/templates/sentrequest.html' 
        });
        $routeProvider.when('/singlepending/:param',{
            templateUrl: 'app/watchflow/pending/single/pendingsingle.html',
@@ -45,6 +45,9 @@ angular.module('myApp.watchflow').config(['$routeProvider', function ($routeProv
        });
         $routeProvider.when('/singlefunctions/:param',{
            templateUrl: 'app/watchflow/pending/single/TEMPfunction.html'
+       });
+       $routeProvider.when('/watchcard/:param',{
+           templateUrl: 'app/watchflow/pending/finishedwatchcard/viewWatchCard.html'
        });
     }]);
 

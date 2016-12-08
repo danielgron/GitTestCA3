@@ -4,19 +4,21 @@
 
 <div class="modal-body" id="modal-body">
     <form class="form-group" novalidate>
+        <div class="col-md-8">
+            <label>Dato</label>
 
-        <label>Dato</label>
-
-        <div style="display:inline-block; min-height:290px;">
-            <div uib-datepicker ng-model="atCtrl.watch.start" class="well well-sm" datepicker-options="atCtrl.options"></div>
-        </div>            
-
-        <div class="form-group col-sm-4"><label for="timestart">Starttidspunkt</label>
-            <div uib-timepicker ng-model="atCtrl.watch.startTime" ng-change="atCtrl.changed()" hour-step="atCtrl.hstep" minute-step="atCtrl.mstep" show-meridian="ismeridian"></div>
+            <div style="display:inline-block; min-height:290px;">
+                <div uib-datepicker ng-model="atCtrl.watch.start" class="well well-sm" datepicker-options="atCtrl.options"></div>
+            </div>       
         </div>
-        <div class="form-group col-sm-4"><label for="timestart">Sluttidspunkt</label>
+        <div class="container col-md-4">
+            <div class="form-group"><label for="timestart">Starttidspunkt</label>
+                <div uib-timepicker ng-model="atCtrl.watch.startTime" ng-change="atCtrl.changed()" hour-step="atCtrl.hstep" minute-step="atCtrl.mstep" show-meridian="ismeridian"></div>
+            </div>
+            <div class="form-group"><label for="timestart">Sluttidspunkt</label>
 
-            <div uib-timepicker ng-model="atCtrl.watch.endTime" ng-change="atCtrl.changed()" hour-step="atCtrl.hstep" minute-step="atCtrl.mstep" show-meridian="ismeridian"></div>
+                <div uib-timepicker ng-model="atCtrl.watch.endTime" ng-change="atCtrl.changed()" hour-step="atCtrl.hstep" minute-step="atCtrl.mstep" show-meridian="ismeridian"></div>
+            </div>
         </div>
 </div>
 

@@ -16,6 +16,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -38,6 +39,9 @@ public class Resource implements Serializable {
     @ManyToOne
     @JsonBackReference(value="department-res")
     private Department department;
+   
+    @ManyToMany(mappedBy = "resources")
+    private List<Request> requests;
     
 
     public Resource() {
@@ -107,6 +111,14 @@ public class Resource implements Serializable {
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    public List<Request> getRequests() {
+        return requests;
+    }
+
+    public void setRequests(List<Request> requests) {
+        this.requests = requests;
     }
     
     

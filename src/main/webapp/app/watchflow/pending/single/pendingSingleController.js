@@ -22,8 +22,10 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOve
     self.selectedSamaritForFunction = [];
     self.excistingFunctions = [];
     self.newFunctions = [];
+    self.selectedUser;
+    self.samaritWatches = [];
 
-    ///***Function Calls****
+    ///***Function Declarations****
     self.getEvent = getEvent;
     self.getSamarits = getSamarits;
     self.add = add;
@@ -34,12 +36,14 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOve
     self.getFunctionsForDepartment = getFunctionsForDepartment;
     self.moveFunction = moveFunction;
     self.deleteFunctionFromWatch = deleteFunctionFromWatch;
-  //  self.testSamaritter = testSamaritter;
     self.samaritSelectedForFunction = samaritSelectedForFunction;
     self.sendFunctions = sendWatchFunctions;
     self.mapToStart = mapToStart;
     self.mapToEventWatchFunctions = mapToEventWatchFunctions;
     self.deleteFromExcistingFunctions = deleteFromExcistingFunctions;
+    self.saveFunction = saveFunction;
+    self.changeUserNameForFunction = changeUserNameForFunction;
+    self.mapSamarits = mapSamarits;
 
 
     //** Exceute on Enter *****
@@ -47,7 +51,6 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOve
     getSamarits(self.id);
     getFunctionsForDepartment();
     getclickedEvent();
-//    testSamaritter();
 
 
     //*** Functions*****
@@ -94,10 +97,11 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOve
 
     function save() {
         bsLoadingOverlayService.start();
-        pendingFactory.saveWatches(self.id, self.samaritOnWatch)
+        pendingFactory.saveWatches(self.id, self.samaritWatches)
                 .then(function (successResponse) {
                     window.console.log(successResponse);
                     bsLoadingOverlayService.stop();
+                    mapToEventWatchFunctions();
                 }, function (errorResponse) {
                     bsLoadingOverlayService.stop();
                     window.console.log("Error in callback: " + errorResponse.data.error.code);
@@ -149,10 +153,14 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOve
             if (self.newFunctions.length === 0) {
                 newFunctionForWatch.id = 1;
             } else {
-                newFunctionForWatch.id = self.newFunctions.length + 1;
+                alert("Gem Eksisterende funktion først");
+                self.selected = null;
+                return;
+                
             }
             newFunctionForWatch.samaritUserName = "Ikke Besat";
             self.newFunctions.push(newFunctionForWatch);
+            self.selectedUser = "Ikke Besat";
             self.selected = null;
         }
     }
@@ -166,16 +174,28 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOve
     }
 
     function samaritSelectedForFunction(idofFunction, index) {
-        var selected = self.selectedSamaritForFunction[index];
-        mapSamaritToFunction(selected, idofFunction);
+        var selectedObj = self.selectedSamaritForFunction[index];
+        self.selectedSamaritForFunction.remove(selectedObj);
+        var samaritUserName = selectedObj.firstName + ' ' +      selectedObj.lastName;
+        mapSamaritToFunction(samaritUserName, idofFunction);
+        
     }
 
 
-    function mapSamaritToFunction(selected, idofFunction) {
+    function mapSamaritToFunction(samaritUserName, idofFunction) {
         angular.forEach(self.newFunctions, function (value, key) {
             if (value.id === idofFunction) {
-                self.newFunctions[key].samaritUserName = selected;
+        var obj = new Object();
+        obj.samaritUserName = samaritUserName;
+        obj.functionName = value.functionName;
+        self.excistingFunctions.push(obj);
             }
+            //remove from newFunctions
+            angular.forEach(self.newFunctions, function (value, key) {
+                if(value.id === idofFunction){
+                    self.newFunctions.remove(value);
+                }
+            });
         });
     }
 
@@ -202,14 +222,32 @@ function PendingSingleCtrl(pendingFactory, $location, $routeParams, bsLoadingOve
         angular.forEach(self.excistingFunctions, function (value, key) {
             self.clickedEvent.watchFunctions.push(value);
         });
-        mapNewFunctions();
-    }
-
-    function mapNewFunctions() {
-        angular.forEach(self.newFunctions, function (value, key) {
-            self.clickedEvent.watchFunctions.push(value);
-        });
         sendWatchFunctions();
     }
 
-}
+    
+    function saveFunction(func){
+        var obj = new Object();
+        obj.functionName = func.functionName;
+        obj.samaritUserName = func.samaritUserName;
+        self.excistingFunctions.push(obj);
+        self.newFunctions.remove(func); 
+    }
+    
+    function changeUserNameForFunction(func){
+       var selecteduser = self.selectedUser;
+       self.newFunctions[0].samaritUserName = selecteduser;
+    }
+    
+    function mapSamarits(){
+        angular.forEach(self.samaritOnWatch, function(value,key){
+           var obj = new Object();
+           obj.samarit = new Object();
+           obj.samarit.userName = value.userName;
+           obj.watchRole = value.role;
+           self.samaritWatches.push(obj);
+        });
+        save();
+    }
+    
+    }
