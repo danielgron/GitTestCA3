@@ -27,11 +27,14 @@ import util.SamaritConverter;
 
 @Path("coordinator")
 @RolesAllowed("Coordinator")
-public class Coordinator {
+public class CoordinatorService {
 
     private static CoordinatorFacade cf = new CoordinatorFacade();
     private static JsonFactory factory = new JsonFactory();
     private static UserFacade uf = new UserFacade();
+    private static ObjectMapper mapper = new ObjectMapper();
+    SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("password","department");
+    FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter", theFilter);
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -47,11 +50,9 @@ public class Coordinator {
         try {
             List<Samarit> sams = cf.getAvailableSamaritesFromEventId(Integer.parseInt(id));
             if (sams.size() > 0) {
-            ObjectMapper mapper = new ObjectMapper();
-            SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("password");
-            FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter", theFilter);
-            return mapper.writer(filters).writeValueAsString(sams);
-              //  return SamaritConverter.samConverter(sams);
+
+//                return mapper.writer(filters).writeValueAsString(sams);
+                return SamaritConverter.samConverter(sams);
             } else {
                 return "[]"; // returns an empty array if the size of the list is 0
             }
@@ -88,6 +89,7 @@ public class Coordinator {
             throw ex;
         }
     }
+    
 
     @GET
     @Path("functions/{department}")

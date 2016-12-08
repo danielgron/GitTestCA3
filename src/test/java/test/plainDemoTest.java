@@ -24,7 +24,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Ignore;
-import rest.Coordinator;
+import rest.CoordinatorService;
 import startup.StartData;
 
 /**

@@ -12,6 +12,7 @@ import entity.RedCrossLevel;
 import entity.WatchFunction;
 import entity.user.Samarit;
 import java.util.List;
+
 /**
  *
  * @author dennisschmock
@@ -27,32 +28,38 @@ public class SamaritConverter {
         }
         return gson.toJson(jsonSamarits);
     }
-    
-    private static JsonObject convertSamarit(Samarit sam){
+
+    private static JsonObject convertSamarit(Samarit sam) {
         JsonObject jsonSam = new JsonObject();
         jsonSam.addProperty("userName", sam.getUserName());
-        jsonSam.addProperty("firstName",sam.getFirstName());
+        jsonSam.addProperty("firstName", sam.getFirstName());
         jsonSam.addProperty("lastName", sam.getLastName());
-        if (sam.getRedCrossLevel()!=null&&sam.getRedCrossLevel().size()>0){
+        if (sam.getRedCrossLevel() != null && sam.getRedCrossLevel().size() > 0) {
             JsonArray ja = new JsonArray();
             for (RedCrossLevel redCrossLevel : sam.getRedCrossLevel()) {
-                ja.add(redCrossLevel.getLevel());
-                
+                JsonObject jo = new JsonObject();
+                jo.addProperty("level", redCrossLevel.getLevel());
+                ja.add(jo);
+
             }
             jsonSam.add("redCrossLevel", ja);
         }
-        if(sam.getWatchFunctions()!=null&&sam.getWatchFunctions().size()>0){
+        if (sam.getWatchFunctions() != null && sam.getWatchFunctions().size() > 0) {
             JsonArray ja = new JsonArray();
             for (WatchFunction watchFunction : sam.getWatchFunctions()) {
-                ja.add(watchFunction.getFunctionName());
-                
+                                JsonObject jo = new JsonObject();
+
+                jo.addProperty("functionName",watchFunction.getFunctionName());
+                jo.addProperty("id", watchFunction.getId());
+                ja.add(jo);
+
             }
             jsonSam.add("watchFunctions", ja);
-            
+
         }
         JsonObject department = new JsonObject();
         department.addProperty("nameOfDepartment", sam.getDepartment().getNameOfDepartment());
-        jsonSam.add("department", jsonSam);
+        jsonSam.add("department", department);
         return jsonSam;
     }
 }

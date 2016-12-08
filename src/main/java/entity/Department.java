@@ -7,6 +7,7 @@ package entity;
 
 import entity.user.Samarit;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,24 +25,24 @@ import javax.persistence.OneToMany;
 public class Department implements Serializable {
 
     @OneToMany(mappedBy = "department")
-    @JsonBackReference(value="request-dep")
+    @JsonBackReference(value = "request-dep")
     private List<Request> requests;
 
     @OneToMany(mappedBy = "department")
-    @JsonBackReference(value="watchfunction-dep")
+    @JsonBackReference(value = "watchfunction-dep")
     private List<WatchFunction> watchFunctions;
 
     @OneToMany(mappedBy = "department", cascade = CascadeType.PERSIST)
-    @JsonBackReference(value="event-dep")
+    @JsonBackReference(value = "event-dep")
     private List<Event> events;
 
     @Id
     private String nameOfDepartment;
     @OneToMany(mappedBy = "department", cascade = CascadeType.PERSIST)
-    @JsonBackReference(value="samarit-con")
+    @JsonBackReference(value = "samarit-con")
     private List<Samarit> samarites;
 //    private List<VagtKort> vagtkorts; // not Implemented!
-    
+
     @OneToMany(mappedBy = "department", cascade = CascadeType.PERSIST)
     private List<Resource> resources;
 
@@ -71,7 +72,9 @@ public class Department implements Serializable {
     }
 
     public List<Event> getEvents() {
-        if (events ==null) events = new ArrayList();
+        if (events == null) {
+            events = new ArrayList();
+        }
         return events;
     }
 
@@ -86,18 +89,16 @@ public class Department implements Serializable {
     public void setWatchFunctions(List<WatchFunction> watchFunctions) {
         this.watchFunctions = watchFunctions;
     }
-    
-    
-    
-    public void addEvent(Event e){
-        if(events == null){
+
+    public void addEvent(Event e) {
+        if (events == null) {
             events = new ArrayList<>();
         }
         events.add(e);
     }
-    
-    public void addWatchFunction(WatchFunction function){
-        if(watchFunctions == null){
+
+    public void addWatchFunction(WatchFunction function) {
+        if (watchFunctions == null) {
             watchFunctions = new ArrayList<>();
         }
         watchFunctions.add(function);
@@ -111,8 +112,8 @@ public class Department implements Serializable {
     public void setResources(List<Resource> resources) {
         this.resources = resources;
     }
-    
-    public void addResource(Resource resource){
+
+    public void addResource(Resource resource) {
         resources.add(resource);
     }
 
@@ -123,7 +124,5 @@ public class Department implements Serializable {
     public void setRequests(List<Request> requests) {
         this.requests = requests;
     }
-    
-    
 
 }
