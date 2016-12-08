@@ -16,8 +16,6 @@ import entity.Department;
 import entity.RedCrossLevel;
 import entity.Resource;
 import entity.StaffedEvent;
-import entity.WatchFunction;
-import entity.user.Samarit;
 import entity.watches.SamaritFunctionsOnWatch;
 import entity.watches.SamaritWatch;
 import enums.Status;
@@ -120,11 +118,12 @@ public class WatchFlowService {
     public String registerWatches(@PathParam("id") int id, String json) throws IOException {
         System.out.println(json);
         ObjectMapper mapper = new ObjectMapper();
+        
         List<SamaritWatch> allWatches = mapper.readValue(json, new TypeReference<List<SamaritWatch>>(){});
 //        List<Samarit> samarits = mapper.readValue(json, new TypeReference<List<Samarit>>(){});
 
         wf.setWatchesForSamarits(allWatches, id);
-        //  String returnJson = mapper.writer(filters).writeValueAsString(samarits);
+//          String returnJson = mapper.writer(filters).writeValueAsString(samarits);
         return json;
     }
     

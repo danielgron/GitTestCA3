@@ -210,28 +210,30 @@ public class WatchFacade {
         return watch;
     }
 
-    public List<Samarit> setWatchesForSamarits(List<SamaritWatch> samarits, int eventId) {
+    public List<Samarit> setWatchesForSamarits(List<SamaritWatch> samaritWatches, int eventId) {
  EntityManager em = EntityConnector.getEntityManager();
         try {
             StaffedEvent event = em.find(StaffedEvent.class, eventId);
            
             em.getTransaction().begin();
-            for (SamaritWatch samarit : samarits) {
-
-                SamaritWatch watch = new SamaritWatch();
-
+            for (SamaritWatch samaritWatch : samaritWatches) {
+                
+                
                 //Method sets the bidirectional reference
-                event.addWatch(watch);
+                event.addWatch(samaritWatch);
+                
                 //Method also sets the bidirectional reference
-//                samarit.addWatch(watch);
-                watch.setTitle(event.getName());
-                watch.setStart(event.getStart());
-                watch.setEnd(event.getEnd());
-                watch.setRole("tbi");
-                watch.setColor("blue");
+               
+                
+                
+                samaritWatch.setTitle(event.getName());
+                samaritWatch.setStart(event.getStart());
+                samaritWatch.setEnd(event.getEnd());
+                
+                samaritWatch.setColor("blue");
 //                em.merge(event);
 //                em.merge(samarit);
-                em.persist(watch);
+                em.persist(samaritWatch);
 
             }
             em.getTransaction().commit();

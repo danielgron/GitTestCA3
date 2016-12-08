@@ -80,7 +80,11 @@ for (int i = 0; i < 10; i++) {
         User_Role adminRole = new User_Role("Admin");
         admin.addRoleToUser(adminRole);
 
-        User coordinator = new Samarit("coordinator", "test");
+        Samarit coordinator = new Samarit("coordinator", "test");
+        coordinator.setFirstName("Coordinator");
+        coordinator.setLastName("Coordinatorsen");
+        coordinator.getRedCrossLevel().add(new RedCrossLevel("Teamleder"));
+        
         User_Role coordinatorRole = new User_Role("Coordinator");
         User_Role departmentAdminRole = new User_Role("DepartmentAdmin");
         d.addUser((Samarit) coordinator);

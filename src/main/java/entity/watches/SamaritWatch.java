@@ -24,6 +24,20 @@ import javax.persistence.ManyToOne;
 @Entity
 public class SamaritWatch extends SamaritCalendar {
 
+    /**
+     * @return the watchRole
+     */
+    public String getWatchRole() {
+        return watchRole;
+    }
+
+    /**
+     * @param watchRole the watchRole to set
+     */
+    public void setWatchRole(String watchRole) {
+        this.watchRole = watchRole;
+    }
+
     @ManyToOne(cascade = {CascadeType.MERGE})
     private Event event;
 
@@ -66,18 +80,6 @@ public class SamaritWatch extends SamaritCalendar {
         this.samarit = samarit;
     }
 
-    /**
-     * @return the role
-     */
-    public String getRole() {
-        return watchRole;
-    }
-
-    /**
-     * @param role the role to set
-     */
-    public void setRole(String role) {
-        this.watchRole = role;
-    }
+  
 
 }
