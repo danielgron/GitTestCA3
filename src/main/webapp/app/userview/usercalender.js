@@ -18,36 +18,30 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
             $scope.eventSources1 = [];
             $scope.watchList = [];
             $scope.watchList = userCalendarFactory.getWatchlist();
-            $scope.shiftsList = [];
+//            $scope.shiftsList = [];
 
             $scope.user = {};
             $scope.user = UserFactory.getCreatedUser();
 
             //*****Function Declarations*****//
-            $scope.getShifts = getShifts();
             
             //****Event models and sources****//
-            //Declaring main eventsource
-            $scope.eventSources1 = [$scope.watchList];
+            
+            //Declaring main eventsources
             $scope.eventSource = {
-                url: 'api/watch/' + $scope.user.userName,
+                url: 'api/watch/shifts/' + $scope.user.userName,
                 color: 'red'
             };
-            
-            function getShifts(userName){
-                userCalendarFactory.getShifts(userName).then(function(successResponse){
-                    $scope.shiftsList = successResponse.date;
-                    window.console.log($scope.shiftsList);
-                },function(errorResponse){
-                    window.console.log("An error occured" + errorResponse);
-                });
-                
+            $scope.eventSource2 = {
+                url: 'api/watch/' + $scope.user.userName,
+                color: 'red'
             }
             
-            
+            //****Calling at start****//
 
+            
             /* event sources array*/
-            $scope.eventSources1 = [$scope.watchList, $scope.eventSource,$scope.shiftsList];
+            $scope.eventSources1 = [$scope.watchList, $scope.eventSource,$scope.eventSource2];
 
             $scope.go = function (path) {
                 $location.path(path);
@@ -87,8 +81,10 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
                 if (event.title == "unavail" && event.allDay) {
 
                     $scope.setUnavailForWatch(event.start);
-                } else if (!event.allDay) {
-
+                } else if (!event.allDay&&event.title==="Blocked") {
+                    alert('no no no!')
+                } else{
+                    window.console.log(event.event.id);
                 }
                 ;
 
