@@ -19,6 +19,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -36,7 +37,7 @@ public class Request implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     
-    
+    @JsonBackReference(value="requests-dep")
     @ManyToOne
     private Department department;
     private String details;
@@ -45,8 +46,9 @@ public class Request implements Serializable {
     @Enumerated(EnumType.STRING)
     private RequestStatus requestStatus;
     private int zip;
-    @OneToMany(mappedBy = "request")
-    @JsonBackReference(value="resources-req")
+    
+    @JsonBackReference(value="requests-res")
+    @ManyToMany
     private List<Resource> resources;
 
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
@@ -66,6 +68,7 @@ public class Request implements Serializable {
     private String catering;
     private String comments;
     private String visibility;
+    private String type;
     
     private int price;
     private int numberGuests;
@@ -465,6 +468,14 @@ public class Request implements Serializable {
 
     public void setDetails(String details) {
         this.details = details;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
 

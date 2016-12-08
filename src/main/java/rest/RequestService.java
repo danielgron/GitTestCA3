@@ -182,6 +182,23 @@ public class RequestService {
         }
     }
     
+    
+    @POST
+    @Path("requesttorejected/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String moveRequestToRejected(@PathParam("id") String id) throws JsonProcessingException, Exception {
+
+        Request r = rf.rejectRequest(Integer.parseInt(id));
+        try {
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(r);
+        } catch (JsonProcessingException ex) {
+            log.Log.writeErrorMessageToLog("Error REST request approve: " + ex.getMessage());
+            throw ex;
+        } catch (Exception ex) {
+            log.Log.writeErrorMessageToLog("Error REST request approve: " + ex.getMessage());
+            throw ex;
+        }
+    }
 
     /**
      * PUT method for updating or creating an instance of RequestService
