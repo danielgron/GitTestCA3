@@ -283,7 +283,6 @@ public class EventFacade {
         event.setComments(comments);
         event.setContact(contact);
         event.setDepartment(department);
-        event.setDoorsopen(eventend);
         event.setEnd(eventend);
         event.setName(eventName);
         event.setStart(eventstart);

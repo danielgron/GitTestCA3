@@ -39,6 +39,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import util.DateUtils;
+import util.DepartmentDecoder;
 import util.JSON_Converter;
 
 /**
@@ -154,6 +155,7 @@ public class RequestService {
         Request r;
         try {
             r = mapper.readValue(json, Request.class);
+            r.setDepartment(DepartmentDecoder.getDepartmentFromToken(context));
             Event e = ef.createEventFromRequest(r);
             return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(e);
         } catch (JsonProcessingException ex) {
