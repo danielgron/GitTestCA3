@@ -28,7 +28,8 @@
                     <tr ng-repeat="shift in pctrl.shifts | filter:pctrl.searchText  | orderBy:pctrl.sortType:ctrl.sortReverse" >
                         <td>{{shift.name}}</td>
                         <td>{{shift.start}}</td>
-                        <td><a href="#/singlepending/{{shift.id}}">Rediger</a> 
+                        <td><a href="#/singlepending/{{shift.id}}">Rediger /</a>
+                            <a href="#/watchcard/{{shift.id}}">Se Færdigt Vagtkort</a>
                         </td>
                     </tr>
                 </tbody>

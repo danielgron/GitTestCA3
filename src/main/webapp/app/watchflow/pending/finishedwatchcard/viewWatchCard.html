@@ -1,0 +1,48 @@
+<div class="container" ng-controller="viewWatchController as vwCtrl">
+    
+    <h2> VagtKort:  {{vwCtrl.shift.name}}</h2>
+    <div class="row">
+        
+    <div class="col-md-5 well well-sm">
+        <h3>Møde Tid og Sted</h3>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>Sted</td>   
+                    <td>{{vwCtrl.shift.venue}}</td>   
+                </tr>
+                <tr>
+                    <td>Adresse</td>   
+                    <td>{{vwCtrl.shift.address}} {{vwCtrl.shift.zip}} København Ø </td>
+                    
+                </tr>
+                <tr>
+                    <td>Dato</td>   
+                    <td>{{vwCtrl.startDate}}</td>
+                    
+                </tr>
+                <tr>
+                    <td>Vagt Start Tidspunkt</td>   
+                    <td>{{vwCtrl.startTime}}</td>
+                    
+                </tr>
+                <tr>
+                    <td>Vagt Slut Tidspunkt</td>   
+                    <td>{{vwCtrl.endTime}}</td>
+                    
+                </tr>
+            </tbody>
+            
+        </table>
+        
+        
+    </div>
+        <div class="col-md-offset-1 col-md-5 well well-sm">
+            
+            
+        </div>    
+        
+        
+    </div>
+
+</div>

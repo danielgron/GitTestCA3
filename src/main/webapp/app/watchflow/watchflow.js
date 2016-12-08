@@ -46,6 +46,9 @@ angular.module('myApp.watchflow').config(['$routeProvider', function ($routeProv
         $routeProvider.when('/singlefunctions/:param',{
            templateUrl: 'app/watchflow/pending/single/TEMPfunction.html'
        });
+       $routeProvider.when('/watchcard/:param',{
+           templateUrl: 'app/watchflow/pending/finishedwatchcard/viewWatchCard.html'
+       });
     }]);
 
 
