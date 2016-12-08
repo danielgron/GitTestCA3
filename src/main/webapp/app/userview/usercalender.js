@@ -84,11 +84,18 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
                 } else if (!event.allDay&&event.title==="Blocked") {
                     alert('no no no!')
                 } else{
-                    window.console.log(event.event.id);
+                    
+                    $scope.go('api/watchcard/'+event.event.id);
                 }
                 ;
 
             };
+            
+            //For using buttons to redirect
+                $scope.go = function (path) {
+                    window.console.log(path);
+                    $location.path(path);
+                };
 
 
             $scope.eventAfterAllRender = function () {
