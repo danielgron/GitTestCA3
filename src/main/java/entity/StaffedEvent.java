@@ -308,4 +308,4 @@ public class StaffedEvent extends Event{
     public void setCoordinatorcomment(String coordinatorcomment) {
         this.coordinatorcomment = coordinatorcomment;
     }
-}
+    }
