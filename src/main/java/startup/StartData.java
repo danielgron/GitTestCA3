@@ -22,6 +22,7 @@ import entity.watches.SamaritFunctionsOnWatch;
 import entity.watches.SamaritOccupied;
 import entity.watches.SamaritWatch;
 import entityconnection.EntityConnector;
+import enums.RequestStatus;
 import enums.Status;
 import exceptions.DateNullException;
 import java.util.ArrayList;
@@ -43,9 +44,9 @@ public class StartData {
     public static void main(String[] args) {
         Persistence.generateSchema("pu_local", null);
         StartData sd = new StartData();
-        //insertTestData();
-        //sd.insertRandomData();
-        //createStaffedEvent();
+        insertTestData();
+        sd.insertRandomData();
+        createStaffedEvent();
 for (int i = 0; i < 10; i++) {
             sd.testRequest();
         }
@@ -133,7 +134,7 @@ for (int i = 0; i < 10; i++) {
         User_Role userRole = (User_Role) q2.getSingleResult();
         ArrayList<User> randomTestUsers = new ArrayList();
         Log.writeToLog("Test Data adding random users");
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 30; i++) {
             String userFName = randomFName();
             String userLName = randomLName();
             String email = generateEmail(userFName,userLName);
@@ -154,17 +155,27 @@ for (int i = 0; i < 10; i++) {
             randomTestUsers.add(s);
         }
         Log.writeToLog("Test Data adding random events");
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 30; i++) {
             Event e = testEvent();
             d.addEvent(e);
             e.setDepartment(d);
         }
-        for (int i = 0; i < 10; i++) {
+        for (int i = 1; i < 4; i++) {
             Resource res = new Resource();
-            res.setName("Bil nummer " + i);
+            res.setName("Bil #" + i);
             d.addResource(res);
             res.setDepartment(d);
         }
+        for (int i = 1; i < 4; i++) {
+            Resource res = new Resource();
+            res.setName("Telefon #" + i);
+            d.addResource(res);
+            res.setDepartment(d);
+        }
+        Resource res = new Resource();
+            res.setName("Hjertestarter");
+            d.addResource(res);
+            res.setDepartment(d);
         try {
             em.getTransaction().begin();
             for (User randomTestUser : randomTestUsers) {
@@ -284,6 +295,7 @@ for (int i = 0; i < 10; i++) {
         r.setNumberGuests((int)(Math.random()*100));
         r.setAmbulance(Math.random()>0.9);
         r.setInvoice(randomInvoice());
+        r.setRequestStatus(RequestStatus.RECIEVED);
         em.getTransaction().begin();
         em.persist(r);
         em.getTransaction().commit();

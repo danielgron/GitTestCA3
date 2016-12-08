@@ -36,12 +36,12 @@
                         <ul class="list list-unstyled" ng-repeat="func in pendingCtrl.newFunctions track by $index" >
                             <li>
                                 {{func.functionName}} <span style="cursor: pointer" ng-click="pendingCtrl.deleteFunctionFromWatch(func)">&#10060;</span>
+                                            <span style="cursor: pointer" ng-click="pendingCtrl.saveFunction(func)">&#x2713;</span>
                                 <br>
                                 Vælg Samarit til at Besidde Funktion:
-                                <select id="functionsDropDown" name="Samarit"
-                                        ng-options="sam.userName as sam.firstName +                  ' ' +                  sam.lastName for sam in pendingCtrl.samaritOnWatch| functionfilter: func.functionName"
-                                        ng-model="pendingCtrl.selectedSamaritForFunction[$index]"  
-                                        ng-change="pendingCtrl.samaritSelectedForFunction(func.id, $index)">
+                                <select id="selectSamDropDown" name="Samarit" ng-change="pendingCtrl.changeUserNameForFunction({{func}})" ng-model="pendingCtrl.selectedUser">
+                                    <option ng-repeat="sam in pendingCtrl.samaritOnWatch| functionfilter: func.functionName">{{sam.firstName}} {{sam.lastName}}</option>
+                                    <option selected="selected">Ikke Besat</option>
                                 </select>
                             </li> 
                         </ul>
@@ -73,7 +73,7 @@
         <div class="btn-group col-md-12"">
             <button class="btn btn-group btn-danger" ng-click="pendingCtrl.reset()">Reset</button>
             <button class="btn btn-group btn-primary" ng-click="pendingCtrl.go()">Cancel</button>
-            <button class="btn btn-group btn-success" ng-click="pendingCtrl.save()">Save</button>
+            <button class="btn btn-group btn-success" ng-click="pendingCtrl.mapSamarits()">Save</button>
         </div>
         <div class="container col-md-12" style=" padding: 10px">       
             <div class="panel panel-success">

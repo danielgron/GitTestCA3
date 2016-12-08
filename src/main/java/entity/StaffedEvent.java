@@ -27,8 +27,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -42,6 +45,34 @@ public class StaffedEvent extends Event{
     @Enumerated(EnumType.STRING)
     private Status status;
     private String address;
+    
+    
+        @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date doorsopen;
+        
+        @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date watchStart;
+    
+    private String catering;
+    private boolean treatmentfacility;
+    private String comments;
+    private int price;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Contact contact;
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Invoice invoice;
+    private boolean medics;
+    private boolean ambulance;
+    private boolean emergencyOffice;
+    private boolean stretcherTeam;
+    private boolean responseTeam;
+    private String visibility;
+    private String venue;
+    private String street;
+    private int zip;
+    private int numberGuests;
+    private String agegroup;
+    private String coordinatorcomment;
     
     /*
     Hold track of how many of each RedCrossLevel is needed!
@@ -58,7 +89,7 @@ public class StaffedEvent extends Event{
 
     @OneToMany(mappedBy = "staffedEvent", cascade = CascadeType.ALL)
     private List<SamaritFunctionsOnWatch> watchFunctions;
-
+    
     public StaffedEvent() {
     }
 
@@ -101,7 +132,7 @@ public class StaffedEvent extends Event{
         this.watchFunctions = watchFunctions;
     }
 
-
+    
     
     /**
      * This method should be called right after an Staffed Event is created.
@@ -117,6 +148,164 @@ public class StaffedEvent extends Event{
         }
         
     }
-    
-    
+
+    public Date getDoorsopen() {
+        return doorsopen;
+    }
+
+    public void setDoorsopen(Date doorsopen) {
+        this.doorsopen = doorsopen;
+    }
+
+    public String getCatering() {
+        return catering;
+    }
+
+    public void setCatering(String catering) {
+        this.catering = catering;
+    }
+
+    public boolean isTreatmentfacility() {
+        return treatmentfacility;
+    }
+
+    public void setTreatmentfacility(boolean treatmentfacility) {
+        this.treatmentfacility = treatmentfacility;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public Contact getContact() {
+        return contact;
+    }
+
+    public void setContact(Contact contact) {
+        this.contact = contact;
+    }
+
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
+    }
+
+    public boolean isMedics() {
+        return medics;
+    }
+
+    public void setMedics(boolean medics) {
+        this.medics = medics;
+    }
+
+    public boolean isAmbulance() {
+        return ambulance;
+    }
+
+    public void setAmbulance(boolean ambulance) {
+        this.ambulance = ambulance;
+    }
+
+    public boolean isEmergencyOffice() {
+        return emergencyOffice;
+    }
+
+    public void setEmergencyOffice(boolean emergencyOffice) {
+        this.emergencyOffice = emergencyOffice;
+    }
+
+    public boolean isStretcherTeam() {
+        return stretcherTeam;
+    }
+
+    public void setStretcherTeam(boolean stretcherTeam) {
+        this.stretcherTeam = stretcherTeam;
+    }
+
+    public boolean isResponseTeam() {
+        return responseTeam;
+    }
+
+    public void setResponseTeam(boolean responseTeam) {
+        this.responseTeam = responseTeam;
+    }
+
+    public String getVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(String visibility) {
+        this.visibility = visibility;
+    }
+
+    public String getVenue() {
+        return venue;
+    }
+
+    public void setVenue(String venue) {
+        this.venue = venue;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public int getZip() {
+        return zip;
+    }
+
+    public void setZip(int zip) {
+        this.zip = zip;
+    }
+
+    public int getNumberGuests() {
+        return numberGuests;
+    }
+
+    public void setNumberGuests(int numberGuests) {
+        this.numberGuests = numberGuests;
+    }
+
+    public String getAgegroup() {
+        return agegroup;
+    }
+
+    public void setAgegroup(String agegroup) {
+        this.agegroup = agegroup;
+    }
+
+    public Date getWatchStart() {
+        return watchStart;
+    }
+
+    public void setWatchStart(Date watchStart) {
+        this.watchStart = watchStart;
+    }
+
+    public String getCoordinatorcomment() {
+        return coordinatorcomment;
+    }
+
+    public void setCoordinatorcomment(String coordinatorcomment) {
+        this.coordinatorcomment = coordinatorcomment;
+    }
 }

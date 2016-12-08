@@ -17,13 +17,13 @@
                     headers: { 'Content-Type': 'application/json' }
                 }
             }
-            $http.post('/..api/demoall/', items, config)
+            $http.post('../../api/request/', items, config)
                 .success(function (data, status, headers) {
                     onSuccess(data)
                 })
                 .error(function (data, status, header, config) {
                     onError(data)
-                });
+                        });
         }
     }
 })();

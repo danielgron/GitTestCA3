@@ -46,7 +46,9 @@
             indexService.saveData(vm.items, function (response) {
                 vm.isSuccess = true;
             }, function (error) {
-                vm.isSuccess = true;
+                     alert("Internal Error");
+                    console.log(error.error.code);
+                    console.log("Message: " + error.error.message);
             })
         }
     }

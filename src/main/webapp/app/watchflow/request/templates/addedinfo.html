@@ -1,12 +1,10 @@
 <div class="col-md-6" style = "border:1px solid black">
 <h3>Bemanding og Ressourcer:</h3>
 
-
-
-    <div class="col-lg-6 col-lg-offset-3" id="resource">
-        
+<label>Bemanding</label> <br>
+<label>Pris</label><input type="text" ng-model="requestCtrl.request.price" ng-change="requestCtrl.updateRequest()"/> <br>
+<!--
         <h3> Vælg Ressourcer fra liste: </h3>
-        
         <table cellpadding="1" class="table">
             <tbody>
                 <tr ng-repeat="resource in requestCtrl.resources">
@@ -15,12 +13,12 @@
             </tbody>
         </table>
 
-       <!--
-        <select ng-options="resource.name for resources in requestCtrl.resources()"
+       
+        <select ng-options="resource.name for resources in requestCtrl.resources"
                 ng-model="requestCtrl.selected">
         </select>
        
-       -->
+      -->
         
         <br>
         <br>
@@ -33,7 +31,18 @@
             </li>
         </ul>
         -->
-       
+       <select ng-options="opt.name for opt in requestCtrl.availableResources"
+                ng-model="requestCtrl.selected"
+                ng-change="requestCtrl.moveResource();requestCtrl.updateRequest()">
+        </select>
         
-    </div>
-</div>
+        <br>
+        <br>
+        
+        <h5>Valgte Resourcer:</h5>
+        <ul ng-repeat="resource in requestCtrl.request.resources">
+            <li>
+                {{resource.name}} <span style="cursor: pointer" ng-click="requestCtrl.moveResourceBack(resource)">&#10060;</span>
+            </li>
+        </ul>
+        </div>

@@ -210,20 +210,20 @@ public class WatchFacade {
         return watch;
     }
 
-    public List<Samarit> setWatchesForSamarits(List<Samarit> samarits, int eventId) {
+    public List<Samarit> setWatchesForSamarits(List<SamaritWatch> samarits, int eventId) {
  EntityManager em = EntityConnector.getEntityManager();
         try {
             StaffedEvent event = em.find(StaffedEvent.class, eventId);
            
             em.getTransaction().begin();
-            for (Samarit samarit : samarits) {
+            for (SamaritWatch samarit : samarits) {
 
                 SamaritWatch watch = new SamaritWatch();
 
                 //Method sets the bidirectional reference
                 event.addWatch(watch);
                 //Method also sets the bidirectional reference
-                samarit.addWatch(watch);
+//                samarit.addWatch(watch);
                 watch.setTitle(event.getName());
                 watch.setStart(event.getStart());
                 watch.setEnd(event.getEnd());
@@ -243,7 +243,8 @@ public class WatchFacade {
         } finally {
             //em.close();
         }
-        return samarits;
+//        return samarits;
+          return null;
 
     }
 }

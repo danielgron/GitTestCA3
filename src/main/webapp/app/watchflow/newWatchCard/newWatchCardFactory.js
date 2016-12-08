@@ -9,10 +9,12 @@ function watchFactory($http){
     
     var service = {
         loadEvents: loadEvents,
+        getEventfromId: getEventfromId,
         getClickedShift : getClickedShift,
         setShift: setShift,
         getAllRedCrossLevelsFromFac: getAllRedCrossLevelsFromFac,
         getAvalibleResources: getAvalibleResources,
+        saveCommentCatering: saveCommentCatering,
         sendDataFromQuantityWatch : sendDataFromQuantityWatch
     };
     
@@ -41,6 +43,14 @@ function watchFactory($http){
     
     function sendDataFromQuantityWatch(jsonObject){
         return $http.post("api/watchflow/events/updatequantity",jsonObject);
+    }
+    
+    function getEventfromId (id){
+        return $http.get("api/event/staffedevent/"+id);
+    }
+    
+    function saveCommentCatering(event){
+        return $http.post("api/watchflow/updatecateringandcomment", event);
     }
     
 };

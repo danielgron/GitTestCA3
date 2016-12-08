@@ -31,8 +31,8 @@
                         <td>{{shift.name}}</td>
                         <td>{{shift.start}}</td>
                         <td>
-                            <span style="color: blue; cursor: pointer" ng-click="ctrl.details(shift)">Vagtkort Detaljer</span> /
-                            <span style="color: blue; cursor: pointer" ng-click="ctrl.staffing(shift)">Bemanding</span>
+                            <span style="color: blue; cursor: pointer"> <a href="#/singleNewWatchCard/{{shift.id}}">VagtKort Detaljer</a></span> /
+                            <span style="color: blue; cursor: pointer"><a href="#/assignquatity/{{shift.id}}">Bemanding</a></span>
 
                         </td>
                     </tr>
