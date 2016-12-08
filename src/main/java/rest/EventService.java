@@ -97,12 +97,12 @@ public class EventService {
     public String getSingleEvent(@PathParam("id") String id) throws JsonProcessingException {
         Event event = ef.getEvent(Integer.parseInt(id));
         try {
-            SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("password","department","event");
-            FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter", theFilter);
+            SimpleBeanPropertyFilter userFilter = SimpleBeanPropertyFilter.serializeAllExcept("password","department","event");
+            FilterProvider userFilterProvider = new SimpleFilterProvider().addFilter("UserFilter", userFilter);
             ObjectMapper mapper = new ObjectMapper();
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm a z");
             mapper.setDateFormat(df);
-            String json = mapper.writer(filters).writeValueAsString(event);
+            String json = mapper.writer(userFilterProvider).writeValueAsString(event);
             return json;
         } catch (JsonProcessingException ex) {
             log.Log.writeErrorMessageToLog("Exception When Creating JSON Object single event: " + ex);
@@ -125,12 +125,14 @@ public class EventService {
     public String getSingleStaffedEvent(@PathParam("id") String id) throws JsonProcessingException {
         StaffedEvent event = (StaffedEvent) ef.getEvent(Integer.parseInt(id));
         try {
+            SimpleBeanPropertyFilter userFilter = SimpleBeanPropertyFilter.serializeAllExcept("password","department","event");
+            FilterProvider userFilterProvider = new SimpleFilterProvider().addFilter("UserFilter", userFilter);
             ObjectMapper mapper = new ObjectMapper();
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm a z");
             mapper.setDateFormat(df);
 
 //            
-            return mapper.writer(filters).writeValueAsString(event);
+            return mapper.writer(userFilterProvider).writeValueAsString(event);
 
         } catch (JsonProcessingException ex) {
             log.Log.writeErrorMessageToLog("Exception When Creating JSON Object single event: " + ex);

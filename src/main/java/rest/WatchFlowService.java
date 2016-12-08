@@ -69,7 +69,9 @@ public class WatchFlowService {
         mapper.setDateFormat(df);
         Status statusFromParam = Status.valueOf(statusString);
         List<StaffedEvent> allEventsWithStatus = wff.getAllStaffedEventsWithStatus(statusFromParam, d);
-        String json = mapper.writer(filters).writeValueAsString(allEventsWithStatus);
+        SimpleBeanPropertyFilter UserFilter = SimpleBeanPropertyFilter.serializeAllExcept("password","department","event");
+        FilterProvider userFilterProvider = new SimpleFilterProvider().addFilter("UserFilter", UserFilter);
+        String json = mapper.writer(userFilterProvider).writeValueAsString(allEventsWithStatus);
         return json;
     }
 
@@ -97,7 +99,9 @@ public class WatchFlowService {
         wff.updateQuantityForEvent(id, map);
         StaffedEvent eventAfterUpdates = wff.updateResources(id, resources);
         wff.updateStatusOfStaffedEvent(id, Status.Pending);
-        return mapper.writer(filters).writeValueAsString(eventAfterUpdates);
+        SimpleBeanPropertyFilter UserFilter = SimpleBeanPropertyFilter.serializeAllExcept("password","department","event");
+        FilterProvider userFilterProvider = new SimpleFilterProvider().addFilter("UserFilter", UserFilter);
+        return mapper.writer(userFilterProvider).writeValueAsString(eventAfterUpdates);
     }
 
     @GET
@@ -138,7 +142,9 @@ public class WatchFlowService {
         StaffedEvent event = mapper.readValue(jsonEvent, StaffedEvent.class);
         List<SamaritFunctionsOnWatch> functionsForThisWatch = event.getWatchFunctions();
         StaffedEvent eventAfterUpdates = wff.updateWatchFunctionsForEvent(functionsForThisWatch, event.getId());
-        return mapper.writer(filters).writeValueAsString(eventAfterUpdates);
+        SimpleBeanPropertyFilter UserFilter = SimpleBeanPropertyFilter.serializeAllExcept("password","department","event");
+        FilterProvider userFilterProvider = new SimpleFilterProvider().addFilter("UserFilter", UserFilter);
+        return mapper.writer(userFilterProvider).writeValueAsString(eventAfterUpdates);
     }
     
     @POST
@@ -153,7 +159,9 @@ public class WatchFlowService {
         StaffedEvent event = mapper.readValue(jsonEvent, StaffedEvent.class);
         wff.updateCateringComment(event.getId(), event.getCatering());
         StaffedEvent updatedEvent = wff.updateCoordinatorComment(event.getId(), event.getCoordinatorcomment());
-        return mapper.writer(filters).writeValueAsString(updatedEvent); 
+        SimpleBeanPropertyFilter UserFilter = SimpleBeanPropertyFilter.serializeAllExcept("password","department","event");
+        FilterProvider userFilterProvider = new SimpleFilterProvider().addFilter("UserFilter", UserFilter);
+        return mapper.writer(userFilterProvider).writeValueAsString(updatedEvent); 
     }
 
 }
