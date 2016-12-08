@@ -1,9 +1,11 @@
-<div class="container" ng-controller="viewWatchController as vwCtrl">
+<div class="container" style="font-size: small" ng-controller="viewWatchController as vwCtrl">
     
     <h2> VagtKort:  {{vwCtrl.shift.name}}</h2>
     <div class="row">
         
-    <div class="col-md-5 well well-sm">
+    <div class="col-md-5">
+        <div class="well well-sm">
+            
         <h3>Møde Tid og Sted</h3>
         <table class="table">
             <tbody>
@@ -18,12 +20,12 @@
                 </tr>
                 <tr>
                     <td>Dato</td>   
-                    <td>{{vwCtrl.startDate}}</td>
+                    <td>{{vwCtrl.watchStartDate}}</td>
                     
                 </tr>
                 <tr>
                     <td>Vagt Start Tidspunkt</td>   
-                    <td>{{vwCtrl.startTime}}</td>
+                    <td>{{vwCtrl.watchStartTime}}</td>
                     
                 </tr>
                 <tr>
@@ -34,15 +36,47 @@
             </tbody>
             
         </table>
-        
-        
+        </div>
+   
+    <div class="well well-sm">
+            <h4>Vagt Leder og Funktioner</h4>
+            <ul>
+                <li ng-repeat="func in vwCtrl.watchFunctions">
+                    {{func.samaritUsername}}: {{func.functionName}}
+                </li>
+            </ul>
+        </div>
+    <div class="well well-sm">
+            <h4>Bemanding</h4>
     </div>
-        <div class="col-md-offset-1 col-md-5 well well-sm">
+            
+        </div>
+        
+        <div class="col-md-offset-3 col-md-3 well well-sm">
+            <h4>Kommentar Fra VagtKoordinator</h4>
+            <textarea disabled="" style="resize: none" >{{vwCtrl.shift.coordinatorcomment}}</textarea>
+            
+        </div>
+        <br>
+        <br>
+        <div class="col-md-offset-3 col-md-3 well well-sm">
+            <h4>Ressourcer </h4>
+                <ul>
+                    <li ng-repeat="res in vwCtrl.shift.resources">
+                        {{res.name}}
+                    </li> 
+                </ul>
+            
+        </div>
+        
+    <div class="col-md-offset-3 col-md-3 well well-sm">
+            <h4>Forplejning</h4>
+             <textarea disabled="" style="resize: none" >{{vwCtrl.shift.catering}}</textarea>
             
             
-        </div>    
-        
-        
-    </div>
+        </div>
 
-</div>
+        
+    </div>
+    
+    </div>

@@ -11,8 +11,8 @@ function viewWatchController(pendingFactory, $location, $routeParams) {
     var self = this;
     self.id = $routeParams.param;
     self.shift = {};
-    self.startDate;
-    self.startTime;
+    self.watchStartDate;
+    self.watchStartTime;
     self.endDate;
     self.endTime;
 
@@ -36,10 +36,10 @@ function viewWatchController(pendingFactory, $location, $routeParams) {
     }
     
     function convertDateStartString(){
-        var startDate = self.shift.start;
-        var startDateArray =  startDate.split(" ");
-        self.startDate = startDateArray[0];
-        self.startTime = startDateArray[1];
+        var watchStart = self.shift.watchStart;
+        var startDateArray =  watchStart.split(" ");
+        self.watchStartDate = startDateArray[0];
+        self.watchStartTime = startDateArray[1];
         var shiftend = self.shift.end;
         var endDateArray = shiftend.split(" ");
         self.endDate = endDateArray[0];
