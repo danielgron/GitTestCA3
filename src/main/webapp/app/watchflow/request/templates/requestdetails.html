@@ -1,20 +1,37 @@
-<div class="row col-md-12 well well-sm" style = "border:1px solid black">
+<div class="row col-md-12 well well-sm" >
     <div class="container">
-        <h3>Details</h3>
+        <h3>Detaljer</h3>
 
-        <label>Ingen Forplejning</label><input type="radio" name="Forplejning" value="Ingen" ng-model="requestCtrl.request.catering" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"/> <br>
-        <label>Arrangør stiller til rådighed</label><input type="radio" name="Forplejning" value="Arrangør" ng-model="requestCtrl.request.catering"  ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"/><br>
-        <label>RK sørger for forplejning</label><input type="radio" name="Forplejning" value="RK" ng-model="requestCtrl.request.catering" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"/><br>
+        <input type="radio" name="Forplejning" value="Ingen" ng-model="requestCtrl.request.catering" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"/> 
 
-        <label>Arrangør stiller behandlingslokaler/telt til rådighed</label><input type="checkbox" name="Arrangør stiller behandlingslokaler/telt til rådighed" ng-model="requestCtrl.request.treatmentfacility" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}" /><br>
-        <label>Ønskes Læge?</label><input type="checkbox" value="ON" ng-model="requestCtrl.request.medics" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"/><br>
-        <label>Ønskes Ambulance?</label><input type="checkbox" value="ON" ng-model="requestCtrl.request.ambulance" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"/><br>
-        <label>Ønskes Bårehold?</label><input type="checkbox" value="ON" ng-model="requestCtrl.request.stretcherTeam" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"/><br>
-        <label>Ønskes Response Team</label><input type="checkbox" name="" value="ON" ng-model="requestCtrl.request.responseTeam" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"/><br>
-        <label>Er der beredskabskontor tilgængeligt?</label><input type="checkbox" name="" value="ON" ng-model="requestCtrl.request.emergencyOffice" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"/><br>
-        <label>eventuelt specielle ønsker til samaritters synlighed:</label><input type="text" ng-model="requestCtrl.request.visibility" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"/><br>
-        <label>Yderligere detaljer om arrangementet</label><textarea name="" rows="4" cols="20" ng-model="requestCtrl.request.details" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"></textarea><br>
-        <label>Kommentarer</label><textarea name="" rows="4" cols="20" ng-model="requestCtrl.request.comments" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"></textarea><br>
-        
+        <label>Ingen Forplejning</label><br>
+
+        <input type="radio" name="Forplejning" value="Arrangør" ng-model="requestCtrl.request.catering"  ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"/>
+
+        <label>Arrangør stiller til rådighed</label><br>
+
+        <input type="radio" name="Forplejning" value="RK" ng-model="requestCtrl.request.catering" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"/>
+
+        <label>RK sørger for forplejning</label><br>
+
+        <input type="checkbox" name="Arrangør stiller behandlingslokaler/telt til rådighed" ng-model="requestCtrl.request.treatmentfacility" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}" />
+        <label>Arrangør stiller behandlingslokaler/telt til rådighed</label><br>
+        <input type="checkbox" value="ON" ng-model="requestCtrl.request.medics" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"/>
+        <label>Ønskes Læge?</label><br>
+        <input type="checkbox" value="ON" ng-model="requestCtrl.request.ambulance" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"/>
+        <label>Ønskes Ambulance?</label><br>
+        <input type="checkbox" value="ON" ng-model="requestCtrl.request.stretcherTeam" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"/>
+        <label>Ønskes Bårehold?</label><br>
+        <input type="checkbox" name="" value="ON" ng-model="requestCtrl.request.responseTeam" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"/>
+        <label>Ønskes Response Team</label><br>
+        <input type="checkbox" name="" value="ON" ng-model="requestCtrl.request.emergencyOffice" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"/>
+        <label>Er der beredskabskontor tilgængeligt?</label><br>
+        <label>Eventuelt specielle ønsker til samaritters synlighed:</label><br>
+        <input type="text" ng-model="requestCtrl.request.visibility" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"/><br>
+        <label>Yderligere detaljer om arrangementet</label><br>
+        <textarea name="" rows="4" cols="20" ng-model="requestCtrl.request.details" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"></textarea><br>
+        <label>Kommentarer</label><br>
+        <textarea name="" rows="4" cols="20" ng-model="requestCtrl.request.comments" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"></textarea><br>
+
     </div>
 </div>
