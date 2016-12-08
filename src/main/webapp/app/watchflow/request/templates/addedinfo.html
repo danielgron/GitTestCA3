@@ -1,36 +1,15 @@
-<div class="col-md-6" style = "border:1px solid black">
+<div class="row col-md-12 well">
 <h3>Bemanding og Ressourcer:</h3>
 
 <label>Bemanding</label> <br>
 <label>Pris</label><input type="text" ng-model="requestCtrl.request.price" ng-change="requestCtrl.updateRequest()"/> <br>
-<!--
-        <h3> Vælg Ressourcer fra liste: </h3>
-        <table cellpadding="1" class="table">
-            <tbody>
-                <tr ng-repeat="resource in requestCtrl.resources">
-                    <td>{{resource.name}}</td>
-                </tr>
-            </tbody>
-        </table>
 
-       
-        <select ng-options="resource.name for resources in requestCtrl.resources"
-                ng-model="requestCtrl.selected">
-        </select>
-       
-      -->
         
         <br>
         <br>
         
         <h5>Valgte Resourcer:</h5>
-        <!--
-        <ul ng-repeat="resource in requestCtrl.resources">
-            <li>
-                {{resource.name}} <span style="cursor: pointer" ng-click="qctrl.moveResourceBack(resource)">&#10060;</span>
-            </li>
-        </ul>
-        -->
+
        <select ng-options="opt.name for opt in requestCtrl.availableResources"
                 ng-model="requestCtrl.selected"
                 ng-change="requestCtrl.moveResource();requestCtrl.updateRequest()">

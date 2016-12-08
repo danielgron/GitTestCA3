@@ -1,4 +1,4 @@
-<div class="col-md-6" style = "border:1px solid black">
+<div class="row col-md-12 well well-sm" style = "border:1px solid black">
     <div class="container">
         <h3>Details</h3>
 
@@ -13,8 +13,8 @@
         <label>Ønskes Response Team</label><input type="checkbox" name="" value="ON" ng-model="requestCtrl.request.responseTeam" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"/><br>
         <label>Er der beredskabskontor tilgængeligt?</label><input type="checkbox" name="" value="ON" ng-model="requestCtrl.request.emergencyOffice" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"/><br>
         <label>eventuelt specielle ønsker til samaritters synlighed:</label><input type="text" ng-model="requestCtrl.request.visibility" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"/><br>
-        <label>Yderligere detaljer om arrangementet</label><textarea name="" rows="4" cols="20" ng-model="requestCtrl.request.details" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"><br>
-        <label>Kommentarer</label><textarea name="" rows="4" cols="20" ng-model="requestCtrl.request.comments" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"><br>
-        </textarea>
+        <label>Yderligere detaljer om arrangementet</label><textarea name="" rows="4" cols="20" ng-model="requestCtrl.request.details" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"></textarea><br>
+        <label>Kommentarer</label><textarea name="" rows="4" cols="20" ng-model="requestCtrl.request.comments" ng-change="requestCtrl.updateRequest()" ng-readonly="{{requestCtrl.readOnly}}"></textarea><br>
+        
     </div>
 </div>

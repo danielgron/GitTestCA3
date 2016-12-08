@@ -40,26 +40,25 @@ public class Request implements Serializable {
     @JsonBackReference(value="requests-dep")
     @ManyToOne
     private Department department;
-    private String details;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date eventDate;
+    
     @Enumerated(EnumType.STRING)
     private RequestStatus requestStatus;
-    private int zip;
     
     @JsonBackReference(value="requests-res")
     @ManyToMany
     private List<Resource> resources;
 
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date eventDate;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date doorsopen;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date eventstart;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date eventend;
-
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date watchStart;
+
 
     private String street;
     private String venue;
@@ -69,9 +68,11 @@ public class Request implements Serializable {
     private String comments;
     private String visibility;
     private String type;
+    private String details;
     
     private int price;
     private int numberGuests;
+    private int zip;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Contact contact;
