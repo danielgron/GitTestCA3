@@ -97,7 +97,7 @@ public class EventService {
     public String getSingleEvent(@PathParam("id") String id) throws JsonProcessingException {
         Event event = ef.getEvent(Integer.parseInt(id));
         try {
-            SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept();
+            SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("password","department","event");
             FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter", theFilter);
             ObjectMapper mapper = new ObjectMapper();
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm a z");
