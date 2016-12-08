@@ -1,6 +1,6 @@
 <div class="col-md-6" style = "border:1px solid black" >
     <h3>Vagttype</h3>
-    <select name="" ng-readonly="{{requestCtrl.readOnly}}" >
+    <select ng-readonly="{{requestCtrl.readOnly}}" ng-model="requestCtrl.type" ng-change="requestCtrl.updateRequest()" >
         <option>Andet</option>
         <option>Fodbold</option>
         <option>Koncert</option>

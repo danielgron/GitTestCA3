@@ -20,6 +20,7 @@ function RequestController($scope, requestFactory, newWatchCardFactory, $locatio
     self.setReadOnly = requestFactory.setReadOnly;
     self.goHome = goHome;
     self.approveRequest = requestFactory.approveRequest;
+    self.rejectRequest = requestFactory.rejectRequest;
     self.updateRequest= updateRequest;
     
     

@@ -303,6 +303,7 @@ public class EventFacade {
             em.getTransaction().commit();
         } catch (Exception ex) {
             Log.writeErrorMessageToLog("Failed to persist event created from request" + ex.getMessage());
+            
             throw new Exception();
         } finally {
             em.close();

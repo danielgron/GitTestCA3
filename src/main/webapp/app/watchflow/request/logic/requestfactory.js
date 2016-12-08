@@ -22,6 +22,7 @@ function requestFactory($http, $location) {
         goSent: goSent,
         getResources: getResources,
         approveRequest: approveRequest,
+        rejectRequest: rejectRequest,
         createEventFromRequest: createEventFromRequest,
         setReadOnly: setReadOnly,
         getReadOnly: getReadOnly
@@ -61,7 +62,11 @@ function requestFactory($http, $location) {
     
     function approveRequest() {
         return $http.post("api/request/requesttoapproved/"+chosenRequest.id);
-       
+    }
+    ;
+    
+    function rejectRequest() {
+        return $http.post("api/request/requesttorejected/"+chosenRequest.id);
     }
     ;
 

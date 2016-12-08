@@ -120,6 +120,22 @@ public class RequestFacade {
         }
         return r;
     }
+    
+    public Request rejectRequest(int id) {
+        EntityManager em = EntityConnector.getEntityManager();
+        Request r = null;
+        try {
+            em.getTransaction().begin();
+            Query q = em.createQuery("SELECT r FROM Request r where r.id=:id");
+            q.setParameter("id", id);
+            r = (Request) q.getSingleResult();
+            r.setRequestStatus(RequestStatus.REJECTED);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return r;
+    }
 
     public List<Resource> getRequestResources(int requestId) {
         

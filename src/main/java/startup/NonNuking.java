@@ -19,6 +19,10 @@ import javax.persistence.Query;
 public class NonNuking {
 
     public static void main(String[] args) {
+        StartData sd = new StartData();
+        for (int i = 0; i < 20; i++) {
+            sd.testRequest();
+        }
         EntityManager em = EntityConnector.getEntityManager();
         em.getTransaction().begin();
         Query q = em.createQuery("Select r from Request r", Request.class);
