@@ -48,7 +48,7 @@ public class EventService {
     private Gson gson = new Gson();
     SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept();
     FilterProvider filters = new SimpleFilterProvider().addFilter("samaritFilter", theFilter);
-    
+
     @Context
     private UriInfo context;
 
@@ -90,26 +90,31 @@ public class EventService {
         return eJson.parseEvents(events);
 
     }
-    
+
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getSingleEvent(@PathParam("id") String id) throws JsonProcessingException{
-      Event event = ef.getEvent(Integer.parseInt(id));
+    public String getSingleEvent(@PathParam("id") String id) throws JsonProcessingException {
+        Event event = ef.getEvent(Integer.parseInt(id));
         try {
+            SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept();
+            FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter", theFilter);
             ObjectMapper mapper = new ObjectMapper();
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm a z");
             mapper.setDateFormat(df);
-            return  mapper.writer(filters).writeValueAsString(event);
+            String json = mapper.writer(filters).writeValueAsString(event);
+            return json;
         } catch (JsonProcessingException ex) {
-           log.Log.writeErrorMessageToLog("Exception When Creating JSON Object single event: " + ex);
-           throw ex;
+            log.Log.writeErrorMessageToLog("Exception When Creating JSON Object single event: " + ex);
+            throw ex;
         }
-        
+
     }
-    
+
     /**
-     * This api is for returning a service that with ONLY the eventinfo. Everything else is filtered out
+     * This api is for returning a service that with ONLY the eventinfo.
+     * Everything else is filtered out
+     *
      * @param id
      * @return
      * @throws JsonProcessingException
@@ -117,21 +122,21 @@ public class EventService {
     @GET
     @Path("staffedevent/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getSingleStaffedEvent(@PathParam("id") String id) throws JsonProcessingException{
-      StaffedEvent event = (StaffedEvent) ef.getEvent(Integer.parseInt(id));
+    public String getSingleStaffedEvent(@PathParam("id") String id) throws JsonProcessingException {
+        StaffedEvent event = (StaffedEvent) ef.getEvent(Integer.parseInt(id));
         try {
             ObjectMapper mapper = new ObjectMapper();
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm a z");
             mapper.setDateFormat(df);
-            
+
 //            
-            return  mapper.writer(filters).writeValueAsString(event);
-            
+            return mapper.writer(filters).writeValueAsString(event);
+
         } catch (JsonProcessingException ex) {
-           log.Log.writeErrorMessageToLog("Exception When Creating JSON Object single event: " + ex);
-           throw ex;
+            log.Log.writeErrorMessageToLog("Exception When Creating JSON Object single event: " + ex);
+            throw ex;
         }
-        
+
     }
 
     /**

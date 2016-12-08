@@ -5,6 +5,7 @@
  */
 package entity.watches;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import entity.Event;
 import entity.user.Samarit;
 import javax.persistence.CascadeType;
@@ -39,6 +40,8 @@ public class SamaritWatch extends SamaritCalendar {
     }
 
     @ManyToOne(cascade = {CascadeType.MERGE})
+        @JsonBackReference (value="watches-event")
+
     private Event event;
 
     @ManyToOne(cascade = {CascadeType.MERGE})
