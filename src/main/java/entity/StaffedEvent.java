@@ -40,25 +40,26 @@ import javax.persistence.Temporal;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "DT", discriminatorType = DiscriminatorType.CHAR)
-public class StaffedEvent extends Event{
-    
+public class StaffedEvent extends Event {
+
     @Enumerated(EnumType.STRING)
     private Status status;
     private String address;
-    
-    
-        @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date doorsopen;
-        
-        @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date watchStart;
-    
+
     private String catering;
     private boolean treatmentfacility;
     private String comments;
     private int price;
+
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Contact contact;
+
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Invoice invoice;
     private boolean medics;
@@ -73,23 +74,22 @@ public class StaffedEvent extends Event{
     private int numberGuests;
     private String agegroup;
     private String coordinatorcomment;
-    
+
     /*
     Hold track of how many of each RedCrossLevel is needed!
     Should be set to hold one of every RedCrossLevel with value of 0
     When Created!
-    */
+     */
     @ElementCollection
     @OneToMany
-    @MapKeyColumn(name="rlevel")
-    @Column(name="numberneeded")
-    @CollectionTable(name="STAFFNUMBER_EVENT", joinColumns=@JoinColumn(name="event_id"))
-    private Map<String,Integer> levelsQuantity;
-    
+    @MapKeyColumn(name = "rlevel")
+    @Column(name = "numberneeded")
+    @CollectionTable(name = "STAFFNUMBER_EVENT", joinColumns = @JoinColumn(name = "event_id"))
+    private Map<String, Integer> levelsQuantity;
 
     @OneToMany(mappedBy = "staffedEvent", cascade = CascadeType.ALL)
     private List<SamaritFunctionsOnWatch> watchFunctions;
-    
+
     public StaffedEvent() {
     }
 
@@ -98,8 +98,7 @@ public class StaffedEvent extends Event{
         this.status = status;
         watchFunctions = new ArrayList<>();
     }
-    
-   
+
     public Status getStatus() {
         return status;
     }
@@ -132,21 +131,20 @@ public class StaffedEvent extends Event{
         this.watchFunctions = watchFunctions;
     }
 
-    
-    
     /**
      * This method should be called right after an Staffed Event is created.
-     * Takes all the redcrossLevels and Initilazes the map with the Levels as keys
-     * and the values of 0
+     * Takes all the redcrossLevels and Initilazes the map with the Levels as
+     * keys and the values of 0
+     *
      * @param list
      */
-    public void initilazeLinkedMap(List<RedCrossLevel> list){
+    public void initilazeLinkedMap(List<RedCrossLevel> list) {
         levelsQuantity = new LinkedHashMap<>();
-        
+
         for (RedCrossLevel redCrossLevel : list) {
             levelsQuantity.put(redCrossLevel.getLevel(), 0);
         }
-        
+
     }
 
     public Date getDoorsopen() {

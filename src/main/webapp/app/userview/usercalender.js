@@ -249,6 +249,25 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
 
                 });
             };
+            
+             $scope.openinterval = function (size, parentSelector) {
+                var modalInstance = $uibModal.open({
+                    animation: true,
+                    ariaLabelledBy: 'modal-title',
+                    ariaDescribedBy: 'modal-body',
+                    templateUrl: 'app/userview/template/addinterval.html',
+                    controller: 'AddTimeDayController',
+                    size: 'md',
+                    controllerAs: 'atCtrl'
+
+                });
+
+                modalInstance.result.then(function (selectedItem) {
+                    $scope.setOccupiedDetail(selectedItem);
+                }, function () {
+
+                });
+            };
 
         }
         );

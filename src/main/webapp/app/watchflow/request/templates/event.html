@@ -6,8 +6,31 @@
     <label>Antal Gæster</label>
     {{requestCtrl.request.numberGuests}} <br>
     <label>Dato</label> <br>
-    
-    <label>Stednavn</label>  <input type="text"  ng-readonly="{{requestCtrl.readOnly}}" ng-model='requestCtrl.request.venue' ng-change="requestCtrl.updateRequest()" /><br>
-    <label>Adresse</label><input type="text" ng-readonly="{{requestCtrl.readOnly}}" ng-model='requestCtrl.request.street' ng-change="requestCtrl.updateRequest()"/> <br>
-    <label>Postnummer</label><input type="text" ng-readonly="{{requestCtrl.readOnly}}" ng-model='requestCtrl.request.zip' ng-change="requestCtrl.updateRequest()"/> <label>by</label>
+    <table>
+        <tr>
+            <td>
+                <label>Stednavn</label>
+            </td>
+            <td>
+                <input type="text"  ng-readonly="{{requestCtrl.readOnly}}" ng-model='requestCtrl.request.venue' ng-change="requestCtrl.updateRequest()" /><br>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Adresse</label>
+            </td>
+            <td>
+                <input type="text" ng-readonly="{{requestCtrl.readOnly}}" ng-model='requestCtrl.request.street' ng-change="requestCtrl.updateRequest()"/> <br>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Postnummer </label>
+            </td>
+            <td>
+                <input type="text" ng-readonly="{{requestCtrl.readOnly}}" ng-model='requestCtrl.request.zip' ng-change="requestCtrl.updateRequest()"/>
+            </td>
+        </tr>
+    </table>
+                <label>by</label>
 </div>
