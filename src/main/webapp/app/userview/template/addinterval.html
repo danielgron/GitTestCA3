@@ -2,17 +2,17 @@
     <h3 class="modal-title" id="modal-title">Vælg dato og tidspunkt</h3>
 </div>
 
-    
-    
-    <div class="btn-group">
-        <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'Left'">Gentag hver uge</label>
-        <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'Right'">Interval</label>
-    </div>
 
-<!--    <div class="label label-info" ng-model="repeat" ng-show="radioModel == 'Left'">Vælg startdag (gentages på pågældende dag, hver uge)</div>
-    <div ng-model="interval" ng-show="radioModel == 'Right'">Test</div>
-    {{interval = radioModel === 'Left'}}
-    {{interval}}-->
+
+<div class="btn-group">
+    <label class="btn btn-primary" ng-model="intCtrl.watch.radioModel" uib-btn-radio="'repe'">Gentag hver uge</label>
+    <label class="btn btn-primary" ng-model="intCtrl.watch.radioModel" uib-btn-radio="'inter'">Interval</label>
+</div>
+
+<div class="container col-md-12" >
+    <div class="label label-info" ng-model="intCtrl.repeat" ng-show="intCtrl.watch.radioModel == 'repe'">Vælg startdag (gentages på pågældende dag, hver uge)</div>
+    <div class="label label-info" ng-model="intCtrl.interval" ng-show="intCtrl.watch.radioModel == 'inter'">Test</div>
+</div>
 
 
 
@@ -23,30 +23,47 @@
 
 
 
-        <div class="form-group c">
+        <div class="form-group">
 
-            <div style="display:inline-block; min-height:290px;">
-                <div uib-datepicker ng-model="atCtrl.watch.start" class="well well-sm" datepicker-options="atCtrl.options"></div>
+
+            <div>
+                   <div class="container col-md-6">
+                <h3>Startdato: {{intCtrl.watch.start|date :  "dd.MM.y"}}</h3>
+             
+                <div uib-datepicker ng-model="intCtrl.watch.start" class="well" datepicker-options="intCtrl.options"></div>
+                </div>
+                <div class="container col-md-6">
+                <h3>Slutdato: {{intCtrl.watch.end|date : "dd.MM.y"}}</h3>
+               
+
+                <div uib-datepicker ng-model="intCtrl.watch.end" class="well " datepicker-options="intCtrl.options"></div>
+                 </div>
             </div> 
 
 
-        </div>
-        <div class="form-group col-sm-4"><label for="timestart">Starttidspunkt</label>
-            <div uib-timepicker ng-model="atCtrl.watch.start" ng-change="atCtrl.changed()" hour-step="atCtrl.hstep" minute-step="atCtrl.mstep" show-meridian="ismeridian"></div>
-        </div>
-        <div class="form-group col-sm-4"><label for="timestart">Sluttidspunkt</label>
 
-            <div uib-timepicker ng-model="atCtrl.watch.end" ng-change="atCtrl.changed()" hour-step="atCtrl.hstep" minute-step="atCtrl.mstep" show-meridian="ismeridian"></div>
+
+        </div>
+        <div class="container col-md-4">
+            <div class="form-group"><label for="timestart">Starttidspunkt</label>
+                <div uib-timepicker ng-model="intCtrl.watch.startTime" ng-change="intCtrl.changed()" hour-step="intCtrl.hstep" minute-step="intCtrl.mstep" show-meridian="ismeridian"></div>
+            </div>
+            <div class="form-group"><label for="timestart">Sluttidspunkt</label>
+
+                <div uib-timepicker ng-model="intCtrl.watch.endTime" ng-change="intCtrl.changed()" hour-step="intCtrl.hstep" minute-step="intCtrl.mstep" show-meridian="ismeridian"></div>
+            </div>
         </div>
 
 
         <div class="modal-footer">
-            <div class="container col-sm-8"><label class="label label-danger" ng-show="atCtrl.watch.start > atCtrl.watch.end">Starttidspunkt kan ikke være mindre end sluttidspunkt</label></div>
+            <div class="container col-sm-8"><label class="label label-danger" ng-show="intCtrl.watch.startTime > intCtrl.watch.endTime">Starttidspunkt kan ikke være mindre end sluttidspunkt</label></div>
             <div class="container col-sm-4">
 
                 <div class="btn-group">
 
-                    <button ng-click="atCtrl.ok()" class="btn btn-primary"  ng-disabled="atCtrl.watch.start > atCtrl.watch.end"><i class="glyphicon glyphicon-floppy-disk"/> Tilføj dato</button>
+                    <button ng-click="intCtrl.ok()" class="btn btn-primary"  ng-disabled="intCtrl.watch.startTime > intCtrl.watch.endTime"><i class="glyphicon glyphicon-floppy-disk"/> Tilføj datoer</button>
+                    </form>
+
                 </div>
             </div>
 

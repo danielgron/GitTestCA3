@@ -264,4 +264,12 @@ public class WatchFacade {
         return watches;
 
     }
+
+    public List<SamaritOccupied> addBlockInterval(List<SamaritOccupied> listOfBlocked) {
+        for (SamaritOccupied samaritOccupied : listOfBlocked) {
+          
+            samaritOccupied = this.addUnavailForWatch(samaritOccupied);
+        }
+        return listOfBlocked;
+    }
 }

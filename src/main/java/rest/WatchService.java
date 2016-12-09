@@ -7,6 +7,7 @@ package rest;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
@@ -15,9 +16,12 @@ import com.google.gson.Gson;
 import entity.watches.SamaritOccupied;
 import entity.watches.SamaritWatch;
 import facades.WatchFacade;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -66,7 +70,7 @@ public class WatchService {
             sw.getSamarit().setUserName(userName);
             sw = wf.addUnavailForWatch(sw);
             SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("samarit");
-            FilterProvider filters = new SimpleFilterProvider().addFilter("samaritFilter", theFilter);
+            FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter", theFilter);
 
             json = mapper.writer(filters).writeValueAsString(sw);
 
@@ -90,7 +94,7 @@ public class WatchService {
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             mapper.setDateFormat(df);
             SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("samarit");
-            FilterProvider filters = new SimpleFilterProvider().addFilter("samaritFilter", theFilter);
+            FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter", theFilter);
 
             json = mapper.writer(filters).writeValueAsString(watches);
         } catch (JsonProcessingException ex) {
@@ -114,7 +118,7 @@ public class WatchService {
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
             mapper.setDateFormat(df);
             SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("samarit");
-            FilterProvider filters = new SimpleFilterProvider().addFilter("samaritFilter", theFilter);
+            FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter", theFilter);
 
             json = mapper.writer(filters).writeValueAsString(watchForDate);
         } catch (Exception ex) {
@@ -136,12 +140,32 @@ public class WatchService {
 
             SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("department");
             FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter", theFilter);
-            //  FilterProvider filters2 = new SimpleFilterProvider().addFilter(json, theFilter);
             json = mapper.writer(filters).writeValueAsString(watches);
         } catch (JsonProcessingException ex) {
             log.Log.writeErrorMessageToLog("Error in Get Watch REST " + ex.getMessage());
             throw ex;
         }
         return json;
+    }
+
+    @Path("interval")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String postInterval(String json) throws IOException {
+
+        try {
+            mapper = new ObjectMapper();
+            List<SamaritOccupied> listOfBlocked = mapper.readValue(json, new TypeReference<List<SamaritOccupied>>() {
+            });
+            listOfBlocked = wf.addBlockInterval(listOfBlocked);
+            SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAllExcept("department");
+            FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter", theFilter);
+            json = mapper.writer(filters).writeValueAsString(listOfBlocked);
+        } catch (IOException ex) {
+            log.Log.writeErrorMessageToLog("Error in Get Watch REST " + ex.getMessage());
+            throw ex;
+        }
+        return json;
+
     }
 }

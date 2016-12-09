@@ -190,7 +190,6 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
             };
 
             $scope.setOccupiedDetail = function (date) {
-                window.console.log(date);
                 var startHours = date.startTime.getHours();
                 var startMinutes = date.startTime.getMinutes();
                 var endHours = date.endTime.getHours()
@@ -225,7 +224,17 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
                 });
             };
 
-
+            $scope.setInterval = function(watch){
+                 userCalendarFactory.setBlocked(watch, $scope.user.userName)
+                         .then(function(success){
+                             window.console.log("Scucces");
+                             angular.forEach(success.data, function(value, key){
+                                $scope.watchList.push(value);
+                             });
+                         },function(error){
+                             window.console.log("faulier");
+                         })
+            };
             //Change the view between month, week and day
             $scope.changeView = function (view, calendar) {
                 uiCalendarConfig.calendars[calendar].fullCalendar('changeView', view);
@@ -256,14 +265,15 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
                     ariaLabelledBy: 'modal-title',
                     ariaDescribedBy: 'modal-body',
                     templateUrl: 'app/userview/template/addinterval.html',
-                    controller: 'AddTimeDayController',
-                    size: 'md',
-                    controllerAs: 'atCtrl'
+                    controller: 'IntervalController',
+                    size: 'lg',
+                    controllerAs: 'intCtrl'
 
                 });
 
                 modalInstance.result.then(function (selectedItem) {
-                    $scope.setOccupiedDetail(selectedItem);
+                    
+                    $scope.setInterval(selectedItem);
                 }, function () {
 
                 });
