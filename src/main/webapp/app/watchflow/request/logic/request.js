@@ -34,6 +34,7 @@ function RequestController($scope, requestFactory, newWatchCardFactory, $locatio
 
     //** Exceute on Enter *****
     self.request = requestFactory.getRequest();
+    window.console.log(self.request);
     self.getResources = getResources();
     self.readOnly = requestFactory.getReadOnly();
 

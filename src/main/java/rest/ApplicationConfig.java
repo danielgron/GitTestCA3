@@ -72,6 +72,7 @@ public class ApplicationConfig extends Application {
         resources.add(rest.CoordinatorService.class);
         resources.add(rest.DepartmentAdmin.class);
         resources.add(rest.EventService.class);
+        resources.add(rest.RequestService.class);
         resources.add(rest.ResourceResource.class);
         resources.add(rest.User.class);
         resources.add(rest.WatchFlowService.class);
@@ -80,6 +81,7 @@ public class ApplicationConfig extends Application {
         resources.add(security.Login.class);
         resources.add(security.NotAuthorizedExceptionMapper.class);
         resources.add(security.RolesAllowedFilter.class);
+       
     }
     
 }

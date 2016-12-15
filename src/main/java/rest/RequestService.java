@@ -211,7 +211,7 @@ public class RequestService {
 
         Request r;
         try {
-          
+            mapper = new ObjectMapper();
             r = mapper.readValue(content, Request.class);
             Request updateRequest = rf.updateRequest(r);
             return mapper.writeValueAsString(updateRequest);
