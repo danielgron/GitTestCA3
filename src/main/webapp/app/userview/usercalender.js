@@ -78,6 +78,7 @@ angular.module('myApp.usercalendar', ['ngRoute', 'ui.calendar', 'angularMoment',
 
             //****Full calender callbacks, declared in uiConfig****//
             $scope.eventClick = function (event) {
+                window.console.log(event);
                 if (event.title == "unavail" && event.allDay) {
 
                     $scope.setUnavailForWatch(event.start);

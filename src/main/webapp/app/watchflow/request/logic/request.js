@@ -11,6 +11,10 @@ function RequestController($scope, requestFactory, newWatchCardFactory, $locatio
     self.availableResources = [];
     self.clickedShift = {};
     self.readOnly = true;
+    
+    //Controlling the steps in time-picker
+    self.hstep = 1;
+    self.mstep = 15;
 
     ///***Function Calls****
     self.getAllRedCrossLevels = getAllRedCrossLevels;
@@ -65,6 +69,7 @@ function RequestController($scope, requestFactory, newWatchCardFactory, $locatio
     
     
     function updateRequest() {
+        window.console.log(self.request.doorsopen);
         requestFactory.updateRequest(self.request)
                 .then(
                         function successCallback(res) {
@@ -73,8 +78,7 @@ function RequestController($scope, requestFactory, newWatchCardFactory, $locatio
                         }, function errorCallBack(error) {
                     console.log("Error in callback: " + error.code);
                 });
-    }
-    ;
+    };
 
     function moveResource() {
         var selected = self.selected; // -- Variable that is created by selecting

@@ -59,9 +59,8 @@ public class RequestService {
     private static ObjectMapper mapper = new ObjectMapper();
     private static JSON_Converter eJson = new JSON_Converter();
     DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MM-dd");
-    
-    //private Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
 
+    //private Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
     /**
      * Creates a new instance of RequestResource
      */
@@ -129,13 +128,11 @@ public class RequestService {
     public String getResourceInTimeslot(@PathParam("start") String start, @PathParam("end") String end) throws JsonProcessingException {
         EventFacade ef = new EventFacade();
         //TODO return proper representation object
-       
+
         DateTime dtStart = new DateTime(start);
         DateTime dtEnd = new DateTime(end);
         Date dStart = dtStart.toDate();
         Date dEnd = dtStart.toDate();
-        
-       
 
         List<Resource> res = ef.getAvailableResourcesForDates(dStart, dEnd);
         try {
@@ -166,7 +163,7 @@ public class RequestService {
             throw ex;
         }
     }
-    
+
     @POST
     @Path("requesttoapproved/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -183,8 +180,7 @@ public class RequestService {
             throw ex;
         }
     }
-    
-    
+
     @POST
     @Path("requesttorejected/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -206,20 +202,26 @@ public class RequestService {
      * PUT method for updating or creating an instance of RequestService
      *
      * @param content representation for the resource
-     * @return 
-     * @throws java.io.IOException 
+     * @return
+     * @throws java.io.IOException
      */
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public String putJson(String content) throws IOException {
-        
+
         Request r;
-        r = mapper.readValue(content, Request.class);
-        Request updateRequest = rf.updateRequest(r);
-        return mapper.writeValueAsString(updateRequest);
+        try {
+          
+            r = mapper.readValue(content, Request.class);
+            Request updateRequest = rf.updateRequest(r);
+            return mapper.writeValueAsString(updateRequest);
+        } catch  (Exception ex){
+            log.Log.writeErrorMessageToLog("Error REST request approve: " + ex.getMessage());
+            throw ex;
+        }
+
     }
-    
-    
+
     /*
      *
      * @param json representation for the resource
@@ -238,8 +240,8 @@ public class RequestService {
             Request afterDbUpdate = rf.createRequest(incomingRequest);
             return localMapper.writeValueAsString(afterDbUpdate);
         } catch (IOException ex) {
-           log.Log.writeErrorMessageToLog("Error in Rest postSamaritterRequest : " +ex.getMessage());
-           throw ex;
+            log.Log.writeErrorMessageToLog("Error in Rest postSamaritterRequest : " + ex.getMessage());
+            throw ex;
         }
     }
 }

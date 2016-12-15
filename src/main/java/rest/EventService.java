@@ -67,7 +67,6 @@ public class EventService {
     @Produces(MediaType.APPLICATION_JSON)
     public String getEvents() {
         List<Event> events = ef.getEvents();
-        System.out.println("Works in event");
         return eJson.parseEvents(events);
 
     }
@@ -86,7 +85,6 @@ public class EventService {
         Date startDate = DateUtils.asDate(localStartDate);
         Date endDate = DateUtils.asDate(localEndDate);
         List<Event> events = ef.getEventsDateRange(startDate, endDate);
-        System.out.println("Works in event");
         return eJson.parseEvents(events);
 
     }
