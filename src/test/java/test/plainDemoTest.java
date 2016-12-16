@@ -95,7 +95,7 @@ public class plainDemoTest {
         }
         
         @Test
-        @Ignore
+        
         public void checkAvalibiltyNoConflict(){
             EntityManager em = EntityConnector.getEntityManager();
             Samarit testSam = new Samarit("test2@gmail.com", "testingpassword");
@@ -140,79 +140,77 @@ public class plainDemoTest {
              assertEquals(1,l.size());
         }
         
-        @Test
-        @Ignore
-        public void checkAvalibiltyConflict(){
-            EntityManager em = EntityConnector.getEntityManager();
-            Samarit testSam = new Samarit("test3@gmail.com", "testingpassword");
-            Department d = new Department();
-            d.setNameOfDepartment("TestDepartment2");
-            d.addUser(testSam);
-        try {
-            testSam.addNotAvail(new SamaritOccupied(testSam, new Date(101, 2, 5, 6, 0),new Date(101, 7, 5, 10, 0), false));
-        } catch (DateNullException ex) {
-            Logger.getLogger(plainDemoTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            // Event with with start and end in between the watch marked
-            Event e = new Event();
-            e.setName("Test Event");
-            e.setStart(new Date(101, 5, 5, 10, 0));
-            e.setEnd(new Date(101, 5, 6, 10, 0));
-            e.setDepartment(d);
-            d.getEvents().add(e);
-            int numBefore;
-            Query q = em.createQuery("SELECT e FROM Event e where e.name IS NOT NULL");
-            
-            List<Event> events = q.getResultList();
-            for (Event event : events) {
-                System.out.println(event.getName());
-            }
-            numBefore=events.size();
-            try{
-            em.getTransaction().begin();
-            em.persist(d);
-            em.persist(e);
-            em.persist(testSam);
-            em.getTransaction().commit();
-            }
-            finally{
-                em.close();
-            }
-            List<Samarit> l = cf.getAvailableSamaritesFromEventId(e.getId());
-            System.out.println(testSam.getDepartment().getNameOfDepartment());
-            System.out.println(l.size());
-            System.out.println(e.getId());
-             //assertEquals((int)numBefore+1,(int)e.getId());
-             assertEquals(0,l.size());
-        }
+//        @Test
+//        public void checkAvalibiltyConflict(){
+//            EntityManager em = EntityConnector.getEntityManager();
+//            Samarit testSam = new Samarit("test3@gmail.com", "testingpassword");
+//            Department d = new Department();
+//            d.setNameOfDepartment("TestDepartment2");
+//            d.addUser(testSam);
+//        try {
+//            testSam.addNotAvail(new SamaritOccupied(testSam, new Date(101, 2, 5, 6, 0),new Date(101, 7, 5, 10, 0), false));
+//        } catch (DateNullException ex) {
+//            Logger.getLogger(plainDemoTest.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//            // Event with with start and end in between the watch marked
+//            Event e = new Event();
+//            e.setName("Test Event");
+//            e.setStart(new Date(101, 5, 5, 10, 0));
+//            e.setEnd(new Date(101, 5, 6, 10, 0));
+//            e.setDepartment(d);
+//            d.getEvents().add(e);
+//            int numBefore;
+//            Query q = em.createQuery("SELECT e FROM Event e where e.name IS NOT NULL");
+//            
+//            List<Event> events = q.getResultList();
+//            for (Event event : events) {
+//                System.out.println(event.getName());
+//            }
+//            numBefore=events.size();
+//            try{
+//            em.getTransaction().begin();
+//            em.persist(d);
+//            em.persist(e);
+//            em.persist(testSam);
+//            em.getTransaction().commit();
+//            }
+//            finally{
+//                em.close();
+//            }
+//            List<Samarit> l = cf.getAvailableSamaritesFromEventId(e.getId());
+//            System.out.println(testSam.getDepartment().getNameOfDepartment());
+//            System.out.println(l.size());
+//            System.out.println(e.getId());
+//             //assertEquals((int)numBefore+1,(int)e.getId());
+//             assertEquals(0,l.size());
+//        }
         
         /*
         Test when we put an "all day occupied" object in the database for
         one Samarit, that the Samarit is registered as not avalible.
         */
-          @Test
-          @Ignore
-        public void checkAvalibeConflictAllDay() throws DateNullException{
-            EntityManager em = EntityConnector.getEntityManager();
-            TypedQuery<Samarit> q1 = em.createQuery("Select s from Samarit s", Samarit.class);
-            List<Samarit> listallSamarit = q1.getResultList();
-            Samarit firstSam = listallSamarit.get(0);
-            Samarit secondSam = listallSamarit.get(1);
-            SamaritOccupied g = new SamaritOccupied(firstSam, new Date(), null, true); //Sets the occupied to all day
-            
-            Event e = new Event(new Date(), new Date(), false, "testEvent", "test", firstSam.getDepartment());
-            
-            em.getTransaction().begin();
-            em.persist(g);
-            em.persist(e);
-            em.getTransaction().commit();
-            
-            List<Samarit> allAvaibledforEvent = cf.getAvailableSamaritesFromEventId(e.getId());
-            
-           assertTrue(!allAvaibledforEvent.contains(firstSam));
-           assertTrue(allAvaibledforEvent.contains(secondSam));
-            
-        }
+//          @Test
+//        public void checkAvalibeConflictAllDay() throws DateNullException{
+//            EntityManager em = EntityConnector.getEntityManager();
+//            TypedQuery<Samarit> q1 = em.createQuery("Select s from Samarit s", Samarit.class);
+//            List<Samarit> listallSamarit = q1.getResultList();
+//            Samarit firstSam = listallSamarit.get(0);
+//            Samarit secondSam = listallSamarit.get(1);
+//            SamaritOccupied g = new SamaritOccupied(firstSam, new Date(), null, true); //Sets the occupied to all day
+//            
+//            Event e = new Event(new Date(), new Date(), false, "testEvent", "test", firstSam.getDepartment());
+//            
+//            em.getTransaction().begin();
+//            em.persist(g);
+//            em.persist(e);
+//            em.getTransaction().commit();
+//            
+//            List<Samarit> allAvaibledforEvent = cf.getAvailableSamaritesFromEventId(e.getId());
+//            
+//           assertTrue(!allAvaibledforEvent.contains(firstSam));
+//           assertTrue(allAvaibledforEvent.contains(secondSam));
+//            
+//        }
         
         @Test
         public void testAddComment(){
